@@ -12,6 +12,7 @@
 
 mod compress;
 mod protocol;
+mod transforms;
 
 use std::io::{self, BufReader, Write};
 
