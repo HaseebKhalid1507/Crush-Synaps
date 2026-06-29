@@ -1,0 +1,449 @@
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.1  27248 11880 ?        Ss   Jun24   0:50 /usr/lib/systemd/systemd --switched-root --system --deserialize=56
+root           2  0.0  0.0      0     0 ?        S    Jun24   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        S    Jun24   0:00 [pool_workqueue_release]
+root           4  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-rcu_gp]
+root           5  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-sync_wq]
+root           6  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-kvfree_rcu_reclaim]
+root           7  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-slub_flushwq]
+root           8  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-netns]
+root          10  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/0:0H-kblockd]
+root          13  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-mm_percpu_wq]
+root          15  0.0  0.0      0     0 ?        S    Jun24   0:03 [ksoftirqd/0]
+root          16  0.0  0.0      0     0 ?        I    Jun24   0:36 [rcu_preempt]
+root          17  0.0  0.0      0     0 ?        S    Jun24   0:00 [rcub/0]
+root          18  0.0  0.0      0     0 ?        S    Jun24   0:00 [rcu_exp_par_gp_kthread_worker/0]
+root          19  0.0  0.0      0     0 ?        S    Jun24   0:01 [rcu_exp_gp_kthread_worker]
+root          20  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/0]
+root          21  0.0  0.0      0     0 ?        S    Jun24   0:00 [kprobe-optimizer]
+root          22  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/0]
+root          23  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/0]
+root          24  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/1]
+root          25  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/1]
+root          26  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/1]
+root          27  0.0  0.0      0     0 ?        S    Jun24   0:00 [ksoftirqd/1]
+root          29  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/1:0H-kblockd]
+root          30  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/2]
+root          31  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/2]
+root          32  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/2]
+root          33  0.0  0.0      0     0 ?        S    Jun24   0:00 [ksoftirqd/2]
+root          35  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/2:0H-kblockd]
+root          36  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/3]
+root          37  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/3]
+root          38  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/3]
+root          39  0.0  0.0      0     0 ?        S    Jun24   0:00 [ksoftirqd/3]
+root          41  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/3:0H-kblockd]
+root          42  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/4]
+root          43  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/4]
+root          44  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/4]
+root          45  0.0  0.0      0     0 ?        S    Jun24   0:00 [ksoftirqd/4]
+root          47  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/4:0H-kblockd]
+root          48  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/5]
+root          49  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/5]
+root          50  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/5]
+root          51  0.0  0.0      0     0 ?        S    Jun24   0:00 [ksoftirqd/5]
+root          53  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/5:0H-kblockd]
+root          54  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/6]
+root          55  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/6]
+root          56  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/6]
+root          57  0.0  0.0      0     0 ?        S    Jun24   0:00 [ksoftirqd/6]
+root          59  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/6:0H-kblockd]
+root          60  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/7]
+root          61  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/7]
+root          62  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/7]
+root          63  0.0  0.0      0     0 ?        S    Jun24   0:00 [ksoftirqd/7]
+root          65  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/7:0H-kblockd]
+root          66  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/8]
+root          67  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/8]
+root          68  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/8]
+root          69  0.0  0.0      0     0 ?        S    Jun24   0:00 [ksoftirqd/8]
+root          71  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/8:0H-kblockd]
+root          72  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/9]
+root          73  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/9]
+root          74  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/9]
+root          75  0.0  0.0      0     0 ?        S    Jun24   0:00 [ksoftirqd/9]
+root          77  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/9:0H-kblockd]
+root          78  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/10]
+root          79  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/10]
+root          80  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/10]
+root          81  0.0  0.0      0     0 ?        S    Jun24   0:00 [ksoftirqd/10]
+root          83  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/10:0H-kblockd]
+root          84  0.0  0.0      0     0 ?        S    Jun24   0:00 [cpuhp/11]
+root          85  0.0  0.0      0     0 ?        S    Jun24   0:00 [idle_inject/11]
+root          86  0.0  0.0      0     0 ?        S    Jun24   0:00 [migration/11]
+root          87  0.0  0.0      0     0 ?        S    Jun24   0:01 [ksoftirqd/11]
+root          89  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/11:0H-kblockd]
+root          90  0.0  0.0      0     0 ?        S    Jun24   0:00 [kdevtmpfs]
+root          91  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-inet_frag_wq]
+root          92  0.0  0.0      0     0 ?        I    Jun24   0:00 [rcu_tasks_kthread]
+root          93  0.0  0.0      0     0 ?        I    Jun24   0:00 [rcu_tasks_rude_kthread]
+root          94  0.0  0.0      0     0 ?        S    Jun24   0:00 [kauditd]
+root          95  0.0  0.0      0     0 ?        S    Jun24   0:00 [khungtaskd]
+root          96  0.0  0.0      0     0 ?        S    Jun24   0:00 [oom_reaper]
+root          99  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-writeback]
+root         100  0.0  0.0      0     0 ?        S    Jun24   0:57 [kcompactd0]
+root         101  0.0  0.0      0     0 ?        SN   Jun24   0:00 [ksmd]
+root         102  0.0  0.0      0     0 ?        SN   Jun24   0:12 [khugepaged]
+root         103  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-kblockd]
+root         104  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-blkcg_punt_bio]
+root         105  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-kintegrityd]
+root         107  0.2  0.0      0     0 ?        S    Jun24  13:51 [irq/9-acpi]
+root         108  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-tpm_dev_wq]
+root         110  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-ata_sff]
+root         111  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-edac-poller]
+root         112  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-devfreq_wq]
+root         113  0.0  0.0      0     0 ?        S    Jun24   0:00 [watchdogd]
+root         114  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-quota_events_unbound]
+root         116  0.0  0.0      0     0 ?        S    Jun24   0:00 [irq/120-dmar0-prq]
+root         117  0.1  0.0      0     0 ?        S    Jun24   7:05 [kswapd0]
+root         118  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-kthrotld]
+root         119  0.0  0.0      0     0 ?        S    Jun24   0:00 [irq/124-pciehp]
+root         120  0.0  0.0      0     0 ?        S    Jun24   0:00 [irq/125-pciehp]
+root         121  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-acpi_thermal_pm]
+root         125  0.0  0.0      0     0 ?        S    Jun24   0:06 [hwrng]
+root         126  0.0  0.0      0     0 ?        S    Jun24   0:00 [scsi_eh_0]
+root         127  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-scsi_tmf_0]
+root         130  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-mld]
+root         131  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-ipv6_addrconf]
+root         132  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-kstrp]
+root         139  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-zswap-shrink]
+root         310  0.0  0.0      0     0 ?        I<   Jun24   0:01 [kworker/0:1H-kblockd]
+root         315  0.0  0.0      0     0 ?        S    Jun24   0:00 [nv_queue]
+root         316  0.0  0.0      0     0 ?        S    Jun24   0:00 [nv_queue]
+root         317  0.0  0.0      0     0 ?        S    Jun24   0:00 [nv_open_q]
+root         319  0.0  0.0      0     0 ?        S    Jun24   0:00 [irq/51-DELL0923:00]
+root         321  0.0  0.0      0     0 ?        S    Jun24   0:00 [nvidia-modeset/kthread_q]
+root         322  0.0  0.0      0     0 ?        S    Jun24   0:00 [nvidia-modeset/deferred_close_kthread_q]
+root         324  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-USBC000:00-con1]
+root         325  0.0  0.0      0     0 ?        S    Jun24   0:09 [irq/158-nvidia]
+root         326  0.0  0.0      0     0 ?        S    Jun24   0:00 [nvidia]
+root         327  0.0  0.0      0     0 ?        S    Jun24   0:10 [nv_queue]
+root         328  0.0  0.0      0     0 ?        S    Jun24   0:00 [UVM global queue]
+root         339  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/6:1H-kblockd]
+root         341  0.0  0.0      0     0 ?        S    Jun24   0:00 [UVM deferred release queue]
+root         342  0.0  0.0      0     0 ?        S    Jun24   0:00 [UVM Tools Event Queue]
+root         346  0.0  0.0      0     0 ?        I<   Jun24   0:01 [kworker/4:1H-kblockd]
+root         347  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/11:1H-kblockd]
+root         348  0.0  0.0      0     0 ?        I<   Jun24   0:01 [kworker/8:1H-kblockd]
+root         349  0.0  0.0      0     0 ?        I<   Jun24   0:08 [kworker/7:1H-kblockd]
+root         350  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/5:1H-kblockd]
+root         364  0.0  0.0      0     0 ?        I<   Jun24   0:01 [kworker/2:1H-kblockd]
+root         365  0.0  0.0      0     0 ?        I<   Jun24   0:01 [kworker/1:1H-kblockd]
+root         366  0.0  0.0      0     0 ?        I<   Jun24   0:01 [kworker/10:1H-kblockd]
+root         371  0.0  0.0      0     0 ?        S    Jun24   0:18 [jbd2/sda2-8]
+root         372  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-ext4-rsv-conversion]
+root         390  0.0  0.0      0     0 ?        I<   Jun24   0:01 [kworker/3:1H-kblockd]
+root         414  0.0  0.0      0     0 ?        S    Jun24   0:00 [psimon]
+root         423  0.0  0.5 198476 41376 ?        Ss   Jun24   0:46 /usr/lib/systemd/systemd-journald
+root         453  0.0  0.0      0     0 ?        I<   Jun24   0:01 [kworker/9:1H-kblockd]
+root         459  0.0  0.0  17352  5232 ?        Ss   Jun24   0:01 /usr/lib/systemd/systemd-userdbd
+root         464  0.0  0.0      0     0 ?        S    Jun24   0:00 [psimon]
+systemd+     468  0.0  0.0  92432  6640 ?        Ssl  Jun24   0:00 /usr/lib/systemd/systemd-timesyncd
+root         472  0.0  0.0  43276  5860 ?        Ss   Jun24   0:18 /usr/lib/systemd/systemd-udevd
+root         475  0.0  0.0      0     0 ?        S    Jun24   0:00 [psimon]
+root         542  0.0  0.0      0     0 ?        S    Jun24   0:00 [irq/159-mei_me]
+root         562  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-cfg80211]
+root         568  0.0  0.0      0     0 ?        S    Jun24   4:36 [irq/160-iwlwifi]
+root         583  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-ttm]
+root         584  0.0  0.0      0     0 ?        S    Jun24   0:00 [card2-crtc0]
+root         585  0.0  0.0      0     0 ?        S    Jun24   0:00 [card2-crtc1]
+root         586  0.0  0.0      0     0 ?        S    Jun24   0:00 [card2-crtc2]
+root         607  0.0  0.0      0     0 ?        S    Jun24   0:00 [irq/162-AudioDSP]
+root         617  0.0  0.0      0     0 ?        S    Jun24   0:00 [cec-DP-3]
+dbus         639  0.0  0.0   9108  3108 ?        Ss   Jun24   0:00 /usr/bin/dbus-broker-launch --scope system --audit
+dbus         640  0.0  0.0   6068  3068 ?        S    Jun24   0:09 dbus-broker --log 10 --controller 9 --machine-id 4647fde3cd6642af9565896ce0111b0b --max-bytes 536870912 --max-fds 4096 --max-matches 131072 --audit
+avahi        642  0.0  0.0   7240  3016 ?        Ss   Jun24   0:01 avahi-daemon: running [jade.local]
+root         645  0.0  0.1 149208 10212 ?        Ssl  Jun24   0:03 /usr/bin/python /usr/bin/firewalld --nofork --nopid
+root         647  0.0  0.1 420752 12764 ?        Ssl  Jun24   0:36 /usr/bin/NetworkManager --no-daemon
+root         648  0.0  0.0  18912  7268 ?        Ss   Jun24   0:01 /usr/lib/systemd/systemd-logind
+root         649  0.0  0.0  18368  5908 ?        Ss   Jun24   0:06 /usr/lib/systemd/systemd-machined
+avahi        676  0.0  0.0   6972   988 ?        S    Jun24   0:00 avahi-daemon: chroot helper
+root         687  0.0  0.0  20028  5728 ?        Ss   Jun24   0:04 /usr/bin/wpa_supplicant -u -s -O /run/wpa_supplicant
+root         695  0.0  0.0  12460  4352 ?        Ss   Jun24   0:04 sshd: /usr/bin/sshd -D [listener] 0 of 10-100 startups
+root         700  0.0  0.0 382376  4048 ?        Ssl  Jun24   0:00 /usr/bin/lightdm
+haseeb       701  0.0  0.1  25228  9440 ?        Ss   Jun24   1:11 /usr/lib/systemd/systemd --user
+root         702  2.4  0.9 4111612 78908 ?       Ssl  Jun24 160:37 /usr/bin/containerd
+root         720  0.0  0.5 26181716 41304 tty7   Ssl+ Jun24   6:20 /usr/lib/Xorg :0 -seat seat0 -auth /run/lightdm/root/:0 -nolisten tcp vt7 -novtswitch
+haseeb       721  0.0  0.0  26232  2020 ?        S    Jun24   0:00 (sd-pam)
+root         722  0.0  0.1 312304  9552 ?        Ssl  Jun24   0:03 /usr/lib/accounts-daemon
+polkitd      750  0.0  0.0 309952  5860 ?        Ssl  Jun24   0:08 /usr/lib/polkit-1/polkitd --no-debug --log-level=notice
+haseeb       753  0.0  0.3 1073848 26504 ?       Ssl  Jun24   1:51 /usr/bin/qbittorrent-nox
+haseeb       843  0.0  0.1  35292  8816 ?        Ss   Jun24   0:20 /usr/bin/python3 /home/haseeb/dashboard/stats-api.py
+haseeb       965  1.3  0.0  19460  6916 ?        Ss   Jun24  90:47 tmux new-session -A -s jawz
+haseeb       970  0.0  0.0   8528  2832 ?        Ss   Jun24   0:00 /usr/bin/dbus-broker-launch --scope user
+haseeb       982  0.0  0.0   4604  2488 ?        S    Jun24   0:10 dbus-broker --log 11 --controller 10 --machine-id 4647fde3cd6642af9565896ce0111b0b --max-bytes 100000000000000 --max-fds 25000000000000 --max-matches 5000000000
+root        1060  0.0  0.0 172772  4232 ?        Sl   Jun24   0:00 lightdm --session-child 17 20
+lightdm     1091  0.0  0.0  25128  7276 ?        Ss   Jun24   0:12 /usr/lib/systemd/systemd --user
+lightdm     1093  0.0  0.0  26232  2024 ?        S    Jun24   0:00 (sd-pam)
+lightdm     1105  0.1  0.2 1756988 23244 ?       Ssl  Jun24   9:47 /usr/bin/slick-greeter
+lightdm     1117  0.0  0.0   8528  2316 ?        Ss   Jun24   0:00 /usr/bin/dbus-broker-launch --scope user
+lightdm     1119  0.0  0.0   4724  2460 ?        S    Jun24   0:00 dbus-broker --log 11 --controller 10 --machine-id 4647fde3cd6642af9565896ce0111b0b --max-bytes 100000000000000 --max-fds 25000000000000 --max-matches 5000000000
+lightdm     1121  0.0  0.0 166608  3428 ?        Ssl  Jun24   0:00 /usr/lib/dconf-service
+lightdm     1143  0.0  0.0 381460  3556 ?        Ssl  Jun24   0:00 /usr/lib/at-spi-bus-launcher
+lightdm     1149  0.0  0.0   8528  2312 ?        S    Jun24   0:00 /usr/bin/dbus-broker-launch --config-file=/usr/share/defaults/at-spi2/accessibility.conf --scope user
+lightdm     1150  0.0  0.0   4604  2388 ?        S    Jun24   0:00 dbus-broker --log 10 --controller 9 --machine-id 4647fde3cd6642af9565896ce0111b0b --max-bytes 100000000000000 --max-fds 6400000 --max-matches 5000000000
+lightdm     1151  0.0  0.0 330736  6456 ?        Ssl  Jun24   0:00 /usr/lib/gvfsd
+lightdm     1157  0.0  0.0 325944  5488 ?        Sl   Jun24   0:00 /usr/lib/gvfsd-fuse /run/user/966/gvfs -f
+lightdm     1193  0.0  0.0 170204  5596 ?        Ssl  Jun24   0:00 /usr/lib/gvfsd-metadata
+root        1255  0.0  0.0  19592  3692 ?        S    Jun24   0:00 lightdm --session-child 13 20
+lightdm     1258  0.0  0.0 168936  3752 ?        Ssl  Jun24   0:01 /usr/lib/at-spi2-registryd --use-gnome-session
+root        1320  2.7  0.9 7321164 74468 ?       Ssl  Jun24 182:27 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+root        2299  0.0  0.0 1268260 7672 ?        Sl   Jun24   0:15 /usr/bin/containerd-shim-runc-v2 -namespace moby -id a855ac9f086be38c3c9325ec2a57703ef5a43e2db5a96907e898a82af12ed755 -address /run/containerd/containerd.sock
+root        2323  0.0  0.0   2488    56 ?        Ss   Jun24   0:04 /usr/bin/tini -g -- node app.js
+root        2426  0.0  0.2 1206768 15908 ?       Sl   Jun24   0:04 node app.js
+root        2435  0.0  0.1 1268260 9012 ?        Sl   Jun24   0:41 /usr/bin/containerd-shim-runc-v2 -namespace moby -id f8720f658a71a53cc5093346c6695db5a2b03b9b3e9722bf5196db943186fe47 -address /run/containerd/containerd.sock
+root        2458  0.0  0.0   2152     8 ?        Ss   Jun24   0:00 /usr/bin/dumb-init -- extra/entrypoint.sh node server/server.js
+root        2473  0.0  0.0 1268260 7748 ?        Sl   Jun24   0:15 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 7ae27cc4771daad7fc890a3c1b119309478f8992de0c4ba92b6bd5d52b492d9f -address /run/containerd/containerd.sock
+nobody      2498  0.4  0.2 1277724 20120 ?       Ssl  Jun24  30:28 /bin/node_exporter --path.rootfs=/host
+root        2573  0.0  0.0 2190764 5260 ?        Sl   Jun24   0:04 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 3001 -container-ip 192.168.176.4 -container-port 3001 -use-listen-fd
+root        2581  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 3001 -container-ip 192.168.176.4 -container-port 3001 -use-listen-fd
+root        2597  0.0  0.1 1268516 9212 ?        Sl   Jun24   1:00 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 2a95a62b7429ea607772a114de5027434b9ae3a3e91bb02b3b7030a6ae76ef6a -address /run/containerd/containerd.sock
+root        2620  0.0  0.6 273678204 48020 ?     Ssl  Jun24   2:10 /jellyfin/jellyfin
+root        2673  0.0  0.0 1268260 7784 ?        Sl   Jun24   0:15 /usr/bin/containerd-shim-runc-v2 -namespace moby -id fb294a1e94383cc62e2274c722ef75d8397a8e253bd8cad97ea1a4b89132c92a -address /run/containerd/containerd.sock
+root        2699  0.0  0.0    448    12 ?        Ss   Jun24   0:00 /package/admin/s6/command/s6-svscan -d4 -- /run/service
+root        2728  0.0  0.0 2117288 4888 ?        Sl   Jun24   0:04 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8096 -container-ip 192.168.176.5 -container-port 8096 -use-listen-fd
+root        2734  0.0  0.0 1746644 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 8096 -container-ip 192.168.176.5 -container-port 8096 -use-listen-fd
+root        2744  0.3  1.2 1025360 102648 ?      Ssl  Jun24  19:45 node server/server.js
+root        2770  0.0  0.0 1821144 3316 ?        Sl   Jun24   0:01 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 9696 -container-ip 192.168.176.6 -container-port 9696 -use-listen-fd
+root        2777  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 9696 -container-ip 192.168.176.6 -container-port 9696 -use-listen-fd
+root        2873  0.0  0.0 1268004 7736 ?        Sl   Jun24   0:15 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 1ab996bdfc72d7344e652b631b5bdaeb8ed5950f0f9887d2249628227fa43f8d -address /run/containerd/containerd.sock
+root        2899  0.0  0.0  10352  2936 ?        Ss   Jun24   0:00 nginx: master process nginx -g daemon off;
+root        2958  0.0  0.0 1268260 7824 ?        Sl   Jun24   0:16 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 875003c2546d45a608a2b706499e0a997ff51406ffcc84026f2b023c18be218e -address /run/containerd/containerd.sock
+root        2982  0.0  0.0  10352  2788 ?        Ss   Jun24   0:00 nginx: master process nginx -g daemon off;
+root        2998  0.0  0.0 1268260 7720 ?        Sl   Jun24   0:16 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 6e1a9c37f258e08e34ed72018a5dadc81277f4149db35c2a7dea90a1166ca197 -address /run/containerd/containerd.sock
+root        3021  0.0  0.0    448    12 ?        Ss   Jun24   0:00 /package/admin/s6/command/s6-svscan -d4 -- /run/service
+root        3089  0.0  0.0 1268516 7764 ?        Sl   Jun24   0:16 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 91fe12898966df78712851b6bd9fc0bd5fd0cc0a8528e1385e62f447865a8725 -address /run/containerd/containerd.sock
+root        3113  0.0  0.0    444    12 ?        Ss   Jun24   0:00 /package/admin/s6/command/s6-svscan -d4 -- /run/service
+root        3151  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 3000 -container-ip 192.168.176.8 -container-port 3000 -use-listen-fd
+root        3159  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 3000 -container-ip 192.168.176.8 -container-port 3000 -use-listen-fd
+root        3228  0.0  0.0 1268516 7808 ?        Sl   Jun24   0:15 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 2675a9bdc82b71f5403bd20a041d7d51e66b470cb0b4c4e576f4cfb368898bdc -address /run/containerd/containerd.sock
+70          3254  0.0  0.1 173856 11640 ?        Ss   Jun24   0:02 postgres
+root        3291  0.0  0.0 1268004 7704 ?        Sl   Jun24   0:15 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 068b9238e417e831a7ed4760824ff9fdc828db649b5d2fcba748824cb764c3ea -address /run/containerd/containerd.sock
+root        3315  0.0  0.0  10584  2988 ?        Ss   Jun24   0:00 nginx: master process nginx -g daemon off;
+root        3361  0.0  0.0 1268260 7784 ?        Sl   Jun24   0:14 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 95679ac5fabd7daa2b912af6bc67cd48ce6493a35919c8f176d2c483b0871a62 -address /run/containerd/containerd.sock
+haseeb      3386  0.0  0.4 11249960 36132 ?      Ssl  Jun24   0:37 node current/index.js
+root        3401  0.0  0.1 1268516 11604 ?       Sl   Jun24   0:31 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 217989e0e87f394d4914ce35b666aca0b9155afcd6e2942824124bfc4430a02a -address /run/containerd/containerd.sock
+root        3438  0.0  0.0    232     4 ?        Ss   Jun24   0:00 /usr/bin/dumb-init node server.js
+root        3463  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 3003 -container-ip 192.168.176.9 -container-port 80 -use-listen-fd
+root        3470  0.0  0.0 1812508 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 3003 -container-ip 192.168.176.9 -container-port 80 -use-listen-fd
+root        3488  0.0  0.0 1268260 7884 ?        Sl   Jun24   0:17 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 26640723bc02c5ea16b6e7ad7c4728d5cda75dd028c07cd1c9d1104b7c1ba061 -address /run/containerd/containerd.sock
+101         3512  0.0  0.0  10352  3136 ?        Ss   Jun24   0:00 nginx: master process nginx -g daemon off;
+root        3526  0.0  0.0 1268260 7876 ?        Sl   Jun24   0:19 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 26a8e2328a531c7001ad107bcdb1c6ead123c046668f3588be8ab159a6cd3f9f -address /run/containerd/containerd.sock
+472         3550  0.4  3.6 1705304 287588 ?      Ssl  Jun24  30:24 grafana server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini --packaging=docker cfg:default.log.mode=console cfg:default.paths.data=/var/lib/grafana cfg:default.paths.logs=/var/log/grafana cfg:default.paths.plugins=/var/lib/grafana/plugins cfg:default.paths.provisioning=/etc/grafana/provisioning
+root        3566  0.0  0.0 1268260 7712 ?        Sl   Jun24   0:14 /usr/bin/containerd-shim-runc-v2 -namespace moby -id abb64f8cb01481f59ad00bb2afe79a96afa7f7ad85365e85d6e76539c731044a -address /run/containerd/containerd.sock
+nobody      3617  0.0  0.7 2339472 56820 ?       Ssl  Jun24   5:04 /bin/prometheus --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention.time=30d
+root        3642  0.0  0.0 1268260 7820 ?        Sl   Jun24   0:16 /usr/bin/containerd-shim-runc-v2 -namespace moby -id cc03a04e33445a6a5f444b374bd51c7f48f8e5281a822fb53d5966babff5372d -address /run/containerd/containerd.sock
+haseeb      3666  0.0  0.0   2344   120 ?        Ss   Jun24   0:00 /usr/bin/dumb-init -- /usr/local/bin/python -u /app/flaresolverr.py
+root        3680  0.0  0.0 1268260 7852 ?        Sl   Jun24   0:20 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 7f23ac7cd29fe82463e9be7febec3fe56409fc7e5ae66cc7717107ceadb9a829 -address /run/containerd/containerd.sock
+10001       3705  0.4  2.0 1681904 160328 ?      Ssl  Jun24  26:39 /usr/bin/loki -config.file=/etc/loki/loki-config.yml
+root        3827  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8989 -container-ip 192.168.176.10 -container-port 8989 -use-listen-fd
+root        3833  0.0  0.0 1672912 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 8989 -container-ip 192.168.176.10 -container-port 8989 -use-listen-fd
+root        3863  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 80 -container-ip 192.168.176.11 -container-port 80 -use-listen-fd
+root        3869  0.0  0.0 1746644 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 80 -container-ip 192.168.176.11 -container-port 80 -use-listen-fd
+root        3886  0.0  0.0 1820632 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 81 -container-ip 192.168.176.11 -container-port 81 -use-listen-fd
+root        3895  0.0  0.0 1672912 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 81 -container-ip 192.168.176.11 -container-port 81 -use-listen-fd
+root        3911  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 443 -container-ip 192.168.176.11 -container-port 443 -use-listen-fd
+root        3919  0.0  0.0 1820632 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 443 -container-ip 192.168.176.11 -container-port 443 -use-listen-fd
+root        4008  0.0  0.0 1820632 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8087 -container-ip 192.168.176.12 -container-port 443 -use-listen-fd
+root        4016  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 8087 -container-ip 192.168.176.12 -container-port 443 -use-listen-fd
+101         4065  0.0  0.0  10816   472 ?        S    Jun24   0:00 nginx: worker process
+101         4066  0.0  0.0  10816   540 ?        S    Jun24   0:00 nginx: worker process
+101         4067  0.0  0.0  10816   548 ?        S    Jun24   0:00 nginx: worker process
+101         4068  0.0  0.0  10816   472 ?        S    Jun24   0:00 nginx: worker process
+101         4069  0.0  0.0  10816   536 ?        S    Jun24   0:00 nginx: worker process
+101         4070  0.0  0.0  10816   472 ?        S    Jun24   0:00 nginx: worker process
+101         4071  0.0  0.0  10816   544 ?        S    Jun24   0:00 nginx: worker process
+101         4072  0.0  0.0  10816   472 ?        S    Jun24   0:00 nginx: worker process
+101         4073  0.0  0.0  10816   448 ?        S    Jun24   0:00 nginx: worker process
+101         4074  0.0  0.0  10816   536 ?        S    Jun24   0:00 nginx: worker process
+101         4075  0.0  0.0  10816   472 ?        S    Jun24   0:00 nginx: worker process
+101         4076  0.0  0.0  10816   548 ?        S    Jun24   0:00 nginx: worker process
+101         4077  0.0  0.0  10816   472 ?        S    Jun24   0:00 nginx: worker process
+101         4078  0.0  0.0  10816   552 ?        S    Jun24   0:00 nginx: worker process
+101         4079  0.0  0.0  10816   472 ?        S    Jun24   0:00 nginx: worker process
+101         4080  0.0  0.0  10816   536 ?        S    Jun24   0:00 nginx: worker process
+101         4081  0.0  0.0  10816   456 ?        S    Jun24   0:00 nginx: worker process
+101         4082  0.0  0.0  10816   540 ?        S    Jun24   0:00 nginx: worker process
+101         4083  0.0  0.0  10816   472 ?        S    Jun24   0:00 nginx: worker process
+101         4084  0.0  0.0  10816   536 ?        S    Jun24   0:00 nginx: worker process
+101         4085  0.0  0.0  10816   456 ?        S    Jun24   0:00 nginx: worker process
+101         4086  0.0  0.0  10816   532 ?        S    Jun24   0:00 nginx: worker process
+101         4087  0.0  0.0  10816   544 ?        S    Jun24   0:00 nginx: worker process
+101         4088  0.0  0.0  10816   472 ?        S    Jun24   0:00 nginx: worker process
+root        4225  0.0  0.0 1969288 4792 ?        Sl   Jun24   0:02 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8100 -container-ip 192.168.176.14 -container-port 8080 -use-listen-fd
+root        4231  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 8100 -container-ip 192.168.176.14 -container-port 8080 -use-listen-fd
+101         4286  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+101         4287  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+101         4288  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+101         4289  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+101         4290  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+101         4291  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+101         4292  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+101         4293  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+101         4294  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+101         4295  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+101         4296  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+101         4297  0.0  0.0  11048   496 ?        S    Jun24   0:00 nginx: worker process
+root        4303  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise s6-linux-init-shutdownd
+root        4314  0.0  0.0    216    12 ?        Ss   Jun24   0:00 /package/admin/s6-linux-init/command/s6-linux-init-shutdownd -d3 -c /run/s6/basedir -g 3000 -C -B
+root        4362  0.0  0.0 1673168 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 3002 -container-ip 192.168.176.7 -container-port 3000 -use-listen-fd
+root        4374  0.0  0.0 1672912 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 3002 -container-ip 192.168.176.7 -container-port 3000 -use-listen-fd
+root        4463  0.0  0.0 1746644 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto udp -host-ip 0.0.0.0 -host-port 51820 -container-ip 192.168.176.15 -container-port 51820 -use-listen-fd
+root        4471  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto udp -host-ip :: -host-port 51820 -container-ip 192.168.176.15 -container-port 51820 -use-listen-fd
+root        4487  0.0  0.0 1969024 4872 ?        Sl   Jun24   0:02 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 51821 -container-ip 192.168.176.15 -container-port 51821 -use-listen-fd
+root        4493  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 51821 -container-ip 192.168.176.15 -container-port 51821 -use-listen-fd
+root        4738  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 9090 -container-ip 192.168.176.17 -container-port 9090 -use-listen-fd
+root        4746  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 9090 -container-ip 192.168.176.17 -container-port 9090 -use-listen-fd
+101         4754  0.0  0.0  10816   864 ?        S    Jun24   0:00 nginx: worker process
+101         4755  0.0  0.0  10816   900 ?        S    Jun24   0:00 nginx: worker process
+101         4756  0.0  0.0  10816   868 ?        S    Jun24   0:00 nginx: worker process
+101         4757  0.0  0.0  10816   848 ?        S    Jun24   0:00 nginx: worker process
+101         4758  0.0  0.0  10816   952 ?        S    Jun24   0:00 nginx: worker process
+101         4759  0.0  0.0  10816   948 ?        S    Jun24   0:00 nginx: worker process
+101         4760  0.0  0.0  10816   952 ?        S    Jun24   0:00 nginx: worker process
+101         4761  0.0  0.0  10816   952 ?        S    Jun24   0:00 nginx: worker process
+101         4762  0.0  0.0  10816   952 ?        S    Jun24   0:00 nginx: worker process
+101         4763  0.0  0.0  10816   952 ?        S    Jun24   0:00 nginx: worker process
+101         4764  0.0  0.0  10816   952 ?        S    Jun24   0:00 nginx: worker process
+101         4765  0.0  0.0  10816   828 ?        S    Jun24   0:00 nginx: worker process
+root        4766  0.0  0.2 11216160 20208 ?      Ssl  Jun24   0:07 node server.js
+root        4940  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise s6-linux-init-shutdownd
+root        4941  0.0  0.0    216    12 ?        Ss   Jun24   0:00 /package/admin/s6-linux-init/command/s6-linux-init-shutdownd -d3 -c /run/s6/basedir -g 3000 -C -B
+root        4999  0.0  0.0 1599180 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 2368 -container-ip 192.168.176.18 -container-port 2368 -use-listen-fd
+root        5009  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 2368 -container-ip 192.168.176.18 -container-port 2368 -use-listen-fd
+root        5133  0.0  0.0 1820888 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8191 -container-ip 192.168.176.19 -container-port 8191 -use-listen-fd
+root        5140  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 8191 -container-ip 192.168.176.19 -container-port 8191 -use-listen-fd
+root        5241  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 3101 -container-ip 192.168.176.20 -container-port 3100 -use-listen-fd
+root        5248  0.0  0.0 1746644 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 3101 -container-ip 192.168.176.20 -container-port 3100 -use-listen-fd
+haseeb      5436  0.0  0.0 490168  5424 ?        Ssl  Jun24   0:19 /usr/local/bin/python -u /app/flaresolverr.py
+root        5563  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise s6rc-fdholder
+root        5564  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise s6rc-fdholder
+root        5565  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise s6rc-oneshot-runner
+root        5566  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise s6rc-oneshot-runner
+root        5567  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise svc-sonarr
+root        5568  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise svc-cron
+root        5569  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise svc-cron
+root        5570  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise svc-prowlarr
+root        5614  0.0  0.0    216    12 ?        Ss   Jun24   0:00 /package/admin/s6/command/s6-ipcserverd -1 -- /package/admin/s6/command/s6-ipcserver-access -v0 -E -l0 -i data/rules -- /package/admin/s6/command/s6-sudod -t 30000 -- /package/admin/s6-rc/command/s6-rc-oneshot-run -l ../.. --
+root        5615  0.0  0.0    216    12 ?        Ss   Jun24   0:00 /package/admin/s6/command/s6-ipcserverd -1 -- /package/admin/s6/command/s6-ipcserver-access -v0 -E -l0 -i data/rules -- /package/admin/s6/command/s6-sudod -t 30000 -- /package/admin/s6-rc/command/s6-rc-oneshot-run -l ../.. --
+root        5809  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise s6-linux-init-shutdownd
+root        5834  0.0  0.0    216    12 ?        Ss   Jun24   0:00 /package/admin/s6-linux-init/command/s6-linux-init-shutdownd -d3 -c /run/s6/basedir -g 3000 -C -B
+70          5976  0.0  0.1 173956  8048 ?        Ss   Jun24   0:00 postgres: checkpointer 
+70          5977  0.0  0.1 173960 10040 ?        Ss   Jun24   0:00 postgres: background writer 
+root        6056  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise s6rc-fdholder
+root        6057  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise s6rc-oneshot-runner
+root        6058  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise nginx
+root        6059  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise frontend
+root        6060  0.0  0.0    228    12 ?        S    Jun24   0:00 s6-supervise backend
+root        6112  0.0  0.0    216    12 ?        Ss   Jun24   0:00 /package/admin/s6/command/s6-ipcserverd -1 -- /package/admin/s6/command/s6-ipcserver-access -v0 -E -l0 -i data/rules -- /package/admin/s6/command/s6-sudod -t 30000 -- /package/admin/s6-rc/command/s6-rc-oneshot-run -l ../.. --
+root        6298  0.0  0.0   1648   520 ?        Ss   Jun24   0:00 busybox crond -f -S -l 5
+haseeb      6299  0.2  1.3 273019952 106228 ?    Ssl  Jun24  17:22 /app/prowlarr/bin/Prowlarr -nobrowser -data=/config
+root        6333  0.0  0.0   1648   504 ?        Ss   Jun24   0:00 busybox crond -f -S -l 5
+haseeb      6334  0.1  1.3 2613736 107608 ?      Ssl  Jun24   9:18 /app/sonarr/bin/Sonarr -nobrowser -data=/config
+root        6701  0.0  0.0      0     0 ?        I<   Jun24   0:00 [kworker/R-wg-crypt-wg0]
+root        6710  0.0  0.0      0     0 ?        S    Jun24   0:02 [napi/wg0-0]
+root        6712  0.0  0.0      0     0 ?        S    Jun24   0:00 [napi/wg0-0]
+root        6714  0.0  0.0      0     0 ?        S    Jun24   0:00 [napi/wg0-0]
+root        7448  0.0  0.0 309836  6340 ?        Ssl  Jun24   0:00 /usr/lib/power-profiles-daemon
+472         9290  0.0  0.0 1293536 6880 ?        Sl   Jun24   0:07 /usr/share/grafana/data/plugins-bundled/elasticsearch/gpx_grafana_elasticsearch_datasource_linux_amd64
+haseeb      9743  0.0  0.0  23328   792 ?        S    Jun24   0:00 Xvfb :1681938477 -screen 0 800x680x24
+root       10852  0.0  0.0  70644  4384 ?        Ss   Jun24   0:00 nginx: master process nginx
+root       10853  0.0  0.0   3940    28 ?        Ss   Jun24   0:00 bash ./run backend
+root       10856  0.0  0.1 1350736 13272 ?       Sl   Jun24   0:21 node --abort_on_uncaught_exception --max_old_space_size=250 index.js
+root       10972  0.0  0.0 1268068 7800 ?        Sl   Jun24   0:15 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 1d3a447bf92972932c7394421b8081d3a7ac5c7e3276299316f50d7242a9ae20 -address /run/containerd/containerd.sock
+nobody     10997  0.0  0.1 1354356 12684 ?       Ssl  Jun24   0:19 /usr/bin/miniflux
+70         11064  0.0  0.1 173928  7956 ?        Ss   Jun24   0:00 postgres: walwriter 
+70         11066  0.0  0.1 175540 10480 ?        Ss   Jun24   0:00 postgres: autovacuum launcher 
+70         11067  0.0  0.1 175468 10396 ?        Ss   Jun24   0:00 postgres: logical replication launcher 
+root       11128  0.0  0.0 1746900 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8088 -container-ip 192.168.176.13 -container-port 8080 -use-listen-fd
+root       11136  0.0  0.0 1812508 1836 ?        Sl   Jun24   0:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 8088 -container-ip 192.168.176.13 -container-port 8080 -use-listen-fd
+root       12800  0.0  0.0 444404   788 ?        Ssl  Jun24   0:01 /usr/sbin/nscd
+root       29254  0.0  0.1 1268004 9204 ?        Sl   Jun24   0:59 /usr/bin/containerd-shim-runc-v2 -namespace moby -id c8a8f130de1db93d192f7443fdd98b320e8e60f792ea03e1b79f25854f8190e1 -address /run/containerd/containerd.sock
+root       29279  0.0  0.0   2616   576 ?        Ss   Jun24   0:00 /bin/bash /usr/bin/start.sh
+root       29403  0.0  0.0   1648   720 ?        Ss   Jun24   0:00 /usr/sbin/crond
+haseeb     29441  0.0  0.0   2376   576 ?        S    Jun24   0:00 /bin/bash -c /usr/bin/pihole-FTL no-daemon >/dev/null
+haseeb     29444  0.1  0.5  56916 39664 ?        Sl   Jun24  10:16 /usr/bin/pihole-FTL no-daemon
+root       29639  0.0  0.0   7624  1004 ?        S    Jun24   0:07 tail -F -c +14226 -- /var/log/pihole/FTL.log
+root       68396  0.0  0.1 1268260 7972 ?        Sl   Jun24   0:17 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 1d32bb7c2d61bd3e406269c03b23fe4d8f220b7b38d4361202b6b31d9f102327 -address /run/containerd/containerd.sock
+root       68420  0.8  0.9 8581484 74884 ?       Ssl  Jun24  55:01 /usr/bin/promtail -config.file=/etc/promtail/promtail-config.yml
+haseeb    550850  0.0  0.0   9244  5380 pts/2    Ss   Jun26   0:00 -bash
+haseeb    588785  0.0  0.0 381460  4748 ?        Ssl  Jun26   0:00 /usr/lib/at-spi-bus-launcher
+root      588787  0.0  0.1 325376 14060 ?        Ssl  Jun26   0:57 /usr/lib/upowerd
+haseeb    591124  0.2  0.8 51251664 65340 ?      Sl   Jun26   9:22 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --remote-debugging-port=9222 --user-data-dir=/home/haseeb/.cache/browser-tools2 --no-first-run --no-default-browser-check --headless=new --disable-blink-features=AutomationControlled --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --window-size=1280,900 --lang=en-US --noerrdialogs --ozone-platform=headless --ozone-override-screen-size=800,600 --use-angle=swiftshader-webgl
+haseeb    591127  0.0  0.0 50345896 2228 ?       Sl   Jun26   0:00 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --database=/home/haseeb/.config/google-chrome-for-testing/Crash Reports --annotation=lsb-release=EndeavourOS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=148.0.7778.96 --initial-client-fd=5 --shared-client-connection
+haseeb    591129  0.0  0.0 50337684 2068 ?       S    Jun26   0:00 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/home/haseeb/.config/google-chrome-for-testing/Crash Reports --annotation=lsb-release=EndeavourOS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=148.0.7778.96 --initial-client-fd=4 --shared-client-connection
+haseeb    591133  0.0  0.1 50751832 9088 ?       S    Jun26   0:00 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=zygote --no-zygote-sandbox --headless=new --crashpad-handler-pid=591127 --enable-crash-reporter=, --noerrdialogs --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --user-data-dir=/home/haseeb/.cache/browser-tools2 --change-stack-guard-on-fork=enable --no-first-run --ozone-platform=headless --ozone-override-screen-size=800,600 --use-angle=swiftshader-webgl
+haseeb    591134  0.0  0.1 50751824 8828 ?       S    Jun26   0:00 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=zygote --headless=new --crashpad-handler-pid=591127 --enable-crash-reporter=, --noerrdialogs --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --user-data-dir=/home/haseeb/.cache/browser-tools2 --change-stack-guard-on-fork=enable --no-first-run --ozone-platform=headless --ozone-override-screen-size=800,600 --use-angle=swiftshader-webgl
+haseeb    591136  0.0  0.0 50751848 2124 ?       S    Jun26   0:00 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=zygote --headless=new --crashpad-handler-pid=591127 --enable-crash-reporter=, --noerrdialogs --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --user-data-dir=/home/haseeb/.cache/browser-tools2 --change-stack-guard-on-fork=enable --no-first-run --ozone-platform=headless --ozone-override-screen-size=800,600 --use-angle=swiftshader-webgl
+haseeb    591161  0.1  0.2 51184084 17396 ?      Sl   Jun26   4:34 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=gpu-process --headless=new --ozone-platform=headless --use-angle=swiftshader-webgl --crashpad-handler-pid=591127 --enable-crash-reporter=, --noerrdialogs --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --user-data-dir=/home/haseeb/.cache/browser-tools2 --change-stack-guard-on-fork=enable --gpu-preferences=UAAAAAAAAAAgAQAEAAAAAAAAAAAAAMAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAYAAAAAAAAABgAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAA --shared-files --field-trial-handle=3,i,8785938823117033486,2503687445197898014,262144 --disable-features=PaintHolding --variations-seed-version --pseudonymization-salt-handle=7,i,9495785943082774874,13250741689331601327,4 --trace-process-track-uuid=3190708988185955192
+haseeb    591243  0.0  0.5 50908512 42620 ?      Sl   Jun26   0:06 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --use-angle=swiftshader-webgl --crashpad-handler-pid=591127 --enable-crash-reporter=, --noerrdialogs --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --user-data-dir=/home/haseeb/.cache/browser-tools2 --change-stack-guard-on-fork=enable --shared-files=network_parent_dirs_pipe:100,v8_context_snapshot_data:101 --field-trial-handle=3,i,8785938823117033486,2503687445197898014,262144 --disable-features=PaintHolding --variations-seed-version --pseudonymization-salt-handle=7,i,9495785943082774874,13250741689331601327,4 --trace-process-track-uuid=3190708989122997041
+haseeb    591245  0.0  0.0 50752096 1516 ?       S    Jun26   0:00 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=broker
+haseeb    591257  0.0  0.1 50834216 11888 ?      Sl   Jun26   0:03 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --use-angle=swiftshader-webgl --crashpad-handler-pid=591127 --enable-crash-reporter=, --noerrdialogs --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --user-data-dir=/home/haseeb/.cache/browser-tools2 --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,8785938823117033486,2503687445197898014,262144 --disable-features=PaintHolding --variations-seed-version --pseudonymization-salt-handle=7,i,9495785943082774874,13250741689331601327,4 --trace-process-track-uuid=3190708990060038890
+haseeb    591312  0.0  0.2 1518500388 19168 ?    Sl   Jun26   0:01 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=renderer --crashpad-handler-pid=591127 --enable-crash-reporter=, --noerrdialogs --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --user-data-dir=/home/haseeb/.cache/browser-tools2 --change-stack-guard-on-fork=enable --remote-debugging-port=9222 --ozone-platform=headless --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=6 --time-ticks-at-unix-epoch=-1782331007918176 --launch-time-ticks=134812455382 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,8785938823117033486,2503687445197898014,262144 --disable-features=PaintHolding --variations-seed-version --pseudonymization-salt-handle=7,i,9495785943082774874,13250741689331601327,4 --trace-process-track-uuid=3190708991934122588
+haseeb    591324  0.0  0.2 1518536296 16296 ?    Sl   Jun26   0:01 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=renderer --crashpad-handler-pid=591127 --enable-crash-reporter=, --noerrdialogs --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --user-data-dir=/home/haseeb/.cache/browser-tools2 --change-stack-guard-on-fork=enable --remote-debugging-port=9222 --ozone-platform=headless --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --time-ticks-at-unix-epoch=-1782331007918176 --launch-time-ticks=134812497922 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,8785938823117033486,2503687445197898014,262144 --disable-features=PaintHolding --variations-seed-version --pseudonymization-salt-handle=7,i,9495785943082774874,13250741689331601327,4 --trace-process-track-uuid=3190708990997080739
+haseeb    591666  0.0  0.1 1518457840 13144 ?    Sl   Jun26   0:01 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=renderer --crashpad-handler-pid=591127 --enable-crash-reporter=, --noerrdialogs --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --user-data-dir=/home/haseeb/.cache/browser-tools2 --change-stack-guard-on-fork=enable --remote-debugging-port=9222 --ozone-platform=headless --disable-gpu-compositing --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=12 --time-ticks-at-unix-epoch=-1782331007918176 --launch-time-ticks=134832085523 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,8785938823117033486,2503687445197898014,262144 --disable-features=PaintHolding --variations-seed-version --pseudonymization-salt-handle=7,i,9495785943082774874,13250741689331601327,4 --trace-process-track-uuid=3190708997556373682
+haseeb    591751  0.0  0.1 1518457840 13340 ?    Sl   Jun26   0:01 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=renderer --crashpad-handler-pid=591127 --enable-crash-reporter=, --noerrdialogs --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --user-data-dir=/home/haseeb/.cache/browser-tools2 --change-stack-guard-on-fork=enable --remote-debugging-port=9222 --ozone-platform=headless --disable-gpu-compositing --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=13 --time-ticks-at-unix-epoch=-1782331007918176 --launch-time-ticks=134850463844 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,8785938823117033486,2503687445197898014,262144 --disable-features=PaintHolding --variations-seed-version --pseudonymization-salt-handle=7,i,9495785943082774874,13250741689331601327,4 --trace-process-track-uuid=3190708998493415531
+haseeb    592144  0.0  0.3 51267388 28976 ?      Sl   Jun26   0:04 /home/haseeb/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome --type=utility --utility-sub-type=on_device_model.mojom.OnDeviceModelService --lang=en-US --service-sandbox-type=on_device_model_execution --use-angle=swiftshader-webgl --crashpad-handler-pid=591127 --enable-crash-reporter=, --noerrdialogs --user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 --user-data-dir=/home/haseeb/.cache/browser-tools2 --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,8785938823117033486,2503687445197898014,262144 --disable-features=PaintHolding --variations-seed-version --pseudonymization-salt-handle=7,i,9495785943082774874,13250741689331601327,4 --trace-process-track-uuid=3190709002241582927
+root      592145  0.0  0.0      0     0 ?        S    Jun26   0:00 [nvidia-drm/timeline-1c]
+root     1259156  0.0  0.0      0     0 ?        I<   01:08   0:00 [kworker/u49:2-rb_allocator]
+root     1272020  0.0  0.0      0     0 ?        I<   01:59   0:00 [kworker/u49:0-rb_allocator]
+root     1298767  0.0  0.1  21220 13184 ?        Ss   03:34   0:00 sshd-session: haseeb [priv]
+haseeb   1298771  0.4  0.1  21220  7968 ?        S    03:34   0:17 sshd-session: haseeb@pts/0
+haseeb   1298772  0.0  0.0   8852  7236 pts/0    Ss+  03:34   0:00 -bash
+haseeb   1298786  0.0  0.0  10460  6416 pts/0    S+   03:34   0:00 tmux new-session -A -s jawz
+root     1301222  0.0  0.0      0     0 ?        I    03:50   0:00 [kworker/u48:4-events_unbound]
+haseeb   1301425  3.8  0.5 1545420 39920 pts/2   Sl+  03:51   1:42 /home/haseeb/.local/bin/synaps --system /tmp/jawz-identity.md
+haseeb   1301445  0.0  0.9 1806264 77660 pts/2   Sl+  03:51   0:02 /home/haseeb/Projects/axel/target/release/axel extension
+haseeb   1301527  0.0  0.1  20356  9120 pts/2    S+   03:51   0:00 python3 /home/haseeb/Projects/synaps-chronos/main.py
+haseeb   1301529  0.0  0.1  19280  7944 pts/2    S+   03:51   0:00 /home/haseeb/Jawz/workspace/finlens/.venv/bin/python /home/haseeb/Jawz/workspace/finlens/synaps-extension/main.py
+haseeb   1301531  0.0  0.1  24988 10800 pts/2    S+   03:51   0:00 python3 /home/haseeb/.synaps-cli/plugins/synaps-tasks/main.py
+root     1301804  0.0  0.0      0     0 ?        I    03:53   0:00 [kworker/2:2-mm_percpu_wq]
+root     1302033  0.0  0.0      0     0 ?        I    03:55   0:00 [kworker/8:2-wg-crypt-wg0]
+root     1303565  0.0  0.0      0     0 ?        I    04:04   0:00 [kworker/3:2-mm_percpu_wq]
+root     1303697  0.0  0.0      0     0 ?        I    04:04   0:00 [kworker/6:0-events]
+root     1304117  0.0  0.0      0     0 ?        I    04:07   0:01 [kworker/0:2-events]
+root     1304184  0.0  0.0      0     0 ?        I    04:07   0:00 [kworker/8:0-events]
+root     1304505  0.0  0.0      0     0 ?        I    04:10   0:00 [kworker/3:0-wg-crypt-wg0]
+root     1304567  0.0  0.0  70644  3952 ?        S    04:10   0:00 nginx: worker process
+root     1304568  0.0  0.0  70644  2816 ?        S    04:10   0:00 nginx: worker process
+root     1304569  0.0  0.0  70644  2560 ?        S    04:10   0:00 nginx: worker process
+root     1304570  0.0  0.0  70644  2572 ?        S    04:10   0:00 nginx: worker process
+root     1304571  0.0  0.0  70644  2560 ?        S    04:10   0:00 nginx: worker process
+root     1304572  0.0  0.0  70644  2564 ?        S    04:10   0:00 nginx: worker process
+root     1304573  0.0  0.0  70644  2756 ?        S    04:10   0:00 nginx: worker process
+root     1304574  0.0  0.0  70644  2576 ?        S    04:10   0:00 nginx: worker process
+root     1304575  0.0  0.0  70644  2556 ?        S    04:10   0:00 nginx: worker process
+root     1304576  0.0  0.0  70644  2568 ?        S    04:10   0:00 nginx: worker process
+root     1304577  0.0  0.0  70644  2556 ?        S    04:10   0:00 nginx: worker process
+root     1304578  0.0  0.0  70644  2576 ?        S    04:10   0:00 nginx: worker process
+root     1304579  0.0  0.0  69876  2788 ?        S    04:10   0:00 nginx: cache manager process
+root     1305920  0.0  0.0      0     0 ?        I    04:15   0:00 [kworker/u48:0-ext4-rsv-conversion]
+root     1306060  0.0  0.0      0     0 ?        I    04:16   0:00 [kworker/4:1-mm_percpu_wq]
+root     1309117  0.0  0.0      0     0 ?        I    04:19   0:00 [kworker/u48:3-flush-8:0]
+root     1311448  0.0  0.0      0     0 ?        I    04:19   0:00 [kworker/11:0-events]
+root     1312730  0.0  0.0      0     0 ?        I    04:20   0:00 [kworker/6:2-events]
+root     1312840  0.0  0.0      0     0 ?        I    04:20   0:00 [kworker/7:0-events_freezable]
+root     1313179  0.0  0.0      0     0 ?        I    04:21   0:00 [kworker/10:0-events]
+root     1315905  0.0  0.0      0     0 ?        I    04:23   0:00 [kworker/9:0-events]
+root     1317715  0.0  0.0      0     0 ?        I    04:24   0:00 [kworker/5:0-events]
+root     1320340  0.0  0.0      0     0 ?        I    04:25   0:00 [kworker/1:1-events]
+root     1320344  0.0  0.0      0     0 ?        I    04:25   0:00 [kworker/2:1-events]
+root     1320345  0.0  0.0      0     0 ?        I    04:25   0:00 [kworker/4:2-events_freezable]
+root     1320397  0.0  0.0      0     0 ?        I    04:25   0:00 [kworker/7:2-events]
+root     1322928  0.0  0.0      0     0 ?        I    04:26   0:00 [kworker/10:1-events_freezable]
+root     1324034  0.0  0.0      0     0 ?        I    04:27   0:00 [kworker/11:2-mm_percpu_wq]
+root     1324435  0.0  0.0      0     0 ?        I    04:29   0:00 [kworker/9:2-mm_percpu_wq]
+root     1324511  0.0  0.0      0     0 ?        I    04:30   0:00 [kworker/5:1-mm_percpu_wq]
+root     1324559  0.0  0.0      0     0 ?        I    04:30   0:00 [kworker/0:0-events]
+root     1324595  0.0  0.0      0     0 ?        I    04:30   0:00 [kworker/1:0-events]
+root     1324760  0.0  0.0  18084  7084 ?        S    04:31   0:00 systemd-userwork: waiting...
+root     1324762  0.0  0.0  18084  7048 ?        S    04:31   0:00 systemd-userwork: waiting...
+root     1324768  0.0  0.0      0     0 ?        I    04:31   0:00 [kworker/6:1-events]
+root     1324838  0.0  0.0      0     0 ?        I    04:32   0:00 [kworker/4:0-events_freezable]
+root     1324843  0.0  0.0      0     0 ?        I    04:32   0:00 [kworker/7:1-mm_percpu_wq]
+root     1324974  0.0  0.0      0     0 ?        I    04:33   0:00 [kworker/10:2-mm_percpu_wq]
+root     1325039  0.0  0.0      0     0 ?        I    04:33   0:00 [kworker/8:1-mm_percpu_wq]
+root     1325173  0.0  0.0  18084  7000 ?        S    04:35   0:00 systemd-userwork: waiting...
+root     1325221  0.0  0.0      0     0 ?        I    04:35   0:00 [kworker/u48:1-events_power_efficient]
+haseeb   1325321  0.0  0.0   7796  5664 ?        Ss   04:36   0:00 bash -c sudo() {     command sudo -S -p '[sudo] password required: ' "$@" } cd ~/Jawz/workspace/crush && echo "=== capture REAL fixtures for honest measurement ===" && mkdir -p tests/fixtures && \ ls -la /usr/bin 2>/dev/null > tests/fixtures/ls_bin.txt; \ ps aux 2>/dev/null > tests/fixtures/ps_aux.txt; \ cd ~/Projects/agent-runtime && git log --format='%H|%an|%ae|%ad|%s' -200 2>/dev/null > ~/Jawz/workspace/crush/tests/fixtures/git_log.txt; \ cargo metadata --format-version 1 2>/dev/null > ~/Jawz/workspace/crush/tests/fixtures/cargo_metadata.json; \ cargo build -p synaps-engine 2>&1 | head -120 > ~/Jawz/workspace/crush/tests/fixtures/build_log.txt; \ cd ~/Jawz/workspace/crush/tests/fixtures && echo "=== fixture sizes ===" && wc -c * 2>/dev/null && echo && echo "=== cargo available? ===" && cargo --version && rustc --version
+haseeb   1325346 50.0  0.0  10728  6712 ?        R    04:36   0:00 ps aux

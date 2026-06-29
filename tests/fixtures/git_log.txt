@@ -1,0 +1,200 @@
+fda5cd796967f3b903593dc277db47bed1d0d59d|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 29 04:29:01 2026 -0400|fix(runtime): compress-then-truncate tool output (Fork 1)
+6208c46f62b8f42982d991d76dfe7b4a969a1e5f|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 29 03:42:42 2026 -0400|docs: document the replace action + tools.transform_output across Synaps docs
+ae3b5862e4684f98b35bc86166b46cff2378375e|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 29 03:36:55 2026 -0400|docs: clarify tool_output preview is ~32KB prefix + marker, not a hard cap
+1f246aed9cdc5af7ca504d0a5f402b3274ecae16|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 29 03:25:29 2026 -0400|feat(perms): two-key gate for tool-output rewriting (security review #1)
+490e9a29e35d06a751075e247692552cdb180c64|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 29 03:16:35 2026 -0400|feat(audit): persistent audit trail for Replace (tool-output rewrite)
+be1176015e1d780f92fdbcf6aaa0b7f785fa07f6|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 29 03:02:29 2026 -0400|fix(hooks): address code-review findings on Replace primitive (no-decision set)
+d3589f94ee7c09a6e1e0ec0a8ea83c054f0d8a91|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 29 01:55:08 2026 -0400|test(e2e): prove HookResult::Replace through a real process extension
+3456b3f393f59b14ba52ef644df0e594fc5570c4|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 29 00:59:05 2026 -0400|test(hooks): fix e2e + contract for Replace action contract
+89a7d171f1f51e346dba81563b50d80dd2872505|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 29 00:43:23 2026 -0400|feat(runtime): honor Replace at all 5 after_tool_call sites
+7fd0e54c2fd0ed6a5e63453e19a38b04fb4d5e15|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 29 00:35:22 2026 -0400|test(hooks): lock the replace wire-format contract for extensions
+6f094ac11af980ad7fa76f09de62ddf13a2f47ae|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 29 00:33:22 2026 -0400|feat(hooks): add HookResult::Replace for after_tool_call output transform
+664912bce59c5b0ca2f176c51fa4b1f9a6c9a702|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 28 22:19:16 2026 -0400|chore(release): v0.4.0 — credential broker + #137 test-isolation fix
+ad2e467c30bd145c4f2e6e525b0cc7814add0664|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 28 22:15:34 2026 -0400|fix(test): unify config-env test lock — kill synaps-tui flaky isolation (#137)
+8d6c1b6c874e3ea82128b98ba8f481b78159e3cd|Haseeb Khalid|haseebkhalid1507@gmail.com|Sun Jun 28 21:34:41 2026 -0400|Merge pull request #48 from HaseebKhalid1507/feat/credential-source
+72d7630d5f2eca35e08119db3624f694265f3bd0|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 19:40:45 2026 -0400|fix(test): update try_route call sites for the C4 source+cache params
+992c65fb29e134b33285249ad25fb291f3a6d51f|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 18:38:17 2026 -0400|docs(auth): ToS warning, env-var table, broker security model + TLS guidance (E1, B6)
+892adaf4d961f714b17881306224f2c14f130f86|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 18:34:08 2026 -0400|feat(auth-broker): token-file, rate-limit, graceful shutdown, supervision (B3, B7, D1)
+abb27836e314d0c732a78e7aed20c21aa8c4441a|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 18:30:45 2026 -0400|feat(auth): on-401 cache invalidation + single refetch-retry (board C1)
+50457c38693a292fa918511b044d8a750432823b|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 18:28:20 2026 -0400|feat(auth): token validation + clock-skew defense via ttl_ms (board C2, C3)
+73cb5c78aaf7d466a83033380250b9de81839900|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 18:09:55 2026 -0400|fix(auth-broker): security batch — B1/B2/B4/B5/B8 + startup validation
+caf1b0eb69d3658d96672785c89b9d0cd08465c5|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 18:07:02 2026 -0400|fix(auth): route status + model-catalog through the credential source (board A4)
+e0ab9087f3e392cde46a095795c01f6425b3ab6f|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 17:19:49 2026 -0400|fix(auth): skip Anthropic pre-fetch for non-Anthropic models (board #7)
+5f7f119c8abc670f6643a0ebdbcefcec10e98847|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 17:17:39 2026 -0400|feat(auth): codex routes through the broker on Remote (board C4)
+4b15a1499568e3266ba936a27af916697e162d88|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 16:47:19 2026 -0400|feat(auth): unified provider-aware resolver + reuse shared client (A5, C4 foundation)
+daa1a4f5bfc02de59ec264d175bbb28b770355bd|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 16:39:10 2026 -0400|fix(auth): subagents inherit the credential source (board #3, A3)
+c1f4a949eff90400f84dce1f4fe59455628da617|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 16:35:59 2026 -0400|fix(auth): scrub AuthState on Remote + clear cache on source change (board #2, A6)
+87a2ae70aec514cbe32ced21371c42a18b958c2c|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 16:33:38 2026 -0400|fix(auth): Remote fast-path uses the cache's margin predicate (board #1)
+def1c47da23c60c1092981567698c4609cc38e27|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 16:17:10 2026 -0400|feat(auth-broker): proactive refresh timer + per-IP audit log + WireGuard note
+ed87c76f88e82f260985eb168c19fc36d2cf73b6|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 16:13:21 2026 -0400|docs(auth): document the credential broker (CHANGELOG + README auth.* section)
+0bbc63fac9534d1ea00a48d8f68e4686e5acaa2a|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 16:11:23 2026 -0400|feat(auth): broker-down degradation — serve a still-valid cached token
+434d1bd729e70cad0284a30a24c7d8e61c3e746c|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 16:09:49 2026 -0400|fix(auth): mid-stream refresh honors the credential source (Remote uses broker)
+81f6aa0aa1e2201c4bbf385fb608dcce38c8ecab|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 15:49:53 2026 -0400|feat(auth): synaps auth-broker subcommand — the credential broker (P2/#156)
+35f799eea2e77a48acfda38c959a8552a9f88992|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 15:39:05 2026 -0400|feat(auth): wire Remote credential source into the runtime hot path
+12013212b1f6946d6267b39ed40dd8608300d3eb|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 15:11:39 2026 -0400|test(auth): invariant — Remote client structurally cannot hold a refresh token
+d3ed4bd4839e3fc1ce0e59fb532b7b72d5eeb9d1|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 15:10:36 2026 -0400|feat(auth): auth.* config + credential_source() resolver (env-overridable)
+81de94709653fcdec76485515d93f04d7ba4647b|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 15:05:25 2026 -0400|feat(auth): token cache + broker client + resolver (Remote path core)
+c87b012530c5fbf5c5ca1cf9a281435cf40d34d3|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 14:57:50 2026 -0400|feat(auth): credential source foundation — CredentialSource, BrokerToken, expiry helper
+e339413a107be638c7b5ac534cdc928197a2110d|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 00:33:47 2026 -0400|Merge fix/ratatui-030-lru into dev: ratatui 0.30 + lru security patch (#47)
+c997a4f84397be16e09b8c2594387e185072d5c2|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 25 00:26:07 2026 -0400|fix(deps): bump ratatui 0.29->0.30 + tachyonfx 0.9->0.25 to patch lru RUSTSEC
+9f70f945268ca0b1aa77f53fa9fa294bb12615d2|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed Jun 24 23:47:48 2026 -0400|Merge dev → main: v0.3.10
+f2ba936e6a0e7094f37aed43d8d1b2863304f11e|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed Jun 24 23:47:36 2026 -0400|release: v0.3.10 — non-interactive auth login --provider (openai-codex)
+81defa7c288690183eb0ceaefb3a721528591985|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed Jun 24 16:37:50 2026 -0400|feat(login): add non-interactive `auth login --provider` path + openai-codex
+a9895fa0515f7c72fe435a0f54ced4b5894315e2|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue Jun 23 03:42:42 2026 -0400|Merge dev → main: v0.3.9
+b7fbb8bcb20282a98818715e7a1938f2d84b149b|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue Jun 23 03:39:49 2026 -0400|release: v0.3.9 — dual-CA TLS, disabled_tools, /gamba scroll fix
+729a81bf4fef35ecb93d83771fe14944754262e7|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue Jun 23 03:12:05 2026 -0400|fix(tui): restore mouse capture + bracketed paste after /gamba
+d2bb20ed071d7db3ba710a84477a6032de0bb0d2|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed Jun 17 17:36:52 2026 -0400|docs: document disabled_tools config option
+39615f11303b0a4f7ebc4ef42847482c030e8eb8|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed Jun 17 15:26:23 2026 -0400|Merge feat/disabled-tools into dev: disable built-in tools via config
+3fd91ebb735edd31afe52e9177f0f381be77541f|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed Jun 17 15:26:11 2026 -0400|feat(config): disabled_tools — disable built-in tools by name
+e401b7804ea81dcd97adcb8f709feb0ba4bd5465|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed Jun 17 07:53:55 2026 -0400|feat(tls): trust both bundled (webpki) and system (native) CA roots
+220cd96d3acbddc7de06edfb59c460dff69b4496|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue Jun 16 19:00:35 2026 -0400|Merge dev → main: v0.3.8
+3a8b31414e01dd6d72020d2f1602f05bb57919f4|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue Jun 16 19:00:16 2026 -0400|release: v0.3.8 — static musl Linux binary + bundled webpki TLS roots
+7b6272c35cc5e9d62865564ccf541feb65041d01|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue Jun 16 17:39:16 2026 -0400|Merge dev -> main: musl static binary + webpki TLS roots
+8220d832ee6776b40530fb00c2adf65c3f07b052|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue Jun 16 17:39:00 2026 -0400|feat(dist): ship static musl Linux binary + bundle webpki TLS roots
+f4b20fc5188774d8033aa3653b3bd9d1e3595a6a|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 15 05:14:51 2026 -0400|Merge dev → main: v0.3.7
+bfc9f287f589c633f34da55413e3ca7c51606338|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 15 05:14:42 2026 -0400|release: v0.3.7 — configurable streaming frame rate (max_fps)
+a4be87b8d2dbbe20fdd660c269a183524f152b4f|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 15 05:04:32 2026 -0400|feat(tui): configurable max_fps redraw cap (default 60)
+95078dc4bc54db08d92a98eed8c80100856a01ac|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 15 04:39:33 2026 -0400|Merge dev → main: v0.3.6
+0e624a4ce077d6cf9a851de597f7edcbbe6e8075|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 15 04:38:04 2026 -0400|release: v0.3.6 — O(viewport) streaming publish + smooth input during streaming
+8c3a302cd88635842b6d5d68ff0a9e34682cab18|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 15 04:04:16 2026 -0400|perf(tui): publish only the visible window — kill O(n) render-publish clone
+0fd8d416ab22bf44817bab3704ae14d61afff484|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon Jun 15 03:11:30 2026 -0400|fix(tui): smooth scroll during streaming — user input bypasses the #131 throttle
+9df41baa5f98f4d4ee0c4c732a4d376c257e31ed|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 17:24:42 2026 -0400|Merge dev → main: v0.3.5
+80934bd39849c4c7de13e6efb7335f762055202b|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 17:24:40 2026 -0400|release: v0.3.5 — packaging fixes (installer xz, .deb /gamba)
+d51051b3cccc54dfe4bcb5738d50b72814f6ff12|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 17:05:45 2026 -0400|fix(dist): ship .tar.gz instead of .tar.xz so the installer works without xz (#134)
+cf5386ce08d7d38ef0265e5c3b15f071a7772830|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 17:04:39 2026 -0400|fix(deb): ship the hidden binary so /gamba works on .deb installs (#133)
+efd035d78c4ca5a0ad441ce6e7e37d4b020309c5|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 16:18:56 2026 -0400|Merge dev → main: v0.3.4
+acd5f9518f5489aff411be921cb1909bb6b9d9ac|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 16:18:54 2026 -0400|release: v0.3.4 — incremental message render cache (#135)
+005454e4f6061e58eefdc2a23b268db3d69a4a0e|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 16:13:58 2026 -0400|fix(tui): clippy — drop unused Line import + gate render_lines as test-only oracle (#135)
+65393e16fed47607b081c50dcf7f3b52c2ab0d17|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 16:09:11 2026 -0400|perf(tui): spinner placeholder marks only tail dirty (#135)
+58cc214ea35a939d4fbefc28a3e2d63c0ff57a68|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 16:07:31 2026 -0400|perf(tui): incremental line-cache — O(n)->O(1) per-frame render during streaming (#135)
+d5dd1fda91c0302e3770a79be990ac21aa0fe2f9|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 16:04:46 2026 -0400|refactor(tui): per-message LineCache struct (full-rebuild, no behavior change)
+a8d50ec5c5abb62cca51b49637d49ed975ee0cda|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 16:02:12 2026 -0400|refactor(tui): extract render_message_lines (prep for incremental cache)
+40d58d05ed96f5fd04bab2230d1eb968eb5a2f54|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 14:30:10 2026 -0400|Merge dev → main: v0.3.3
+7184871e1faa0cc5245898e18465a04f49ff0449|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 14:29:30 2026 -0400|release: v0.3.3 — tool UI overhaul, night-city theme (opt-in), #131 redraw throttle
+f47825c1938bf63c589931249234a694c01a1842|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 14:05:32 2026 -0400|fix(tui): make night-city opt-in — stop neon leaking into preset themes
+4680e34acc408e1de591ec663d0d1d8a386731ae|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 06:53:36 2026 -0400|perf(tui): throttle streaming redraw 16ms->100ms (#131)
+fee627ea0e2f82d12150a22f7c97878f510e0885|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 06:50:15 2026 -0400|fix(tui): review-board findings on tool-ui-overhaul
+a73972a1717e704499b13f48fb57592700cf1dff|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 06:20:29 2026 -0400|merge: tool ui overhaul (night-city theme, per-tool panels, spinner fix) → dev
+6bce4595819748c8dfc0dd8ec3bd1d15950d3f02|Haseeb Khalid|haseebkhalid1507@gmail.com|Sun Jun 14 06:15:34 2026 -0400|feat: tool ui overhaul
+a38adf575338e6696773d2aa25552ef86ee84fa2|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 03:19:54 2026 -0400|Merge dev → main: v0.3.2
+915c5cfd3f5ad1fd1e5b59dae10083f276720340|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 03:19:34 2026 -0400|release: v0.3.2 — log filter, build-hash, + 8-agent review fixes
+edca9a855bdf5297d4c21d759c75f933c4490503|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 02:48:55 2026 -0400|fix: address 8-agent review board findings (pre-0.3.2)
+33016f3de7a1f6011fd12ffc3a1ca24fcea64b43|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 02:12:10 2026 -0400|docs: refresh user/contributor docs for the 0.2→0.3 / A3 reality
+9c054efb6a49c72af50648f8ac642054cd110eef|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 01:47:54 2026 -0400|fix(build): don't bake a bogus git hash for source-tarball builds
+1647313bd88c4a3d9dbefca81280ba796ed19ef4|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun Jun 14 01:36:06 2026 -0400|fix(logging): match post-A3 crate targets in tracing filter
+2e84083001bd36fa6df3cf9b192cafa898d46aa0|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 23:26:11 2026 -0400|Merge dev → main: v0.3.1
+1f8d0f11bfd3468ccfaaa5cb738c00ed01a77c1d|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 23:20:46 2026 -0400|fix(release): v0.3.1 — repair crates.io packaging (missing help.json asset)
+a1786f5c16a98b668a7e94e00567e90c2ce2a500|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 22:49:52 2026 -0400|fix(release): make the A3 workspace publishable to crates.io
+7a3956946db224662f8247370597aa4f8262f68d|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 21:56:05 2026 -0400|Merge dev → main: v0.3.0
+71872adb5f158386d8b8e80e2ac6695403d1a37c|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 21:29:21 2026 -0400|fix(clippy): clear --all-targets -D warnings on rust 1.95
+f2673b8ae02ab18f666e544a51782b024ee74ba8|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 21:13:32 2026 -0400|fix(clippy): collapse overindented doc-list continuations (rust 1.95 doc_overindented_list_items)
+e2d4837b86376b468cb87f1fb1a5b8cbfc5374d9|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 20:59:11 2026 -0400|release: prep v0.3.0
+daa970d6687dad0f7626acbcf2a7d13420ec7f61|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 19:55:56 2026 -0400|fix(runtime): surface in-stream API errors + unify retry budget (#130)
+a1fbb40400d29f63b693020fe74d8feb30d14c0b|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 17:35:14 2026 -0400|docs: perf/scaling audit reports (4 scanners) + synthesis
+7f1e8a42a5ed6aa04727b653d9ca316afac5c4ab|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 17:35:13 2026 -0400|perf(tui): bounded tail read for /extensions audit (was full unbounded-log parse)
+6a22407a82df16d6d412957dc04f000c64dc2120|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 17:35:12 2026 -0400|perf(sessions): drop save_chain's 76MB collision scan + iterate-and-early-return name lookup
+5ea1c069dd047614fad43522c8c55afaa2cb3a55|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 17:28:30 2026 -0400|perf(runtime): serialize request body once across retries
+72c0be24c94d590eaf309a5c6737919e46936f72|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 17:24:24 2026 -0400|perf(boot): hoist plugins.json read out of the extension load loop
+f1ae42c6b2232ccedc5c556fe44e5a24e38c8f08|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 17:23:51 2026 -0400|perf(runtime): sanitize_thinking_blocks O(N^2) -> tail-only
+9c84f0f299b7ca0ec6ac60cc83facb7465e6d105|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 17:19:14 2026 -0400|perf(boot): spawn_blocking the skills fs-walk (#1)
+06e87254e9f05d07fbc7379ec69ad11691849b2a|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 16:52:32 2026 -0400|perf(sessions): make /sessions fast — header-read + recent-only (was full 76MB parse)
+efab4a43c4ada006a394a706df588fbbc7f279e3|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 16:15:16 2026 -0400|perf(boot): fix ~11s --continue boot — latest_session() parsed ALL session files
+dbe5f98c63380b0982ab037f2ae46f3b4700339c|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 15:33:51 2026 -0400|perf(tui): dirty-check widget events — kill the ~30% idle CPU burn (#119)
+993389210a18d944ccb9792310499eb4486ef4db|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 15:07:52 2026 -0400|fix(tui): toast renderer panic on small terminal resize (min > max)
+9162022e3cb2e910d8ace739b9fd4247b1ba43c5|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 09:48:33 2026 -0400|merge: #116/A3 review hardening (6 review findings fixed)
+5c52003ffab1c05bac2c313882c4dc1763b9f299|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 09:45:45 2026 -0400|chore(116): remove dead render paths, fix stale comments, tighten RenderHandle API (#120)
+1b6cbe01d0fc1c9964baebd6352de3654b9bec4e|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 09:06:57 2026 -0400|perf(116): Arc-project heavy App structures + fix help_find scroll write-back (#124)
+cb66ba25c0ea1a6bc6a212487a806172a1f426ea|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 08:52:08 2026 -0400|fix(116): pause render thread during casino takeover — no stdout race (#122)
+9af880715be0892e4d3ac356bb8da1234bc43d3f|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 08:46:14 2026 -0400|chore: Cargo.lock dep-prune update + 8-agent review reports & hardening spec
+757b51dbf8b08feaad8e6d39617b22d4490f6769|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 08:39:16 2026 -0400|fix(116/a3): review one-liners — mem ordering, zero-size gate, unwraps, resolver, dep prune (#123)
+d052424b5628d70b84f48ce30476eb1e6b8e15b2|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 08:32:46 2026 -0400|fix(116): render-thread panic safety — always restore terminal (#121)
+361324946e65dc495f5c5be37f8cc44c0b795845|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 08:04:52 2026 -0400|merge: A3 crate split + #116 render thread
+f8d6392077baed401244c1eefc736430e5780b93|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 08:00:11 2026 -0400|feat(116): retire the signal watchdog (now safe post render-thread)
+01f8e8c663a97e9c250d89002dd385bff4255b08|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 07:37:17 2026 -0400|feat(116): move Terminal to a dedicated render thread (Step 2)
+4b5a1e6598d3ad8ce12f62a7559bf5b33afab734|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 07:00:50 2026 -0400|feat(116): RenderModel + synchronous render_frame (Step 1)
+6388d6b4b665932c2eeb9451c66a5f8fc9343ef8|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 06:06:20 2026 -0400|docs(116): RenderModel extraction spec for the render-thread fix
+7d30f0b3d3fa2481ae9c9af2e4ebc58c61dc11d7|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 05:42:29 2026 -0400|docs(a3): benchmark results + completion notes
+24e698eda485a79c4a8ac4a219830c3a99671e52|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 05:37:17 2026 -0400|refactor(a3): extract agent-tui crate (workspace step 3)
+370a9b99443a7bc8446ee6aba7b7bab239d1396f|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 05:15:19 2026 -0400|refactor(a3): extract agent-engine crate (workspace step 2)
+dde6f4e5911a8cbeac588444f29d4e6b417c6b07|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 04:42:36 2026 -0400|refactor(a3): extract agent-core crate (workspace step 1)
+8f036c6a0ad0db251a0fe303c30e2b1450a03f0f|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 04:20:15 2026 -0400|refactor(a3): step 0 — make agent-core a clean leaf
+bd7d83f965bc933e29c03c41a3d5b0b4e66e5810|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 03:26:31 2026 -0400|feat(tui): /stats command + cache-split footer + session receipt
+a75a71896ec9c9e80feb38983e5701e3eb65b3cc|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 03:09:01 2026 -0400|fix(api): header-aware retry backoff + higher 429 budget
+3267e15b78fab9c92de488a6928011d4846545f6|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 02:44:07 2026 -0400|fix(tui+hooks+server): signal-shutdown review-board fixes
+17befd88383d5eb27f8d3a69dead1daffa3b95ac|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 01:34:01 2026 -0400|fix(tui): three signal-shutdown refinements — watchdog/teardown ordering, SIGINT clean path, trace cleanup
+790fc8e73947737a6b205506d372414dc19abbf6|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 01:12:30 2026 -0400|fix(tui): signal delivery + shutdown — real root causes found and fixed
+d40f4948336bf0cb20415821cdaa87345577692b|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sat Jun 13 00:19:26 2026 -0400|fix(tui): busy-loop + unkillable-process on dead PTY — three-layer fix
+8f4ca3f6e511ada0a5b5d77abc94a438c071ce85|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 19:40:13 2026 -0400|review-board deferred items closed
+46e6168217c4c8a35c4db3ba1bacc52cb0fdc337|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 19:07:47 2026 -0400|chore: review cleanups — test precondition, sync-path doc, telemetry rotation, newline
+afacc1fd5754a253ee0d3fb49cbba64deeb61dc7|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 19:07:47 2026 -0400|refactor(usage): extract merge_split for the Option-accumulate dance
+47f4f87ebc3320524fcb34849cf975e06c184360|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 19:07:46 2026 -0400|fix(server): surface Notice events to server-mode clients
+6811a66db7be11cf7ca5bb80888a6d2d2bbe42df|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 19:07:34 2026 -0400|fix(usage): emit exactly one Usage event per request; harden TTL downgrade detector
+fa01e3d425eb82bc7cb98164701d2ec87c1f9dca|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 18:24:33 2026 -0400|docs(cache-ttl): spec v4 + close user-facing discovery gaps (doc-consistency audit)
+7c93bea1c72891f13c7104f1fc7cb3b7797f8518|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 18:05:21 2026 -0400|fix(cache-ttl): capture usage split from message_start — delta arm was reading a field live traffic never carries
+52df734cf26b919729f4d15c3134c21d3bda6968|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 17:51:18 2026 -0400|Merge feat/cache-ttl: configurable cache TTL (5m|1h|hybrid)
+8426f8283f95b45d4d2ec11296e3528a33cdc5fd|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 17:47:53 2026 -0400|fix(cache-ttl): post-review fixes — hybrid downgrade false positive, doc gaps, subagent split forwarding
+ce04cc5e785d48a82f90f1da8a2dc90cf0970e99|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 17:11:20 2026 -0400|feat(cache-ttl): TTL-split usage plumbing through every cost path (spec §3.5–§3.6)
+4ba436f949113b233752c8444701ccd864a92cee|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 16:53:28 2026 -0400|feat(cache-ttl): role-aware wire emission, beta header, downgrade detector (spec §3.2–§3.4.1)
+40cd1c1281fc1c89a3d497091e8a2f5557d4aa7b|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 16:38:39 2026 -0400|feat(cache-ttl): CacheTtl config key + 1h cache-write pricing (spec §3.1, §3.5)
+cfba6a1fed61b2ad631cdc8c8412abae01fac524|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 07:43:42 2026 -0400|fix(commands): move /model, /thinking, /compact side effects to the live engine dispatch path
+73c52706e16120cd5aa53ea51c5e23f062027ddc|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 07:12:57 2026 -0400|tui: /thinking persists to config; add /context command
+5e679f1d4e9a511dd031d0ccc1eb741c754e55ef|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 07:08:48 2026 -0400|tui: /model <name> persists to config
+143d9bb03cfebc9e8df70d30273402d268097cd0|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 07:01:49 2026 -0400|tui: allow paste while streaming
+a72a2fc885392537a486ad0a4457765e5e1f2442|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 03:50:50 2026 -0400|fix(tui): idle logo gradient frozen until first keystroke
+d7a439e5d91bccf9e5860faa7cbf606ac79e8f3c|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 03:22:21 2026 -0400|Merge dev → main: v0.2.1
+3468eda341b71b228332e3df85b02f58b0743b70|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 03:22:04 2026 -0400|release: v0.2.1 — fix AUR build (ring + LTO), drop stale openssl dep
+0f97b59915a68c26fad07c9868dc83f727ac127a|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 02:54:09 2026 -0400|Merge dev → main: clippy CI fixes (post-v0.2.0)
+b80d285ecbe6670c343ade77c565fd662be680fc|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 02:44:12 2026 -0400|fix: clippy clean under --all-targets -D warnings (CI red since toolchain bump)
+f3a27616573ee63274ca55451a1b979d4b806a67|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 02:14:02 2026 -0400|Merge dev → main: v0.2.0
+513e9eb667ed068d03cbf7277db74b774748d521|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 01:59:35 2026 -0400|release: v0.2.0 — typed SSE pipeline, render perf, rustls, telemetry, fable-5
+a2d4f85c287e0f8842f4dce311bfaa35f61bd197|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 01:48:24 2026 -0400|docs: move S205 review to docs/, drop spent session plan
+539e6750db36799062d3f042d767f2865c0b7dc6|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 01:48:05 2026 -0400|docs: archive PLAN-SSE.md — typed SSE refactor architecture record
+3e8dbbdf2fc7831bed9118d2eb472a1017cbec28|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Fri Jun 12 01:47:58 2026 -0400|ux: raise streaming redraw coalesce 30fps -> 60fps
+63e1f7be4d169e8e28b4e4d42e14e14e10628d66|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 23:46:12 2026 -0400|refactor(sse): swap Value -> typed AnthropicEvent in parse path (slice 3/3)
+dd57ca53a28b59b21e0584f3011932254a7e258c|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 23:33:21 2026 -0400|refactor(sse): consolidate SSE event handling into ParseState + process_event (slice 2/3)
+b1306a06076b48b1dbaa404c21938941c3896efd|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 23:24:05 2026 -0400|fix(sse): tail-flush leaves in_* flags set, double-emitting final block
+4158ad003df5278f5e83d0173995ef61bc4a379b|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 23:16:45 2026 -0400|feat(sse): typed wire model for Anthropic SSE events (slice 1/3)
+6a72b89af766050a32dda000b4b1beaec005be3a|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 22:51:58 2026 -0400|deps: reqwest 0.11 -> 0.12, collapse duplicate HTTP stack
+b3aee1532ed68174563d06a93fa975a95d3cf231|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 22:51:45 2026 -0400|perf: cache strategy sliding-4 -> single-last
+4b466fb0a8a1598eb332fa20196b39c7490175fa|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 19:22:13 2026 -0400|fix: full integration suite green — env_clear test rot + 2 real bugs
+fb958e30aa237438dac082244f0cdeef7db09d00|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 17:39:45 2026 -0400|chore: dev profile line-tables-only + REVIEW.md scoreboard update
+edba67c969b73378d0c521e377de7029932bf5b9|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 17:32:07 2026 -0400|perf: kill per-frame allocations in draw path
+48d2b28ce622f72c4e56fd4ccba9ab2d5af5dddd|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 17:29:32 2026 -0400|perf: zero-copy SSE line buffering + chunk-boundary test suite
+a62934567579341bab28d1e9107fa9e298a1a506|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 17:11:50 2026 -0400|ux: polish batch — login hints, status refresh, completions, help text
+98167393833c65b0f5369dab94419ee2c9e0354e|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 16:39:10 2026 -0400|fix: exempt dotted (namespaced) keys from unknown-key config warnings
+69314b387933ff26b14976387bea2d15d7ddd082|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 15:55:57 2026 -0400|perf: mem::take instead of cloning full history at session resume
+af80fbd3f4d0e44f9e0f7ee4f5569827387c4b42|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 15:55:08 2026 -0400|ux: first-run banner when no credentials found
+51b1dde65da3e75741d2335bbca82508c4256845|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 15:52:52 2026 -0400|ux: config parse warnings with did-you-mean suggestions
+666d542372df3a52fb74196cd1fff6b36929839f|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 15:47:47 2026 -0400|ux: recover user input on stream error instead of losing it
+48ba71f7dc5c8d880001aea94b7c06b6e0cd45d3|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 15:46:35 2026 -0400|ux: humanize API + network errors, retry notices out of transcript
+8b8d18c75f398404986fa0558fc6224c00ec78e0|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 15:37:23 2026 -0400|fix: reap PTY children after kill in PtyHandle::Drop
+dc55543da88cba81576b8298faf2c9ce9a9495f1|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 15:33:02 2026 -0400|perf: dirty-flag render loop + 30fps streaming throttle
+e78a1b489370d1c5c7730a1ce6a88bcffbe0c2e4|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 12:40:00 2026 -0400|docs: reconcile AGENTS.md with reality — 5-perspective review fixes
+8e3ecb449158d0ec9c8cce54d66a9403ff22bb27|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 05:55:51 2026 -0400|bench: fix OAuth identity for rate-limit auth, add v2 partial results (Q1-Q8)
+f4779dd388679f100f21c47d55b824d5c556a92f|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 04:16:27 2026 -0400|bench: v2 questions — realistic FastAPI project, 4-10 tool calls per question
+60d40133f1c470525c7b10113d5cb81733be1090|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 02:55:16 2026 -0400|feat: fable-5 supports 1M context opt-in
+ce531211a7b5c39deace62dce74c84ec98fdd47d|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 02:52:17 2026 -0400|feat: add Fable 5 pricing ($10/$50 per MTok) to pricing table
+ccc67514aba96ef9abb82b4dcb0ab11476ac845e|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 02:48:14 2026 -0400|feat: add claude-fable-5 to known models + adaptive thinking support
+07680ba3a495c7d64e8dd30e6586f64f2a531c75|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 02:43:04 2026 -0400|chore: ignore bench __pycache__ and results dir
+20bda7a1066d5f69e0dbbb7a2b8c064da12ff3bd|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 02:42:55 2026 -0400|feat: add cache strategy benchmark suite (bench/)
+456eb571da26a3b5bbaaacbdd92652732998fe57|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 02:22:44 2026 -0400|feat: wire telemetry capture into Anthropic SSE stream
+7dddd2733713ff4cafa8f2094935e82d1679d494|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 02:15:34 2026 -0400|feat: wire telemetry config keys into Runtime
+8e173584c72f64e2f696502241d4a81c2b6004b4|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Thu Jun 11 01:53:19 2026 -0400|feat: add telemetry module — structured per-request API records
+51c5ab9230fef9e98133cd74309cb802cb77a3f1|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon May 25 19:02:17 2026 -0400|docs: add identity config key to README and AGENTS.md
+ee67f3f9cb86ac78e8b96af35746a33492a94764|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Mon May 25 18:49:48 2026 -0400|fix: remove hardcoded Claude Code identity from API preamble
+5740fb6be6005ce5383c1f28cb0e82f7409afe2b|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun May 17 23:04:48 2026 -0400|Merge dev → main: v0.1.10
+bd35c80a04b15ab1f962f62e028300575c004c8b|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun May 17 23:04:40 2026 -0400|release: v0.1.10 — fix Cargo.lock drift, cache prefix + token optimization
+0a73f7ae2b2a0dd8c9886efcc8dfeb2d0b925041|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed May 13 14:35:47 2026 -0400|perf: token optimization — cache prefix order + tools_schema reuse
+e7810bf1464cd20368e3caa40e9529ee94f8da47|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed May 13 14:02:32 2026 -0400|fix: append extension context after system prompt to preserve cache prefix
+09afeb439b1cf2253ae8fe2302636b979761f1df|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed May 13 13:48:11 2026 -0400|fix: cargo publish --allow-dirty for Cargo.lock drift in CI
+c983d6e5a26ca4efae18eb9f85c354f089dbb98b|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed May 13 13:26:46 2026 -0400|bump v0.1.9
+5ce4510342a9212adfa881014d39a423e5204ea9|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Wed May 13 13:10:06 2026 -0400|fix: update Cargo.lock for AUR --locked compat, bump v0.1.8
+bbb16356afbcca9253a1ae8134f5601e6085cced|Haseeb Khalid|haseebkhalid1507@gmail.com|Tue May 12 21:11:52 2026 -0400|Merge pull request #45 from HaseebKhalid1507/dev
+5e2216a3b56651886e5c981a8ebc45eaee319152|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue May 12 21:09:55 2026 -0400|release: v0.1.7 — Extension Widgets
+e56496ea9150a26e0b1481e464370612d9239b97|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue May 12 21:00:26 2026 -0400|fix(widgets): center rich content + preserve pixel art spacing
+98fe0cab99c69b90c1956bb177a75ee66c86302a|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue May 12 19:35:21 2026 -0400|feat(widgets): rich styled content with per-span colors
+7697d4ac3f813790680837e57972bb656b933b2f|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue May 12 18:46:41 2026 -0400|feat(extensions): wire widget notifications from extensions to TUI
+bb023b0c2772e4288dc1606647c8212dc39eed93|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue May 12 18:35:50 2026 -0400|refactor(extensions): notification_sink singleton → fan-out Vec
+f11600ebe92e5618dc2648cf9ec980d68b487ba3|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Tue May 12 18:35:43 2026 -0400|feat(extensions): add widget notification types and parser
+f43c42c44e4d8a00f8e1ccffa5dc8c07b2f1af4c|Haseeb Khalid|haseebkhalid1507@gmail.com|Mon May 11 10:43:34 2026 -0400|Merge pull request #44 from HaseebKhalid1507/feat/watcher-bridge-heartbeat
+0488b8d9dc8df5c877feeb7b8163db4240aa5f97|Haseeb Khalid|HaseebKhalid1507@users.noreply.github.com|Sun May 10 19:44:06 2026 -0400|chore: gitignore wiki/ (lives in SynapsCLI.wiki.git)
