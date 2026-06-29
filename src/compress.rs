@@ -62,8 +62,12 @@ mod tests {
 
     #[test]
     fn passes_through_when_no_transform_helps() {
-        // Slice 1: nothing registered, so even large output passes through.
-        let big = "x".repeat(100_000);
+        // Varied prose: not JSON, no duplicate lines, no ANSI, no path prefix,
+        // no long blob — nothing for any transform to grab.
+        let mut big = String::new();
+        for i in 0..300 {
+            big.push_str(&format!("the quick brown fox {i} jumps over a lazy dog\n"));
+        }
         assert!(compress(&json!({}), &big).is_none());
     }
 }

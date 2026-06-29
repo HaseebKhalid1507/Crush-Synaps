@@ -116,13 +116,16 @@ mod tests {
     }
 
     #[test]
-    fn large_uncompressible_output_passes_through_in_slice1() {
+    fn incompressible_output_passes_through() {
+        let mut big = String::new();
+        for i in 0..300 {
+            big.push_str(&format!("the quick brown fox {i} jumps over a lazy dog\n"));
+        }
         let params = serde_json::json!({
             "kind": "after_tool_call",
             "tool_input": { "command": "echo hi" },
-            "tool_output": "x".repeat(100_000),
+            "tool_output": big,
         });
-        // Slice 1 has no transforms, so even big output continues.
         assert_eq!(handle_hook(Some(&params))["action"], "continue");
     }
 }
