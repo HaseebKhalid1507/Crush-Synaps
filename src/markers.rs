@@ -16,6 +16,8 @@ pub const NS: &str = "@crush/";
 pub const COLS: &str = "@crush/1.cols";
 /// Columnar dictionary table line.
 pub const DICT: &str = "@crush/1.dict";
+/// Columnar non-default delimiter declaration line.
+pub const DELIM: &str = "@crush/1.delim";
 /// Tabular (JSON-array) header line.
 pub const TABLE: &str = "@crush/1.table";
 /// Common-path-prefix factor line.
