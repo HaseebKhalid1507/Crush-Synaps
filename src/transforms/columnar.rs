@@ -510,4 +510,130 @@ mod tests {
     fn unfold_guards_empty_header() {
         assert!(unfold("@crush/1.cols\nA B C\n").is_none());
     }
+
+    // ---- property fuzzing (std-only, deterministic seed) ----
+
+    /// Tiny xorshift RNG — no dev-dependency, reproducible.
+    struct Rng(u64);
+    impl Rng {
+        fn next(&mut self) -> u64 {
+            let mut x = self.0;
+            x ^= x << 13;
+            x ^= x >> 7;
+            x ^= x << 17;
+            self.0 = x;
+            x
+        }
+        fn below(&mut self, n: usize) -> usize {
+            (self.next() % n as u64) as usize
+        }
+    }
+
+    #[test]
+    fn fuzz_roundtrip_whitespace_and_pipe() {
+        // Token pools mixing low- and high-cardinality columns to exercise
+        // Constant / Dict / Plain encodings.
+        let perms = ["-rwxr-xr-x", "drwxr-xr-x", "lrwxrwxrwx", "-rw-r--r--"];
+        let owners = ["root"]; // constant-factor target
+        let ws = Schema {
+            cols: &["perms", "links", "owner", "size", "month", "day", "time"],
+            tail: "name",
+            delim: Delim::Whitespace,
+            skip_total: false,
+            skip_header: false,
+        };
+        let pipe = Schema {
+            cols: &["sha", "author", "email", "date"],
+            tail: "subject",
+            delim: Delim::Char('|'),
+            skip_total: false,
+            skip_header: false,
+        };
+        let mut rng = Rng(0x1234_5678_9abc_def0);
+        for _ in 0..3000 {
+            let rows = 4 + rng.below(40);
+            // whitespace input
+            let mut ws_in = String::new();
+            for r in 0..rows {
+                ws_in.push_str(&format!(
+                    "{} {} {} {}K Jun {} {:02}:00 file_{}_name\n",
+                    perms[rng.below(perms.len())],
+                    1 + rng.below(9),
+                    owners[0],
+                    10 + rng.below(900),
+                    1 + rng.below(28),
+                    rng.below(24),
+                    r
+                ));
+            }
+            if let Some(f) = fold(&ws_in, &ws) {
+                let back = unfold(&f).expect("unfold ws");
+                assert_field_lossless(&ws_in, &back, ws.cols.len(), Delim::Whitespace);
+            }
+            // pipe input — author can carry spaces (the delimiter feature)
+            let authors = ["Haseeb Khalid", "Jane Q. Public"];
+            let mut p_in = String::new();
+            for r in 0..rows {
+                p_in.push_str(&format!(
+                    "{:040x}|{}|x@y.com|Mon Jun {} 2026|fix: thing | with pipe {}\n",
+                    r,
+                    authors[rng.below(authors.len())],
+                    1 + rng.below(28),
+                    r
+                ));
+            }
+            if let Some(f) = fold(&p_in, &pipe) {
+                let back = unfold(&f).expect("unfold pipe");
+                assert_field_lossless(&p_in, &back, pipe.cols.len(), Delim::Char('|'));
+            }
+        }
+    }
+
+    #[test]
+    fn fuzz_arbitrary_input_never_panics_never_enlarges() {
+        let schemas = [
+            Schema {
+                cols: &["a", "b", "c"],
+                tail: "t",
+                delim: Delim::Whitespace,
+                skip_total: false,
+                skip_header: false,
+            },
+            Schema {
+                cols: &["a", "b"],
+                tail: "t",
+                delim: Delim::Char('|'),
+                skip_total: true,
+                skip_header: false,
+            },
+        ];
+        let bytes = b"abc \t|=\n:/.-_0123XYZ\xe2\x9c\x93 ";
+        let mut rng = Rng(0xdead_beef_cafe_babe);
+        for _ in 0..5000 {
+            let len = rng.below(400);
+            let mut s = String::new();
+            for _ in 0..len {
+                let c = bytes[rng.below(bytes.len())];
+                s.push(c as char); // ascii-ish; the ✓ byte handled below
+            }
+            // occasionally inject real multi-byte + crush markers
+            if rng.below(5) == 0 {
+                s.push_str("✓ @crush/1.cols x\n");
+            }
+            for sc in &schemas {
+                if let Some(f) = fold(&s, sc) {
+                    assert!(
+                        f.len() < s.len(),
+                        "fold enlarged: {} -> {}",
+                        s.len(),
+                        f.len()
+                    );
+                    // unfold must not panic on its own output
+                    let _ = unfold(&f);
+                }
+            }
+            // unfold on arbitrary input must never panic
+            let _ = unfold(&s);
+        }
+    }
 }
