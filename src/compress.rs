@@ -128,4 +128,51 @@ mod tests {
         s.push_str(&"some line of data here\n".repeat(200));
         assert!(compress("ls", &json!({}), &s).is_none());
     }
+
+    #[test]
+    fn fuzz_compress_invariants() {
+        // never panics · output (if any) is strictly smaller · deterministic.
+        struct Rng(u64);
+        impl Rng {
+            fn next(&mut self) -> u64 {
+                let mut x = self.0;
+                x ^= x << 13;
+                x ^= x >> 7;
+                x ^= x << 17;
+                self.0 = x;
+                x
+            }
+            fn below(&mut self, n: usize) -> usize {
+                (self.next() % n as u64) as usize
+            }
+        }
+        let tools = ["ls", "ps", "bash", "grep", "read", ""];
+        let cmds = [
+            "ls -lah /usr/bin",
+            "ps aux",
+            "git log --pretty=a|b|c",
+            "cat x",
+            "echo",
+        ];
+        let pool = b"abcXYZ 0129 \t\n:/|=.-_[]{}\",";
+        let mut rng = Rng(0x0bad_f00d_1234_5678);
+        for _ in 0..8000 {
+            let len = rng.below(6000);
+            let mut out = String::with_capacity(len);
+            for _ in 0..len {
+                out.push(pool[rng.below(pool.len())] as char);
+            }
+            let tool = tools[rng.below(tools.len())];
+            let input = json!({ "command": cmds[rng.below(cmds.len())] });
+
+            let a = compress(tool, &input, &out);
+            // never enlarges
+            if let Some(ref s) = a {
+                assert!(s.len() < out.len(), "enlarged {} -> {}", out.len(), s.len());
+            }
+            // deterministic (cache-safety invariant): same input → same output
+            let b = compress(tool, &input, &out);
+            assert_eq!(a, b, "non-deterministic output");
+        }
+    }
 }
