@@ -83,8 +83,12 @@ fn handle_hook(params: Option<&serde_json::Value>) -> serde_json::Value {
     };
     let empty = serde_json::Value::Null;
     let tool_input = params.get("tool_input").unwrap_or(&empty);
+    let tool_name = params
+        .get("tool_name")
+        .and_then(|t| t.as_str())
+        .unwrap_or("");
 
-    match compress::compress(tool_input, output) {
+    match compress::compress(tool_name, tool_input, output) {
         Some(compressed) => serde_json::json!({
             "action": "replace",
             "output": compressed,
