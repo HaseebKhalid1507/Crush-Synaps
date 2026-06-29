@@ -1,3 +1,7 @@
 target/
 Cargo.lock
 tests/fixtures/cargo_metadata.json
+fuzz/target
+fuzz/Cargo.lock
+fuzz/corpus
+fuzz/artifacts

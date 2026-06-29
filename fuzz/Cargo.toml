@@ -1,0 +1,37 @@
+[package]
+name = "crush-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+serde_json = "1"
+
+[dependencies.crush]
+path = ".."
+
+[[bin]]
+name = "compress"
+path = "fuzz_targets/compress.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "run"
+path = "fuzz_targets/run.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "unfold"
+path = "fuzz_targets/unfold.rs"
+test = false
+doc = false
+bench = false
+
