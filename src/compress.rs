@@ -64,7 +64,10 @@ pub fn looks_crushed(s: &str) -> bool {
 fn with_header(before: usize, after: usize, body: &str) -> String {
     // before >= MIN_RAW_BYTES at call site, so the division is always defined.
     let pct = (before - after) * 100 / before;
-    format!("[{} {before}\u{2192}{after} bytes (-{pct}%)]\n{body}", crate::markers::VERSION)
+    format!(
+        "[{} {before}\u{2192}{after} bytes (-{pct}%)]\n{body}",
+        crate::markers::VERSION
+    )
 }
 
 #[cfg(test)]
@@ -94,7 +97,9 @@ mod tests {
             if i > 0 {
                 arr.push(',');
             }
-            arr.push_str(&format!(r#"{{"name":"item{i}","value":{i},"active":true}}"#));
+            arr.push_str(&format!(
+                r#"{{"name":"item{i}","value":{i},"active":true}}"#
+            ));
         }
         arr.push(']');
         let out = compress("bash", &json!({"command": "echo"}), &arr).expect("should compress");
