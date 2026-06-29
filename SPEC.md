@@ -31,6 +31,19 @@ Proven baseline to beat: 61–66% on JSON tool output, live in a real session, l
 > +4 tests, 856 passed 0 failed, clippy clean, workspace builds. RED proof: 150KB output reached hook
 > as 30,029B before fix; full 150KB after. The compressor now gets whole food. crush skeleton UNBLOCKED.
 
+## Build order
+
+1. ✅ **[engine] Fork 1** — full-output hook + compress-then-truncate. **DONE — PR #51.**
+2. ✅ **[crush] skeleton** — Rust process extension, JSON-RPC v1, pass-through safe. **DONE — slice 1.**
+3. ✅ **[crush] tabular fold** — JSON array → schema+CSV. **DONE — slice 2.**
+4. ✅ **[crush] text chain** — ANSI/whitespace strip + run collapse. **DONE — slice 3.**
+5. ✅ **[crush] path fold + blob elision** — the long tail. **DONE — slice 4.**
+6. ✅ **Measure** — crush vs headroom on real fixtures. **DONE — see RESULTS.md.**
+   - Compression PARITY (41% vs 40% on JSON arrays, ~5% blended, 0% on text/columnar for both).
+   - crush wins footprint 366× (416K vs 149M, 0 vs 44 deps) and speed 8–115×.
+7. ⬜ **Retire headroom-bridge** — **HASEEB'S DECISION** (data in RESULTS.md). NOT done. crush
+   not yet symlinked live; recommend one live shakeout session before retiring headroom.
+
 ### Original spec (for reference)
 
 
