@@ -4,8 +4,7 @@
 //! `Content-Length: N\r\n\r\n<N bytes of UTF-8 JSON>`. This module is the
 //! transport — it knows nothing about hooks or compression.
 
-use std::io::{BufRead, Read, Write};
-
+use std::io::{BufRead, Write};
 /// Read one Content-Length-framed JSON message. Returns `Ok(None)` on clean
 /// EOF (peer closed the pipe), `Err` on a malformed frame.
 pub fn read_message<R: BufRead>(reader: &mut R) -> std::io::Result<Option<serde_json::Value>> {
@@ -107,8 +106,12 @@ mod tests {
     #[test]
     fn write_response_is_framed_and_readable() {
         let mut out = Vec::new();
-        write_response(&mut out, &serde_json::json!(7), serde_json::json!({"action":"continue"}))
-            .unwrap();
+        write_response(
+            &mut out,
+            &serde_json::json!(7),
+            serde_json::json!({"action":"continue"}),
+        )
+        .unwrap();
         let mut cursor = Cursor::new(out);
         let msg = read_message(&mut cursor).unwrap().unwrap();
         assert_eq!(msg["id"], 7);

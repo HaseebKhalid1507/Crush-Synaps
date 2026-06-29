@@ -37,21 +37,15 @@ pub fn compress(_tool_input: &Value, output: &str) -> Option<String> {
 }
 
 /// Apply the transform suite and return the smallest result that is strictly
-/// smaller than the input. Slice 1 registers no transforms.
-fn run_transforms(_output: &str) -> Option<String> {
-    // Transforms are added one per slice. Each takes &str → Option<String>
-    // and must shrink (or return None). The pipeline keeps the smallest.
-    None
+/// smaller than the input.
+fn run_transforms(output: &str) -> Option<String> {
+    crate::transforms::run(output)
 }
 
 /// Prepend a single-line provenance header so the model (and humans reading
 /// the transcript) know the output was rewritten and by how much.
 fn with_header(before: usize, after: usize, body: &str) -> String {
-    let pct = if before > 0 {
-        100 - (after * 100 / before)
-    } else {
-        0
-    };
+    let pct = before.saturating_sub(after).saturating_mul(100) / before.max(1);
     format!("[crush: {before}→{after} bytes (-{pct}%)]\n{body}")
 }
 
