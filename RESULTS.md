@@ -12,7 +12,7 @@ the real Synaps JSON-RPC protocol. Bytes are what the model actually receives
 
 ---
 
-## 1. Compression — crush now WINS decisively (28% vs 4% blended)
+## 1. Compression — crush now WINS decisively (29% vs 4% blended)
 
 Input capped at 256 KiB (the post-Fork-1 `max_tool_buffer`).
 
@@ -20,12 +20,12 @@ Input capped at 256 KiB (the post-Fork-1 `max_tool_buffer`).
 |---|--:|--:|--:|--:|--:|
 | build_verbose.txt | 7,043 | 7,043 | 0% | 7,043 | 0% |
 | cargo_metadata.json (trunc) | 262,144 | 262,144 | 0% | 262,144 | 0% |
-| git_log.txt | 38,439 | 38,439 | 0% | 38,439 | 0% |
+| **git_log.txt** | 38,439 | **27,902** | **28%** | 38,439 | 0% |
 | json_array.json | 83,068 | 49,592 | 41% | 50,120 | 40% |
 | **ls_bin.txt** | 239,643 | **132,842** | **45%** | 239,643 | 0% |
 | **ls_lah.txt** | 224,088 | **126,688** | **44%** | 224,088 | 0% |
 | **ps_aux.txt** | 60,106 | **43,467** | **28%** | 60,106 | 0% |
-| **TOTAL** | 914,531 | 660,215 | **28%** | 881,583 | 4% |
+| **TOTAL** | 914,531 | 649,724 | **29%** | 881,583 | 4% |
 
 **The read:** tool-awareness is the whole game. Columnar tool output (`ls`, `ps`)
 — which BOTH tools compressed 0% in Phase 1 — now compresses 28–45% under crush
