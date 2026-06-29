@@ -5,6 +5,11 @@
 //! transport — it knows nothing about hooks or compression.
 
 use std::io::{BufRead, Write};
+
+/// Reject frames larger than this to bound memory against a malformed or
+/// malicious Content-Length. Tool output is capped at 256 KiB upstream; 64 MiB
+/// is generous headroom for the framed JSON envelope.
+const MAX_FRAME_BYTES: usize = 64 * 1024 * 1024;
 /// Read one Content-Length-framed JSON message. Returns `Ok(None)` on clean
 /// EOF (peer closed the pipe), `Err` on a malformed frame.
 pub fn read_message<R: BufRead>(reader: &mut R) -> std::io::Result<Option<serde_json::Value>> {
@@ -29,6 +34,12 @@ pub fn read_message<R: BufRead>(reader: &mut R) -> std::io::Result<Option<serde_
     let len = content_length.ok_or_else(|| {
         std::io::Error::new(std::io::ErrorKind::InvalidData, "missing Content-Length")
     })?;
+    if len > MAX_FRAME_BYTES {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidData,
+            format!("frame too large: {len} > {MAX_FRAME_BYTES}"),
+        ));
+    }
     let mut buf = vec![0u8; len];
     reader.read_exact(&mut buf)?;
     let value = serde_json::from_slice(&buf)
