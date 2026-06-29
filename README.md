@@ -13,6 +13,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/rust-stable-orange.svg" alt="Rust">
   <img src="https://img.shields.io/badge/tests-50%20passing-brightgreen.svg" alt="Tests">
+  <img src="https://img.shields.io/badge/fuzzed-libFuzzer%20%2B%20ASAN-brightgreen.svg" alt="Fuzzed">
   <img src="https://img.shields.io/badge/runtime%20deps-0-blue.svg" alt="Zero deps">
   <img src="https://img.shields.io/badge/binary-416%20KB-blue.svg" alt="Binary size">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey.svg" alt="License">
