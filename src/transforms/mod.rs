@@ -13,9 +13,21 @@ mod schema;
 mod tabular;
 mod text;
 
+/// Decode a columnar-folded block back to its original rows (padding
+/// normalised). Powers the `crush --unfold` diagnostic — the executable proof of
+/// the lossless contract.
+#[must_use]
+pub fn unfold_columnar(s: &str) -> Option<String> {
+    columnar::unfold(s)
+}
+
 /// Run the transform suite for output produced by `tool_name` (with `command`
-/// for bash sniffing). Returns the smallest result strictly smaller than the
-/// input, or `None` if nothing helped.
+/// for bash sniffing). Returns the result of the **first family that wins**, in
+/// priority order — tool-aware columnar (most specific) → structural tabular →
+/// textual cleanup. Families do not compose across the boundary: each is
+/// all-or-nothing, which keeps the wire format unambiguous (no `@crush.table`
+/// row that itself contains `@crush.cols`). `None` if nothing shrank the input.
+#[must_use]
 pub fn run(tool_name: &str, command: &str, output: &str) -> Option<String> {
     // Tool-aware: a known columnar producer folds with its schema.
     if let Some(s) = schema::schema_for(tool_name, command) {
@@ -70,7 +82,7 @@ mod tests {
         }
         let out = run("ls", "", &input).expect("columnar should win");
         assert!(out.len() < input.len());
-        assert!(out.contains("@crush.cols"));
+        assert!(out.contains("@crush/1.cols"));
         assert!(out.contains("owner=root"));
     }
 

@@ -11,6 +11,7 @@
 //! drop a tool's output.
 
 mod compress;
+mod markers;
 mod protocol;
 mod transforms;
 
@@ -23,6 +24,25 @@ fn log(msg: &str) {
 }
 
 fn main() {
+    // `crush --unfold`: read a columnar-folded block on stdin, reconstruct the
+    // original rows on stdout. The executable proof of the lossless contract.
+    if std::env::args().any(|a| a == "--unfold") {
+        let mut input = String::new();
+        if io::Read::read_to_string(&mut io::stdin(), &mut input).is_err() {
+            std::process::exit(2);
+        }
+        match transforms::unfold_columnar(&input) {
+            Some(s) => {
+                let _ = io::stdout().write_all(s.as_bytes());
+            }
+            None => {
+                let _ = writeln!(io::stderr(), "[crush] not a columnar-folded block");
+                std::process::exit(1);
+            }
+        }
+        return;
+    }
+
     log("started");
     let stdin = io::stdin();
     let mut reader = BufReader::new(stdin.lock());
@@ -34,8 +54,11 @@ fn main() {
             Ok(Some(m)) => m,
             Ok(None) => break, // clean EOF
             Err(e) => {
-                log(&format!("frame error: {e}"));
-                break;
+                // A malformed/oversized frame corrupts at most one message.
+                // read_message is stateless between calls, so resync on the next
+                // frame rather than killing a long-lived extension.
+                log(&format!("frame error: {e} — resyncing"));
+                continue;
             }
         };
 
@@ -51,7 +74,17 @@ fn main() {
                 respond(&mut writer, &id, result);
             }
             "hook.handle" => {
-                let result = handle_hook(msg.get("params"));
+                // Panic firewall: a bug in any transform must degrade to
+                // pass-through, never crash the long-lived extension. (Release
+                // profile is panic=unwind precisely so this catches.)
+                let params = msg.get("params").cloned();
+                let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                    handle_hook(params.as_ref())
+                }))
+                .unwrap_or_else(|_| {
+                    log("transform panicked — passing through");
+                    serde_json::json!({ "action": "continue" })
+                });
                 respond(&mut writer, &id, result);
             }
             "shutdown" => {
