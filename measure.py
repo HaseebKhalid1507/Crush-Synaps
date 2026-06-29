@@ -52,14 +52,30 @@ def parse_frames(data):
         i = start + length
 
 
-def run_ext(cmd, output):
+def tool_for(name):
+    """Map a fixture to the (tool_name, command) it would arrive with in production."""
+    if name.startswith("ls_"):
+        return "ls", "ls -lah /usr/bin"
+    if name.startswith("ps_"):
+        return "bash", "ps aux"
+    if name.startswith("git_"):
+        return "bash", "git log --format=..."
+    if name.startswith("build_"):
+        return "bash", "cargo build --verbose"
+    if name.endswith(".json"):
+        return "bash", "cat data.json"
+    return "bash", "echo"
+
+
+def run_ext(cmd, output, tool_name="bash", command="echo"):
     """Pipe one after_tool_call through an extension; return the bytes the model
     would receive (compressed if replace, original if continue), or None on error."""
     stream = (
         frame({"jsonrpc": "2.0", "id": 1, "method": "initialize"})
         + frame({"jsonrpc": "2.0", "id": 2, "method": "hook.handle",
                  "params": {"kind": "after_tool_call",
-                            "tool_input": {"command": "x"},
+                            "tool_name": tool_name,
+                            "tool_input": {"command": command},
                             "tool_output": output}})
         + frame({"jsonrpc": "2.0", "id": 3, "method": "shutdown"})
     )
@@ -93,12 +109,12 @@ def main():
         if before < 512:
             continue
 
-        c_out, c_act = run_ext([CRUSH], output)
+        c_out, c_act = run_ext([CRUSH], output, *tool_for(name))
         c_after = len(c_out) if c_out is not None else before
         c_ratio = 100 - (c_after * 100 // before)
 
         if have_hr:
-            h_out, h_act = run_ext([HR_PY, HR_MAIN], output)
+            h_out, h_act = run_ext([HR_PY, HR_MAIN], output, *tool_for(name))
             h_after = len(h_out) if h_out is not None else before
             h_ratio = 100 - (h_after * 100 // before)
         else:

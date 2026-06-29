@@ -25,6 +25,8 @@ pub struct Schema {
     pub tail: &'static str,
     /// Whether to hold aside a leading `total <n>` line (coreutils `ls`).
     pub skip_total: bool,
+    /// Whether to hold aside the first line as a column-name header (`ps aux`).
+    pub skip_header: bool,
 }
 
 const COLS_TAG: &str = "@crush.cols";
@@ -52,7 +54,7 @@ pub fn fold(text: &str, schema: &Schema) -> Option<String> {
         return None;
     }
 
-    let (preamble, body) = split_preamble(text, schema.skip_total);
+    let (preamble, body) = split_preamble(text, schema);
 
     let mut rows: Vec<(Vec<&str>, &str)> = Vec::new();
     for line in &body {
@@ -178,14 +180,14 @@ fn choose_enc(rows: &[(Vec<&str>, &str)], i: usize) -> Enc {
     Enc::Dict(map)
 }
 
-fn split_preamble(text: &str, skip_total: bool) -> (Option<&str>, Vec<&str>) {
+fn split_preamble<'a>(text: &'a str, schema: &Schema) -> (Option<&'a str>, Vec<&'a str>) {
     let mut lines: Vec<&str> = text.lines().collect();
-    if skip_total
+    let take_total = schema.skip_total
         && lines
             .first()
             .map(|l| l.starts_with("total "))
-            .unwrap_or(false)
-    {
+            .unwrap_or(false);
+    if take_total || (schema.skip_header && !lines.is_empty()) {
         let first = lines.remove(0);
         (Some(first), lines)
     } else {
@@ -291,6 +293,7 @@ mod tests {
         ],
         tail: "name",
         skip_total: true,
+        skip_header: false,
     };
 
     fn ls_sample() -> String {

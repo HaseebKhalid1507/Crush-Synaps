@@ -12,6 +12,18 @@ pub const LS: Schema = Schema {
     ],
     tail: "name",
     skip_total: true,
+    skip_header: false,
+};
+
+/// `ps aux`: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME, then the free-text
+/// COMMAND. The first line is a column-name header, held aside.
+pub const PS: Schema = Schema {
+    cols: &[
+        "USER", "PID", "%CPU", "%MEM", "VSZ", "RSS", "TTY", "STAT", "START", "TIME",
+    ],
+    tail: "COMMAND",
+    skip_total: false,
+    skip_header: true,
 };
 
 /// Resolve a columnar schema for a tool invocation, or `None` for "no specialist
@@ -22,6 +34,7 @@ pub fn schema_for(tool_name: &str, command: &str) -> Option<&'static Schema> {
         // bash/shell: sniff the leading program of the command.
         "bash" | "shell" | "shell_send" => match leading_program(command) {
             "ls" => Some(&LS),
+            "ps" => Some(&PS),
             _ => None,
         },
         _ => None,
@@ -54,6 +67,11 @@ mod tests {
         assert!(schema_for("bash", "ls -lah /usr/bin").is_some());
         assert!(schema_for("bash", "/bin/ls -la").is_some());
         assert!(schema_for("bash", "LC_ALL=C ls -l").is_some());
+    }
+
+    #[test]
+    fn bash_ps_command_resolves() {
+        assert!(schema_for("bash", "ps aux").is_some());
     }
 
     #[test]
