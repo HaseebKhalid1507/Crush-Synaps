@@ -119,16 +119,16 @@ fn handle_command_invoke<W: Write>(
         other => format!("crush: unknown command '{other}'"),
     };
 
-    emit_text(writer, request_id, &body);
+    emit_system(writer, request_id, &body);
     emit_done(writer, request_id);
 
     serde_json::json!({ "ok": true })
 }
 
-fn emit_text<W: Write>(writer: &mut W, request_id: &str, content: &str) {
+fn emit_system<W: Write>(writer: &mut W, request_id: &str, content: &str) {
     let params = serde_json::json!({
         "request_id": request_id,
-        "event": { "kind": "text", "content": content },
+        "event": { "kind": "system", "content": content },
     });
     if let Err(e) = protocol::write_notification(writer, "command.output", params) {
         log(&format!("notification write error: {e}"));
@@ -180,10 +180,10 @@ mod tests {
         assert_eq!(resp["ok"], true);
 
         let frames = drain_notifications(&buf);
-        assert_eq!(frames.len(), 2, "expected text + done, got: {frames:?}");
+        assert_eq!(frames.len(), 2, "expected system + done, got: {frames:?}");
         assert_eq!(frames[0]["method"], "command.output");
         assert_eq!(frames[0]["params"]["request_id"], "req-42");
-        assert_eq!(frames[0]["params"]["event"]["kind"], "text");
+        assert_eq!(frames[0]["params"]["event"]["kind"], "system");
         let text = frames[0]["params"]["event"]["content"].as_str().unwrap();
         assert!(text.contains("crush"), "report should mention crush: {text}");
         assert!(text.contains("ls"), "report should list the ls bucket: {text}");
