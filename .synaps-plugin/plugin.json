@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "description": "Native Rust tool-output compressor. Subscribes to after_tool_call and returns HookResult::Replace with compressed output before it enters conversation history. Tool-aware columnar fold (ls/ps: constant-column factoring + per-column dictionary), JSON tabular fold, and a log-cleanup chain (ANSI/whitespace/run-collapse/blob-elide/path-fold). Versioned @crush/1 wire format, panic-firewalled, pass-through-safe. Replaces headroom-bridge.",
   "author": "Jawz",
+  "commands": [
+    {
+      "name": "crush",
+      "description": "Report how much context crush has saved this session.",
+      "interactive": true
+    }
+  ],
   "extension": {
     "protocol_version": 1,
     "runtime": "process",
