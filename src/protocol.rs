@@ -62,6 +62,22 @@ pub fn write_response<W: Write>(
     write_frame(writer, &payload)
 }
 
+/// Write a JSON-RPC notification (no `id`) as a Content-Length-framed message.
+/// Used to stream `command.output` events back to Synaps during a
+/// `command.invoke` call.
+pub fn write_notification<W: Write>(
+    writer: &mut W,
+    method: &str,
+    params: serde_json::Value,
+) -> std::io::Result<()> {
+    let payload = serde_json::json!({
+        "jsonrpc": "2.0",
+        "method": method,
+        "params": params,
+    });
+    write_frame(writer, &payload)
+}
+
 fn write_frame<W: Write>(writer: &mut W, payload: &serde_json::Value) -> std::io::Result<()> {
     let body = serde_json::to_vec(payload)?;
     write!(writer, "Content-Length: {}\r\n\r\n", body.len())?;

@@ -12,14 +12,23 @@
 pub mod compress;
 pub mod markers;
 pub mod protocol;
+pub mod stats;
 pub mod transforms;
 
 use serde_json::Value;
+
+use crate::stats::Stats;
 
 /// Handle an `after_tool_call` hook event. Returns the JSON result body:
 /// `{"action":"replace","output":...}` on a win, else `{"action":"continue"}`.
 #[must_use]
 pub fn handle_hook(params: Option<&Value>) -> Value {
+    handle_hook_with_stats(params, &mut Stats::new())
+}
+
+/// Same as [`handle_hook`], but records every compression win to `stats`.
+#[must_use]
+pub fn handle_hook_with_stats(params: Option<&Value>, stats: &mut Stats) -> Value {
     let cont = serde_json::json!({ "action": "continue" });
     let Some(params) = params else { return cont };
 
@@ -36,11 +45,14 @@ pub fn handle_hook(params: Option<&Value>) -> Value {
     let tool_input = params.get("tool_input").unwrap_or(&empty);
     let tool_name = params.get("tool_name").and_then(|t| t.as_str()).unwrap_or("");
 
-    match compress::compress(tool_name, tool_input, output) {
-        Some(compressed) => serde_json::json!({
-            "action": "replace",
-            "output": compressed,
-        }),
+    match compress::compress_labeled(tool_name, tool_input, output) {
+        Some((compressed, label)) => {
+            stats.record(label, output.len(), compressed.len());
+            serde_json::json!({
+                "action": "replace",
+                "output": compressed,
+            })
+        }
         None => cont,
     }
 }

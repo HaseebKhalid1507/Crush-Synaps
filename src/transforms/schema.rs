@@ -61,6 +61,22 @@ pub fn schema_for(tool_name: &str, command: &str) -> Option<&'static Schema> {
     }
 }
 
+/// Mirror of [`schema_for`]'s dispatch returning a short bucket label for
+/// stats (`"ls"`, `"ps"`, `"git_log"`). Stays in lockstep with the dispatch
+/// above so the label is always accurate.
+pub fn label_for(tool_name: &str, command: &str) -> &'static str {
+    match tool_name {
+        "ls" => "ls",
+        "bash" | "shell" | "shell_send" => match leading_program(command) {
+            "ls" => "ls",
+            "ps" => "ps",
+            "git" if command.contains("log") => "git_log",
+            _ => "columnar",
+        },
+        _ => "columnar",
+    }
+}
+
 /// First whitespace-delimited token of a command, skipping leading env-var
 /// assignments (`FOO=bar ls ...`).
 fn leading_program(command: &str) -> &str {

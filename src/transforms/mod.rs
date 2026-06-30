@@ -27,28 +27,38 @@ pub fn unfold_columnar(s: &str) -> Option<String> {
 /// textual cleanup. Families do not compose across the boundary: each is
 /// all-or-nothing, which keeps the wire format unambiguous (no `@crush.table`
 /// row that itself contains `@crush.cols`). `None` if nothing shrank the input.
+/// Like [`run`], but also returns the bucket label of the family that fired
+/// (`"<tool>"` for tool-aware, `"tabular"` for structural, `"text"` for the
+/// cleanup chain). The label is purely for stats/telemetry — the compressed
+/// output is identical to what [`run`] would return.
 #[must_use]
-pub fn run(tool_name: &str, command: &str, output: &str) -> Option<String> {
-    // Tool-aware: a known columnar producer folds with its schema.
+pub fn run_labeled(
+    tool_name: &str,
+    command: &str,
+    output: &str,
+) -> Option<(String, &'static str)> {
     if let Some(s) = schema::schema_for(tool_name, command) {
         if let Some(folded) = columnar::fold(output, s) {
             if folded.len() < output.len() {
-                return Some(folded);
+                return Some((folded, schema::label_for(tool_name, command)));
             }
         }
     }
-    // Structural: a JSON array-of-objects folds to schema + CSV.
     if let Some(folded) = tabular::fold(output) {
         if folded.len() < output.len() {
-            return Some(folded);
+            return Some((folded, "tabular"));
         }
     }
-    // Textual: compose the cleanup chain for everything else.
     let cleaned = text::clean(output);
     if cleaned.len() < output.len() {
-        return Some(cleaned);
+        return Some((cleaned, "text"));
     }
     None
+}
+
+#[must_use]
+pub fn run(tool_name: &str, command: &str, output: &str) -> Option<String> {
+    run_labeled(tool_name, command, output).map(|(s, _)| s)
 }
 
 #[cfg(test)]

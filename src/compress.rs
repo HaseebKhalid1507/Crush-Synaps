@@ -28,12 +28,21 @@ pub const MIN_BYTES_SAVED: usize = 256;
 /// header) only when it is a genuine, meaningful win; otherwise `None`.
 #[must_use]
 pub fn compress(tool_name: &str, tool_input: &Value, output: &str) -> Option<String> {
+    compress_labeled(tool_name, tool_input, output).map(|(s, _)| s)
+}
+
+/// Like [`compress`], but also returns the bucket label (transform/tool)
+/// for stats. The label is `"ls"`/`"ps"`/`"git_log"` for tool-aware folds,
+/// `"tabular"` for JSON-array fold, `"text"` for the cleanup chain.
+#[must_use]
+pub fn compress_labeled(
+    tool_name: &str,
+    tool_input: &Value,
+    output: &str,
+) -> Option<(String, &'static str)> {
     if output.len() < MIN_RAW_BYTES {
         return None;
     }
-    // Never double-compress: if the output already carries crush markers, it was
-    // produced by crush (or contains text that would poison the wire format).
-    // Bail to pass-through rather than risk corrupting the format.
     if looks_crushed(output) {
         return None;
     }
@@ -42,14 +51,13 @@ pub fn compress(tool_name: &str, tool_input: &Value, output: &str) -> Option<Str
         .and_then(|c| c.as_str())
         .unwrap_or("");
 
-    let body = crate::transforms::run(tool_name, command, output)?;
+    let (body, label) = crate::transforms::run_labeled(tool_name, command, output)?;
     let final_out = with_header(output.len(), body.len(), &body);
 
-    // Net win after header overhead; also guarantees final_out < output (no enlarge).
     if final_out.len() + MIN_BYTES_SAVED > output.len() {
         return None;
     }
-    Some(final_out)
+    Some((final_out, label))
 }
 
 /// True if the input already contains crush's versioned markers — i.e. it is (or
