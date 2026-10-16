@@ -12,5 +12,7 @@ if [ ! -f Cargo.lock ]; then
   echo "crush: Cargo.lock is missing; refusing an unlocked build." >&2
   exit 1
 fi
-cargo build --release --locked
+# Pin the target dir: a user-level build.target-dir or CARGO_TARGET_DIR would otherwise put the
+# binary somewhere the manifest's relative command can't find it.
+cargo build --release --locked --target-dir target
 test -x target/release/crush
