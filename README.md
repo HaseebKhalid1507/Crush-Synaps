@@ -89,17 +89,20 @@ C 1 30 A 13 Q androiddeployqt6 -> ../lib/qt6/bin/...
 ## Get started (60 seconds)
 
 ```bash
-# 1 — build (one static binary, no runtime deps)
-git clone https://github.com/HaseebKhalid1507/Crush-Synaps.git crush
-cd crush && cargo build --release
+# 1 — install into Synaps' plugin dir and build (one static binary, no runtime deps)
+git clone https://github.com/HaseebKhalid1507/Crush-Synaps.git ~/.synaps-cli/plugins/crush
+cd ~/.synaps-cli/plugins/crush && bash scripts/setup.sh   # cargo build --release --locked
 
-# 2 — install as a Synaps extension (manifest ships in .synaps-plugin/)
-ln -s "$PWD" ~/.synaps-cli/plugins/crush
-#    the manifest subscribes to after_tool_call with
+# 2 — start Synaps. tool output now arrives crushed.
+#    the manifest (.synaps-plugin/plugin.json) subscribes to after_tool_call with
 #    tools.intercept + tools.transform_output
-
-# 3 — start Synaps. tool output now arrives crushed.
 ```
+
+The manifest's `command` is `target/release/crush`, relative to the plugin dir, so the
+plugin works from any install path. It also declares `"setup": "scripts/setup.sh"`, so
+a `/plugins` install or update builds the binary for you (it needs `cargo` on `PATH`).
+[synaps-overclocked](https://github.com/HaseebKhalid1507/synaps-overclocked) installs
+it the same way.
 
 **Decode any folded block yourself:**
 

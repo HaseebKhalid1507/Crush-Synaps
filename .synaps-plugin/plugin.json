@@ -13,7 +13,8 @@
   "extension": {
     "protocol_version": 1,
     "runtime": "process",
-    "command": "/home/dev/Jawz/workspace/crush/target/release/crush",
+    "command": "target/release/crush",
+    "setup": "scripts/setup.sh",
     "args": [],
     "permissions": ["tools.intercept", "tools.transform_output"],
     "hooks": [
