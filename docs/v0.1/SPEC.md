@@ -7,7 +7,7 @@
 
 ## Why headroom-bridge dies
 
-The Python extension at `~/Jawz/workspace/headroom-bridge/` is being scrapped. Reasons:
+The Python extension (headroom-bridge) is being scrapped. Reasons:
 
 1. **22-dependency .venv** (pydantic, tiktoken, ast-grep-cli, rich, opentelemetry…) to run *one*
    transform. Heavy backpack for a shim.
@@ -108,6 +108,6 @@ to pass-through `continue`. A compression layer must NEVER break or drop a tool'
 ## Open questions for morning
 
 - Where does the Rust binary live? New crate in `~/Projects/agent-runtime/` workspace, or
-  standalone? (Leaning: standalone repo or `~/Jawz/tools/crush/` — it's an extension, not engine.)
+  standalone? (Leaning: standalone repo — it's an extension, not engine.)
 - Reuse the `headroom-bridge` manifest shape verbatim, just swap `command` to the Rust binary.
 - Length cap value post-compression — keep ~30KB, or raise it now that the compressor runs first?
