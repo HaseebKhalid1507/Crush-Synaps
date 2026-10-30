@@ -99,8 +99,8 @@ impl ClassSwitches {
 }
 
 /// Per-transform switches. Defaults reflect the accuracy gate: a transform
-/// that failed parity ships disabled (`search_group`, `ls_columns`, see
-/// eval/RESULTS.md).
+/// that failed parity ships disabled (`search_group`, `ls_columns`, `test_pass`,
+/// `json_minify`; see eval/RESULTS.md).
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(default, deny_unknown_fields)]
 pub struct TransformSwitches {
@@ -123,13 +123,19 @@ pub struct TransformSwitches {
     /// note wordings (models answered "unknown" for the owner and read the
     /// neighbouring row's date; eval/RESULTS.md, Phase 2A).
     pub ls_columns: bool,
-    /// LOG: runs of passing-test lines become a counted note (lossy).
+    /// LOG: runs of passing-test lines become a counted note (lossy). Off:
+    /// failures, totals and panics stayed at parity, but "did test X pass?"
+    /// for a collapsed test fell from 200/200 to 55/200 (the models answer
+    /// "unknown": the name is gone), eval/RESULTS.md.
     pub test_pass: bool,
     /// LOG: runs of build-progress lines (`Compiling`, pip `Collecting`, ...)
     /// become a counted note (lossy).
     pub build_progress: bool,
     /// STRUCTURED: pretty-printed JSON re-laid out one top-level element per
-    /// line, no other whitespace (lossless in meaning).
+    /// line, no other whitespace (lossless in meaning). Off: JSON-value
+    /// questions were 124/124 both ways, but Sonnet's raw-only excess (two
+    /// "quote the next line" answers, 3.0%) exceeded its raw-vs-raw
+    /// disagreement (1.1%), eval/RESULTS.md.
     pub json_minify: bool,
 }
 
@@ -142,9 +148,9 @@ impl Default for TransformSwitches {
             blobs: true,
             search_elide: true,
             ls_columns: false,
-            test_pass: true,
+            test_pass: false,
             build_progress: true,
-            json_minify: true,
+            json_minify: false,
         }
     }
 }
