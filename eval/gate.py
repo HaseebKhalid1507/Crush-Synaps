@@ -64,10 +64,11 @@ for tag in ("", ".search_on"):
             for m, a in t["fired"].items():
                 check(a["grew_real_tokens"] == 0, f"{s}{tag}: fired results with more real tokens ({m}): {a['grew_real_tokens']}")
 
-syn = load("synthetic.json")
-if syn:
-    for x in syn:
-        check(x["best_us"] < 1000, f"256 KiB {x['shape']}: best {x['best_us']:.0f} µs (p99 {x['p99_us']:.0f} µs) < 1 ms")
+for tag in ("", ".search_on"):
+    syn = load(f"synthetic{tag}.json")
+    if syn:
+        for x in syn:
+            check(x["best_us"] < 1000, f"256 KiB {x['shape']}{tag}: best {x['best_us']:.0f} µs (p99 {x['p99_us']:.0f} µs) < 1 ms")
 
 est = load("estimator.json")
 if est:
