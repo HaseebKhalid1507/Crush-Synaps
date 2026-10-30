@@ -550,6 +550,39 @@
       "class": "LOG",
       "bytes": 2566,
       "note": "real shell retry loop"
+    },
+    {
+      "name": "grep_long_lines",
+      "file": "data/grep_long_lines.txt",
+      "tool": "bash",
+      "input": {
+        "command": "grep -rn 'fetchUser' ."
+      },
+      "class": "SEARCH",
+      "bytes": 71650,
+      "note": "real grep over a minified bundle, a JSONL log, long markdown lines and short TS lines; cut at 96 KiB on a line boundary"
+    },
+    {
+      "name": "grep_n_jsonl",
+      "file": "data/grep_n_jsonl.txt",
+      "tool": "bash",
+      "input": {
+        "command": "grep -n '\"status\":\"error\"' logs/events.jsonl | head -n 40"
+      },
+      "class": "SEARCH",
+      "bytes": 49839,
+      "note": "real single-file grep -n over JSONL (long lines)"
+    },
+    {
+      "name": "ls_la_scratch",
+      "file": "data/ls_la_scratch.txt",
+      "tool": "bash",
+      "input": {
+        "command": "ls -la"
+      },
+      "class": "LISTING",
+      "bytes": 1053,
+      "note": "real ls -la of a scratch dir in /tmp (.. is root's)"
     }
   ],
   "skipped": []

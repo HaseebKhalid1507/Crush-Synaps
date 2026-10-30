@@ -59,6 +59,11 @@ ALL_TOOLS = ("activate_tools,bash,edit,find,forum_forget,forum_post,forum_read,g
 REAL_AUTH = Path.home() / ".synaps-cli" / "auth.json"
 MAX_PROMPT = 400_000  # rpc frames are capped at 1 MiB
 DROPPED: dict[str, int] = {}
+# a separate accuracy run (CRUSH_EVAL_ACC_TAG, e.g. a phase's candidates)
+# keeps its own summary next to the main one
+ACC_TAG = os.environ.get("CRUSH_EVAL_ACC_TAG", "")
+SUMMARY = f"accuracy.summary.{ACC_TAG}.json" if ACC_TAG else "accuracy.summary.json"
+FXREC = f"accuracy.fixtures.{ACC_TAG}.jsonl" if ACC_TAG else "accuracy.fixtures.jsonl"
 QUOTA: dict[str, int] = {}
 
 
@@ -205,6 +210,12 @@ def select(which: str, n_corpus: int, seed: int, max_q: int):
             continue
         qs, dropped = fair_for(gen_questions(s, max_q), r["output"])
         DROPPED[which] = DROPPED.get(which, 0) + dropped
+        # a question quoting text crush cut (moved to the raw file) is still
+        # asked, but marked: it measures what was moved out, not misreading
+        for x in qs:
+            if x.get("needle") and x["needle"] not in r["output"]:
+                x["kind"] = "cut:" + x["kind"]
+                x["cut"] = True
         if qs:
             cands.append((s, r["output"], qs))
     if which == "fixtures":
@@ -250,10 +261,10 @@ def main() -> int:
     ap.add_argument("--resummarize", action="store_true", help="rebuild the summary from stored records (no model calls)")
     args = ap.parse_args()
     if args.resummarize:
-        prev = json.loads((OUT / "accuracy.summary.json").read_text())
-        recs = list(read_jsonl(OUT / "accuracy.fixtures.jsonl")) + list(read_jsonl(CORPUS_DIR / "accuracy" / f"{prev['run']}.jsonl"))
+        prev = json.loads((OUT / SUMMARY).read_text())
+        recs = list(read_jsonl(OUT / FXREC)) + list(read_jsonl(CORPUS_DIR / "accuracy" / f"{prev['run']}.jsonl"))
         prev.update(summarize(recs))
-        (OUT / "accuracy.summary.json").write_text(json.dumps(prev, indent=1))
+        (OUT / SUMMARY).write_text(json.dumps(prev, indent=1))
         print(json.dumps(prev["by_model_set"], indent=1))
         return 0
     models = [MODELS.get(m, m) for m in args.models.split(",")]
@@ -310,7 +321,8 @@ def main() -> int:
                 for x, a in zip(qs, ans):
                     records.append({"set": w, "model": model, "sample": s["id"], "class": s["class"], "label": s.get("label"),
                                     "variant": variant, "kind": x["kind"], "q": x["q"], "want": x["answer"],
-                                    "got": a, "correct": score(x, a), "tool_calls": r["tool_calls"], "ok": r["ok"]})
+                                    "got": a, "correct": score(x, a), "tool_calls": r["tool_calls"], "ok": r["ok"],
+                                    "cut": bool(x.get("cut"))})
                 if (j + 1) % 10 == 0:
                     print(f"  {model}: {j + 1}/{len(order)} asks", file=sys.stderr)
                 if auth_digest() != before:
@@ -332,10 +344,10 @@ def main() -> int:
         totals[model] = {"api_requests": len(log), "usage": dict(u), "cost_usd_list": cost,
                          "stop_reasons": dict(Counter(e.get("stop_reason") for e in log))}
     stamp = time.strftime("%Y%m%d-%H%M%S")
-    prev = json.loads((OUT / "accuracy.summary.json").read_text()) if args.merge and (OUT / "accuracy.summary.json").exists() else None
+    prev = json.loads((OUT / SUMMARY).read_text()) if args.merge and (OUT / SUMMARY).exists() else None
     if prev:
         redo = {(r["set"], r["sample"]) for r in records}
-        old_fx = list(read_jsonl(OUT / "accuracy.fixtures.jsonl")) if (OUT / "accuracy.fixtures.jsonl").exists() else []
+        old_fx = list(read_jsonl(OUT / FXREC)) if (OUT / FXREC).exists() else []
         old_cp = []
         for rn in prev.get("runs", [prev.get("run")]):
             f = CORPUS_DIR / "accuracy" / f"{rn}.jsonl"
@@ -362,7 +374,7 @@ def main() -> int:
     # private per-answer records for real data; fixture records are committed-safe
     write_jsonl_private(CORPUS_DIR / "accuracy" / f"{stamp}.jsonl", [r for r in records if r["set"] == "corpus"])
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "accuracy.fixtures.jsonl").write_text("".join(json.dumps(r) + "\n" for r in records if r["set"] == "fixtures"))
+    (OUT / FXREC).write_text("".join(json.dumps(r) + "\n" for r in records if r["set"] == "fixtures"))
     summary = summarize(records)
     # with --merge the new private records file holds old + new corpus records,
     # so it alone is the source for the next merge
@@ -371,7 +383,7 @@ def main() -> int:
                     "calls_used": calls_used, "per_model": totals,
                     "cost_usd_list_total": sum(t["cost_usd_list"] or 0 for t in totals.values()),
                     "real_auth_unchanged": auth_digest() == before and (prev or {}).get("real_auth_unchanged", True)})
-    (OUT / "accuracy.summary.json").write_text(json.dumps(summary, indent=1))
+    (OUT / SUMMARY).write_text(json.dumps(summary, indent=1))
     print(json.dumps({k: summary[k] for k in ("calls_used", "cost_usd_list_total", "real_auth_unchanged")}, indent=1))
     print(json.dumps(summary["by_model_set"], indent=1))
     return 0

@@ -32,8 +32,12 @@ and an Anthropic credential (below). Build output goes to `$CARGO_TARGET_DIR`
 | `run_crush.py` | runs the driver over corpus/fixtures, and the real `crush-ext` binary over JSON-RPC (as Synaps runs it) on every fired sample plus 3,000 others, for round-trip latency, protocol errors and a library-vs-binary consistency check. Results carry crush-core's class and the Phase 0 class. |
 | `estimator/` | `sample_counts.py` counts a stratified real slice (class × size) one text per request with both tokenizer families; `fit.py` fits crush-core's estimator (non-negative least squares on the Rust feature vector), writes `estimate_coef.rs` and the held-out error (`--check` scores the committed coefficients). |
 | `search_layout.py` | renders seeded fired SEARCH results in each candidate layout and counts real tokens: the layout is chosen by measurement. |
+| `anatomy.py` | Phase 2A: where SEARCH and LISTING tokens go, on every real result of the class (real `count_tokens`, by deletion): paths, line numbers, hit text, context lines, other lines, over-long and duplicate lines, size/hit-count buckets and the after-spill total; LISTING by command, `ls -l` rows and their constant columns. |
+| `after_spill.py` | what a variant saves on top of SynapsCLI #334 (results over 12 KiB become a head + tail preview): real tokens of `after_spill(raw)` vs `after_spill(crushed)` per transform and spill regime. `lib/spill.py` is a byte-exact port of Synaps' preview. |
+| `fixtures/generate_p2a.py` | Phase 2A fixtures: real `grep -rn` over a minified bundle / JSONL log / long markdown lines, a single-file JSONL `grep -n`, a real `ls -la` in /tmp (`..` is root's). |
+| `report_p2a.py` | writes only the `p2a_*` sections of `RESULTS.md` (anatomy, candidate tokens raw and after spill, accuracy rounds, edit safety, latency). |
 | `fixtures/generate_p1.py` | Phase 1 fixtures for the generic transforms (rsync/curl progress, openssl PEM, kubectl secret YAML, a retry loop). |
-| `gate.py` | fails on any broken invariant in `out/*.json`: panics, idempotence, crush-ext mismatch, CONTENT changes, SEARCH rebuild failures, results with more real tokens, latency, estimator error. |
+| `gate.py` | fails on any broken invariant in `out/*.json`: panics, idempotence, crush-ext mismatch, CONTENT changes, SEARCH rebuild failures, SEARCH cut lines that aren't exact slices with exact counts, `ls -l` factorings that don't restore, results with more real tokens, latency, estimator error. |
 | `lib/tokens.py` | `count_tokens` client: sqlite cache by (model, sha256), shared token bucket (4 req/s), 429/5xx retry with backoff, framing overhead subtracted. |
 | `count_tokens.py` | per-sample raw+crushed counts for fixtures and every fired corpus sample; class composition of the whole corpus counted in packed batches (with a measured batching error). |
 | `accuracy/questions.py` | question generators with exact answers parsed from the RAW output (grep path/line/count, ls size/perms/mtime/owner/symlink, ps pid/%mem/stat/user/rss, cargo/pytest/node pass-fail and counts, rustc/gcc diagnostic locations, git author/email/subject/date, JSON field-by-id / null-vs-"" / length, git status state, repeated-run counts, adjacent lines) + the scorer. |
@@ -70,6 +74,25 @@ and an Anthropic credential (below). Build output goes to `$CARGO_TARGET_DIR`
   plugins, extensions, MCP or memory. `synaps rpc` doesn't use the session daemon.
   The real `auth.json` is hashed before and after (abort on change) and the
   isolated dir is deleted at the end.
+
+## Phase 2A accuracy runs
+
+The candidates (`eval/configs/p2a_on.json`) are gated in their own capped runs,
+each with its own summary (`CRUSH_EVAL_ACC_TAG`), so `make eval` keeps the
+Phase 1 summary. A re-test uses samples the earlier round didn't (an id file
+for `--only-samples`), so a fix is never judged on the samples that exposed the
+problem. Questions quoting text a lossy transform cut are marked `cut:` (asked,
+reported, kept out of the verdict). As run for `RESULTS.md`:
+
+```sh
+export CRUSH_EVAL_TAG=p2a_on CRUSH_EVAL_CONFIG=eval/configs/p2a_on.json
+CRUSH_EVAL_ACC_TAG=p2a python3 eval/accuracy/run_accuracy.py --sets corpus --quota search_elide:22,ls_columns:22 \
+  --corpus-samples 44 --max-q 8 --max-calls 220
+CRUSH_EVAL_ACC_TAG=p2a_ls2 python3 eval/accuracy/run_accuracy.py --sets corpus --quota ls_columns:69 --corpus-samples 69 \
+  --max-q 8 --max-calls 110 --seed 11 --only-samples @$CRUSH_CORPUS_DIR/regate_ls_ids.txt
+CRUSH_EVAL_ACC_TAG=p2a_el2 python3 eval/accuracy/run_accuracy.py --sets corpus --quota search_elide:105 --corpus-samples 105 \
+  --max-q 8 --max-calls 85 --seed 17 --only-samples @$CRUSH_CORPUS_DIR/regate_el_ids.txt
+```
 
 ## Gating a new transform
 

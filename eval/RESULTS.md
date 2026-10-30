@@ -1,4 +1,4 @@
-# crush 2 — Phase 1 gate results
+# crush 2 — gate results (Phase 1, Phase 2A)
 
 crush-core (classifier, transform framework, invariants, generic transforms, SEARCH
 grouping) measured on 30 days of real tool results (59,843 unique, private, never
@@ -9,8 +9,16 @@ aggregates only. Method and harness: [`README.md`](README.md); v0.1 for comparis
 
 ## Headline
 
-- **What ships enabled saves almost nothing on this workload, by design.** The
-  default config fires on 79 of 59,843 real results (0.13%) and saves 25,928
+- **Phase 2A (SEARCH layout, LISTING; [section 8](#8-phase-2a-search-layout-and-listing-transforms))**:
+  `search_elide` ships on. Over-long grep hit lines keep the text around the
+  match, every line keeps its own `path:N:`, and the cuts carry exact counts.
+  It saves 1.05% of SEARCH tokens (39.8% on the 105 results it fires on), or
+  0.61% after Synaps' spill. It was at parity on Haiku and Sonnet in two
+  rounds (n = 181 questions per model). `ls_columns` (ls -l owner/group said
+  once) failed parity with both note wordings and ships off. The default
+  config now saves 0.24% of all tool-result tokens (0.04% in Phase 1).
+- **Phase 1's generic transforms save almost nothing on this workload, by design.** They
+  fire on 79 of 59,843 real results (0.13%) and save 25,928
   tokens (0.04% of tool-result tokens; 35% of the results it fires on):
   identical-line runs, `\r` progress redraws and base64 blobs are rare in our
   sessions. All three passed accuracy parity, no fired result grew in real tokens
@@ -36,14 +44,14 @@ aggregates only. Method and harness: [`README.md`](README.md); v0.1 for comparis
 | class (crush-core) | samples | fired | fire rate | tokens 5.x | saved 5.x | saved 5.x % | saved 4.x % | saved on fired 5.x |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | CONTENT | 15,935 | 0 | 0.0% | 33,290,175 | 0 | 0.00% | 0.00% | – |
-| SEARCH | 15,727 | 0 | 0.0% | 11,827,999 | 0 | 0.00% | 0.00% | – |
+| SEARCH | 15,727 | 105 | 0.7% | 11,827,999 | 123,705 | 1.05% | 0.94% | 39.8% |
 | UNKNOWN | 8,904 | 19 | 0.2% | 3,970,648 | 9,995 | 0.25% | 0.26% | 46.0% |
 | PROSE | 1,962 | 0 | 0.0% | 3,365,558 | 0 | 0.00% | 0.00% | – |
 | LISTING | 4,783 | 12 | 0.3% | 3,996,187 | 5,567 | 0.14% | 0.16% | 44.6% |
 | VCS | 4,825 | 13 | 0.3% | 2,910,302 | 4,469 | 0.15% | 0.18% | 32.3% |
 | LOG | 6,703 | 28 | 0.4% | 3,061,892 | 4,367 | 0.14% | 0.13% | 19.4% |
 | STRUCTURED | 1,004 | 7 | 0.7% | 1,212,354 | 1,530 | 0.13% | 0.13% | 45.5% |
-| **total** | 59,843 | 79 | 0.1% | 63,635,115 | 25,928 | 0.04% | 0.04% | 35.1% |
+| **total** | 59,843 | 184 | 0.3% | 63,635,115 | 149,633 | 0.24% | 0.22% | 38.9% |
 
 By class and transform (savings on the fired results themselves):
 
@@ -53,6 +61,7 @@ By class and transform (savings on the fired results themselves):
 | LISTING | progress | 3 | 3,706 | 66.9% | 71.1% | 86.7% |
 | LISTING | repeats | 6 | 4,539 | 25.4% | 24.3% | 25.8% |
 | LOG | repeats | 28 | 22,502 | 19.4% | 19.1% | 18.8% |
+| SEARCH | search_elide | 105 | 311,202 | 39.8% | 38.1% | 41.3% |
 | STRUCTURED | blobs | 2 | 1,991 | 32.6% | 35.2% | 17.7% |
 | STRUCTURED | repeats | 5 | 1,372 | 64.1% | 61.4% | 64.0% |
 | UNKNOWN | blobs | 5 | 11,048 | 44.7% | 48.4% | 28.3% |
@@ -61,9 +70,9 @@ By class and transform (savings on the fired results themselves):
 | VCS | progress | 7 | 10,636 | 30.4% | 35.7% | 31.7% |
 | VCS | repeats | 6 | 3,187 | 38.6% | 40.3% | 34.4% |
 
-Real-token check on **every** fired result: more tokens than raw: 0 (5.x), 0 (4.x); equal: 0 / 0. Per-result saving p10/p50/p90 (5.x): [7.54, 36.64, 69.71]%. Estimated vs real saving (5.x): 25,970 vs 25,928 tokens; per-result median |error| 13.3%, p90 29.0%.
+Real-token check on **every** fired result: more tokens than raw: 0 (5.x), 0 (4.x); equal: 0 / 0. Per-result saving p10/p50/p90 (5.x): [12.88, 35.0, 66.5]%. Estimated vs real saving (5.x): 148,467 vs 149,633 tokens; per-result median |error| 7.9%, p90 23.8%.
 
-Pass-through reasons (all 59,843 results): nothing-to-do 27,187, byte-identical-class 15,935, too-small 14,465, class-disabled 1,962, marker-like-input 109, no-gain 106, compressed 79.
+Pass-through reasons (all 59,843 results): nothing-to-do 27,057, byte-identical-class 15,935, too-small 14,465, class-disabled 1,962, compressed 184, no-gain 131, marker-like-input 109.
 <!-- END:tokens -->
 
 Fixtures, default config:
@@ -75,7 +84,9 @@ Fixtures, default config:
 | openssl_cert | UNKNOWN | blobs | 1,139 | 1,076 | 79.3% | 87.3% | 89.2% |
 | k8s_secret_yaml | STRUCTURED | blobs | 5,832 | 5,399 | 84.9% | 90.4% | 91.0% |
 | retry_loop | LISTING | repeats | 2,566 | 832 | 91.3% | 90.5% | 90.7% |
-| **all 50 fixtures** |  |  | 994,471 | 490,697 | 1.1% | 1.6% | 1.8% |
+| grep_long_lines | SEARCH | search_elide | 71,650 | 28,634 | 70.8% | 65.8% | 62.6% |
+| grep_n_jsonl | SEARCH | search_elide | 49,839 | 19,646 | 83.1% | 83.4% | 83.5% |
+| **all 53 fixtures** |  |  | 1,117,013 | 539,655 | 9.2% | 8.0% | 7.0% |
 <!-- END:fixtures -->
 
 ## 2. Tokens with SEARCH grouping on (disabled candidate)
@@ -125,7 +136,8 @@ Pass-through reasons (all 59,843 results): nothing-to-do 23,578, byte-identical-
 | openssl_cert | UNKNOWN | blobs | 1,139 | 1,076 | 79.3% | 87.3% | 89.2% |
 | k8s_secret_yaml | STRUCTURED | blobs | 5,832 | 5,399 | 84.9% | 90.4% | 91.0% |
 | retry_loop | LISTING | repeats | 2,566 | 832 | 91.3% | 90.5% | 90.7% |
-| **all 50 fixtures** |  |  | 994,471 | 490,697 | 6.7% | 7.6% | 7.8% |
+| grep_long_lines | SEARCH | search_group | 71,650 | 28,634 | 2.0% | 2.8% | 3.1% |
+| **all 53 fixtures** |  |  | 1,117,013 | 539,655 | 6.1% | 7.1% | 7.4% |
 <!-- END:fixtures_search_on -->
 
 ## 3. Accuracy: raw vs crushed
@@ -196,14 +208,14 @@ repetition, before trying grouping again.
 | set | CONTENT changed (crush-core class) | SEARCH grouped | SEARCH rebuild failures | grep hit lines whose `N:text` is still a whole line | Phase 0 classifier says CONTENT, crush changed |
 |---|---:|---:|---:|---:|---:|
 | fixtures | 0 | 0 | 0 | 0 / 0 | 0 (); 0 lines not rebuildable |
-| corpus | 0 | 0 | 0 | 0 / 0 | 8 (repeats 7, progress 1); 1 lines not rebuildable |
+| corpus | 0 | 0 | 0 | 0 / 0 | 14 (search_elide 6, repeats 7, progress 1); 7 lines not rebuildable |
 <!-- END:edit -->
 
 With SEARCH grouping on:
 <!-- BEGIN:edit_search_on -->
 | set | CONTENT changed (crush-core class) | SEARCH grouped | SEARCH rebuild failures | grep hit lines whose `N:text` is still a whole line | Phase 0 classifier says CONTENT, crush changed |
 |---|---:|---:|---:|---:|---:|
-| fixtures | 0 | 3 | 0 | 1,890 / 1,890 | 0 (); 0 lines not rebuildable |
+| fixtures | 0 | 4 | 0 | 1,967 / 1,967 | 0 (); 0 lines not rebuildable |
 | corpus | 0 | 3413 | 0 | 44,569 / 44,569 | 68 (search_group 60, repeats 7, progress 1); 1 lines not rebuildable |
 <!-- END:edit_search_on -->
 
@@ -239,20 +251,23 @@ fresh sheet is labelled.
 <!-- BEGIN:latency -->
 | set | results | in-process p50/p99 (all) | p50/p99 (≥ 2 KiB) | p50/p99 (fired) | max | crush-ext JSON-RPC round trip p50/p99 | panics | crush-ext ok | ext ≠ library |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| real corpus | 59,843 | 4.1 / 66 µs | 10 / 100 µs | 15 / 89 µs | 199 µs | 33 / 310 µs (3,079) | 0 | 3079/3079 | 0 |
-| fixtures | 50 | 15.4 / 193 µs | 23 / 198 µs | 16 / 30 µs | 209 µs | 60 / 441 µs (50) | 0 | 50/50 | 0 |
+| real corpus | 59,843 | 5.0 / 73 µs | 12 / 106 µs | 19 / 88 µs | 211 µs | 32 / 363 µs (3,184) | 0 | 3184/3184 | 0 |
+| fixtures | 53 | 13.2 / 169 µs | 23 / 170 µs | 23 / 133 µs | 174 µs | 59 / 441 µs (53) | 0 | 53/53 | 0 |
 
 256 KiB worst cases (200 runs each):
 
 | shape | bytes | result | transforms | best µs | p50 µs | p99 µs |
 |---|---:|---:|---:|---:|---:|---:|
-| grep_hits | 262,143 | nothing-to-do | – | 221 | 233 | 250 |
-| source_file | 262,044 | byte-identical-class | – | 163 | 177 | 226 |
-| ls_listing | 262,118 | nothing-to-do | – | 323 | 344 | 391 |
-| minified_json | 262,153 | nothing-to-do | – | 435 | 481 | 542 |
-| progress_cr | 262,131 | compressed | progress | 386 | 426 | 468 |
-| repeats_log | 262,140 | compressed | repeats | 265 | 295 | 333 |
-| base64_blobs | 261,976 | compressed | blobs | 699 | 762 | 873 |
+| grep_hits | 262,143 | nothing-to-do | – | 294 | 366 | 436 |
+| source_file | 262,044 | byte-identical-class | – | 158 | 166 | 181 |
+| ls_listing | 262,118 | nothing-to-do | – | 319 | 328 | 342 |
+| minified_json | 262,153 | nothing-to-do | – | 442 | 453 | 464 |
+| progress_cr | 262,131 | compressed | progress | 386 | 406 | 426 |
+| repeats_log | 262,140 | compressed | repeats | 253 | 265 | 289 |
+| base64_blobs | 261,976 | compressed | blobs | 713 | 734 | 760 |
+| grep_long_lines | 258,585 | compressed | search_elide | 560 | 595 | 638 |
+| ls_mixed_owner | 262,105 | nothing-to-do | – | 323 | 332 | 347 |
+| ls_64k_fires | 65,349 | nothing-to-do | – | 80 | 84 | 90 |
 <!-- END:latency -->
 
 With SEARCH grouping on (its fired results are the slowest path: transform,
@@ -262,20 +277,23 @@ with three fuzzers on the box):
 <!-- BEGIN:latency_search_on -->
 | set | results | in-process p50/p99 (all) | p50/p99 (≥ 2 KiB) | p50/p99 (fired) | max | crush-ext JSON-RPC round trip p50/p99 | panics | crush-ext ok | ext ≠ library |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| real corpus | 59,843 | 4.5 / 70 µs | 11 / 102 µs | 11 / 95 µs | 291 µs | 45 / 371 µs (6,492) | 0 | 6492/6492 | 0 |
-| fixtures | 50 | 13.4 / 274 µs | 17 / 298 µs | 33 / 345 µs | 363 µs | 230 / 904 µs (50) | 0 | 50/50 | 0 |
+| real corpus | 59,843 | 5.3 / 81 µs | 13 / 116 µs | 13 / 117 µs | 332 µs | 40 / 404 µs (6,492) | 0 | 6492/6492 | 0 |
+| fixtures | 53 | 15.9 / 405 µs | 28 / 459 µs | 58 / 566 µs | 603 µs | 56 / 706 µs (53) | 0 | 53/53 | 0 |
 
 256 KiB worst cases (200 runs each):
 
 | shape | bytes | result | transforms | best µs | p50 µs | p99 µs |
 |---|---:|---:|---:|---:|---:|---:|
-| grep_hits | 262,143 | compressed | search_group | 624 | 706 | 844 |
-| source_file | 262,044 | byte-identical-class | – | 154 | 163 | 235 |
-| ls_listing | 262,118 | nothing-to-do | – | 308 | 332 | 410 |
-| minified_json | 262,153 | nothing-to-do | – | 428 | 456 | 539 |
-| progress_cr | 262,131 | compressed | progress | 366 | 405 | 482 |
-| repeats_log | 262,140 | compressed | repeats | 244 | 275 | 340 |
-| base64_blobs | 261,976 | compressed | blobs | 660 | 729 | 848 |
+| grep_hits | 262,143 | compressed | search_group | 723 | 891 | 975 |
+| source_file | 262,044 | byte-identical-class | – | 186 | 203 | 222 |
+| ls_listing | 262,118 | nothing-to-do | – | 374 | 402 | 438 |
+| minified_json | 262,153 | nothing-to-do | – | 488 | 521 | 558 |
+| progress_cr | 262,131 | compressed | progress | 443 | 482 | 521 |
+| repeats_log | 262,140 | compressed | repeats | 290 | 323 | 352 |
+| base64_blobs | 261,976 | compressed | blobs | 779 | 835 | 897 |
+| grep_long_lines | 258,585 | no-gain | – | 733 | 811 | 909 |
+| ls_mixed_owner | 262,105 | nothing-to-do | – | 374 | 401 | 427 |
+| ls_64k_fires | 65,349 | nothing-to-do | – | 90 | 101 | 108 |
 <!-- END:latency_search_on -->
 
 Measured on a shared 24-core box under load (load average ≈ 12 from other
@@ -283,19 +301,19 @@ workers and three fuzzers), so p99s carry noise; `best` is the code's own cost.
 
 ## 7. Token estimator and the SEARCH layout choice
 <!-- BEGIN:estimator -->
-Fitted on 2058 real results (stratified class × size), scored on 513 held out:
+Fitted on 2060 real results (stratified class × size), scored on 514 held out:
 
 | family | model | held-out n | Σest/Σreal | median |err| | p90 | p95 | median (≥500 tok) | p95 (≥500 tok) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| V5 | claude-opus-5-5 | 513 | 0.986 | 3.8% | 13.4% | 18.6% | 3.5% | 14.0% |
-| V4 | claude-sonnet-4-6 | 513 | 0.986 | 3.6% | 13.9% | 18.4% | 3.0% | 14.0% |
+| V5 | claude-opus-5-5 | 514 | 0.986 | 3.8% | 13.4% | 18.6% | 3.5% | 13.9% |
+| V4 | claude-sonnet-4-6 | 514 | 0.987 | 3.6% | 13.9% | 18.4% | 3.0% | 14.0% |
 
 SEARCH layout, 250 seeded fired real results, real tokens:
 
 | model | raw tokens | rg --heading | + blank between groups | `path:` heading | singles inline |
 |---|---:|---:|---:|---:|---:|
-| claude-sonnet-4-6 | 203,475 | 20.33% (0 grew) | 20.33% (0 grew) | 19.85% (2 grew) | 20.33% (0 grew) |
-| claude-opus-5-5 | 262,304 | 20.46% (0 grew) | 20.46% (0 grew) | 20.09% (1 grew) | 20.46% (0 grew) |
+| claude-sonnet-4-6 | 183,289 | 22.07% (0 grew) | 22.07% (0 grew) | 21.58% (0 grew) | 22.07% (0 grew) |
+| claude-opus-5-5 | 237,145 | 22.72% (0 grew) | 22.72% (0 grew) | 22.34% (0 grew) | 22.72% (0 grew) |
 <!-- END:estimator -->
 
 The estimator is a non-negative linear model over 16 one-pass shape features
@@ -304,3 +322,262 @@ indentation, newlines, non-ASCII, letter/digit switches). Its error on whole
 texts is what matters for telemetry; the gate only needs the *sign and size of
 the change*, checked under both families with a margin (≥ 8 tokens and ≥ 2%), and
 every fired corpus result was re-counted with the real tokenizer above.
+
+## 8. Phase 2A: SEARCH layout and LISTING transforms
+
+**What ships:** `search_elide` (on). **What doesn't:** `ls_columns` (off: it
+failed accuracy parity twice). Lossy results need the host's `raw_ref`, as in
+Phase 1. Every number in this section is real `count_tokens` on all 59,843
+results, with 5.x primary and 4.x alongside. Accuracy is Haiku 4.5 and Sonnet 4.6
+in isolated `synaps rpc` sessions.
+
+### 8.1 Where the tokens go (measured before anything was built)
+
+The Phase 1 lesson was that layouts which separate a value from its key hurt
+accuracy. That rules out paths and line numbers, which together are 13% of
+SEARCH. The rest is file text that edits quote back. It has to stay byte-exact,
+or be cut in the open with a raw pointer. Here is what is actually left to
+attack:
+
+- **Over-long lines** (> 500 chars): 4.4% of SEARCH tokens. In bytes, 60% of
+  them are markdown/prose paragraphs from grepped notes and docs. The rest is
+  minified JS, JSONL and HTML.
+- **Huge outputs**: a grep with 100+ hit lines is 6.3% of SEARCH tokens. Of
+  those, only 11 multi-file results have over 100 `path:N:` hits, since our
+  sessions already pipe through `head`.
+- **Context lines** (`-A/-B/-C` and `--`): 15.5%. The model asked for them.
+- **Duplicate lines**: 1.24%. Mostly non-hit text from chained commands;
+  duplicate hit lines are 0.25% of SEARCH bytes.
+- **Spill**: Synaps already cuts the 126 SEARCH results over 12 KiB from 7.2%
+  of SEARCH tokens to 3.4%.
+
+LISTING: `ls -l` rows are 12.7% of LISTING tokens, and the columns that are
+constant across a listing are at most 2.4% of LISTING. Most "ls" and "wc"
+LISTING results are file views chained after the listing (`wc -l f && sed -n
+…p f`, `ls d; cat f`). That is a classifier observation for later; Phase 2A
+transforms only touch rows they parse.
+
+<!-- BEGIN:p2a_anatomy -->
+SEARCH: 15,727 real results, every one counted (shares by deletion, so they overlap: `context` and `long` lines are also hit/other text).
+
+| tokenizer | tokens | paths | line numbers | hit text | context lines + `--` | other lines | lines > 500 chars | duplicate lines | > 12 KiB (raw → after spill) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| opus-5-5 | 11,827,999 | 8.51% | 4.61% | 52.58% | 15.49% | 32.29% | 4.41% | 1.24% | 126 results, 7.2% → 3.4% |
+| sonnet-4-6 | 9,378,747 | 8.19% | 5.78% | 50.73% | 15.89% | 32.72% | 4.21% | 1.24% | 126 results, 7.1% → 3.4% |
+
+By shape (5.x): mixed 38.59% (6,665), multi-file 21.66% (2,785), single-file 39.75% (6,277). By hit lines per result: <100 15.99% (946), <20 48.57% (11,681), <200 5.46% (178), <50 29.12% (2,904), >=200 0.86% (18).
+
+LISTING: 4,783 real results, 3,996,188 tokens (5.x). By command (5.x): cmd:ls 50.38%, cmd:wc 20.7%, cmd:grep 4.95%, cmd:ps 3.92%, sniff:path list 3.35%, sniff:ls 3.41%, cmd:pgrep 2.73%, cmd:find 2.24%, tool:ls 2.46%, cmd:which 1.55%.
+`ls -l` rows: 12.67% of LISTING tokens (11,214 rows in 547 results); columns constant across a listing (links/owner/group) are 19.27% of those rows' tokens (5.x; 4.x 18.4%), i.e. at most 2.4% of LISTING. Over 12 KiB: 96 results, 20.0% of LISTING tokens raw, 8.8% after spill.
+<!-- END:p2a_anatomy -->
+
+### 8.2 Tokens, raw and after spill (candidate config: both on)
+
+"After spill" is what Synaps history carries: any text over 12 KiB becomes
+`lib/spill.py`'s head + tail preview (a byte-exact port of SynapsCLI #334), and
+crush runs before the spill. Two regimes cost tokens after spill:
+
+- **Crush brings a >12 KiB result under the threshold.** The model then sees
+  the whole crushed text (every hit, cut lines included) instead of a 7 KiB
+  preview. That is 13 `search_elide` results, +3.3% after spill.
+- **Both stay over.** The preview is the same size either way.
+
+Phase 3 can keep whichever form is smaller after spill. `ls_columns` gets
+nothing after spill on listings over 12 KiB, which is one reason it is bounded
+at 64 KiB.
+
+<!-- BEGIN:p2a_tokens -->
+| transform | fired | raw tokens 5.x | saved on fired 5.x / 4.x | saved 5.x | after spill: saved on fired 5.x / 4.x | after spill: saved 5.x | grew raw 5.x / 4.x | grew after spill 5.x / 4.x |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| search_elide | 105 | 311,202 | 39.8% / 38.1% | 123,705 (1.05% of SEARCH) | 27.9% / 26.3% | 69,680 (0.61% of SEARCH after spill) | 0 / 0 | 11 / 11 |
+| ls_columns | 69 | 257,042 | 17.3% / 16.1% | 44,580 (1.12% of LISTING) | 12.3% / 11.2% | 23,552 (0.66% of LISTING after spill) | 0 / 0 | 3 / 8 |
+
+By spill regime (5.x; Synaps previews any result over 12 KiB, crush runs first):
+
+| transform | regime | results | tokens raw → crushed | after spill raw → crushed | grew after spill |
+|---|---:|---:|---:|---:|---:|
+| ls_columns | both over | 10 | 113,265 → 92,182 | 47,548 → 47,493 | 3 |
+| ls_columns | both under | 59 | 143,777 → 120,280 | 143,777 → 120,280 | 0 |
+| search_elide | both over | 3 | 20,285 → 17,242 | 9,319 → 9,613 | 3 |
+| search_elide | both under | 89 | 201,158 → 129,895 | 201,158 → 129,895 | 0 |
+| search_elide | crush brings it under | 13 | 89,759 → 40,360 | 39,071 → 40,360 | 8 |
+
+Every fired result counted with count_tokens, both families. All fired results of the candidate config (Phase 1's generic transforms included) with more real tokens than raw: 0 (5.x), 0 (4.x). Estimated vs real saving (5.x, all fired): 165,644 vs 194,213 tokens.
+<!-- END:p2a_tokens -->
+
+### 8.3 Accuracy
+
+The parity rule is Phase 1's: per model, McNemar p ≥ 0.05 **and** the
+raw-only excess within that model's raw-vs-raw disagreement. A transform ships
+only if every round, and the pooled rounds, pass on both models.
+
+Questions come from the RAW output and the command:
+
+- grep path, line and count;
+- the file and line of a match on an over-long line, quoted by a snippet next
+  to it (the pattern is located with Python's `re`, independently of crush);
+- the 4 words after the match;
+- ls size, perms, mtime, owner, group, links and symlink, and the owner of an
+  entry that differs from most rows.
+
+A question that quotes text crush cut is still asked, but marked `cut:`. Its
+answer now lives only in the raw file.
+
+The rounds:
+
+- **`search_elide`**: round 1, then round 2 on samples round 1 never saw.
+  Same code in both rounds.
+- **`ls_columns` v1** (`owner X, group Y on all N rows below; those columns
+  are left out`): Haiku held. Sonnet answered "unknown" for owner and group
+  (14 raw-only, 0 crushed-only).
+- **`ls_columns` v2** (`all N entries below are owned by user X, group Y;
+  their rows omit those two columns (ls -go layout)`). A 2-call Sonnet pilot
+  on the failing samples went 14/14. The re-gate on **fresh samples** failed on
+  both models: fewer "unknown"s, but models now read the *neighbouring* row's
+  mtime (mtime 44/46 → 37/46). Taking a column out of the rows changes how
+  the remaining rows are read, the same lesson as Phase 1's grouping.
+  `ls_columns` stays built, fuzzed and measured (`eval/configs/p2a_on.json`),
+  and ships off.
+
+<!-- BEGIN:p2a_accuracy -->
+| transform | round | model | samples | questions | raw correct | crushed correct | discordant raw-only / crushed-only | McNemar p | raw-vs-raw disagreement | per model |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| search_elide | round 1 | haiku-4-5-20251001 | 22 | 109 | 75/109 (68.8%) | 75/109 (68.8%) | 9 / 9 | 1.000 | 8.0% (n=25) | parity |
+| search_elide | round 1 | sonnet-4-6 | 22 | 109 | 77/109 (70.6%) | 84/109 (77.1%) | 7 / 14 | 0.189 | 4.0% (n=25) | parity |
+| search_elide | round 1 | both models | 22 | 218 | 152/218 (69.7%) | 159/218 (72.9%) | 16 / 23 | 0.337 | 6.0% (n=50) |  |
+| search_elide | round 2 (fresh samples) | haiku-4-5-20251001 | 18 | 72 | 40/72 (55.6%) | 41/72 (56.9%) | 4 / 5 | 1.000 | 11.8% (n=17) | parity |
+| search_elide | round 2 (fresh samples) | sonnet-4-6 | 18 | 72 | 38/72 (52.8%) | 41/72 (56.9%) | 5 / 8 | 0.581 | 0.0% (n=17) | parity |
+| search_elide | round 2 (fresh samples) | both models | 18 | 144 | 78/144 (54.2%) | 82/144 (56.9%) | 9 / 13 | 0.523 | 5.9% (n=34) |  |
+| search_elide | pooled | haiku-4-5-20251001 | 40 | 181 | 115/181 (63.5%) | 116/181 (64.1%) | 13 / 14 | 1.000 | 9.5% (n=42) | parity |
+| search_elide | pooled | sonnet-4-6 | 40 | 181 | 115/181 (63.5%) | 125/181 (69.1%) | 12 / 22 | 0.121 | 2.4% (n=42) | parity |
+| search_elide | pooled | both models | 40 | 362 | 230/362 (63.5%) | 241/362 (66.6%) | 25 / 36 | 0.200 | 6.0% (n=84) |  |
+| ls_columns v1 | v1 note (round 1) | haiku-4-5-20251001 | 22 | 161 | 153/161 (95.0%) | 152/161 (94.4%) | 3 / 2 | 1.000 | 2.3% (n=44) | parity |
+| ls_columns v1 | v1 note (round 1) | sonnet-4-6 | 22 | 161 | 160/161 (99.4%) | 146/161 (90.7%) | 14 / 0 | 0.000 | 2.3% (n=44) | **FAIL** |
+| ls_columns v1 | v1 note (round 1) | both models | 22 | 322 | 313/322 (97.2%) | 298/322 (92.5%) | 17 / 2 | 0.001 | 2.3% (n=88) |  |
+| ls_columns v2 | v2 note (round 2, fresh samples) | haiku-4-5-20251001 | 24 | 170 | 168/170 (98.8%) | 160/170 (94.1%) | 9 / 1 | 0.021 | 2.3% (n=43) | **FAIL** |
+| ls_columns v2 | v2 note (round 2, fresh samples) | sonnet-4-6 | 24 | 170 | 167/170 (98.2%) | 158/170 (92.9%) | 12 / 3 | 0.035 | 0.0% (n=43) | **FAIL** |
+| ls_columns v2 | v2 note (round 2, fresh samples) | both models | 24 | 340 | 335/340 (98.5%) | 318/340 (93.5%) | 21 / 4 | 0.001 | 1.2% (n=86) |  |
+
+Verdicts: **search_elide: ships**; **ls_columns v1: disabled**; **ls_columns v2: disabled**.
+
+Questions quoting text crush cut (`cut:` kinds; the answer was moved to the raw file, so the crushed side can only say "unknown"; kept out of the verdict, shown here):
+
+| transform | raw correct | crushed correct |
+|---|---:|---:|
+| search_elide | 10/10 | 2/10 |
+
+By question kind (both models pooled):
+
+| transform | kind | raw | crushed |
+|---|---:|---:|---:|
+| ls_columns v1 | lines:next | 9/10 | 10/10 |
+| ls_columns v1 | ls:group | 44/44 | 40/44 |
+| ls_columns v1 | ls:links | 43/44 | 43/44 |
+| ls_columns v1 | ls:mtime | 39/44 | 37/44 |
+| ls_columns v1 | ls:owner | 84/84 | 76/84 |
+| ls_columns v1 | ls:owner_other | 4/4 | 4/4 |
+| ls_columns v1 | ls:perms | 44/44 | 43/44 |
+| ls_columns v1 | ls:size | 42/44 | 41/44 |
+| ls_columns v1 | ls:symlink | 4/4 | 4/4 |
+| ls_columns v2 | lines:next | 7/8 | 6/8 |
+| ls_columns v2 | ls:group | 48/48 | 44/48 |
+| ls_columns v2 | ls:links | 48/48 | 48/48 |
+| ls_columns v2 | ls:mtime | 44/46 | 37/46 |
+| ls_columns v2 | ls:owner | 90/90 | 84/90 |
+| ls_columns v2 | ls:owner_other | 4/4 | 4/4 |
+| ls_columns v2 | ls:perms | 46/46 | 46/46 |
+| ls_columns v2 | ls:size | 44/46 | 45/46 |
+| ls_columns v2 | ls:symlink | 4/4 | 4/4 |
+| search_elide | cut:grep:line | 2/2 | 1/2 |
+| search_elide | cut:grep:path | 2/2 | 1/2 |
+| search_elide | cut:numbered:line | 6/6 | 0/6 |
+| search_elide | elide:after | 17/68 | 17/68 |
+| search_elide | elide:line | 66/86 | 73/86 |
+| search_elide | elide:path | 14/20 | 16/20 |
+| search_elide | grep:count | 11/18 | 13/18 |
+| search_elide | grep:line | 12/14 | 12/14 |
+| search_elide | grep:most | 8/14 | 11/14 |
+| search_elide | grep:path | 11/14 | 12/14 |
+| search_elide | lines:gap | 2/2 | 2/2 |
+| search_elide | lines:next | 35/64 | 33/64 |
+| search_elide | lines:run | 2/2 | 2/2 |
+| search_elide | numbered:line | 52/60 | 50/60 |
+
+Spend: 388 model calls in 3 runs (cap 400 for the phase), $2.99 at list price; real auth.json unchanged in every run: True.
+<!-- END:p2a_accuracy -->
+
+### 8.4 Edit safety and reconstruction
+
+`search_elide` keeps each line's own `path:N:` prefix and one byte-exact slice
+of its text around the match. `[crush: N chars cut]` on each side gives the
+exact number of missing characters. One end note gives the raw pointer. Lines
+that aren't cut are untouched.
+
+Two checks run on every fired result:
+
+- crush-core's `verify` runs in the gate;
+- `eval/lib/p2a_checks.py`, an independent Python check, confirms each cut
+  line is `prefix + slice` of its raw line with exactly the stated counts.
+
+`ls_columns` is lossless: `restore()` rebuilds the input from the note alone.
+The gate runs an equivalent side-by-side `verify`, and a property test holds
+the two together.
+
+<!-- BEGIN:p2a_edit -->
+| set | CONTENT changed | search_elide results | cut lines not an exact slice / wrong counts | ls_columns results | not restorable from the note |
+|---|---:|---:|---:|---:|---:|
+| fixtures | 0 | 2 (96 lines cut, 21 kept verbatim) | 0 | 1 | 0 |
+| corpus | 0 | 105 (189 lines cut, 2,106 kept verbatim) | 0 | 69 | 0 |
+<!-- END:p2a_edit -->
+
+### 8.5 Latency, property tests, fuzzing
+
+`ls_columns` was first quadratic in rows (75 ms at 256 KiB, found by a
+property test). It is now linear (Boyer-Moore majority) and its gate check
+allocates nothing per row. It is bounded at 64 KiB: no LISTING result in the
+corpus is over 32 KiB, and over the spill threshold factoring gains nothing.
+The table shows it firing at that bound.
+
+<!-- BEGIN:p2a_latency -->
+| shape (candidates on) | bytes | result | transforms | best µs | p50 µs | p99 µs |
+|---|---:|---:|---:|---:|---:|---:|
+| grep_hits | 262,143 | nothing-to-do | – | 353 | 430 | 631 |
+| source_file | 262,044 | byte-identical-class | – | 159 | 176 | 209 |
+| ls_listing | 262,118 | nothing-to-do | – | 315 | 346 | 426 |
+| minified_json | 262,153 | nothing-to-do | – | 447 | 457 | 495 |
+| progress_cr | 262,131 | compressed | progress | 391 | 425 | 458 |
+| repeats_log | 262,140 | compressed | repeats | 261 | 296 | 335 |
+| base64_blobs | 261,976 | compressed | blobs | 701 | 735 | 799 |
+| grep_long_lines | 258,585 | compressed | search_elide | 568 | 604 | 643 |
+| ls_mixed_owner | 262,105 | nothing-to-do | – | 323 | 349 | 381 |
+| ls_64k_fires | 65,349 | compressed | ls_columns | 216 | 236 | 256 |
+
+Real corpus, candidates on: p50 / p99 5.2 / 74 µs (all), 22 / 114 µs (fired), max 212 µs; panics 0, not idempotent 0, crush-ext ≠ library 0 / 3253.
+<!-- END:p2a_latency -->
+
+Property tests (`crates/crush-core/tests/properties_p2a.rs`, release, 2,000
+cases × 4 properties, plus worst-case timing):
+
+- elision cuts are exact and keep a pattern literal;
+- ls factoring round-trips through `restore` and agrees with `verify`, even on
+  tampered output;
+- arbitrary strings break neither transform;
+- CONTENT is untouched with both candidates on;
+- the gate invariants hold with the candidates on.
+
+Fuzzing: libFuzzer + ASAN, 11 minutes per target on the final code (`make fuzz`
+runs `search_elide` and `listing` as well). Results are in the PR. During
+development the `listing` target found one bug: input that already carried a
+`[crush:` line could not be restored. The gate never lets such input through;
+both transforms now refuse it on their own too.
+
+### 8.6 Measured, not built
+
+| idea | what it would touch (corpus) | why not |
+|---|---|---|
+| per-file hit cap (first N hits per file, counts in words) | multi-file greps with > 100 hits: 11 results, 0.3% of SEARCH bytes; > 50 hits, N=10: 99 results, 1.3% | drops exactly the hits grep was asked for; small |
+| drop duplicate lines | 1.24% of SEARCH tokens, mostly non-hit text; duplicate hit lines 0.25% of bytes | small; dropping changes per-grep counts |
+| strip `./`, shorten absolute paths | `./` 0.03% of SEARCH bytes; absolute paths 0.36% | tiny, or unsafe (`read`/`edit` resolve against the session cwd, not the shell's `cd`) |
+| fold `Permission denied` / `No such file` noise | 0.14% of SEARCH bytes, 0.4% of LISTING | tiny |
+| `find` / path-list cap | path lists ≈ 7% of LISTING tokens, mostly results over 12 KiB that spill already previews | little left after spill |
+| `ps` column drop | ps + pgrep 6.6% of LISTING tokens | budget went to the `ls_columns` re-gate; `ls_columns` showed that dropping columns hurts reading |

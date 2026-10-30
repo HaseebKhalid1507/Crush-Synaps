@@ -178,7 +178,37 @@ fn synthetic(cfg: &Config) {
             fill(|i| format!("waiting for the build lock held by another process (attempt group {})\n", i / 50)),
         ),
         ("base64_blobs", "kubectl get secret x -o yaml", fill(|i| format!("  key{i}: {}\n", b64.repeat(8)))),
+        // Phase 2A: over-long hit lines (match mid-line, case-folded), and an
+        // ls -la with the user's rows plus a root-owned `..`-style exception
+        (
+            "grep_long_lines",
+            "grep -rni 'fetchuser' dist",
+            fill(|i| {
+                let f: String = "abcdefghij;var k=e.q[3]||7;".chars().cycle().take(1500 + (i % 7) * 400).collect();
+                format!("dist/chunk{}.min.js:{}:{f}fetchUser(e,t){f}\n", i / 3, i + 1)
+            }),
+        ),
+        (
+            "ls_mixed_owner",
+            "ls -la ~/data",
+            fill(|i| {
+                if i % 40 == 1 {
+                    format!("drwxr-xr-x 1 root   root   {:>9} Oct 12 09:41 ..\n", 4096)
+                } else {
+                    format!("-rw-r--r-- 1 worker worker {:>9} Oct 12 09:41 data-{i}.parquet\n", 1000 + i * 7)
+                }
+            }),
+        ),
     ];
+    // ls_columns' input bound is 64 KiB: its worst case where it still fires
+    let mut ls64 = String::new();
+    let mut i = 0;
+    while ls64.len() < 64 * 1024 - 200 {
+        ls64.push_str(&format!("-rw-r--r-- 1 worker worker {:>9} Oct 12 09:41 data-{i}.parquet\n", 1000 + i * 7));
+        i += 1;
+    }
+    let mut shapes = shapes;
+    shapes.push(("ls_64k_fires", "ls -la ~/data", ls64));
     let mut rows = Vec::new();
     for (name, cmd, text) in &shapes {
         let input = Input { tool: "bash", command: Some(cmd), output: text, raw_ref: Some(RAW_REF) };

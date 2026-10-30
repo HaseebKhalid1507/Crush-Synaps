@@ -1,0 +1,21 @@
+total 88
+drwx------    6 dev dev   400 Oct 30 04:20 .
+drwxrwxrwt 2642 root   root   68020 Oct 30 04:20 ..
+drwxr-xr-x    2 dev dev    80 Oct 30 04:20 dist
+drwxr-xr-x    2 dev dev    60 Oct 30 04:20 docs
+drwxr-xr-x    2 dev dev    60 Oct 30 04:20 logs
+-rw-r--r--    1 dev dev  5749 Oct 30 04:20 note-00.md
+-rw-r--r--    1 dev dev  3813 Oct 30 04:20 note-01.md
+-rw-r--r--    1 dev dev  1777 Oct 30 04:20 note-02.md
+-rw-r--r--    1 dev dev  1367 Oct 30 04:20 note-03.md
+-rw-r--r--    1 dev dev   942 Oct 30 04:20 note-04.md
+-rw-r--r--    1 dev dev  1922 Oct 30 04:20 note-05.md
+-rw-r--r--    1 dev dev  8905 Oct 30 04:20 note-06.md
+-rw-r--r--    1 dev dev  7481 Oct 30 04:20 note-07.md
+-rw-r--r--    1 dev dev  7274 Oct 30 04:20 note-08.md
+-rw-r--r--    1 dev dev  5292 Oct 30 04:20 note-09.md
+-rw-r--r--    1 dev dev  1006 Oct 30 04:20 note-10.md
+-rw-r--r--    1 dev dev  5659 Oct 30 04:20 note-11.md
+-rw-r--r--    1 dev dev  5167 Oct 30 04:20 note-12.md
+-rw-r--r--    1 dev dev  3994 Oct 30 04:20 note-13.md
+drwxr-xr-x    4 dev dev    80 Oct 30 04:20 src
