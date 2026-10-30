@@ -1,0 +1,13 @@
+REPOSITORY                        TAG      IMAGE ID       CREATED        SIZE
+registry.example.com/team/svc01   v1.01    e6eb5a38bd3b   4 weeks ago    19.6GB
+registry.example.com/team/svc02   v1.02    4284894e1e7b   5 weeks ago    7.05GB
+registry.example.com/team/svc03   v1.03    1f827acf80ca   5 weeks ago    5.78GB
+registry.example.com/team/svc03   v1.04    1f827acf80ca   5 weeks ago    5.78GB
+registry.example.com/team/svc03   v1.05    e9f9c4472606   5 weeks ago    5.78GB
+node                              v1.06    64af3819f927   5 weeks ago    1.64GB
+registry.example.com/team/svc04   <none>   207aa8b9546b   2 months ago   201MB
+registry.example.com/team/svc04   <none>   95b69206e60d   2 months ago   494MB
+registry.example.com/team/svc04   <none>   26953c07a02f   2 months ago   185MB
+registry.example.com/team/svc04   <none>   72aefd5ceb95   2 months ago   219MB
+node                              v1.07    219fc9da91e7   3 months ago   1.65GB
+mongo                             v1.08    8ecb514b00bd   4 months ago   1.19GB

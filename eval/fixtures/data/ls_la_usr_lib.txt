@@ -1,0 +1,1197 @@
+total 3110112
+drwxr-xr-x 1 root root    207366 Oct 27 00:55 .
+drwxr-xr-x 1 root root        94 Oct 27 00:55 ..
+drwxr-xr-x 1 root root        44 Oct  7 09:33 7zip
+drwxr-xr-x 1 root root        34 Oct 20 20:02 GraphicsMagick-1.3.49
+drwxr-xr-x 1 root root        58 May 16 19:02 ImageMagick-7.1.2
+-rwxr-xr-x 1 root root     92200 Oct 18 05:20 LLVMgold.so
+-rw-r--r-- 1 root root       760 Sep 29 12:27 Mcrt1.o
+drwxr-xr-x 1 root root      2540 Oct 20 20:02 ModemManager
+drwxr-xr-x 1 root root       294 Oct 20 20:02 NetworkManager
+-rw-r--r-- 1 root root      2048 Sep 29 12:27 Scrt1.o
+drwxr-xr-x 1 root root        38 Sep 18 19:19 Thunar
+drwxr-xr-x 1 root root        24 May 16 19:01 X11
+-rwxr-xr-x 1 root root   3478184 Oct 15 16:08 Xorg
+-r-sr-xr-x 1 root root     22656 Oct 15 16:08 Xorg.wrap
+-rwxr-xr-x 1 root root    219608 Jul  3 21:55 accounts-daemon
+drwxr-xr-x 1 root root      2010 Sep 27 01:13 alsa-lib
+drwxr-xr-x 1 root root        52 Jun 12 03:08 alsa-topology
+drwxr-xr-x 1 root root        18 Oct 27 00:55 ao
+-rwxr-xr-x 1 root root     30912 Sep 29 02:35 appstreamcli-compose
+drwxr-xr-x 1 root root      2390 Sep  7 15:31 ardour9
+drwxr-xr-x 1 root root        30 Sep 30 19:28 ascompose
+-rwxr-xr-x 1 root root     30896 Oct 10 21:02 at-spi-bus-launcher
+-rwxr-xr-x 1 root root     88720 Oct 10 21:02 at-spi2-registryd
+drwxr-xr-x 1 root root        22 Sep 19 03:18 atkmm-1.6
+drwxr-xr-x 1 root root        28 Sep 30 19:28 audit
+drwxr-xr-x 1 root root        32 Oct 20 20:01 avahi
+drwxr-xr-x 1 root root        20 Jul 15 16:39 awk
+drwxr-xr-x 1 root root      1914 Aug  8 17:26 babl-0.1
+drwxr-xr-x 1 root root       496 Sep 27 01:12 bash
+drwxr-xr-x 1 root root        72 Oct 21 04:51 bfd-plugins
+-rwxr-xr-x 1 root root   1085536 Oct 10 11:33 bgmod
+-rwxr-xr-x 1 root root   7871008 Oct 10 11:33 bgmod-splash
+-rwxr-xr-x 1 root root    991336 Oct 10 11:33 bgmod-uninstaller
+drwxr-xr-x 1 root root        50 Sep 18 19:19 bind
+drwxr-xr-x 1 root root         0 Apr 22  2026 binfmt.d
+drwxr-xr-x 1 root root        30 Jul 15 16:39 bluetooth
+drwxr-xr-x 1 root root       112 Aug 13 00:13 bpf
+drwxr-xr-x 1 root root      1694 Jun 24 17:55 brltty
+drwxr-xr-x 1 root root        44 Oct 20 20:01 btrfs-assistant
+drwxr-xr-x 1 root root        54 Jun 23 04:35 cachyos-kernel-manager
+drwxr-xr-x 1 root root        24 May 16 19:02 cachyos-pi
+drwxr-xr-x 1 root root        14 Sep 19 03:48 caelestia
+drwxr-xr-x 1 root root        64 Sep 27 01:12 cairo
+drwxr-xr-x 1 root root        14 Aug 23 14:42 cairomm-1.0
+drwxr-xr-x 1 root root        14 May 16 19:02 cairomm-1.16
+drwxr-xr-x 1 root root        20 Oct 20 20:01 cifs-utils
+drwxr-xr-x 1 root root         4 May 16 19:02 ckport
+drwxr-xr-x 1 root root       144 Oct 21 04:51 clang
+drwxr-xr-x 1 root root     17072 Oct 20 20:02 cmake
+drwxr-xr-x 1 root root        24 Sep 30 19:28 coreutils
+drwxr-xr-x 1 root root        42 Sep  9 13:21 crda
+drwxr-xr-x 1 root root         0 Apr 22  2026 credstore
+-rw-r--r-- 1 root root      2416 Sep 29 12:27 crt1.o
+-rw-r--r-- 1 root root      1240 Sep 29 12:27 crti.o
+-rw-r--r-- 1 root root       808 Sep 29 12:27 crtn.o
+drwxr-xr-x 1 root root       216 Oct 20 20:01 cryptsetup
+drwxr-xr-x 1 root root        14 May 16 19:02 cups
+drwxr-xr-x 1 root root        64 May 16 19:00 db5.3
+drwxr-xr-x 1 root root        14 May 16 19:00 dbus-1.0
+---s--x--- 1 root dbus     70160 Oct 19 10:15 dbus-daemon-launch-helper
+-rwxr-xr-x 1 root root     76032 Oct  7 03:26 dconf-service
+drwxr-xr-x 1 root root        22 May 16 19:00 depmod.d
+drwxr-xr-x 1 root root       356 Oct  7 09:33 device-mapper
+drwxr-xr-x 1 root root        62 Sep  7 15:31 dhcpcd
+drwxr-xr-x 1 root root        22 Jun 15 22:27 docker
+drwxr-xr-x 1 root root        18 Jun 24 17:55 dracut
+drwxr-xr-x 1 root root      1908 Oct  2 11:35 dri
+drwxr-xr-x 1 root root        24 May 16 19:00 e2fsprogs
+-rwxr-xr-x 1 root root     18536 Mar 11  2026 e2initrd_helper
+drwxr-xr-x 1 root root       588 Oct 20 20:02 electron39
+drwxr-xr-x 1 root root       588 Oct 20 20:02 electron40
+drwxr-xr-x 1 root root       616 Oct 20 20:02 electron42
+drwxr-xr-x 1 root root       616 Oct 20 20:02 electron43
+drwxr-xr-x 1 root root       176 Sep  7 15:31 enchant-2
+drwxr-xr-x 1 root root        80 Sep 30 19:28 engines-3
+drwxr-xr-x 1 root root       114 Oct 20 20:01 environment.d
+drwxr-xr-x 1 root root        36 Aug 14 23:29 exfatprogs
+drwxr-xr-x 1 root root       238 Sep  7 15:31 ffmpeg4.4
+drwxr-xr-x 1 root root       692 Oct 20 20:02 firefox
+drwxr-xr-x 1 root root        26 Jun 24 17:55 firewalld
+drwxr-xr-x 1 root root     31384 Sep 18 19:19 firmware
+drwxr-xr-x 1 root root        80 Sep 18 20:27 gamemode
+drwxr-xr-x 1 root root       238 Jul 15 16:39 gawk
+drwxr-xr-x 1 root root        54 Oct 20 20:01 gbm
+drwxr-xr-x 1 root root        38 May 16 19:00 gcc
+drwxr-xr-x 1 root root      5434 Sep 30 19:28 gconv
+-rwxr-xr-x 1 root root     63816 Sep 13 11:44 gcr-ssh-agent
+-rwxr-xr-x 1 root root     18584 Sep 13 11:44 gcr4-ssh-askpass
+-rw-r--r-- 1 root root      3776 Sep 29 12:27 gcrt1.o
+drwxr-xr-x 1 root root        12 May 16 19:02 gdk-pixbuf-2.0
+drwxr-xr-x 1 root root        14 Sep 19 03:18 gdkmm-3.0
+drwxr-xr-x 1 root root      1934 Sep 27 01:13 gegl-0.4
+drwxr-xr-x 1 root root       106 Sep 30 19:28 getconf
+drwxr-xr-x 1 root root        92 May 16 19:00 gettext
+drwxr-xr-x 1 root root         6 Jul 25 18:26 gimp
+drwxr-xr-x 1 root root        14 May 16 19:00 gio
+-rwxr-xr-x 1 root root     14432 Oct  7 05:50 gio-launch-desktop
+drwxr-xr-x 1 root root        14 Aug 23 14:42 giomm-2.4
+drwxr-xr-x 1 root root        14 May 16 19:02 giomm-2.68
+drwxr-xr-x 1 root root      5954 Oct 27 00:55 girepository-1.0
+drwxr-xr-x 1 root root      4870 Sep 30 19:28 git-core
+drwxr-xr-x 1 root root        14 May 16 19:00 glib-2.0
+-rwxr-xr-x 1 root root     18608 Oct  7 03:49 glib-pacrunner
+drwxr-xr-x 1 root root        22 Aug 23 14:42 glibmm-2.4
+drwxr-xr-x 1 root root        22 May 16 19:02 glibmm-2.68
+drwxr-xr-x 1 root root        40 Jun 24 17:55 glusterfs
+drwxr-xr-x 1 root root         4 May 16 19:01 glycin-loaders
+drwxr-xr-x 1 root root        22 May 16 19:01 gnome-settings-daemon-3.0
+drwxr-xr-x 1 root root       252 Aug 13 00:13 gnupg
+drwxr-xr-x 1 root root        18 Jul 17 04:01 gobject-introspection
+-rwxr-xr-x 1 root root   7790120 Oct 10 11:33 goverlay
+drwxr-xr-x 1 root root       202 Aug  1 15:32 gprofng
+drwxr-xr-x 1 root root        14 May 16 19:01 graphene-1.0
+-rw-r--r-- 1 root root      2720 Sep 29 12:27 grcrt1.o
+drwxr-xr-x 1 root root        50 May 16 19:01 grub
+drwxr-xr-x 1 root root        24 May 16 19:02 gssproxy
+drwxr-xr-x 1 root root      9132 Oct 20 20:02 gstreamer-1.0
+drwxr-xr-x 1 root root        24 May 16 19:02 gtk-3.0
+drwxr-xr-x 1 root root        10 Jul 17 04:01 gtk-4.0
+drwxr-xr-x 1 root root        22 Sep 19 03:18 gtkmm-3.0
+drwxr-xr-x 1 root root        22 May 16 19:02 gtkmm-4.0
+drwxr-xr-x 1 root root        20 Jun 24 17:55 guestfs
+drwxr-xr-x 1 root root         6 May 16 19:00 guile
+drwxr-xr-x 1 root root        62 Oct 20 20:02 hwloc
+drwxr-xr-x 1 root root        24 Sep 18 19:19 ibacm
+drwxr-xr-x 1 root root       210 Oct  7 09:33 ibus
+drwxr-xr-x 1 root root        68 May 16 19:00 icu
+drwxr-xr-x 1 root root        28 May 16 19:02 imlib2
+drwxr-xr-x 1 root root       124 Oct  7 09:33 initcpio
+drwxr-xr-x 1 root root       192 May 16 19:02 itcl4.3.2
+-rwxr-xr-x 1 root root      2142 Sep 24 05:59 iw-set-regdomain
+drwxr-xr-x 1 root root        12 Sep 18 19:19 iwd
+drwxr-xr-x 1 root root       332 May 16 19:02 jack
+-rw-r--r-- 1 root root     86200 Aug  9 05:42 jarhdf5-2.2.0.jar
+drwxr-xr-x 1 root root        80 Oct 20 20:49 jcode
+drwxr-xr-x 1 root root        74 Sep 27 01:13 jvm
+drwxr-xr-x 1 root root        32 Jul 17 04:21 kauth
+drwxr-xr-x 1 root root        58 Oct 20 20:01 kernel
+drwxr-xr-x 1 root root        64 Jul 17 04:21 kf5
+drwxr-xr-x 1 root root       180 Oct 20 20:02 kf6
+drwxr-xr-x 1 root root       150 Oct  2 11:35 kitty
+drwxr-xr-x 1 root root        14 May 16 19:00 krb5
+-rwxr-xr-x 1 root root    283632 Sep 29 12:27 ld-linux-x86-64.so.2
+lrwxrwxrwx 1 root root        22 Sep 29 12:27 ld-linux.so.2 -> ../lib32/ld-linux.so.2
+lrwxrwxrwx 1 root root        25 Sep  8 11:55 ld-musl-x86_64.so.1 -> /usr/lib/musl/lib/libc.so
+drwxr-xr-x 1 root root        26 Aug  1 15:32 ld.so.conf.d
+drwxr-xr-x 1 root root      3114 Aug  1 15:32 ldscripts
+drwxr-xr-x 1 root root       144 Oct  7 09:33 leancrypto
+-rwxr-xr-x 1 root root      1067 Sep 20 07:19 less-osc8-open
+-rwxr-xr-x 1 root root     14440 Sep 20 07:19 lessecho
+lrwxrwxrwx 1 root root        33 Jun 15  2025 libBasicUsageEnvironment.so -> libBasicUsageEnvironment.so.2.1.0
+lrwxrwxrwx 1 root root        33 Jun 15  2025 libBasicUsageEnvironment.so.2 -> libBasicUsageEnvironment.so.2.1.0
+-rw-r--r-- 1 root root     51256 Jun 15  2025 libBasicUsageEnvironment.so.2.1.0
+-rw-r--r-- 1 root root      2382 Sep 29 12:27 libBrokenLocale.a
+lrwxrwxrwx 1 root root        20 Sep 29 12:27 libBrokenLocale.so -> libBrokenLocale.so.1
+-rwxr-xr-x 1 root root     14432 Sep 29 12:27 libBrokenLocale.so.1
+lrwxrwxrwx 1 root root        11 Jun 14  2025 libEGL.so -> libEGL.so.1
+lrwxrwxrwx 1 root root        15 Jun 14  2025 libEGL.so.1 -> libEGL.so.1.1.0
+-rwxr-xr-x 1 root root     67536 Jun 14  2025 libEGL.so.1.1.0
+lrwxrwxrwx 1 root root        16 Oct  1 11:41 libEGL_mesa.so -> libEGL_mesa.so.0
+lrwxrwxrwx 1 root root        20 Oct  1 11:41 libEGL_mesa.so.0 -> libEGL_mesa.so.0.0.0
+-rwxr-xr-x 1 root root    400408 Oct  1 11:41 libEGL_mesa.so.0.0.0
+lrwxrwxrwx 1 root root        18 Oct 10 02:39 libEGL_nvidia.so -> libEGL_nvidia.so.0
+lrwxrwxrwx 1 root root        26 Oct 10 02:39 libEGL_nvidia.so.0 -> libEGL_nvidia.so.615.78.08
+-rwxr-xr-x 1 root root   1198032 Oct 10 02:39 libEGL_nvidia.so.615.78.08
+lrwxrwxrwx 1 root root        15 Jun 14  2025 libFLAC++.so -> libFLAC++.so.11
+lrwxrwxrwx 1 root root        19 Jun 14  2025 libFLAC++.so.11 -> libFLAC++.so.11.0.0
+-rwxr-xr-x 1 root root    112688 Jun 14  2025 libFLAC++.so.11.0.0
+lrwxrwxrwx 1 root root        13 Jun 14  2025 libFLAC.so -> libFLAC.so.14
+lrwxrwxrwx 1 root root        17 Jun 14  2025 libFLAC.so.14 -> libFLAC.so.14.0.0
+-rwxr-xr-x 1 root root    444384 Jun 14  2025 libFLAC.so.14.0.0
+lrwxrwxrwx 1 root root        10 Jun 14  2025 libGL.so -> libGL.so.1
+lrwxrwxrwx 1 root root        14 Jun 14  2025 libGL.so.1 -> libGL.so.1.7.0
+-rwxr-xr-x 1 root root    460816 Jun 14  2025 libGL.so.1.7.0
+lrwxrwxrwx 1 root root        24 Oct 10 02:39 libGLESv1_CM_nvidia.so -> libGLESv1_CM_nvidia.so.1
+lrwxrwxrwx 1 root root        32 Oct 10 02:39 libGLESv1_CM_nvidia.so.1 -> libGLESv1_CM_nvidia.so.615.78.08
+-rwxr-xr-x 1 root root     63528 Oct 10 02:39 libGLESv1_CM_nvidia.so.615.78.08
+lrwxrwxrwx 1 root root        14 Jun 14  2025 libGLESv2.so -> libGLESv2.so.2
+lrwxrwxrwx 1 root root        18 Jun 14  2025 libGLESv2.so.2 -> libGLESv2.so.2.1.0
+-rwxr-xr-x 1 root root     63512 Jun 14  2025 libGLESv2.so.2.1.0
+lrwxrwxrwx 1 root root        21 Oct 10 02:39 libGLESv2_nvidia.so -> libGLESv2_nvidia.so.2
+lrwxrwxrwx 1 root root        29 Oct 10 02:39 libGLESv2_nvidia.so.2 -> libGLESv2_nvidia.so.615.78.08
+-rwxr-xr-x 1 root root    112672 Oct 10 02:39 libGLESv2_nvidia.so.615.78.08
+lrwxrwxrwx 1 root root        16 Jan 25  2026 libGLEW.so -> libGLEW.so.2.3.1
+lrwxrwxrwx 1 root root        16 Jan 25  2026 libGLEW.so.2.3 -> libGLEW.so.2.3.1
+-rw-r--r-- 1 root root    735160 Jan 25  2026 libGLEW.so.2.3.1
+lrwxrwxrwx 1 root root        11 Feb 14  2026 libGLU.so -> libGLU.so.1
+lrwxrwxrwx 1 root root        15 Feb 14  2026 libGLU.so.1 -> libGLU.so.1.3.1
+-rwxr-xr-x 1 root root    686120 Feb 14  2026 libGLU.so.1.3.1
+lrwxrwxrwx 1 root root        11 Jun 14  2025 libGLX.so -> libGLX.so.0
+lrwxrwxrwx 1 root root        15 Jun 14  2025 libGLX.so.0 -> libGLX.so.0.0.0
+-rwxr-xr-x 1 root root    137160 Jun 14  2025 libGLX.so.0.0.0
+lrwxrwxrwx 1 root root        20 Oct  1 11:41 libGLX_indirect.so.0 -> libGLX_mesa.so.0.0.0
+lrwxrwxrwx 1 root root        16 Oct  1 11:41 libGLX_mesa.so -> libGLX_mesa.so.0
+lrwxrwxrwx 1 root root        20 Oct  1 11:41 libGLX_mesa.so.0 -> libGLX_mesa.so.0.0.0
+-rwxr-xr-x 1 root root    379448 Oct  1 11:41 libGLX_mesa.so.0.0.0
+lrwxrwxrwx 1 root root        18 Oct 10 02:39 libGLX_nvidia.so -> libGLX_nvidia.so.0
+lrwxrwxrwx 1 root root        26 Oct 10 02:39 libGLX_nvidia.so.0 -> libGLX_nvidia.so.615.78.08
+-rwxr-xr-x 1 root root   1211968 Oct 10 02:39 libGLX_nvidia.so.615.78.08
+lrwxrwxrwx 1 root root        18 Jun 14  2025 libGLdispatch.so -> libGLdispatch.so.0
+lrwxrwxrwx 1 root root        22 Jun 14  2025 libGLdispatch.so.0 -> libGLdispatch.so.0.0.0
+-rwxr-xr-x 1 root root    460896 Jun 14  2025 libGLdispatch.so.0.0.0
+-rw-r--r-- 1 root root      1396 Oct  3 08:20 libGenericCodeGen.a
+-rwxr-xr-x 1 root root      1103 Oct 19 05:46 libGraphicsMagick++.la
+lrwxrwxrwx 1 root root        29 Oct 19 05:46 libGraphicsMagick++.so -> libGraphicsMagick++.so.12.9.1
+lrwxrwxrwx 1 root root        29 Oct 19 05:46 libGraphicsMagick++.so.12 -> libGraphicsMagick++.so.12.9.1
+-rwxr-xr-x 1 root root    518240 Oct 19 05:46 libGraphicsMagick++.so.12.9.1
+-rwxr-xr-x 1 root root      1062 Oct 19 05:46 libGraphicsMagick.la
+lrwxrwxrwx 1 root root        27 Oct 19 05:46 libGraphicsMagick.so -> libGraphicsMagick.so.3.27.2
+lrwxrwxrwx 1 root root        27 Oct 19 05:46 libGraphicsMagick.so.3 -> libGraphicsMagick.so.3.27.2
+-rwxr-xr-x 1 root root   3057888 Oct 19 05:46 libGraphicsMagick.so.3.27.2
+-rwxr-xr-x 1 root root      1120 Oct 19 05:46 libGraphicsMagickWand.la
+lrwxrwxrwx 1 root root        31 Oct 19 05:46 libGraphicsMagickWand.so -> libGraphicsMagickWand.so.2.11.1
+lrwxrwxrwx 1 root root        31 Oct 19 05:46 libGraphicsMagickWand.so.2 -> libGraphicsMagickWand.so.2.11.1
+-rwxr-xr-x 1 root root    173960 Oct 19 05:46 libGraphicsMagickWand.so.2.11.1
+lrwxrwxrwx 1 root root        15 Dec 14  2024 libICE.so -> libICE.so.6.3.0
+lrwxrwxrwx 1 root root        15 Dec 14  2024 libICE.so.6 -> libICE.so.6.3.0
+-rwxr-xr-x 1 root root    105304 Dec 14  2024 libICE.so.6.3.0
+lrwxrwxrwx 1 root root        17 Feb 24  2026 libINIReader.so -> libINIReader.so.0
+-rwxr-xr-x 1 root root     38872 Feb 24  2026 libINIReader.so.0
+lrwxrwxrwx 1 root root        16 Oct  3 04:16 libIex-3_5.so -> libIex-3_5.so.34
+lrwxrwxrwx 1 root root        22 Oct  3 04:16 libIex-3_5.so.34 -> libIex-3_5.so.34.3.5.2
+-rwxr-xr-x 1 root root    526384 Oct  3 04:16 libIex-3_5.so.34.3.5.2
+lrwxrwxrwx 1 root root        13 Oct  3 04:16 libIex.so -> libIex-3_5.so
+lrwxrwxrwx 1 root root        22 Oct  3 04:16 libIlmThread-3_5.so -> libIlmThread-3_5.so.34
+lrwxrwxrwx 1 root root        28 Oct  3 04:16 libIlmThread-3_5.so.34 -> libIlmThread-3_5.so.34.3.5.2
+-rwxr-xr-x 1 root root    104504 Oct  3 04:16 libIlmThread-3_5.so.34.3.5.2
+lrwxrwxrwx 1 root root        19 Oct  3 04:16 libIlmThread.so -> libIlmThread-3_5.so
+lrwxrwxrwx 1 root root        18 Aug 20 07:48 libImath-3_2.so -> libImath-3_2.so.30
+lrwxrwxrwx 1 root root        24 Aug 20 07:48 libImath-3_2.so.30 -> libImath-3_2.so.30.3.2.3
+-rwxr-xr-x 1 root root    350088 Aug 20 07:48 libImath-3_2.so.30.3.2.3
+lrwxrwxrwx 1 root root        15 Aug 20 07:48 libImath.so -> libImath-3_2.so
+lrwxrwxrwx 1 root root        19 Aug 30 16:06 libImlib2.so -> libImlib2.so.1.12.7
+lrwxrwxrwx 1 root root        19 Aug 30 16:06 libImlib2.so.1 -> libImlib2.so.1.12.7
+-rwxr-xr-x 1 root root    588528 Aug 30 16:06 libImlib2.so.1.12.7
+lrwxrwxrwx 1 root root        17 Oct  8 13:53 libKExiv2Qt6.so -> libKExiv2Qt6.so.0
+lrwxrwxrwx 1 root root        21 Oct  8 13:53 libKExiv2Qt6.so.0 -> libKExiv2Qt6.so.5.1.0
+-rwxr-xr-x 1 root root    444560 Oct  8 13:53 libKExiv2Qt6.so.5.1.0
+lrwxrwxrwx 1 root root        18 May 30 13:05 libKF5Archive.so -> libKF5Archive.so.5
+lrwxrwxrwx 1 root root        24 May 30 13:05 libKF5Archive.so.5 -> libKF5Archive.so.5.116.0
+-rwxr-xr-x 1 root root    268312 May 30 13:05 libKF5Archive.so.5.116.0
+lrwxrwxrwx 1 root root        15 Nov  2  2025 libKF5Auth.so -> libKF5Auth.so.5
+lrwxrwxrwx 1 root root        21 Nov  2  2025 libKF5Auth.so.5 -> libKF5Auth.so.5.116.0
+-rwxr-xr-x 1 root root     26648 Nov  2  2025 libKF5Auth.so.5.116.0
+lrwxrwxrwx 1 root root        19 Nov  2  2025 libKF5AuthCore.so -> libKF5AuthCore.so.5
+lrwxrwxrwx 1 root root        25 Nov  2  2025 libKF5AuthCore.so.5 -> libKF5AuthCore.so.5.116.0
+-rwxr-xr-x 1 root root    112664 Nov  2  2025 libKF5AuthCore.so.5.116.0
+lrwxrwxrwx 1 root root        17 Mar 20  2026 libKF5Codecs.so -> libKF5Codecs.so.5
+lrwxrwxrwx 1 root root        23 Mar 20  2026 libKF5Codecs.so.5 -> libKF5Codecs.so.5.116.0
+-rwxr-xr-x 1 root root    235544 Mar 20  2026 libKF5Codecs.so.5.116.0
+lrwxrwxrwx 1 root root        21 Nov  2  2025 libKF5ConfigCore.so -> libKF5ConfigCore.so.5
+lrwxrwxrwx 1 root root        27 Nov  2  2025 libKF5ConfigCore.so.5 -> libKF5ConfigCore.so.5.116.0
+-rwxr-xr-x 1 root root    395296 Nov  2  2025 libKF5ConfigCore.so.5.116.0
+lrwxrwxrwx 1 root root        20 Nov  2  2025 libKF5ConfigGui.so -> libKF5ConfigGui.so.5
+lrwxrwxrwx 1 root root        26 Nov  2  2025 libKF5ConfigGui.so.5 -> libKF5ConfigGui.so.5.116.0
+-rwxr-xr-x 1 root root    145440 Nov  2  2025 libKF5ConfigGui.so.5.116.0
+lrwxrwxrwx 1 root root        20 Nov  2  2025 libKF5ConfigQml.so -> libKF5ConfigQml.so.5
+lrwxrwxrwx 1 root root        26 Nov  2  2025 libKF5ConfigQml.so.5 -> libKF5ConfigQml.so.5.116.0
+-rwxr-xr-x 1 root root     18464 Nov  2  2025 libKF5ConfigQml.so.5.116.0
+lrwxrwxrwx 1 root root        24 Nov  2  2025 libKF5ConfigWidgets.so -> libKF5ConfigWidgets.so.5
+lrwxrwxrwx 1 root root        30 Nov  2  2025 libKF5ConfigWidgets.so.5 -> libKF5ConfigWidgets.so.5.116.0
+-rwxr-xr-x 1 root root    436328 Nov  2  2025 libKF5ConfigWidgets.so.5.116.0
+lrwxrwxrwx 1 root root        21 Nov  2  2025 libKF5CoreAddons.so -> libKF5CoreAddons.so.5
+lrwxrwxrwx 1 root root        27 Nov  2  2025 libKF5CoreAddons.so.5 -> libKF5CoreAddons.so.5.116.0
+-rwxr-xr-x 1 root root    788632 Nov  2  2025 libKF5CoreAddons.so.5.116.0
+lrwxrwxrwx 1 root root        21 Nov  2  2025 libKF5DBusAddons.so -> libKF5DBusAddons.so.5
+lrwxrwxrwx 1 root root        27 Nov  2  2025 libKF5DBusAddons.so.5 -> libKF5DBusAddons.so.5.116.0
+-rwxr-xr-x 1 root root    124960 Nov  2  2025 libKF5DBusAddons.so.5.116.0
+lrwxrwxrwx 1 root root        20 Nov  2  2025 libKF5GuiAddons.so -> libKF5GuiAddons.so.5
+lrwxrwxrwx 1 root root        26 Nov  2  2025 libKF5GuiAddons.so.5 -> libKF5GuiAddons.so.5.116.0
+-rwxr-xr-x 1 root root    244656 Nov  2  2025 libKF5GuiAddons.so.5.116.0
+lrwxrwxrwx 1 root root        15 Nov  2  2025 libKF5I18n.so -> libKF5I18n.so.5
+lrwxrwxrwx 1 root root        21 Nov  2  2025 libKF5I18n.so.5 -> libKF5I18n.so.5.116.0
+-rwxr-xr-x 1 root root    346136 Nov  2  2025 libKF5I18n.so.5.116.0
+lrwxrwxrwx 1 root root        25 Nov  2  2025 libKF5I18nLocaleData.so -> libKF5I18nLocaleData.so.5
+lrwxrwxrwx 1 root root        31 Nov  2  2025 libKF5I18nLocaleData.so.5 -> libKF5I18nLocaleData.so.5.116.0
+-rwxr-xr-x 1 root root   1071136 Nov  2  2025 libKF5I18nLocaleData.so.5.116.0
+lrwxrwxrwx 1 root root        21 Nov  2  2025 libKF5IconThemes.so -> libKF5IconThemes.so.5
+lrwxrwxrwx 1 root root        27 Nov  2  2025 libKF5IconThemes.so.5 -> libKF5IconThemes.so.5.116.0
+-rwxr-xr-x 1 root root    268400 Nov  2  2025 libKF5IconThemes.so.5.116.0
+lrwxrwxrwx 1 root root        20 Sep 30 19:30 libKF5Kirigami2.so -> libKF5Kirigami2.so.5
+lrwxrwxrwx 1 root root        26 Sep 30 19:30 libKF5Kirigami2.so.5 -> libKF5Kirigami2.so.5.116.0
+-rwxr-xr-x 1 root root    214952 Sep 30 19:30 libKF5Kirigami2.so.5.116.0
+lrwxrwxrwx 1 root root        24 Nov  2  2025 libKF5WidgetsAddons.so -> libKF5WidgetsAddons.so.5
+lrwxrwxrwx 1 root root        30 Nov  2  2025 libKF5WidgetsAddons.so.5 -> libKF5WidgetsAddons.so.5.116.0
+-rwxr-xr-x 1 root root   1439776 Nov  2  2025 libKF5WidgetsAddons.so.5.116.0
+lrwxrwxrwx 1 root root        18 Oct 12 16:03 libKF6Archive.so -> libKF6Archive.so.6
+lrwxrwxrwx 1 root root        23 Oct 12 16:03 libKF6Archive.so.6 -> libKF6Archive.so.6.31.0
+-rwxr-xr-x 1 root root    346416 Oct 12 16:03 libKF6Archive.so.6.31.0
+lrwxrwxrwx 1 root root        20 Oct 12 15:58 libKF6Bookmarks.so -> libKF6Bookmarks.so.6
+lrwxrwxrwx 1 root root        25 Oct 12 15:58 libKF6Bookmarks.so.6 -> libKF6Bookmarks.so.6.31.0
+-rwxr-xr-x 1 root root    121392 Oct 12 15:58 libKF6Bookmarks.so.6.31.0
+lrwxrwxrwx 1 root root        27 Oct 12 15:58 libKF6BookmarksWidgets.so -> libKF6BookmarksWidgets.so.6
+lrwxrwxrwx 1 root root        32 Oct 12 15:58 libKF6BookmarksWidgets.so.6 -> libKF6BookmarksWidgets.so.6.31.0
+-rwxr-xr-x 1 root root    113208 Oct 12 15:58 libKF6BookmarksWidgets.so.6.31.0
+lrwxrwxrwx 1 root root        22 Oct 12 15:56 libKF6BreezeIcons.so -> libKF6BreezeIcons.so.6
+lrwxrwxrwx 1 root root        27 Oct 12 15:56 libKF6BreezeIcons.so.6 -> libKF6BreezeIcons.so.6.31.0
+-rwxr-xr-x 1 root root  12720104 Oct 12 15:56 libKF6BreezeIcons.so.6.31.0
+lrwxrwxrwx 1 root root        17 Oct 12 16:05 libKF6Codecs.so -> libKF6Codecs.so.6
+lrwxrwxrwx 1 root root        22 Oct 12 16:05 libKF6Codecs.so.6 -> libKF6Codecs.so.6.31.0
+-rwxr-xr-x 1 root root    264240 Oct 12 16:05 libKF6Codecs.so.6.31.0
+lrwxrwxrwx 1 root root        22 Oct 12 16:28 libKF6ColorScheme.so -> libKF6ColorScheme.so.6
+lrwxrwxrwx 1 root root        27 Oct 12 16:28 libKF6ColorScheme.so.6 -> libKF6ColorScheme.so.6.31.0
+-rwxr-xr-x 1 root root    104824 Oct 12 16:28 libKF6ColorScheme.so.6.31.0
+lrwxrwxrwx 1 root root        21 Oct 12 16:03 libKF6Completion.so -> libKF6Completion.so.6
+lrwxrwxrwx 1 root root        26 Oct 12 16:03 libKF6Completion.so.6 -> libKF6Completion.so.6.31.0
+-rwxr-xr-x 1 root root    269752 Oct 12 16:03 libKF6Completion.so.6.31.0
+lrwxrwxrwx 1 root root        21 Oct 12 16:09 libKF6ConfigCore.so -> libKF6ConfigCore.so.6
+lrwxrwxrwx 1 root root        26 Oct 12 16:09 libKF6ConfigCore.so.6 -> libKF6ConfigCore.so.6.31.0
+-rwxr-xr-x 1 root root    589368 Oct 12 16:09 libKF6ConfigCore.so.6.31.0
+lrwxrwxrwx 1 root root        20 Oct 12 16:09 libKF6ConfigGui.so -> libKF6ConfigGui.so.6
+lrwxrwxrwx 1 root root        25 Oct 12 16:09 libKF6ConfigGui.so.6 -> libKF6ConfigGui.so.6.31.0
+-rwxr-xr-x 1 root root    264656 Oct 12 16:09 libKF6ConfigGui.so.6.31.0
+lrwxrwxrwx 1 root root        20 Oct 12 16:09 libKF6ConfigQml.so -> libKF6ConfigQml.so.6
+lrwxrwxrwx 1 root root        25 Oct 12 16:09 libKF6ConfigQml.so.6 -> libKF6ConfigQml.so.6.31.0
+-rwxr-xr-x 1 root root     49840 Oct 12 16:09 libKF6ConfigQml.so.6.31.0
+lrwxrwxrwx 1 root root        24 Oct 12 16:07 libKF6ConfigWidgets.so -> libKF6ConfigWidgets.so.6
+lrwxrwxrwx 1 root root        29 Oct 12 16:07 libKF6ConfigWidgets.so.6 -> libKF6ConfigWidgets.so.6.31.0
+-rwxr-xr-x 1 root root    406712 Oct 12 16:07 libKF6ConfigWidgets.so.6.31.0
+lrwxrwxrwx 1 root root        21 Oct 12 18:23 libKF6CoreAddons.so -> libKF6CoreAddons.so.6
+lrwxrwxrwx 1 root root        26 Oct 12 18:23 libKF6CoreAddons.so.6 -> libKF6CoreAddons.so.6.31.0
+-rwxr-xr-x 1 root root   1131472 Oct 12 18:23 libKF6CoreAddons.so.6.31.0
+lrwxrwxrwx 1 root root        16 Oct 12 15:56 libKF6Crash.so -> libKF6Crash.so.6
+lrwxrwxrwx 1 root root        21 Oct 12 15:56 libKF6Crash.so.6 -> libKF6Crash.so.6.31.0
+-rwxr-xr-x 1 root root     63648 Oct 12 15:56 libKF6Crash.so.6.31.0
+lrwxrwxrwx 1 root root        21 Oct 12 16:04 libKF6DBusAddons.so -> libKF6DBusAddons.so.6
+lrwxrwxrwx 1 root root        26 Oct 12 16:04 libKF6DBusAddons.so.6 -> libKF6DBusAddons.so.6.31.0
+-rwxr-xr-x 1 root root    139576 Oct 12 16:04 libKF6DBusAddons.so.6.31.0
+lrwxrwxrwx 1 root root        22 Oct 12 16:10 libKF6GlobalAccel.so -> libKF6GlobalAccel.so.6
+lrwxrwxrwx 1 root root        27 Oct 12 16:10 libKF6GlobalAccel.so.6 -> libKF6GlobalAccel.so.6.31.0
+-rwxr-xr-x 1 root root    242616 Oct 12 16:10 libKF6GlobalAccel.so.6.31.0
+lrwxrwxrwx 1 root root        20 Oct 12 18:28 libKF6GuiAddons.so -> libKF6GuiAddons.so.6
+lrwxrwxrwx 1 root root        25 Oct 12 18:28 libKF6GuiAddons.so.6 -> libKF6GuiAddons.so.6.31.0
+-rwxr-xr-x 1 root root    442672 Oct 12 18:28 libKF6GuiAddons.so.6.31.0
+lrwxrwxrwx 1 root root        15 Oct 12 16:08 libKF6I18n.so -> libKF6I18n.so.6
+lrwxrwxrwx 1 root root        20 Oct 12 16:08 libKF6I18n.so.6 -> libKF6I18n.so.6.31.0
+-rwxr-xr-x 1 root root    653744 Oct 12 16:08 libKF6I18n.so.6.31.0
+lrwxrwxrwx 1 root root        25 Oct 12 16:08 libKF6I18nLocaleData.so -> libKF6I18nLocaleData.so.6
+lrwxrwxrwx 1 root root        30 Oct 12 16:08 libKF6I18nLocaleData.so.6 -> libKF6I18nLocaleData.so.6.31.0
+-rwxr-xr-x 1 root root   1083960 Oct 12 16:08 libKF6I18nLocaleData.so.6.31.0
+lrwxrwxrwx 1 root root        18 Oct 12 16:08 libKF6I18nQml.so -> libKF6I18nQml.so.6
+lrwxrwxrwx 1 root root        23 Oct 12 16:08 libKF6I18nQml.so.6 -> libKF6I18nQml.so.6.31.0
+-rwxr-xr-x 1 root root    219824 Oct 12 16:08 libKF6I18nQml.so.6.31.0
+lrwxrwxrwx 1 root root        21 Oct 12 16:15 libKF6IconThemes.so -> libKF6IconThemes.so.6
+lrwxrwxrwx 1 root root        26 Oct 12 16:15 libKF6IconThemes.so.6 -> libKF6IconThemes.so.6.31.0
+-rwxr-xr-x 1 root root    249168 Oct 12 16:15 libKF6IconThemes.so.6.31.0
+lrwxrwxrwx 1 root root        22 Oct 12 16:15 libKF6IconWidgets.so -> libKF6IconWidgets.so.6
+lrwxrwxrwx 1 root root        27 Oct 12 16:15 libKF6IconWidgets.so.6 -> libKF6IconWidgets.so.6.31.0
+-rwxr-xr-x 1 root root    109240 Oct 12 16:15 libKF6IconWidgets.so.6.31.0
+lrwxrwxrwx 1 root root        21 Oct 12 16:05 libKF6ItemModels.so -> libKF6ItemModels.so.6
+lrwxrwxrwx 1 root root        26 Oct 12 16:05 libKF6ItemModels.so.6 -> libKF6ItemModels.so.6.31.0
+-rwxr-xr-x 1 root root    434872 Oct 12 16:05 libKF6ItemModels.so.6.31.0
+lrwxrwxrwx 1 root root        20 Oct 12 16:13 libKF6ItemViews.so -> libKF6ItemViews.so.6
+lrwxrwxrwx 1 root root        25 Oct 12 16:13 libKF6ItemViews.so.6 -> libKF6ItemViews.so.6.31.0
+-rwxr-xr-x 1 root root    352944 Oct 12 16:13 libKF6ItemViews.so.6.31.0
+lrwxrwxrwx 1 root root        21 Oct 12 18:22 libKF6JobWidgets.so -> libKF6JobWidgets.so.6
+lrwxrwxrwx 1 root root        26 Oct 12 18:22 libKF6JobWidgets.so.6 -> libKF6JobWidgets.so.6.31.0
+-rwxr-xr-x 1 root root    329784 Oct 12 18:22 libKF6JobWidgets.so.6.31.0
+lrwxrwxrwx 1 root root        19 Oct 12 15:59 libKF6KCMUtils.so -> libKF6KCMUtils.so.6
+lrwxrwxrwx 1 root root        24 Oct 12 15:59 libKF6KCMUtils.so.6 -> libKF6KCMUtils.so.6.31.0
+-rwxr-xr-x 1 root root    172080 Oct 12 15:59 libKF6KCMUtils.so.6.31.0
+lrwxrwxrwx 1 root root        23 Oct 12 15:59 libKF6KCMUtilsCore.so -> libKF6KCMUtilsCore.so.6
+lrwxrwxrwx 1 root root        28 Oct 12 15:59 libKF6KCMUtilsCore.so.6 -> libKF6KCMUtilsCore.so.6.31.0
+-rwxr-xr-x 1 root root    138168 Oct 12 15:59 libKF6KCMUtilsCore.so.6.31.0
+lrwxrwxrwx 1 root root        24 Oct 12 15:59 libKF6KCMUtilsQuick.so -> libKF6KCMUtilsQuick.so.6
+lrwxrwxrwx 1 root root        29 Oct 12 15:59 libKF6KCMUtilsQuick.so.6 -> libKF6KCMUtilsQuick.so.6.31.0
+-rwxr-xr-x 1 root root     88760 Oct 12 15:59 libKF6KCMUtilsQuick.so.6.31.0
+lrwxrwxrwx 1 root root        18 Oct 12 15:51 libKF6KIOCore.so -> libKF6KIOCore.so.6
+lrwxrwxrwx 1 root root        23 Oct 12 15:51 libKF6KIOCore.so.6 -> libKF6KIOCore.so.6.31.0
+-rwxr-xr-x 1 root root   1833080 Oct 12 15:51 libKF6KIOCore.so.6.31.0
+lrwxrwxrwx 1 root root        25 Oct 12 15:51 libKF6KIOFileWidgets.so -> libKF6KIOFileWidgets.so.6
+lrwxrwxrwx 1 root root        30 Oct 12 15:51 libKF6KIOFileWidgets.so.6 -> libKF6KIOFileWidgets.so.6.31.0
+-rwxr-xr-x 1 root root   1308632 Oct 12 15:51 libKF6KIOFileWidgets.so.6.31.0
+lrwxrwxrwx 1 root root        17 Oct 12 15:51 libKF6KIOGui.so -> libKF6KIOGui.so.6
+lrwxrwxrwx 1 root root        22 Oct 12 15:51 libKF6KIOGui.so.6 -> libKF6KIOGui.so.6.31.0
+-rwxr-xr-x 1 root root    598064 Oct 12 15:51 libKF6KIOGui.so.6.31.0
+lrwxrwxrwx 1 root root        21 Oct 12 15:51 libKF6KIOWidgets.so -> libKF6KIOWidgets.so.6
+lrwxrwxrwx 1 root root        26 Oct 12 15:51 libKF6KIOWidgets.so.6 -> libKF6KIOWidgets.so.6.31.0
+-rwxr-xr-x 1 root root   1386680 Oct 12 15:51 libKF6KIOWidgets.so.6.31.0
+lrwxrwxrwx 1 root root        24 Oct 12 18:23 libKF6Notifications.so -> libKF6Notifications.so.6
+lrwxrwxrwx 1 root root        29 Oct 12 18:23 libKF6Notifications.so.6 -> libKF6Notifications.so.6.31.0
+-rwxr-xr-x 1 root root    288056 Oct 12 18:23 libKF6Notifications.so.6.31.0
+lrwxrwxrwx 1 root root        16 Oct 12 16:11 libKF6Parts.so -> libKF6Parts.so.6
+lrwxrwxrwx 1 root root        21 Oct 12 16:11 libKF6Parts.so.6 -> libKF6Parts.so.6.31.0
+-rwxr-xr-x 1 root root    271664 Oct 12 16:11 libKF6Parts.so.6.31.0
+lrwxrwxrwx 1 root root        18 Oct 12 16:28 libKF6Purpose.so -> libKF6Purpose.so.6
+lrwxrwxrwx 1 root root        23 Oct 12 16:28 libKF6Purpose.so.6 -> libKF6Purpose.so.6.31.0
+-rwxr-xr-x 1 root root    142640 Oct 12 16:28 libKF6Purpose.so.6.31.0
+lrwxrwxrwx 1 root root        25 Oct 12 16:28 libKF6PurposeWidgets.so -> libKF6PurposeWidgets.so.6
+lrwxrwxrwx 1 root root        30 Oct 12 16:28 libKF6PurposeWidgets.so.6 -> libKF6PurposeWidgets.so.6.31.0
+-rwxr-xr-x 1 root root    105400 Oct 12 16:28 libKF6PurposeWidgets.so.6.31.0
+lrwxrwxrwx 1 root root        18 Oct 12 16:40 libKF6Service.so -> libKF6Service.so.6
+lrwxrwxrwx 1 root root        23 Oct 12 16:40 libKF6Service.so.6 -> libKF6Service.so.6.31.0
+-rwxr-xr-x 1 root root    559736 Oct 12 16:40 libKF6Service.so.6.31.0
+lrwxrwxrwx 1 root root        16 Oct 12 16:14 libKF6Solid.so -> libKF6Solid.so.6
+lrwxrwxrwx 1 root root        21 Oct 12 16:14 libKF6Solid.so.6 -> libKF6Solid.so.6.31.0
+-rwxr-xr-x 1 root root   1127600 Oct 12 16:14 libKF6Solid.so.6.31.0
+lrwxrwxrwx 1 root root        21 Oct 12 16:18 libKF6SonnetCore.so -> libKF6SonnetCore.so.6
+lrwxrwxrwx 1 root root        26 Oct 12 16:18 libKF6SonnetCore.so.6 -> libKF6SonnetCore.so.6.31.0
+-rwxr-xr-x 1 root root    363448 Oct 12 16:18 libKF6SonnetCore.so.6.31.0
+lrwxrwxrwx 1 root root        19 Oct 12 16:18 libKF6SonnetUi.so -> libKF6SonnetUi.so.6
+lrwxrwxrwx 1 root root        24 Oct 12 16:18 libKF6SonnetUi.so.6 -> libKF6SonnetUi.so.6.31.0
+-rwxr-xr-x 1 root root    187440 Oct 12 16:18 libKF6SonnetUi.so.6.31.0
+lrwxrwxrwx 1 root root        22 Oct 12 16:22 libKF6TextWidgets.so -> libKF6TextWidgets.so.6
+lrwxrwxrwx 1 root root        27 Oct 12 16:22 libKF6TextWidgets.so.6 -> libKF6TextWidgets.so.6.31.0
+-rwxr-xr-x 1 root root    303032 Oct 12 16:22 libKF6TextWidgets.so.6.31.0
+lrwxrwxrwx 1 root root        23 Oct 12 16:20 libKF6ThreadWeaver.so -> libKF6ThreadWeaver.so.6
+lrwxrwxrwx 1 root root        28 Oct 12 16:20 libKF6ThreadWeaver.so.6 -> libKF6ThreadWeaver.so.6.31.0
+-rwxr-xr-x 1 root root    191816 Oct 12 16:20 libKF6ThreadWeaver.so.6.31.0
+lrwxrwxrwx 1 root root        17 Oct 12 16:25 libKF6Wallet.so -> libKF6Wallet.so.6
+lrwxrwxrwx 1 root root        22 Oct 12 16:25 libKF6Wallet.so.6 -> libKF6Wallet.so.6.31.0
+-rwxr-xr-x 1 root root    159280 Oct 12 16:25 libKF6Wallet.so.6.31.0
+lrwxrwxrwx 1 root root        29 Oct 12 16:25 libKF6WalletBackend.so.6 -> libKF6WalletBackend.so.6.31.0
+-rwxr-xr-x 1 root root    170040 Oct 12 16:25 libKF6WalletBackend.so.6.31.0
+lrwxrwxrwx 1 root root        24 Oct 12 18:26 libKF6WidgetsAddons.so -> libKF6WidgetsAddons.so.6
+lrwxrwxrwx 1 root root        29 Oct 12 18:26 libKF6WidgetsAddons.so.6 -> libKF6WidgetsAddons.so.6.31.0
+-rwxr-xr-x 1 root root   2762552 Oct 12 18:26 libKF6WidgetsAddons.so.6.31.0
+lrwxrwxrwx 1 root root        23 Oct 12 16:40 libKF6WindowSystem.so -> libKF6WindowSystem.so.6
+lrwxrwxrwx 1 root root        28 Oct 12 16:40 libKF6WindowSystem.so.6 -> libKF6WindowSystem.so.6.31.0
+-rwxr-xr-x 1 root root    431288 Oct 12 16:40 libKF6WindowSystem.so.6.31.0
+lrwxrwxrwx 1 root root        17 Oct 12 18:20 libKF6XmlGui.so -> libKF6XmlGui.so.6
+lrwxrwxrwx 1 root root        22 Oct 12 18:20 libKF6XmlGui.so.6 -> libKF6XmlGui.so.6.31.0
+-rwxr-xr-x 1 root root    966832 Oct 12 18:20 libKF6XmlGui.so.6.31.0
+lrwxrwxrwx 1 root root        16 Oct 11 18:42 libKirigami.so -> libKirigami.so.6
+lrwxrwxrwx 1 root root        21 Oct 11 18:42 libKirigami.so.6 -> libKirigami.so.6.31.0
+-rwxr-xr-x 1 root root    197680 Oct 11 18:42 libKirigami.so.6.31.0
+lrwxrwxrwx 1 root root        24 Oct 11 18:42 libKirigamiControls.so -> libKirigamiControls.so.6
+lrwxrwxrwx 1 root root        29 Oct 11 18:42 libKirigamiControls.so.6 -> libKirigamiControls.so.6.31.0
+-rwxr-xr-x 1 root root   2494648 Oct 11 18:42 libKirigamiControls.so.6.31.0
+lrwxrwxrwx 1 root root        25 Oct 11 18:42 libKirigamiDelegates.so -> libKirigamiDelegates.so.6
+lrwxrwxrwx 1 root root        30 Oct 11 18:42 libKirigamiDelegates.so.6 -> libKirigamiDelegates.so.6.31.0
+-rwxr-xr-x 1 root root    232120 Oct 11 18:42 libKirigamiDelegates.so.6.31.0
+lrwxrwxrwx 1 root root        23 Oct 11 18:42 libKirigamiDialogs.so -> libKirigamiDialogs.so.6
+lrwxrwxrwx 1 root root        28 Oct 11 18:42 libKirigamiDialogs.so.6 -> libKirigamiDialogs.so.6.31.0
+-rwxr-xr-x 1 root root    280760 Oct 11 18:42 libKirigamiDialogs.so.6.31.0
+lrwxrwxrwx 1 root root        21 Oct 11 18:42 libKirigamiForms.so -> libKirigamiForms.so.6
+lrwxrwxrwx 1 root root        26 Oct 11 18:42 libKirigamiForms.so.6 -> libKirigamiForms.so.6.31.0
+-rwxr-xr-x 1 root root     27448 Oct 11 18:42 libKirigamiForms.so.6.31.0
+lrwxrwxrwx 1 root root        33 Oct 11 18:42 libKirigamiFormsPrivateCards.so -> libKirigamiFormsPrivateCards.so.6
+lrwxrwxrwx 1 root root        38 Oct 11 18:42 libKirigamiFormsPrivateCards.so.6 -> libKirigamiFormsPrivateCards.so.6.31.0
+-rwxr-xr-x 1 root root    219840 Oct 11 18:42 libKirigamiFormsPrivateCards.so.6.31.0
+lrwxrwxrwx 1 root root        32 Oct 11 18:42 libKirigamiFormsPrivateFlat.so -> libKirigamiFormsPrivateFlat.so.6
+lrwxrwxrwx 1 root root        37 Oct 11 18:42 libKirigamiFormsPrivateFlat.so.6 -> libKirigamiFormsPrivateFlat.so.6.31.0
+-rwxr-xr-x 1 root root    187072 Oct 11 18:42 libKirigamiFormsPrivateFlat.so.6.31.0
+lrwxrwxrwx 1 root root        37 Oct 11 18:42 libKirigamiFormsPrivateTemplates.so -> libKirigamiFormsPrivateTemplates.so.6
+lrwxrwxrwx 1 root root        42 Oct 11 18:42 libKirigamiFormsPrivateTemplates.so.6 -> libKirigamiFormsPrivateTemplates.so.6.31.0
+-rwxr-xr-x 1 root root    104520 Oct 11 18:42 libKirigamiFormsPrivateTemplates.so.6.31.0
+lrwxrwxrwx 1 root root        23 Oct 11 18:42 libKirigamiLayouts.so -> libKirigamiLayouts.so.6
+lrwxrwxrwx 1 root root        28 Oct 11 18:42 libKirigamiLayouts.so.6 -> libKirigamiLayouts.so.6.31.0
+-rwxr-xr-x 1 root root    528696 Oct 11 18:42 libKirigamiLayouts.so.6.31.0
+lrwxrwxrwx 1 root root        30 Oct 11 18:42 libKirigamiLayoutsPrivate.so -> libKirigamiLayoutsPrivate.so.6
+lrwxrwxrwx 1 root root        35 Oct 11 18:42 libKirigamiLayoutsPrivate.so.6 -> libKirigamiLayoutsPrivate.so.6.31.0
+-rwxr-xr-x 1 root root     88128 Oct 11 18:42 libKirigamiLayoutsPrivate.so.6.31.0
+lrwxrwxrwx 1 root root        24 Oct 11 18:42 libKirigamiPlatform.so -> libKirigamiPlatform.so.6
+lrwxrwxrwx 1 root root        29 Oct 11 18:42 libKirigamiPlatform.so.6 -> libKirigamiPlatform.so.6.31.0
+-rwxr-xr-x 1 root root    342968 Oct 11 18:42 libKirigamiPlatform.so.6.31.0
+lrwxrwxrwx 1 root root        24 Oct 11 18:42 libKirigamiPolyfill.so -> libKirigamiPolyfill.so.6
+lrwxrwxrwx 1 root root        29 Oct 11 18:42 libKirigamiPolyfill.so.6 -> libKirigamiPolyfill.so.6.31.0
+-rwxr-xr-x 1 root root     14312 Oct 11 18:42 libKirigamiPolyfill.so.6.31.0
+lrwxrwxrwx 1 root root        26 Oct 11 18:42 libKirigamiPrimitives.so -> libKirigamiPrimitives.so.6
+lrwxrwxrwx 1 root root        31 Oct 11 18:42 libKirigamiPrimitives.so.6 -> libKirigamiPrimitives.so.6.31.0
+-rwxr-xr-x 1 root root    366776 Oct 11 18:42 libKirigamiPrimitives.so.6.31.0
+lrwxrwxrwx 1 root root        23 Oct 11 18:42 libKirigamiPrivate.so -> libKirigamiPrivate.so.6
+lrwxrwxrwx 1 root root        28 Oct 11 18:42 libKirigamiPrivate.so.6 -> libKirigamiPrivate.so.6.31.0
+-rwxr-xr-x 1 root root     43960 Oct 11 18:42 libKirigamiPrivate.so.6.31.0
+lrwxrwxrwx 1 root root        25 Oct 11 18:42 libKirigamiTemplates.so -> libKirigamiTemplates.so.6
+lrwxrwxrwx 1 root root        30 Oct 11 18:42 libKirigamiTemplates.so.6 -> libKirigamiTemplates.so.6.31.0
+-rwxr-xr-x 1 root root    756152 Oct 11 18:42 libKirigamiTemplates.so.6.31.0
+lrwxrwxrwx 1 root root        15 Mar 14  2026 libLLVM-21.so -> libLLVM.so.21.1
+lrwxrwxrwx 1 root root        15 Oct 18 05:20 libLLVM-23.so -> libLLVM.so.23.1
+lrwxrwxrwx 1 root root        15 Oct 18 05:20 libLLVM.so -> libLLVM.so.23.1
+-rwxr-xr-x 1 root root 163275768 Mar 14  2026 libLLVM.so.21.1
+-rwxr-xr-x 1 root root 153671216 Oct 18 05:20 libLLVM.so.23.1
+-rw-r--r-- 1 root root    646542 Oct 18 05:20 libLLVMDebuginfod.a
+-rw-r--r-- 1 root root   1814482 Oct 18 05:20 libLLVMDemangle.a
+-rw-r--r-- 1 root root    195152 Oct 18 05:20 libLLVMHTTP.a
+-rw-r--r-- 1 root root  19422986 Oct 18 05:20 libLLVMSupport.a
+-rw-r--r-- 1 root root   4451916 Oct 18 05:20 libLLVMTableGen.a
+-rw-r--r-- 1 root root    127792 Oct 18 05:20 libLLVMTestingAnnotations.a
+-rw-r--r-- 1 root root    120896 Oct 18 05:20 libLLVMTestingSupport.a
+lrwxrwxrwx 1 root root        14 Oct 18 05:20 libLTO.so -> libLTO.so.23.1
+-rwxr-xr-x 1 root root     66640 Oct 18 05:20 libLTO.so.23.1
+-rw-r--r-- 1 root root      1396 Oct  3 08:20 libMachineIndependent.a
+lrwxrwxrwx 1 root root        30 Oct 19 03:51 libMagick++-7.Q16HDRI.so -> libMagick++-7.Q16HDRI.so.5.0.0
+lrwxrwxrwx 1 root root        30 Oct 19 03:51 libMagick++-7.Q16HDRI.so.5 -> libMagick++-7.Q16HDRI.so.5.0.0
+-rwxr-xr-x 1 root root    673888 Oct 19 03:51 libMagick++-7.Q16HDRI.so.5.0.0
+lrwxrwxrwx 1 root root        33 Oct 19 03:51 libMagickCore-7.Q16HDRI.so -> libMagickCore-7.Q16HDRI.so.10.0.3
+lrwxrwxrwx 1 root root        33 Oct 19 03:51 libMagickCore-7.Q16HDRI.so.10 -> libMagickCore-7.Q16HDRI.so.10.0.3
+-rwxr-xr-x 1 root root   4349528 Oct 19 03:51 libMagickCore-7.Q16HDRI.so.10.0.3
+lrwxrwxrwx 1 root root        33 Oct 19 03:51 libMagickWand-7.Q16HDRI.so -> libMagickWand-7.Q16HDRI.so.10.0.3
+lrwxrwxrwx 1 root root        33 Oct 19 03:51 libMagickWand-7.Q16HDRI.so.10 -> libMagickWand-7.Q16HDRI.so.10.0.3
+-rwxr-xr-x 1 root root   1431680 Oct 19 03:51 libMagickWand-7.Q16HDRI.so.10.0.3
+-rw-r--r-- 1 root root      1396 Oct  3 08:20 libOSDependent.a
+lrwxrwxrwx 1 root root        19 Oct  8 12:38 libOkular6Core.so -> libOkular6Core.so.4
+lrwxrwxrwx 1 root root        23 Oct  8 12:38 libOkular6Core.so.4 -> libOkular6Core.so.4.0.0
+-rwxr-xr-x 1 root root   1604312 Oct  8 12:38 libOkular6Core.so.4.0.0
+lrwxrwxrwx 1 root root        18 Jul 28 09:26 libOpenCL.so -> libOpenCL.so.1.0.0
+lrwxrwxrwx 1 root root        18 Jul 28 09:26 libOpenCL.so.1 -> libOpenCL.so.1.0.0
+-rwxr-xr-x 1 root root    233016 Jul 28 09:26 libOpenCL.so.1.0.0
+lrwxrwxrwx 1 root root        20 Oct  3 04:16 libOpenEXR-3_5.so -> libOpenEXR-3_5.so.34
+lrwxrwxrwx 1 root root        26 Oct  3 04:16 libOpenEXR-3_5.so.34 -> libOpenEXR-3_5.so.34.3.5.2
+-rwxr-xr-x 1 root root   1343168 Oct  3 04:16 libOpenEXR-3_5.so.34.3.5.2
+lrwxrwxrwx 1 root root        17 Oct  3 04:16 libOpenEXR.so -> libOpenEXR-3_5.so
+lrwxrwxrwx 1 root root        24 Oct  3 04:16 libOpenEXRCore-3_5.so -> libOpenEXRCore-3_5.so.34
+lrwxrwxrwx 1 root root        30 Oct  3 04:16 libOpenEXRCore-3_5.so.34 -> libOpenEXRCore-3_5.so.34.3.5.2
+-rwxr-xr-x 1 root root    454584 Oct  3 04:16 libOpenEXRCore-3_5.so.34.3.5.2
+lrwxrwxrwx 1 root root        21 Oct  3 04:16 libOpenEXRCore.so -> libOpenEXRCore-3_5.so
+lrwxrwxrwx 1 root root        24 Oct  3 04:16 libOpenEXRUtil-3_5.so -> libOpenEXRUtil-3_5.so.34
+lrwxrwxrwx 1 root root        30 Oct  3 04:16 libOpenEXRUtil-3_5.so.34 -> libOpenEXRUtil-3_5.so.34.3.5.2
+-rwxr-xr-x 1 root root    231904 Oct  3 04:16 libOpenEXRUtil-3_5.so.34.3.5.2
+lrwxrwxrwx 1 root root        21 Oct  3 04:16 libOpenEXRUtil.so -> libOpenEXRUtil-3_5.so
+lrwxrwxrwx 1 root root        14 Jun 14  2025 libOpenGL.so -> libOpenGL.so.0
+lrwxrwxrwx 1 root root        18 Jun 14  2025 libOpenGL.so.0 -> libOpenGL.so.0.0.0
+-rwxr-xr-x 1 root root    145432 Jun 14  2025 libOpenGL.so.0.0.0
+lrwxrwxrwx 1 root root        28 Aug 20 07:48 libPyImath.so -> libPyImath_Python3_14-3_2.so
+lrwxrwxrwx 1 root root        31 Aug 20 07:48 libPyImath_Python3_14-3_2.so -> libPyImath_Python3_14-3_2.so.30
+lrwxrwxrwx 1 root root        37 Aug 20 07:48 libPyImath_Python3_14-3_2.so.30 -> libPyImath_Python3_14-3_2.so.30.3.2.3
+-rwxr-xr-x 1 root root  21811984 Aug 20 07:48 libPyImath_Python3_14-3_2.so.30.3.2.3
+-rw-r--r-- 1 root root       315 Jan 15  2026 libQgpsmm.prl
+lrwxrwxrwx 1 root root        19 Jan 15  2026 libQgpsmm.so -> libQgpsmm.so.32.0.0
+lrwxrwxrwx 1 root root        19 Jan 15  2026 libQgpsmm.so.32 -> libQgpsmm.so.32.0.0
+-rwxr-xr-x 1 root root    163040 Jan 15  2026 libQgpsmm.so.32.0.0
+-rw-r--r-- 1 root root      8476 May 21 04:10 libQt5AccessibilitySupport.a
+-rw-r--r-- 1 root root      1263 May 21 04:10 libQt5AccessibilitySupport.prl
+-rw-r--r-- 1 root root   5106124 May 21 04:10 libQt5Bootstrap.a
+-rw-r--r-- 1 root root      1092 May 21 04:10 libQt5Bootstrap.prl
+-rw-r--r-- 1 root root      1190 May 21 04:10 libQt5Concurrent.prl
+lrwxrwxrwx 1 root root        27 May 21 04:10 libQt5Concurrent.so -> libQt5Concurrent.so.5.15.19
+lrwxrwxrwx 1 root root        27 May 21 04:10 libQt5Concurrent.so.5 -> libQt5Concurrent.so.5.15.19
+lrwxrwxrwx 1 root root        27 May 21 04:10 libQt5Concurrent.so.5.15 -> libQt5Concurrent.so.5.15.19
+-rwxr-xr-x 1 root root     26840 May 21 04:10 libQt5Concurrent.so.5.15.19
+-rw-r--r-- 1 root root      1217 May 21 04:10 libQt5Core.prl
+lrwxrwxrwx 1 root root        21 May 21 04:10 libQt5Core.so -> libQt5Core.so.5.15.19
+lrwxrwxrwx 1 root root        21 May 21 04:10 libQt5Core.so.5 -> libQt5Core.so.5.15.19
+lrwxrwxrwx 1 root root        21 May 21 04:10 libQt5Core.so.5.15 -> libQt5Core.so.5.15.19
+-rwxr-xr-x 1 root root   5816176 May 21 04:10 libQt5Core.so.5.15.19
+-rw-r--r-- 1 root root      1171 May 21 04:10 libQt5DBus.prl
+lrwxrwxrwx 1 root root        21 May 21 04:10 libQt5DBus.so -> libQt5DBus.so.5.15.19
+lrwxrwxrwx 1 root root        21 May 21 04:10 libQt5DBus.so.5 -> libQt5DBus.so.5.15.19
+lrwxrwxrwx 1 root root        21 May 21 04:10 libQt5DBus.so.5.15 -> libQt5DBus.so.5.15.19
+-rwxr-xr-x 1 root root    563320 May 21 04:10 libQt5DBus.so.5.15.19
+-rw-r--r-- 1 root root      1536 Oct  1 09:25 libQt5Designer.prl
+lrwxrwxrwx 1 root root        25 Oct  1 09:25 libQt5Designer.so -> libQt5Designer.so.5.15.19
+lrwxrwxrwx 1 root root        25 Oct  1 09:25 libQt5Designer.so.5 -> libQt5Designer.so.5.15.19
+lrwxrwxrwx 1 root root        25 Oct  1 09:25 libQt5Designer.so.5.15 -> libQt5Designer.so.5.15.19
+-rwxr-xr-x 1 root root   5286104 Oct  1 09:25 libQt5Designer.so.5.15.19
+-rw-r--r-- 1 root root      1613 Oct  1 09:25 libQt5DesignerComponents.prl
+lrwxrwxrwx 1 root root        35 Oct  1 09:25 libQt5DesignerComponents.so -> libQt5DesignerComponents.so.5.15.19
+lrwxrwxrwx 1 root root        35 Oct  1 09:25 libQt5DesignerComponents.so.5 -> libQt5DesignerComponents.so.5.15.19
+lrwxrwxrwx 1 root root        35 Oct  1 09:25 libQt5DesignerComponents.so.5.15 -> libQt5DesignerComponents.so.5.15.19
+-rwxr-xr-x 1 root root   2805560 Oct  1 09:25 libQt5DesignerComponents.so.5.15.19
+-rw-r--r-- 1 root root     35058 May 21 04:10 libQt5DeviceDiscoverySupport.a
+-rw-r--r-- 1 root root      1178 May 21 04:10 libQt5DeviceDiscoverySupport.prl
+-rw-r--r-- 1 root root    202134 May 21 04:10 libQt5EdidSupport.a
+-rw-r--r-- 1 root root      1143 May 21 04:10 libQt5EdidSupport.prl
+-rw-r--r-- 1 root root      2754 May 21 04:10 libQt5EglFSDeviceIntegration.prl
+lrwxrwxrwx 1 root root        39 May 21 04:10 libQt5EglFSDeviceIntegration.so -> libQt5EglFSDeviceIntegration.so.5.15.19
+lrwxrwxrwx 1 root root        39 May 21 04:10 libQt5EglFSDeviceIntegration.so.5 -> libQt5EglFSDeviceIntegration.so.5.15.19
+lrwxrwxrwx 1 root root        39 May 21 04:10 libQt5EglFSDeviceIntegration.so.5.15 -> libQt5EglFSDeviceIntegration.so.5.15.19
+-rwxr-xr-x 1 root root    743664 May 21 04:10 libQt5EglFSDeviceIntegration.so.5.15.19
+-rw-r--r-- 1 root root      3055 May 21 04:10 libQt5EglFsKmsSupport.prl
+lrwxrwxrwx 1 root root        32 May 21 04:10 libQt5EglFsKmsSupport.so -> libQt5EglFsKmsSupport.so.5.15.19
+lrwxrwxrwx 1 root root        32 May 21 04:10 libQt5EglFsKmsSupport.so.5 -> libQt5EglFsKmsSupport.so.5.15.19
+lrwxrwxrwx 1 root root        32 May 21 04:10 libQt5EglFsKmsSupport.so.5.15 -> libQt5EglFsKmsSupport.so.5.15.19
+-rwxr-xr-x 1 root root    317552 May 21 04:10 libQt5EglFsKmsSupport.so.5.15.19
+-rw-r--r-- 1 root root     93904 May 21 04:10 libQt5EglSupport.a
+-rw-r--r-- 1 root root      1322 May 21 04:10 libQt5EglSupport.prl
+-rw-r--r-- 1 root root     33546 May 21 04:10 libQt5EventDispatcherSupport.a
+-rw-r--r-- 1 root root      1336 May 21 04:10 libQt5EventDispatcherSupport.prl
+-rw-r--r-- 1 root root    106814 May 21 04:10 libQt5FbSupport.a
+-rw-r--r-- 1 root root      1270 May 21 04:10 libQt5FbSupport.prl
+-rw-r--r-- 1 root root    194090 May 21 04:10 libQt5FontDatabaseSupport.a
+-rw-r--r-- 1 root root      1336 May 21 04:10 libQt5FontDatabaseSupport.prl
+-rw-r--r-- 1 root root     21474 May 21 04:10 libQt5GlxSupport.a
+-rw-r--r-- 1 root root      1288 May 21 04:10 libQt5GlxSupport.prl
+-rw-r--r-- 1 root root      1313 May 21 04:10 libQt5Gui.prl
+lrwxrwxrwx 1 root root        20 May 21 04:10 libQt5Gui.so -> libQt5Gui.so.5.15.19
+lrwxrwxrwx 1 root root        20 May 21 04:10 libQt5Gui.so.5 -> libQt5Gui.so.5.15.19
+lrwxrwxrwx 1 root root        20 May 21 04:10 libQt5Gui.so.5.15 -> libQt5Gui.so.5.15.19
+-rwxr-xr-x 1 root root   7210232 May 21 04:10 libQt5Gui.so.5.15.19
+-rw-r--r-- 1 root root      1404 Oct  1 09:25 libQt5Help.prl
+lrwxrwxrwx 1 root root        21 Oct  1 09:25 libQt5Help.so -> libQt5Help.so.5.15.19
+lrwxrwxrwx 1 root root        21 Oct  1 09:25 libQt5Help.so.5 -> libQt5Help.so.5.15.19
+lrwxrwxrwx 1 root root        21 Oct  1 09:25 libQt5Help.so.5.15 -> libQt5Help.so.5.15.19
+-rwxr-xr-x 1 root root    493672 Oct  1 09:25 libQt5Help.so.5.15.19
+-rw-r--r-- 1 root root    398134 May 21 04:10 libQt5InputSupport.a
+-rw-r--r-- 1 root root      1613 May 21 04:10 libQt5InputSupport.prl
+-rw-r--r-- 1 root root    171682 May 21 04:10 libQt5KmsSupport.a
+-rw-r--r-- 1 root root      1276 May 21 04:10 libQt5KmsSupport.prl
+-rw-r--r-- 1 root root    853728 May 21 04:10 libQt5LinuxAccessibilitySupport.a
+-rw-r--r-- 1 root root      1515 May 21 04:10 libQt5LinuxAccessibilitySupport.prl
+-rw-r--r-- 1 root root      1406 May 21 04:38 libQt5Multimedia.prl
+lrwxrwxrwx 1 root root        27 May 21 04:38 libQt5Multimedia.so -> libQt5Multimedia.so.5.15.19
+lrwxrwxrwx 1 root root        27 May 21 04:38 libQt5Multimedia.so.5 -> libQt5Multimedia.so.5.15.19
+lrwxrwxrwx 1 root root        27 May 21 04:38 libQt5Multimedia.so.5.15 -> libQt5Multimedia.so.5.15.19
+-rwxr-xr-x 1 root root   1063328 May 21 04:38 libQt5Multimedia.so.5.15.19
+-rw-r--r-- 1 root root      2019 May 21 04:38 libQt5MultimediaGstTools.prl
+lrwxrwxrwx 1 root root        35 May 21 04:38 libQt5MultimediaGstTools.so -> libQt5MultimediaGstTools.so.5.15.19
+lrwxrwxrwx 1 root root        35 May 21 04:38 libQt5MultimediaGstTools.so.5 -> libQt5MultimediaGstTools.so.5.15.19
+lrwxrwxrwx 1 root root        35 May 21 04:38 libQt5MultimediaGstTools.so.5.15 -> libQt5MultimediaGstTools.so.5.15.19
+-rwxr-xr-x 1 root root    342256 May 21 04:38 libQt5MultimediaGstTools.so.5.15.19
+-rw-r--r-- 1 root root      1780 May 21 04:38 libQt5MultimediaQuick.prl
+lrwxrwxrwx 1 root root        32 May 21 04:38 libQt5MultimediaQuick.so -> libQt5MultimediaQuick.so.5.15.19
+lrwxrwxrwx 1 root root        32 May 21 04:38 libQt5MultimediaQuick.so.5 -> libQt5MultimediaQuick.so.5.15.19
+lrwxrwxrwx 1 root root        32 May 21 04:38 libQt5MultimediaQuick.so.5.15 -> libQt5MultimediaQuick.so.5.15.19
+-rwxr-xr-x 1 root root    137456 May 21 04:38 libQt5MultimediaQuick.so.5.15.19
+-rw-r--r-- 1 root root      1624 May 21 04:38 libQt5MultimediaWidgets.prl
+lrwxrwxrwx 1 root root        34 May 21 04:38 libQt5MultimediaWidgets.so -> libQt5MultimediaWidgets.so.5.15.19
+lrwxrwxrwx 1 root root        34 May 21 04:38 libQt5MultimediaWidgets.so.5 -> libQt5MultimediaWidgets.so.5.15.19
+lrwxrwxrwx 1 root root        34 May 21 04:38 libQt5MultimediaWidgets.so.5.15 -> libQt5MultimediaWidgets.so.5.15.19
+-rwxr-xr-x 1 root root    129144 May 21 04:38 libQt5MultimediaWidgets.so.5.15.19
+-rw-r--r-- 1 root root      1196 May 21 04:10 libQt5Network.prl
+lrwxrwxrwx 1 root root        24 May 21 04:10 libQt5Network.so -> libQt5Network.so.5.15.19
+lrwxrwxrwx 1 root root        24 May 21 04:10 libQt5Network.so.5 -> libQt5Network.so.5.15.19
+lrwxrwxrwx 1 root root        24 May 21 04:10 libQt5Network.so.5.15 -> libQt5Network.so.5.15.19
+-rwxr-xr-x 1 root root   1665160 May 21 04:10 libQt5Network.so.5.15.19
+-rw-r--r-- 1 root root      1373 May 21 04:10 libQt5OpenGL.prl
+lrwxrwxrwx 1 root root        23 May 21 04:10 libQt5OpenGL.so -> libQt5OpenGL.so.5.15.19
+lrwxrwxrwx 1 root root        23 May 21 04:10 libQt5OpenGL.so.5 -> libQt5OpenGL.so.5.15.19
+lrwxrwxrwx 1 root root        23 May 21 04:10 libQt5OpenGL.so.5.15 -> libQt5OpenGL.so.5.15.19
+-rwxr-xr-x 1 root root    387208 May 21 04:10 libQt5OpenGL.so.5.15.19
+-rw-r--r-- 1 root root   1024052 May 21 04:10 libQt5OpenGLExtensions.a
+-rw-r--r-- 1 root root      1243 May 21 04:10 libQt5OpenGLExtensions.prl
+-rw-r--r-- 1 root root     29848 May 21 04:56 libQt5PacketProtocol.a
+-rw-r--r-- 1 root root      1156 May 21 04:56 libQt5PacketProtocol.prl
+-rw-r--r-- 1 root root     48774 May 21 04:10 libQt5PlatformCompositorSupport.a
+-rw-r--r-- 1 root root      1273 May 21 04:10 libQt5PlatformCompositorSupport.prl
+-rw-r--r-- 1 root root      1397 May 21 04:10 libQt5PrintSupport.prl
+lrwxrwxrwx 1 root root        29 May 21 04:10 libQt5PrintSupport.so -> libQt5PrintSupport.so.5.15.19
+lrwxrwxrwx 1 root root        29 May 21 04:10 libQt5PrintSupport.so.5 -> libQt5PrintSupport.so.5.15.19
+lrwxrwxrwx 1 root root        29 May 21 04:10 libQt5PrintSupport.so.5.15 -> libQt5PrintSupport.so.5.15.19
+-rwxr-xr-x 1 root root    473200 May 21 04:10 libQt5PrintSupport.so.5.15.19
+-rw-r--r-- 1 root root      1347 May 21 04:56 libQt5Qml.prl
+lrwxrwxrwx 1 root root        20 May 21 04:56 libQt5Qml.so -> libQt5Qml.so.5.15.19
+lrwxrwxrwx 1 root root        20 May 21 04:56 libQt5Qml.so.5 -> libQt5Qml.so.5.15.19
+lrwxrwxrwx 1 root root        20 May 21 04:56 libQt5Qml.so.5.15 -> libQt5Qml.so.5.15.19
+-rwxr-xr-x 1 root root   4516752 May 21 04:56 libQt5Qml.so.5.15.19
+-rw-r--r-- 1 root root    527328 May 21 04:56 libQt5QmlDebug.a
+-rw-r--r-- 1 root root      1410 May 21 04:56 libQt5QmlDebug.prl
+-rw-r--r-- 1 root root   2349160 May 21 04:56 libQt5QmlDevTools.a
+-rw-r--r-- 1 root root      1183 May 21 04:56 libQt5QmlDevTools.prl
+-rw-r--r-- 1 root root      1424 May 21 04:56 libQt5QmlModels.prl
+lrwxrwxrwx 1 root root        26 May 21 04:56 libQt5QmlModels.so -> libQt5QmlModels.so.5.15.19
+lrwxrwxrwx 1 root root        26 May 21 04:56 libQt5QmlModels.so.5 -> libQt5QmlModels.so.5.15.19
+lrwxrwxrwx 1 root root        26 May 21 04:56 libQt5QmlModels.so.5.15 -> libQt5QmlModels.so.5.15.19
+-rwxr-xr-x 1 root root    587976 May 21 04:56 libQt5QmlModels.so.5.15.19
+-rw-r--r-- 1 root root      1417 May 21 04:56 libQt5QmlWorkerScript.prl
+lrwxrwxrwx 1 root root        32 May 21 04:56 libQt5QmlWorkerScript.so -> libQt5QmlWorkerScript.so.5.15.19
+lrwxrwxrwx 1 root root        32 May 21 04:56 libQt5QmlWorkerScript.so.5 -> libQt5QmlWorkerScript.so.5.15.19
+lrwxrwxrwx 1 root root        32 May 21 04:56 libQt5QmlWorkerScript.so.5.15 -> libQt5QmlWorkerScript.so.5.15.19
+-rwxr-xr-x 1 root root     71800 May 21 04:56 libQt5QmlWorkerScript.so.5.15.19
+-rw-r--r-- 1 root root      1656 May 21 04:56 libQt5Quick.prl
+lrwxrwxrwx 1 root root        22 May 21 04:56 libQt5Quick.so -> libQt5Quick.so.5.15.19
+lrwxrwxrwx 1 root root        22 May 21 04:56 libQt5Quick.so.5 -> libQt5Quick.so.5.15.19
+lrwxrwxrwx 1 root root        22 May 21 04:56 libQt5Quick.so.5.15 -> libQt5Quick.so.5.15.19
+-rwxr-xr-x 1 root root   6081616 May 21 04:56 libQt5Quick.so.5.15.19
+-rw-r--r-- 1 root root      1767 May 21 04:33 libQt5QuickControls2.prl
+lrwxrwxrwx 1 root root        31 May 21 04:33 libQt5QuickControls2.so -> libQt5QuickControls2.so.5.15.19
+lrwxrwxrwx 1 root root        31 May 21 04:33 libQt5QuickControls2.so.5 -> libQt5QuickControls2.so.5.15.19
+lrwxrwxrwx 1 root root        31 May 21 04:33 libQt5QuickControls2.so.5.15 -> libQt5QuickControls2.so.5.15.19
+-rwxr-xr-x 1 root root    215152 May 21 04:33 libQt5QuickControls2.so.5.15.19
+-rw-r--r-- 1 root root      1697 May 21 04:56 libQt5QuickParticles.prl
+lrwxrwxrwx 1 root root        31 May 21 04:56 libQt5QuickParticles.so -> libQt5QuickParticles.so.5.15.19
+lrwxrwxrwx 1 root root        31 May 21 04:56 libQt5QuickParticles.so.5 -> libQt5QuickParticles.so.5.15.19
+lrwxrwxrwx 1 root root        31 May 21 04:56 libQt5QuickParticles.so.5.15 -> libQt5QuickParticles.so.5.15.19
+-rwxr-xr-x 1 root root    653528 May 21 04:56 libQt5QuickParticles.so.5.15.19
+-rw-r--r-- 1 root root      1752 May 21 04:56 libQt5QuickShapes.prl
+lrwxrwxrwx 1 root root        28 May 21 04:56 libQt5QuickShapes.so -> libQt5QuickShapes.so.5.15.19
+lrwxrwxrwx 1 root root        28 May 21 04:56 libQt5QuickShapes.so.5 -> libQt5QuickShapes.so.5.15.19
+lrwxrwxrwx 1 root root        28 May 21 04:56 libQt5QuickShapes.so.5.15 -> libQt5QuickShapes.so.5.15.19
+-rwxr-xr-x 1 root root    280704 May 21 04:56 libQt5QuickShapes.so.5.15.19
+-rw-r--r-- 1 root root      1779 May 21 04:33 libQt5QuickTemplates2.prl
+lrwxrwxrwx 1 root root        32 May 21 04:33 libQt5QuickTemplates2.so -> libQt5QuickTemplates2.so.5.15.19
+lrwxrwxrwx 1 root root        32 May 21 04:33 libQt5QuickTemplates2.so.5 -> libQt5QuickTemplates2.so.5.15.19
+lrwxrwxrwx 1 root root        32 May 21 04:33 libQt5QuickTemplates2.so.5.15 -> libQt5QuickTemplates2.so.5.15.19
+-rwxr-xr-x 1 root root   1775728 May 21 04:33 libQt5QuickTemplates2.so.5.15.19
+-rw-r--r-- 1 root root      1629 May 21 04:56 libQt5QuickTest.prl
+lrwxrwxrwx 1 root root        26 May 21 04:56 libQt5QuickTest.so -> libQt5QuickTest.so.5.15.19
+lrwxrwxrwx 1 root root        26 May 21 04:56 libQt5QuickTest.so.5 -> libQt5QuickTest.so.5.15.19
+lrwxrwxrwx 1 root root        26 May 21 04:56 libQt5QuickTest.so.5.15 -> libQt5QuickTest.so.5.15.19
+-rwxr-xr-x 1 root root    133232 May 21 04:56 libQt5QuickTest.so.5.15.19
+-rw-r--r-- 1 root root      1736 May 21 04:56 libQt5QuickWidgets.prl
+lrwxrwxrwx 1 root root        29 May 21 04:56 libQt5QuickWidgets.so -> libQt5QuickWidgets.so.5.15.19
+lrwxrwxrwx 1 root root        29 May 21 04:56 libQt5QuickWidgets.so.5 -> libQt5QuickWidgets.so.5.15.19
+lrwxrwxrwx 1 root root        29 May 21 04:56 libQt5QuickWidgets.so.5.15 -> libQt5QuickWidgets.so.5.15.19
+-rwxr-xr-x 1 root root    100464 May 21 04:56 libQt5QuickWidgets.so.5.15.19
+-rw-r--r-- 1 root root    118736 May 21 04:10 libQt5ServiceSupport.a
+-rw-r--r-- 1 root root      1358 May 21 04:10 libQt5ServiceSupport.prl
+-rw-r--r-- 1 root root      1188 May 21 04:10 libQt5Sql.prl
+lrwxrwxrwx 1 root root        20 May 21 04:10 libQt5Sql.so -> libQt5Sql.so.5.15.19
+lrwxrwxrwx 1 root root        20 May 21 04:10 libQt5Sql.so.5 -> libQt5Sql.so.5.15.19
+lrwxrwxrwx 1 root root        20 May 21 04:10 libQt5Sql.so.5.15 -> libQt5Sql.so.5.15.19
+-rwxr-xr-x 1 root root    272496 May 21 04:10 libQt5Sql.so.5.15.19
+-rw-r--r-- 1 root root      1345 May 21 04:36 libQt5Svg.prl
+lrwxrwxrwx 1 root root        20 May 21 04:36 libQt5Svg.so -> libQt5Svg.so.5.15.19
+lrwxrwxrwx 1 root root        20 May 21 04:36 libQt5Svg.so.5 -> libQt5Svg.so.5.15.19
+lrwxrwxrwx 1 root root        20 May 21 04:36 libQt5Svg.so.5.15 -> libQt5Svg.so.5.15.19
+-rwxr-xr-x 1 root root    370792 May 21 04:36 libQt5Svg.so.5.15.19
+-rw-r--r-- 1 root root      1200 May 21 04:10 libQt5Test.prl
+lrwxrwxrwx 1 root root        21 May 21 04:10 libQt5Test.so -> libQt5Test.so.5.15.19
+lrwxrwxrwx 1 root root        21 May 21 04:10 libQt5Test.so.5 -> libQt5Test.so.5.15.19
+lrwxrwxrwx 1 root root        21 May 21 04:10 libQt5Test.so.5.15 -> libQt5Test.so.5.15.19
+-rwxr-xr-x 1 root root    325936 May 21 04:10 libQt5Test.so.5.15.19
+-rw-r--r-- 1 root root    956790 May 21 04:10 libQt5ThemeSupport.a
+-rw-r--r-- 1 root root      1464 May 21 04:10 libQt5ThemeSupport.prl
+-rw-r--r-- 1 root root      1313 Oct  1 09:25 libQt5UiPlugin.prl
+-rw-r--r-- 1 root root   1174630 Oct  1 09:25 libQt5UiTools.a
+-rw-r--r-- 1 root root      1600 Oct  1 09:25 libQt5UiTools.prl
+-rw-r--r-- 1 root root     65012 May 21 04:10 libQt5VulkanSupport.a
+-rw-r--r-- 1 root root      1256 May 21 04:10 libQt5VulkanSupport.prl
+-rw-r--r-- 1 root root      1552 May 21 04:34 libQt5WaylandClient.prl
+lrwxrwxrwx 1 root root        30 May 21 04:34 libQt5WaylandClient.so -> libQt5WaylandClient.so.5.15.19
+lrwxrwxrwx 1 root root        30 May 21 04:34 libQt5WaylandClient.so.5 -> libQt5WaylandClient.so.5.15.19
+lrwxrwxrwx 1 root root        30 May 21 04:34 libQt5WaylandClient.so.5.15 -> libQt5WaylandClient.so.5.15.19
+-rwxr-xr-x 1 root root   1393544 May 21 04:34 libQt5WaylandClient.so.5.15.19
+-rw-r--r-- 1 root root      1852 May 21 04:34 libQt5WaylandCompositor.prl
+lrwxrwxrwx 1 root root        34 May 21 04:34 libQt5WaylandCompositor.so -> libQt5WaylandCompositor.so.5.15.19
+lrwxrwxrwx 1 root root        34 May 21 04:34 libQt5WaylandCompositor.so.5 -> libQt5WaylandCompositor.so.5.15.19
+lrwxrwxrwx 1 root root        34 May 21 04:34 libQt5WaylandCompositor.so.5.15 -> libQt5WaylandCompositor.so.5.15.19
+-rwxr-xr-x 1 root root   1765488 May 21 04:34 libQt5WaylandCompositor.so.5.15.19
+-rw-r--r-- 1 root root      1336 May 21 04:10 libQt5Widgets.prl
+lrwxrwxrwx 1 root root        24 May 21 04:10 libQt5Widgets.so -> libQt5Widgets.so.5.15.19
+lrwxrwxrwx 1 root root        24 May 21 04:10 libQt5Widgets.so.5 -> libQt5Widgets.so.5.15.19
+lrwxrwxrwx 1 root root        24 May 21 04:10 libQt5Widgets.so.5.15 -> libQt5Widgets.so.5.15.19
+-rwxr-xr-x 1 root root   7694608 May 21 04:10 libQt5Widgets.so.5.15.19
+-rw-r--r-- 1 root root      1282 May 21 04:32 libQt5X11Extras.prl
+lrwxrwxrwx 1 root root        26 May 21 04:32 libQt5X11Extras.so -> libQt5X11Extras.so.5.15.19
+lrwxrwxrwx 1 root root        26 May 21 04:32 libQt5X11Extras.so.5 -> libQt5X11Extras.so.5.15.19
+lrwxrwxrwx 1 root root        26 May 21 04:32 libQt5X11Extras.so.5.15 -> libQt5X11Extras.so.5.15.19
+-rwxr-xr-x 1 root root     22560 May 21 04:32 libQt5X11Extras.so.5.15.19
+-rw-r--r-- 1 root root      2706 May 21 04:10 libQt5XcbQpa.prl
+lrwxrwxrwx 1 root root        23 May 21 04:10 libQt5XcbQpa.so -> libQt5XcbQpa.so.5.15.19
+lrwxrwxrwx 1 root root        23 May 21 04:10 libQt5XcbQpa.so.5 -> libQt5XcbQpa.so.5.15.19
+lrwxrwxrwx 1 root root        23 May 21 04:10 libQt5XcbQpa.so.5.15 -> libQt5XcbQpa.so.5.15.19
+-rwxr-xr-x 1 root root   1375552 May 21 04:10 libQt5XcbQpa.so.5.15.19
+-rw-r--r-- 1 root root     36936 May 21 04:10 libQt5XkbCommonSupport.a
+-rw-r--r-- 1 root root      1279 May 21 04:10 libQt5XkbCommonSupport.prl
+-rw-r--r-- 1 root root      1188 May 21 04:10 libQt5Xml.prl
+lrwxrwxrwx 1 root root        20 May 21 04:10 libQt5Xml.so -> libQt5Xml.so.5.15.19
+lrwxrwxrwx 1 root root        20 May 21 04:10 libQt5Xml.so.5 -> libQt5Xml.so.5.15.19
+lrwxrwxrwx 1 root root        20 May 21 04:10 libQt5Xml.so.5.15 -> libQt5Xml.so.5.15.19
+-rwxr-xr-x 1 root root    305256 May 21 04:10 libQt5Xml.so.5.15.19
+-rw-r--r-- 1 root root   2435454 Oct  7 18:05 libQt6BundledResonanceAudio.a
+-rw-r--r-- 1 root root       204 Oct 14 15:28 libQt6Concurrent.prl
+lrwxrwxrwx 1 root root        21 Oct 14 15:28 libQt6Concurrent.so -> libQt6Concurrent.so.6
+lrwxrwxrwx 1 root root        26 Oct 14 15:28 libQt6Concurrent.so.6 -> libQt6Concurrent.so.6.12.0
+-rwxr-xr-x 1 root root     22760 Oct 14 15:28 libQt6Concurrent.so.6.12.0
+-rw-r--r-- 1 root root        86 Oct 14 15:28 libQt6Core.prl
+lrwxrwxrwx 1 root root        15 Oct 14 15:28 libQt6Core.so -> libQt6Core.so.6
+lrwxrwxrwx 1 root root        20 Oct 14 15:28 libQt6Core.so.6 -> libQt6Core.so.6.12.0
+-rwxr-xr-x 1 root root   7451056 Oct 14 15:28 libQt6Core.so.6.12.0
+-rw-r--r-- 1 root root       205 Oct  7 18:18 libQt6Core5Compat.prl
+lrwxrwxrwx 1 root root        22 Oct  7 18:18 libQt6Core5Compat.so -> libQt6Core5Compat.so.6
+lrwxrwxrwx 1 root root        27 Oct  7 18:18 libQt6Core5Compat.so.6 -> libQt6Core5Compat.so.6.12.0
+-rwxr-xr-x 1 root root    407816 Oct  7 18:18 libQt6Core5Compat.so.6.12.0
+-rw-r--r-- 1 root root       198 Oct 14 15:28 libQt6DBus.prl
+lrwxrwxrwx 1 root root        15 Oct 14 15:28 libQt6DBus.so -> libQt6DBus.so.6
+lrwxrwxrwx 1 root root        20 Oct 14 15:28 libQt6DBus.so.6 -> libQt6DBus.so.6.12.0
+-rwxr-xr-x 1 root root    844800 Oct 14 15:28 libQt6DBus.so.6.12.0
+-rw-r--r-- 1 root root     54838 Oct 14 15:28 libQt6DeviceDiscoverySupport.a
+-rw-r--r-- 1 root root       277 Oct 14 15:28 libQt6DeviceDiscoverySupport.prl
+-rw-r--r-- 1 root root      1120 Oct 14 15:28 libQt6EglFSDeviceIntegration.prl
+lrwxrwxrwx 1 root root        33 Oct 14 15:28 libQt6EglFSDeviceIntegration.so -> libQt6EglFSDeviceIntegration.so.6
+lrwxrwxrwx 1 root root        38 Oct 14 15:28 libQt6EglFSDeviceIntegration.so.6 -> libQt6EglFSDeviceIntegration.so.6.12.0
+-rwxr-xr-x 1 root root    352400 Oct 14 15:28 libQt6EglFSDeviceIntegration.so.6.12.0
+-rw-r--r-- 1 root root      1508 Oct 14 15:28 libQt6EglFsKmsGbmSupport.prl
+lrwxrwxrwx 1 root root        29 Oct 14 15:28 libQt6EglFsKmsGbmSupport.so -> libQt6EglFsKmsGbmSupport.so.6
+lrwxrwxrwx 1 root root        34 Oct 14 15:28 libQt6EglFsKmsGbmSupport.so.6 -> libQt6EglFsKmsGbmSupport.so.6.12.0
+-rwxr-xr-x 1 root root    207760 Oct 14 15:28 libQt6EglFsKmsGbmSupport.so.6.12.0
+-rw-r--r-- 1 root root      1355 Oct 14 15:28 libQt6EglFsKmsSupport.prl
+lrwxrwxrwx 1 root root        26 Oct 14 15:28 libQt6EglFsKmsSupport.so -> libQt6EglFsKmsSupport.so.6
+lrwxrwxrwx 1 root root        31 Oct 14 15:28 libQt6EglFsKmsSupport.so.6 -> libQt6EglFsKmsSupport.so.6.12.0
+-rwxr-xr-x 1 root root    166152 Oct 14 15:28 libQt6EglFsKmsSupport.so.6.12.0
+-rw-r--r-- 1 root root   2367298 Oct  7 18:05 libQt6FFmpegMediaPluginImpl.a
+-rw-r--r-- 1 root root      1354 Oct  7 18:05 libQt6FFmpegMediaPluginImpl.prl
+-rw-r--r-- 1 root root    133186 Oct 14 15:28 libQt6FbSupport.a
+-rw-r--r-- 1 root root       466 Oct 14 15:28 libQt6FbSupport.prl
+-rw-r--r-- 1 root root       323 Oct 14 15:28 libQt6Gui.prl
+lrwxrwxrwx 1 root root        14 Oct 14 15:28 libQt6Gui.so -> libQt6Gui.so.6
+lrwxrwxrwx 1 root root        19 Oct 14 15:28 libQt6Gui.so.6 -> libQt6Gui.so.6.12.0
+-rwxr-xr-x 1 root root  10459648 Oct 14 15:28 libQt6Gui.so.6.12.0
+-rw-r--r-- 1 root root    503102 Oct 14 15:28 libQt6InputSupport.a
+-rw-r--r-- 1 root root       819 Oct 14 15:28 libQt6InputSupport.prl
+-rw-r--r-- 1 root root    226464 Oct 14 15:28 libQt6KmsSupport.a
+-rw-r--r-- 1 root root       527 Oct 14 15:28 libQt6KmsSupport.prl
+-rw-r--r-- 1 root root        95 Oct  7 16:12 libQt6LabsAnimation.prl
+lrwxrwxrwx 1 root root        24 Oct  7 16:12 libQt6LabsAnimation.so -> libQt6LabsAnimation.so.6
+lrwxrwxrwx 1 root root        29 Oct  7 16:12 libQt6LabsAnimation.so.6 -> libQt6LabsAnimation.so.6.12.0
+-rwxr-xr-x 1 root root     47752 Oct  7 16:12 libQt6LabsAnimation.so.6.12.0
+-rw-r--r-- 1 root root       101 Oct  7 16:12 libQt6LabsFolderListModel.prl
+lrwxrwxrwx 1 root root        30 Oct  7 16:12 libQt6LabsFolderListModel.so -> libQt6LabsFolderListModel.so.6
+lrwxrwxrwx 1 root root        35 Oct  7 16:12 libQt6LabsFolderListModel.so.6 -> libQt6LabsFolderListModel.so.6.12.0
+-rwxr-xr-x 1 root root    130704 Oct  7 16:12 libQt6LabsFolderListModel.so.6.12.0
+-rw-r--r-- 1 root root        94 Oct  7 16:12 libQt6LabsPlatform.prl
+lrwxrwxrwx 1 root root        23 Oct  7 16:12 libQt6LabsPlatform.so -> libQt6LabsPlatform.so.6
+lrwxrwxrwx 1 root root        28 Oct  7 16:12 libQt6LabsPlatform.so.6 -> libQt6LabsPlatform.so.6.12.0
+-rwxr-xr-x 1 root root    327304 Oct  7 16:12 libQt6LabsPlatform.so.6.12.0
+-rw-r--r-- 1 root root        95 Oct  7 16:12 libQt6LabsQmlModels.prl
+lrwxrwxrwx 1 root root        24 Oct  7 16:12 libQt6LabsQmlModels.so -> libQt6LabsQmlModels.so.6
+lrwxrwxrwx 1 root root        29 Oct  7 16:12 libQt6LabsQmlModels.so.6 -> libQt6LabsQmlModels.so.6.12.0
+-rwxr-xr-x 1 root root    214280 Oct  7 16:12 libQt6LabsQmlModels.so.6.12.0
+-rw-r--r-- 1 root root       346 Oct  7 16:12 libQt6LabsSettings.prl
+lrwxrwxrwx 1 root root        23 Oct  7 16:12 libQt6LabsSettings.so -> libQt6LabsSettings.so.6
+lrwxrwxrwx 1 root root        28 Oct  7 16:12 libQt6LabsSettings.so.6 -> libQt6LabsSettings.so.6.12.0
+-rwxr-xr-x 1 root root     47752 Oct  7 16:12 libQt6LabsSettings.so.6.12.0
+-rw-r--r-- 1 root root        97 Oct  7 16:12 libQt6LabsSharedImage.prl
+lrwxrwxrwx 1 root root        26 Oct  7 16:12 libQt6LabsSharedImage.so -> libQt6LabsSharedImage.so.6
+lrwxrwxrwx 1 root root        31 Oct  7 16:12 libQt6LabsSharedImage.so.6 -> libQt6LabsSharedImage.so.6.12.0
+-rwxr-xr-x 1 root root     47880 Oct  7 16:12 libQt6LabsSharedImage.so.6.12.0
+-rw-r--r-- 1 root root       472 Oct  7 16:12 libQt6LabsStyleKit.prl
+lrwxrwxrwx 1 root root        23 Oct  7 16:12 libQt6LabsStyleKit.so -> libQt6LabsStyleKit.so.6
+lrwxrwxrwx 1 root root        28 Oct  7 16:12 libQt6LabsStyleKit.so.6 -> libQt6LabsStyleKit.so.6.12.0
+-rwxr-xr-x 1 root root   3779336 Oct  7 16:12 libQt6LabsStyleKit.so.6.12.0
+-rw-r--r-- 1 root root        98 Oct  7 16:12 libQt6LabsStyleKitImpl.prl
+lrwxrwxrwx 1 root root        27 Oct  7 16:12 libQt6LabsStyleKitImpl.so -> libQt6LabsStyleKitImpl.so.6
+lrwxrwxrwx 1 root root        32 Oct  7 16:12 libQt6LabsStyleKitImpl.so.6 -> libQt6LabsStyleKitImpl.so.6.12.0
+-rwxr-xr-x 1 root root    536584 Oct  7 16:12 libQt6LabsStyleKitImpl.so.6.12.0
+-rw-r--r-- 1 root root       210 Oct  7 16:12 libQt6LabsSynchronizer.prl
+lrwxrwxrwx 1 root root        27 Oct  7 16:12 libQt6LabsSynchronizer.so -> libQt6LabsSynchronizer.so.6
+lrwxrwxrwx 1 root root        32 Oct  7 16:12 libQt6LabsSynchronizer.so.6 -> libQt6LabsSynchronizer.so.6.12.0
+-rwxr-xr-x 1 root root     64008 Oct  7 16:12 libQt6LabsSynchronizer.so.6.12.0
+-rw-r--r-- 1 root root        99 Oct  7 16:12 libQt6LabsWavefrontMesh.prl
+lrwxrwxrwx 1 root root        28 Oct  7 16:12 libQt6LabsWavefrontMesh.so -> libQt6LabsWavefrontMesh.so.6
+lrwxrwxrwx 1 root root        33 Oct  7 16:12 libQt6LabsWavefrontMesh.so.6 -> libQt6LabsWavefrontMesh.so.6.12.0
+-rwxr-xr-x 1 root root     43656 Oct  7 16:12 libQt6LabsWavefrontMesh.so.6.12.0
+-rw-r--r-- 1 root root       470 Oct  7 18:05 libQt6Multimedia.prl
+lrwxrwxrwx 1 root root        21 Oct  7 18:05 libQt6Multimedia.so -> libQt6Multimedia.so.6
+lrwxrwxrwx 1 root root        26 Oct  7 18:05 libQt6Multimedia.so.6 -> libQt6Multimedia.so.6.12.0
+-rwxr-xr-x 1 root root   1756776 Oct  7 18:05 libQt6Multimedia.so.6.12.0
+-rw-r--r-- 1 root root       763 Oct  7 18:05 libQt6MultimediaQuick.prl
+lrwxrwxrwx 1 root root        26 Oct  7 18:05 libQt6MultimediaQuick.so -> libQt6MultimediaQuick.so.6
+lrwxrwxrwx 1 root root        31 Oct  7 18:05 libQt6MultimediaQuick.so.6 -> libQt6MultimediaQuick.so.6.12.0
+-rwxr-xr-x 1 root root    363016 Oct  7 18:05 libQt6MultimediaQuick.so.6.12.0
+-rw-r--r-- 1 root root    179446 Oct  7 18:05 libQt6MultimediaTestLib.a
+-rw-r--r-- 1 root root       696 Oct  7 18:05 libQt6MultimediaTestLib.prl
+-rw-r--r-- 1 root root       631 Oct  7 18:05 libQt6MultimediaWidgets.prl
+lrwxrwxrwx 1 root root        28 Oct  7 18:05 libQt6MultimediaWidgets.so -> libQt6MultimediaWidgets.so.6
+lrwxrwxrwx 1 root root        33 Oct  7 18:05 libQt6MultimediaWidgets.so.6 -> libQt6MultimediaWidgets.so.6.12.0
+-rwxr-xr-x 1 root root     47880 Oct  7 18:05 libQt6MultimediaWidgets.so.6.12.0
+-rw-r--r-- 1 root root       201 Oct 14 15:28 libQt6Network.prl
+lrwxrwxrwx 1 root root        18 Oct 14 15:28 libQt6Network.so -> libQt6Network.so.6
+lrwxrwxrwx 1 root root        23 Oct 14 15:28 libQt6Network.so.6 -> libQt6Network.so.6.12.0
+-rwxr-xr-x 1 root root   2083936 Oct 14 15:28 libQt6Network.so.6.12.0
+-rw-r--r-- 1 root root       392 Oct 14 15:28 libQt6OpenGL.prl
+lrwxrwxrwx 1 root root        17 Oct 14 15:28 libQt6OpenGL.so -> libQt6OpenGL.so.6
+lrwxrwxrwx 1 root root        22 Oct 14 15:28 libQt6OpenGL.so.6 -> libQt6OpenGL.so.6.12.0
+-rwxr-xr-x 1 root root    690048 Oct 14 15:28 libQt6OpenGL.so.6.12.0
+-rw-r--r-- 1 root root       545 Oct 14 15:28 libQt6OpenGLWidgets.prl
+lrwxrwxrwx 1 root root        24 Oct 14 15:28 libQt6OpenGLWidgets.so -> libQt6OpenGLWidgets.so.6
+lrwxrwxrwx 1 root root        29 Oct 14 15:28 libQt6OpenGLWidgets.so.6 -> libQt6OpenGLWidgets.so.6.12.0
+-rwxr-xr-x 1 root root     55816 Oct 14 15:28 libQt6OpenGLWidgets.so.6.12.0
+-rw-r--r-- 1 root root     37240 Oct  7 16:12 libQt6PacketProtocol.a
+-rw-r--r-- 1 root root       207 Oct  7 16:12 libQt6PacketProtocol.prl
+lrwxrwxrwx 1 root root        19 Jun 10 07:00 libQt6Pas.so -> libQt6Pas.so.6.2.10
+lrwxrwxrwx 1 root root        19 Jun 10 07:00 libQt6Pas.so.6 -> libQt6Pas.so.6.2.10
+lrwxrwxrwx 1 root root        19 Jun 10 07:00 libQt6Pas.so.6.2 -> libQt6Pas.so.6.2.10
+-rwxr-xr-x 1 root root   2697600 Jun 10 07:00 libQt6Pas.so.6.2.10
+-rw-r--r-- 1 root root       389 Oct  7 10:26 libQt6Pdf.prl
+lrwxrwxrwx 1 root root        14 Oct  7 10:26 libQt6Pdf.so -> libQt6Pdf.so.6
+lrwxrwxrwx 1 root root        19 Oct  7 10:26 libQt6Pdf.so.6 -> libQt6Pdf.so.6.12.0
+-rwxr-xr-x 1 root root   4235944 Oct  7 10:26 libQt6Pdf.so.6.12.0
+-rw-r--r-- 1 root root       742 Oct  7 10:26 libQt6PdfQuick.prl
+lrwxrwxrwx 1 root root        19 Oct  7 10:26 libQt6PdfQuick.so -> libQt6PdfQuick.so.6
+lrwxrwxrwx 1 root root        24 Oct  7 10:26 libQt6PdfQuick.so.6 -> libQt6PdfQuick.so.6.12.0
+-rwxr-xr-x 1 root root    770816 Oct  7 10:26 libQt6PdfQuick.so.6.12.0
+-rw-r--r-- 1 root root       536 Oct  7 10:26 libQt6PdfWidgets.prl
+lrwxrwxrwx 1 root root        21 Oct  7 10:26 libQt6PdfWidgets.so -> libQt6PdfWidgets.so.6
+lrwxrwxrwx 1 root root        26 Oct  7 10:26 libQt6PdfWidgets.so.6 -> libQt6PdfWidgets.so.6.12.0
+-rwxr-xr-x 1 root root     97416 Oct  7 10:26 libQt6PdfWidgets.so.6.12.0
+-rw-r--r-- 1 root root       205 Oct  7 18:41 libQt6Positioning.prl
+lrwxrwxrwx 1 root root        22 Oct  7 18:41 libQt6Positioning.so -> libQt6Positioning.so.6
+lrwxrwxrwx 1 root root        27 Oct  7 18:41 libQt6Positioning.so.6 -> libQt6Positioning.so.6.12.0
+-rwxr-xr-x 1 root root    575992 Oct  7 18:41 libQt6Positioning.so.6.12.0
+-rw-r--r-- 1 root root       766 Oct  7 18:41 libQt6PositioningQuick.prl
+lrwxrwxrwx 1 root root        27 Oct  7 18:41 libQt6PositioningQuick.so -> libQt6PositioningQuick.so.6
+lrwxrwxrwx 1 root root        32 Oct  7 18:41 libQt6PositioningQuick.so.6 -> libQt6PositioningQuick.so.6.12.0
+-rwxr-xr-x 1 root root    410120 Oct  7 18:41 libQt6PositioningQuick.so.6.12.0
+-rw-r--r-- 1 root root       472 Oct 14 15:28 libQt6PrintSupport.prl
+lrwxrwxrwx 1 root root        23 Oct 14 15:28 libQt6PrintSupport.so -> libQt6PrintSupport.so.6
+lrwxrwxrwx 1 root root        28 Oct 14 15:28 libQt6PrintSupport.so.6 -> libQt6PrintSupport.so.6.12.0
+-rwxr-xr-x 1 root root    514568 Oct 14 15:28 libQt6PrintSupport.so.6.12.0
+-rw-r--r-- 1 root root       271 Oct  7 16:12 libQt6Qml.prl
+lrwxrwxrwx 1 root root        14 Oct  7 16:12 libQt6Qml.so -> libQt6Qml.so.6
+lrwxrwxrwx 1 root root        19 Oct  7 16:12 libQt6Qml.so.6 -> libQt6Qml.so.6.12.0
+-rwxr-xr-x 1 root root   6207616 Oct  7 16:12 libQt6Qml.so.6.12.0
+-rw-r--r-- 1 root root       345 Oct  7 16:12 libQt6QmlCompiler.prl
+lrwxrwxrwx 1 root root        22 Oct  7 16:12 libQt6QmlCompiler.so -> libQt6QmlCompiler.so.6
+lrwxrwxrwx 1 root root        27 Oct  7 16:12 libQt6QmlCompiler.so.6 -> libQt6QmlCompiler.so.6.12.0
+-rwxr-xr-x 1 root root   2259080 Oct  7 16:12 libQt6QmlCompiler.so.6.12.0
+-rw-r--r-- 1 root root       341 Oct  7 16:12 libQt6QmlCore.prl
+lrwxrwxrwx 1 root root        18 Oct  7 16:12 libQt6QmlCore.so -> libQt6QmlCore.so.6
+lrwxrwxrwx 1 root root        23 Oct  7 16:12 libQt6QmlCore.so.6 -> libQt6QmlCore.so.6.12.0
+-rwxr-xr-x 1 root root    135040 Oct  7 16:12 libQt6QmlCore.so.6.12.0
+-rw-r--r-- 1 root root    986130 Oct  7 16:12 libQt6QmlDebug.a
+-rw-r--r-- 1 root root       427 Oct  7 16:12 libQt6QmlDebug.prl
+-rw-r--r-- 1 root root       350 Oct  7 16:12 libQt6QmlDesignSupport.prl
+lrwxrwxrwx 1 root root        27 Oct  7 16:12 libQt6QmlDesignSupport.so -> libQt6QmlDesignSupport.so.6
+lrwxrwxrwx 1 root root        32 Oct  7 16:12 libQt6QmlDesignSupport.so.6 -> libQt6QmlDesignSupport.so.6.12.0
+-rwxr-xr-x 1 root root    110984 Oct  7 16:12 libQt6QmlDesignSupport.so.6.12.0
+-rw-r--r-- 1 root root  20555418 Oct  7 16:12 libQt6QmlDom.a
+-rw-r--r-- 1 root root       515 Oct  7 16:12 libQt6QmlDom.prl
+-rw-r--r-- 1 root root    627986 Oct  7 16:12 libQt6QmlFormat.a
+-rw-r--r-- 1 root root       682 Oct  7 16:12 libQt6QmlFormat.prl
+-rw-r--r-- 1 root root  22527346 Oct  7 16:12 libQt6QmlLS.a
+-rw-r--r-- 1 root root       984 Oct  7 16:12 libQt6QmlLS.prl
+-rw-r--r-- 1 root root   1219040 Oct  7 16:12 libQt6QmlLint.a
+-rw-r--r-- 1 root root       680 Oct  7 16:12 libQt6QmlLint.prl
+-rw-r--r-- 1 root root       275 Oct  7 16:12 libQt6QmlLocalStorage.prl
+lrwxrwxrwx 1 root root        26 Oct  7 16:12 libQt6QmlLocalStorage.so -> libQt6QmlLocalStorage.so.6
+lrwxrwxrwx 1 root root        31 Oct  7 16:12 libQt6QmlLocalStorage.so.6 -> libQt6QmlLocalStorage.so.6.12.0
+-rwxr-xr-x 1 root root     59912 Oct  7 16:12 libQt6QmlLocalStorage.so.6.12.0
+-rw-r--r-- 1 root root       509 Oct  7 16:12 libQt6QmlMeta.prl
+lrwxrwxrwx 1 root root        18 Oct  7 16:12 libQt6QmlMeta.so -> libQt6QmlMeta.so.6
+lrwxrwxrwx 1 root root        23 Oct  7 16:12 libQt6QmlMeta.so.6 -> libQt6QmlMeta.so.6.12.0
+-rwxr-xr-x 1 root root    168192 Oct  7 16:12 libQt6QmlMeta.so.6.12.0
+-rw-r--r-- 1 root root       343 Oct  7 16:12 libQt6QmlModels.prl
+lrwxrwxrwx 1 root root        20 Oct  7 16:12 libQt6QmlModels.so -> libQt6QmlModels.so.6
+lrwxrwxrwx 1 root root        25 Oct  7 16:12 libQt6QmlModels.so.6 -> libQt6QmlModels.so.6.12.0
+-rwxr-xr-x 1 root root   1259392 Oct  7 16:12 libQt6QmlModels.so.6.12.0
+-rw-r--r-- 1 root root       344 Oct  7 16:12 libQt6QmlNetwork.prl
+lrwxrwxrwx 1 root root        21 Oct  7 16:12 libQt6QmlNetwork.so -> libQt6QmlNetwork.so.6
+lrwxrwxrwx 1 root root        26 Oct  7 16:12 libQt6QmlNetwork.so.6 -> libQt6QmlNetwork.so.6.12.0
+-rwxr-xr-x 1 root root    130440 Oct  7 16:12 libQt6QmlNetwork.so.6.12.0
+-rw-r--r-- 1 root root    636142 Oct  7 16:12 libQt6QmlPreview.a
+-rw-r--r-- 1 root root       343 Oct  7 16:12 libQt6QmlPreview.prl
+-rw-r--r-- 1 root root     77514 Oct  7 16:12 libQt6QmlToolingSettings.a
+-rw-r--r-- 1 root root       211 Oct  7 16:12 libQt6QmlToolingSettings.prl
+-rw-r--r-- 1 root root    466432 Oct  7 16:12 libQt6QmlTypeRegistrar.a
+-rw-r--r-- 1 root root       547 Oct  7 16:12 libQt6QmlTypeRegistrar.prl
+-rw-r--r-- 1 root root       349 Oct  7 16:12 libQt6QmlWorkerScript.prl
+lrwxrwxrwx 1 root root        26 Oct  7 16:12 libQt6QmlWorkerScript.so -> libQt6QmlWorkerScript.so.6
+lrwxrwxrwx 1 root root        31 Oct  7 16:12 libQt6QmlWorkerScript.so.6 -> libQt6QmlWorkerScript.so.6.12.0
+-rwxr-xr-x 1 root root     85256 Oct  7 16:12 libQt6QmlWorkerScript.so.6.12.0
+-rw-r--r-- 1 root root       349 Oct  7 16:12 libQt6QmlXmlListModel.prl
+lrwxrwxrwx 1 root root        26 Oct  7 16:12 libQt6QmlXmlListModel.so -> libQt6QmlXmlListModel.so.6
+lrwxrwxrwx 1 root root        31 Oct  7 16:12 libQt6QmlXmlListModel.so.6 -> libQt6QmlXmlListModel.so.6.12.0
+-rwxr-xr-x 1 root root    126728 Oct  7 16:12 libQt6QmlXmlListModel.so.6.12.0
+-rw-r--r-- 1 root root   1425408 Oct  7 16:12 libQt6Qmltc.a
+-rw-r--r-- 1 root root       750 Oct  7 16:12 libQt6Qmltc.prl
+-rw-r--r-- 1 root root       603 Oct  7 16:12 libQt6Quick.prl
+lrwxrwxrwx 1 root root        16 Oct  7 16:12 libQt6Quick.so -> libQt6Quick.so.6
+lrwxrwxrwx 1 root root        21 Oct  7 16:12 libQt6Quick.so.6 -> libQt6Quick.so.6.12.0
+-rwxr-xr-x 1 root root   7999584 Oct  7 16:12 libQt6Quick.so.6.12.0
+-rw-r--r-- 1 root root       643 Oct  7 18:05 libQt6Quick3DSpatialAudio.prl
+lrwxrwxrwx 1 root root        30 Oct  7 18:05 libQt6Quick3DSpatialAudio.so -> libQt6Quick3DSpatialAudio.so.6
+lrwxrwxrwx 1 root root        35 Oct  7 18:05 libQt6Quick3DSpatialAudio.so.6 -> libQt6Quick3DSpatialAudio.so.6.12.0
+-rwxr-xr-x 1 root root     87056 Oct  7 18:05 libQt6Quick3DSpatialAudio.so.6.12.0
+-rw-r--r-- 1 root root       682 Oct  7 16:12 libQt6QuickControls2.prl
+lrwxrwxrwx 1 root root        25 Oct  7 16:12 libQt6QuickControls2.so -> libQt6QuickControls2.so.6
+lrwxrwxrwx 1 root root        30 Oct  7 16:12 libQt6QuickControls2.so.6 -> libQt6QuickControls2.so.6.12.0
+-rwxr-xr-x 1 root root    101000 Oct  7 16:12 libQt6QuickControls2.so.6.12.0
+-rw-r--r-- 1 root root       101 Oct  7 16:12 libQt6QuickControls2Basic.prl
+lrwxrwxrwx 1 root root        30 Oct  7 16:12 libQt6QuickControls2Basic.so -> libQt6QuickControls2Basic.so.6
+lrwxrwxrwx 1 root root        35 Oct  7 16:12 libQt6QuickControls2Basic.so.6 -> libQt6QuickControls2Basic.so.6.12.0
+-rwxr-xr-x 1 root root   2977808 Oct  7 16:12 libQt6QuickControls2Basic.so.6.12.0
+-rw-r--r-- 1 root root       110 Oct  7 16:12 libQt6QuickControls2BasicStyleImpl.prl
+lrwxrwxrwx 1 root root        39 Oct  7 16:12 libQt6QuickControls2BasicStyleImpl.so -> libQt6QuickControls2BasicStyleImpl.so.6
+lrwxrwxrwx 1 root root        44 Oct  7 16:12 libQt6QuickControls2BasicStyleImpl.so.6 -> libQt6QuickControls2BasicStyleImpl.so.6.12.0
+-rwxr-xr-x 1 root root    110232 Oct  7 16:12 libQt6QuickControls2BasicStyleImpl.so.6.12.0
+-rw-r--r-- 1 root root       108 Oct  7 16:12 libQt6QuickControls2FluentWinUI3.prl
+lrwxrwxrwx 1 root root        37 Oct  7 16:12 libQt6QuickControls2FluentWinUI3.so -> libQt6QuickControls2FluentWinUI3.so.6
+lrwxrwxrwx 1 root root        42 Oct  7 16:12 libQt6QuickControls2FluentWinUI3.so.6 -> libQt6QuickControls2FluentWinUI3.so.6.12.0
+-rwxr-xr-x 1 root root   3906072 Oct  7 16:12 libQt6QuickControls2FluentWinUI3.so.6.12.0
+-rw-r--r-- 1 root root       117 Oct  7 16:12 libQt6QuickControls2FluentWinUI3StyleImpl.prl
+lrwxrwxrwx 1 root root        46 Oct  7 16:12 libQt6QuickControls2FluentWinUI3StyleImpl.so -> libQt6QuickControls2FluentWinUI3StyleImpl.so.6
+lrwxrwxrwx 1 root root        51 Oct  7 16:12 libQt6QuickControls2FluentWinUI3StyleImpl.so.6 -> libQt6QuickControls2FluentWinUI3StyleImpl.so.6.12.0
+-rwxr-xr-x 1 root root    269728 Oct  7 16:12 libQt6QuickControls2FluentWinUI3StyleImpl.so.6.12.0
+-rw-r--r-- 1 root root       102 Oct  7 16:12 libQt6QuickControls2Fusion.prl
+lrwxrwxrwx 1 root root        31 Oct  7 16:12 libQt6QuickControls2Fusion.so -> libQt6QuickControls2Fusion.so.6
+lrwxrwxrwx 1 root root        36 Oct  7 16:12 libQt6QuickControls2Fusion.so.6 -> libQt6QuickControls2Fusion.so.6.12.0
+-rwxr-xr-x 1 root root   2497424 Oct  7 16:12 libQt6QuickControls2Fusion.so.6.12.0
+-rw-r--r-- 1 root root       111 Oct  7 16:12 libQt6QuickControls2FusionStyleImpl.prl
+lrwxrwxrwx 1 root root        40 Oct  7 16:12 libQt6QuickControls2FusionStyleImpl.so -> libQt6QuickControls2FusionStyleImpl.so.6
+lrwxrwxrwx 1 root root        45 Oct  7 16:12 libQt6QuickControls2FusionStyleImpl.so.6 -> libQt6QuickControls2FusionStyleImpl.so.6.12.0
+-rwxr-xr-x 1 root root    241560 Oct  7 16:12 libQt6QuickControls2FusionStyleImpl.so.6.12.0
+-rw-r--r-- 1 root root       103 Oct  7 16:12 libQt6QuickControls2Imagine.prl
+lrwxrwxrwx 1 root root        32 Oct  7 16:12 libQt6QuickControls2Imagine.so -> libQt6QuickControls2Imagine.so.6
+lrwxrwxrwx 1 root root        37 Oct  7 16:12 libQt6QuickControls2Imagine.so.6 -> libQt6QuickControls2Imagine.so.6.12.0
+-rwxr-xr-x 1 root root   4234512 Oct  7 16:12 libQt6QuickControls2Imagine.so.6.12.0
+-rw-r--r-- 1 root root       112 Oct  7 16:12 libQt6QuickControls2ImagineStyleImpl.prl
+lrwxrwxrwx 1 root root        41 Oct  7 16:12 libQt6QuickControls2ImagineStyleImpl.so -> libQt6QuickControls2ImagineStyleImpl.so.6
+lrwxrwxrwx 1 root root        46 Oct  7 16:12 libQt6QuickControls2ImagineStyleImpl.so.6 -> libQt6QuickControls2ImagineStyleImpl.so.6.12.0
+-rwxr-xr-x 1 root root     84248 Oct  7 16:12 libQt6QuickControls2ImagineStyleImpl.so.6.12.0
+-rw-r--r-- 1 root root       686 Oct  7 16:12 libQt6QuickControls2Impl.prl
+lrwxrwxrwx 1 root root        29 Oct  7 16:12 libQt6QuickControls2Impl.so -> libQt6QuickControls2Impl.so.6
+lrwxrwxrwx 1 root root        34 Oct  7 16:12 libQt6QuickControls2Impl.so.6 -> libQt6QuickControls2Impl.so.6.12.0
+-rwxr-xr-x 1 root root    385680 Oct  7 16:12 libQt6QuickControls2Impl.so.6.12.0
+-rw-r--r-- 1 root root       104 Oct  7 16:12 libQt6QuickControls2Material.prl
+lrwxrwxrwx 1 root root        33 Oct  7 16:12 libQt6QuickControls2Material.so -> libQt6QuickControls2Material.so.6
+lrwxrwxrwx 1 root root        38 Oct  7 16:12 libQt6QuickControls2Material.so.6 -> libQt6QuickControls2Material.so.6.12.0
+-rwxr-xr-x 1 root root   3080208 Oct  7 16:12 libQt6QuickControls2Material.so.6.12.0
+-rw-r--r-- 1 root root       113 Oct  7 16:12 libQt6QuickControls2MaterialStyleImpl.prl
+lrwxrwxrwx 1 root root        42 Oct  7 16:12 libQt6QuickControls2MaterialStyleImpl.so -> libQt6QuickControls2MaterialStyleImpl.so.6
+lrwxrwxrwx 1 root root        47 Oct  7 16:12 libQt6QuickControls2MaterialStyleImpl.so.6 -> libQt6QuickControls2MaterialStyleImpl.so.6.12.0
+-rwxr-xr-x 1 root root    394520 Oct  7 16:12 libQt6QuickControls2MaterialStyleImpl.so.6.12.0
+-rw-r--r-- 1 root root       102 Oct  7 16:12 libQt6QuickControls2Native.prl
+lrwxrwxrwx 1 root root        31 Oct  7 16:12 libQt6QuickControls2Native.so -> libQt6QuickControls2Native.so.6
+lrwxrwxrwx 1 root root        36 Oct  7 16:12 libQt6QuickControls2Native.so.6 -> libQt6QuickControls2Native.so.6.12.0
+-rwxr-xr-x 1 root root     14400 Oct  7 16:12 libQt6QuickControls2Native.so.6.12.0
+-rw-r--r-- 1 root root       105 Oct  7 16:12 libQt6QuickControls2Universal.prl
+lrwxrwxrwx 1 root root        34 Oct  7 16:12 libQt6QuickControls2Universal.so -> libQt6QuickControls2Universal.so.6
+lrwxrwxrwx 1 root root        39 Oct  7 16:12 libQt6QuickControls2Universal.so.6 -> libQt6QuickControls2Universal.so.6.12.0
+-rwxr-xr-x 1 root root   2625040 Oct  7 16:12 libQt6QuickControls2Universal.so.6.12.0
+-rw-r--r-- 1 root root       114 Oct  7 16:12 libQt6QuickControls2UniversalStyleImpl.prl
+lrwxrwxrwx 1 root root        43 Oct  7 16:12 libQt6QuickControls2UniversalStyleImpl.so -> libQt6QuickControls2UniversalStyleImpl.so.6
+lrwxrwxrwx 1 root root        48 Oct  7 16:12 libQt6QuickControls2UniversalStyleImpl.so.6 -> libQt6QuickControls2UniversalStyleImpl.so.6.12.0
+-rwxr-xr-x 1 root root    188056 Oct  7 16:12 libQt6QuickControls2UniversalStyleImpl.so.6.12.0
+-rw-r--r-- 1 root root    203914 Oct  7 16:12 libQt6QuickControlsTestUtils.a
+-rw-r--r-- 1 root root      1943 Oct  7 16:12 libQt6QuickControlsTestUtils.prl
+-rw-r--r-- 1 root root       681 Oct  7 16:12 libQt6QuickDialogs2.prl
+lrwxrwxrwx 1 root root        24 Oct  7 16:12 libQt6QuickDialogs2.so -> libQt6QuickDialogs2.so.6
+lrwxrwxrwx 1 root root        29 Oct  7 16:12 libQt6QuickDialogs2.so.6 -> libQt6QuickDialogs2.so.6.12.0
+-rwxr-xr-x 1 root root    170760 Oct  7 16:12 libQt6QuickDialogs2.so.6.12.0
+-rw-r--r-- 1 root root       690 Oct  7 16:12 libQt6QuickDialogs2QuickImpl.prl
+lrwxrwxrwx 1 root root        33 Oct  7 16:12 libQt6QuickDialogs2QuickImpl.so -> libQt6QuickDialogs2QuickImpl.so.6
+lrwxrwxrwx 1 root root        38 Oct  7 16:12 libQt6QuickDialogs2QuickImpl.so.6 -> libQt6QuickDialogs2QuickImpl.so.6.12.0
+-rwxr-xr-x 1 root root   4218512 Oct  7 16:12 libQt6QuickDialogs2QuickImpl.so.6.12.0
+-rw-r--r-- 1 root root       212 Oct  7 16:12 libQt6QuickDialogs2Utils.prl
+lrwxrwxrwx 1 root root        29 Oct  7 16:12 libQt6QuickDialogs2Utils.so -> libQt6QuickDialogs2Utils.so.6
+lrwxrwxrwx 1 root root        34 Oct  7 16:12 libQt6QuickDialogs2Utils.so.6 -> libQt6QuickDialogs2Utils.so.6.12.0
+-rwxr-xr-x 1 root root     30992 Oct  7 16:12 libQt6QuickDialogs2Utils.so.6.12.0
+-rw-r--r-- 1 root root       680 Oct  7 16:12 libQt6QuickEffects.prl
+lrwxrwxrwx 1 root root        23 Oct  7 16:12 libQt6QuickEffects.so -> libQt6QuickEffects.so.6
+lrwxrwxrwx 1 root root        28 Oct  7 16:12 libQt6QuickEffects.so.6 -> libQt6QuickEffects.so.6.12.0
+-rwxr-xr-x 1 root root    343432 Oct  7 16:12 libQt6QuickEffects.so.6.12.0
+-rw-r--r-- 1 root root       346 Oct  7 16:12 libQt6QuickLayouts.prl
+lrwxrwxrwx 1 root root        23 Oct  7 16:12 libQt6QuickLayouts.so -> libQt6QuickLayouts.so.6
+lrwxrwxrwx 1 root root        28 Oct  7 16:12 libQt6QuickLayouts.so.6 -> libQt6QuickLayouts.so.6.12.0
+-rwxr-xr-x 1 root root    368776 Oct  7 16:12 libQt6QuickLayouts.so.6.12.0
+-rw-r--r-- 1 root root       682 Oct  7 16:12 libQt6QuickParticles.prl
+lrwxrwxrwx 1 root root        25 Oct  7 16:12 libQt6QuickParticles.so -> libQt6QuickParticles.so.6
+lrwxrwxrwx 1 root root        30 Oct  7 16:12 libQt6QuickParticles.so.6 -> libQt6QuickParticles.so.6.12.0
+-rwxr-xr-x 1 root root    695112 Oct  7 16:12 libQt6QuickParticles.so.6.12.0
+-rw-r--r-- 1 root root       345 Oct  7 16:12 libQt6QuickShapes.prl
+lrwxrwxrwx 1 root root        22 Oct  7 16:12 libQt6QuickShapes.so -> libQt6QuickShapes.so.6
+lrwxrwxrwx 1 root root        27 Oct  7 16:12 libQt6QuickShapes.so.6 -> libQt6QuickShapes.so.6.12.0
+-rwxr-xr-x 1 root root    360888 Oct  7 16:12 libQt6QuickShapes.so.6.12.0
+-rw-r--r-- 1 root root       358 Oct  7 16:12 libQt6QuickShapesDesignHelpers.prl
+lrwxrwxrwx 1 root root        35 Oct  7 16:12 libQt6QuickShapesDesignHelpers.so -> libQt6QuickShapesDesignHelpers.so.6
+lrwxrwxrwx 1 root root        40 Oct  7 16:12 libQt6QuickShapesDesignHelpers.so.6 -> libQt6QuickShapesDesignHelpers.so.6.12.0
+-rwxr-xr-x 1 root root    230672 Oct  7 16:12 libQt6QuickShapesDesignHelpers.so.6.12.0
+-rw-r--r-- 1 root root       761 Oct  7 16:12 libQt6QuickTemplates2.prl
+lrwxrwxrwx 1 root root        26 Oct  7 16:12 libQt6QuickTemplates2.so -> libQt6QuickTemplates2.so.6
+lrwxrwxrwx 1 root root        31 Oct  7 16:12 libQt6QuickTemplates2.so.6 -> libQt6QuickTemplates2.so.6.12.0
+-rwxr-xr-x 1 root root   2647048 Oct  7 16:12 libQt6QuickTemplates2.so.6.12.0
+-rw-r--r-- 1 root root       271 Oct  7 16:12 libQt6QuickTest.prl
+lrwxrwxrwx 1 root root        20 Oct  7 16:12 libQt6QuickTest.so -> libQt6QuickTest.so.6
+lrwxrwxrwx 1 root root        25 Oct  7 16:12 libQt6QuickTest.so.6 -> libQt6QuickTest.so.6.12.0
+-rwxr-xr-x 1 root root    332928 Oct  7 16:12 libQt6QuickTest.so.6.12.0
+-rw-r--r-- 1 root root    374918 Oct  7 16:12 libQt6QuickTestUtils.a
+-rw-r--r-- 1 root root      1141 Oct  7 16:12 libQt6QuickTestUtils.prl
+-rw-r--r-- 1 root root        98 Oct  7 16:12 libQt6QuickVectorImage.prl
+lrwxrwxrwx 1 root root        27 Oct  7 16:12 libQt6QuickVectorImage.so -> libQt6QuickVectorImage.so.6
+lrwxrwxrwx 1 root root        32 Oct  7 16:12 libQt6QuickVectorImage.so.6 -> libQt6QuickVectorImage.so.6.12.0
+-rwxr-xr-x 1 root root     85768 Oct  7 16:12 libQt6QuickVectorImage.so.6.12.0
+-rw-r--r-- 1 root root       107 Oct  7 16:12 libQt6QuickVectorImageGenerator.prl
+lrwxrwxrwx 1 root root        36 Oct  7 16:12 libQt6QuickVectorImageGenerator.so -> libQt6QuickVectorImageGenerator.so.6
+lrwxrwxrwx 1 root root        41 Oct  7 16:12 libQt6QuickVectorImageGenerator.so.6 -> libQt6QuickVectorImageGenerator.so.6.12.0
+-rwxr-xr-x 1 root root    334224 Oct  7 16:12 libQt6QuickVectorImageGenerator.so.6.12.0
+-rw-r--r-- 1 root root       105 Oct  7 16:12 libQt6QuickVectorImageHelpers.prl
+lrwxrwxrwx 1 root root        34 Oct  7 16:12 libQt6QuickVectorImageHelpers.so -> libQt6QuickVectorImageHelpers.so.6
+lrwxrwxrwx 1 root root        39 Oct  7 16:12 libQt6QuickVectorImageHelpers.so.6 -> libQt6QuickVectorImageHelpers.so.6.12.0
+-rwxr-xr-x 1 root root    143760 Oct  7 16:12 libQt6QuickVectorImageHelpers.so.6.12.0
+-rw-r--r-- 1 root root       754 Oct  7 16:12 libQt6QuickWidgets.prl
+lrwxrwxrwx 1 root root        23 Oct  7 16:12 libQt6QuickWidgets.so -> libQt6QuickWidgets.so.6
+lrwxrwxrwx 1 root root        28 Oct  7 16:12 libQt6QuickWidgets.so.6 -> libQt6QuickWidgets.so.6.12.0
+-rwxr-xr-x 1 root root    125960 Oct  7 16:12 libQt6QuickWidgets.so.6.12.0
+-rw-r--r-- 1 root root       397 Oct  7 18:33 libQt6ShaderTools.prl
+lrwxrwxrwx 1 root root        22 Oct  7 18:33 libQt6ShaderTools.so -> libQt6ShaderTools.so.6
+lrwxrwxrwx 1 root root        27 Oct  7 18:33 libQt6ShaderTools.so.6 -> libQt6ShaderTools.so.6.12.0
+-rwxr-xr-x 1 root root   5754528 Oct  7 18:33 libQt6ShaderTools.so.6.12.0
+-rw-r--r-- 1 root root       552 Oct  7 18:05 libQt6SpatialAudio.prl
+lrwxrwxrwx 1 root root        23 Oct  7 18:05 libQt6SpatialAudio.so -> libQt6SpatialAudio.so.6
+lrwxrwxrwx 1 root root        28 Oct  7 18:05 libQt6SpatialAudio.so.6 -> libQt6SpatialAudio.so.6.12.0
+-rwxr-xr-x 1 root root    581000 Oct  7 18:05 libQt6SpatialAudio.so.6.12.0
+-rw-r--r-- 1 root root       197 Oct 14 15:28 libQt6Sql.prl
+lrwxrwxrwx 1 root root        14 Oct 14 15:28 libQt6Sql.so -> libQt6Sql.so.6
+lrwxrwxrwx 1 root root        19 Oct 14 15:28 libQt6Sql.so.6 -> libQt6Sql.so.6.12.0
+-rwxr-xr-x 1 root root    352016 Oct 14 15:28 libQt6Sql.so.6.12.0
+-rw-r--r-- 1 root root       389 Oct  7 18:50 libQt6Svg.prl
+lrwxrwxrwx 1 root root        14 Oct  7 18:50 libQt6Svg.so -> libQt6Svg.so.6
+lrwxrwxrwx 1 root root        19 Oct  7 18:50 libQt6Svg.so.6 -> libQt6Svg.so.6.12.0
+-rwxr-xr-x 1 root root    678784 Oct  7 18:50 libQt6Svg.so.6.12.0
+-rw-r--r-- 1 root root       536 Oct  7 18:50 libQt6SvgWidgets.prl
+lrwxrwxrwx 1 root root        21 Oct  7 18:50 libQt6SvgWidgets.so -> libQt6SvgWidgets.so.6
+lrwxrwxrwx 1 root root        26 Oct  7 18:50 libQt6SvgWidgets.so.6 -> libQt6SvgWidgets.so.6.12.0
+-rwxr-xr-x 1 root root     47496 Oct  7 18:50 libQt6SvgWidgets.so.6.12.0
+-rw-r--r-- 1 root root       198 Oct 14 15:28 libQt6Test.prl
+lrwxrwxrwx 1 root root        15 Oct 14 15:28 libQt6Test.so -> libQt6Test.so.6
+lrwxrwxrwx 1 root root        20 Oct 14 15:28 libQt6Test.so.6 -> libQt6Test.so.6.12.0
+-rwxr-xr-x 1 root root    482488 Oct 14 15:28 libQt6Test.so.6.12.0
+-rw-r--r-- 1 root root       552 Oct  7 18:34 libQt6TextToSpeech.prl
+lrwxrwxrwx 1 root root        23 Oct  7 18:34 libQt6TextToSpeech.so -> libQt6TextToSpeech.so.6
+lrwxrwxrwx 1 root root        28 Oct  7 18:34 libQt6TextToSpeech.so.6 -> libQt6TextToSpeech.so.6.12.0
+-rwxr-xr-x 1 root root    130952 Oct  7 18:34 libQt6TextToSpeech.so.6.12.0
+-rw-r--r-- 1 root root       563 Oct 14 15:28 libQt6WaylandClient.prl
+lrwxrwxrwx 1 root root        24 Oct 14 15:28 libQt6WaylandClient.so -> libQt6WaylandClient.so.6
+lrwxrwxrwx 1 root root        29 Oct 14 15:28 libQt6WaylandClient.so.6 -> libQt6WaylandClient.so.6.12.0
+-rwxr-xr-x 1 root root   1173224 Oct 14 15:28 libQt6WaylandClient.so.6.12.0
+-rw-r--r-- 1 root root       767 Oct  7 18:31 libQt6WaylandCompositor.prl
+lrwxrwxrwx 1 root root        28 Oct  7 18:31 libQt6WaylandCompositor.so -> libQt6WaylandCompositor.so.6
+lrwxrwxrwx 1 root root        33 Oct  7 18:31 libQt6WaylandCompositor.so.6 -> libQt6WaylandCompositor.so.6.12.0
+-rwxr-xr-x 1 root root   2015432 Oct  7 18:31 libQt6WaylandCompositor.so.6.12.0
+-rw-r--r-- 1 root root       113 Oct  7 18:31 libQt6WaylandCompositorIviapplication.prl
+lrwxrwxrwx 1 root root        42 Oct  7 18:31 libQt6WaylandCompositorIviapplication.so -> libQt6WaylandCompositorIviapplication.so.6
+lrwxrwxrwx 1 root root        47 Oct  7 18:31 libQt6WaylandCompositorIviapplication.so.6 -> libQt6WaylandCompositorIviapplication.so.6.12.0
+-rwxr-xr-x 1 root root     32024 Oct  7 18:31 libQt6WaylandCompositorIviapplication.so.6.12.0
+-rw-r--r-- 1 root root       115 Oct  7 18:31 libQt6WaylandCompositorPresentationTime.prl
+lrwxrwxrwx 1 root root        44 Oct  7 18:31 libQt6WaylandCompositorPresentationTime.so -> libQt6WaylandCompositorPresentationTime.so.6
+lrwxrwxrwx 1 root root        49 Oct  7 18:31 libQt6WaylandCompositorPresentationTime.so.6 -> libQt6WaylandCompositorPresentationTime.so.6.12.0
+-rwxr-xr-x 1 root root     27416 Oct  7 18:31 libQt6WaylandCompositorPresentationTime.so.6.12.0
+-rw-r--r-- 1 root root       106 Oct  7 18:31 libQt6WaylandCompositorWLShell.prl
+lrwxrwxrwx 1 root root        35 Oct  7 18:31 libQt6WaylandCompositorWLShell.so -> libQt6WaylandCompositorWLShell.so.6
+lrwxrwxrwx 1 root root        40 Oct  7 18:31 libQt6WaylandCompositorWLShell.so.6 -> libQt6WaylandCompositorWLShell.so.6.12.0
+-rwxr-xr-x 1 root root     27792 Oct  7 18:31 libQt6WaylandCompositorWLShell.so.6.12.0
+-rw-r--r-- 1 root root       107 Oct  7 18:31 libQt6WaylandCompositorXdgShell.prl
+lrwxrwxrwx 1 root root        36 Oct  7 18:31 libQt6WaylandCompositorXdgShell.so -> libQt6WaylandCompositorXdgShell.so.6
+lrwxrwxrwx 1 root root        41 Oct  7 18:31 libQt6WaylandCompositorXdgShell.so.6 -> libQt6WaylandCompositorXdgShell.so.6.12.0
+-rwxr-xr-x 1 root root     55440 Oct  7 18:31 libQt6WaylandCompositorXdgShell.so.6.12.0
+-rw-r--r-- 1 root root      1191 Oct  7 18:31 libQt6WaylandEglCompositorHwIntegration.prl
+lrwxrwxrwx 1 root root        44 Oct  7 18:31 libQt6WaylandEglCompositorHwIntegration.so -> libQt6WaylandEglCompositorHwIntegration.so.6
+lrwxrwxrwx 1 root root        49 Oct  7 18:31 libQt6WaylandEglCompositorHwIntegration.so.6 -> libQt6WaylandEglCompositorHwIntegration.so.6.12.0
+-rwxr-xr-x 1 root root     34968 Oct  7 18:31 libQt6WaylandEglCompositorHwIntegration.so.6.12.0
+-rw-r--r-- 1 root root       344 Oct  7 18:18 libQt6WebChannel.prl
+lrwxrwxrwx 1 root root        21 Oct  7 18:18 libQt6WebChannel.so -> libQt6WebChannel.so.6
+lrwxrwxrwx 1 root root        26 Oct  7 18:18 libQt6WebChannel.so.6 -> libQt6WebChannel.so.6.12.0
+-rwxr-xr-x 1 root root    265096 Oct  7 18:18 libQt6WebChannel.so.6.12.0
+-rw-r--r-- 1 root root        97 Oct  7 18:18 libQt6WebChannelQuick.prl
+lrwxrwxrwx 1 root root        26 Oct  7 18:18 libQt6WebChannelQuick.so -> libQt6WebChannelQuick.so.6
+lrwxrwxrwx 1 root root        31 Oct  7 18:18 libQt6WebChannelQuick.so.6 -> libQt6WebChannelQuick.so.6.12.0
+-rwxr-xr-x 1 root root     48264 Oct  7 18:18 libQt6WebChannelQuick.so.6.12.0
+-rw-r--r-- 1 root root       843 Oct  7 10:26 libQt6WebEngineCore.prl
+lrwxrwxrwx 1 root root        24 Oct  7 10:26 libQt6WebEngineCore.so -> libQt6WebEngineCore.so.6
+lrwxrwxrwx 1 root root        29 Oct  7 10:26 libQt6WebEngineCore.so.6 -> libQt6WebEngineCore.so.6.12.0
+-rwxr-xr-x 1 root root 203197752 Oct  7 10:26 libQt6WebEngineCore.so.6.12.0
+-rw-r--r-- 1 root root      1020 Oct  7 10:26 libQt6WebEngineQuick.prl
+lrwxrwxrwx 1 root root        25 Oct  7 10:26 libQt6WebEngineQuick.so -> libQt6WebEngineQuick.so.6
+lrwxrwxrwx 1 root root        30 Oct  7 10:26 libQt6WebEngineQuick.so.6 -> libQt6WebEngineQuick.so.6.12.0
+-rwxr-xr-x 1 root root    798600 Oct  7 10:26 libQt6WebEngineQuick.so.6.12.0
+-rw-r--r-- 1 root root       108 Oct  7 10:26 libQt6WebEngineQuickDelegatesQml.prl
+lrwxrwxrwx 1 root root        37 Oct  7 10:26 libQt6WebEngineQuickDelegatesQml.so -> libQt6WebEngineQuickDelegatesQml.so.6
+lrwxrwxrwx 1 root root        42 Oct  7 10:26 libQt6WebEngineQuickDelegatesQml.so.6 -> libQt6WebEngineQuickDelegatesQml.so.6.12.0
+-rwxr-xr-x 1 root root    207176 Oct  7 10:26 libQt6WebEngineQuickDelegatesQml.so.6.12.0
+-rw-r--r-- 1 root root      1090 Oct  7 10:26 libQt6WebEngineWidgets.prl
+lrwxrwxrwx 1 root root        27 Oct  7 10:26 libQt6WebEngineWidgets.so -> libQt6WebEngineWidgets.so.6
+lrwxrwxrwx 1 root root        32 Oct  7 10:26 libQt6WebEngineWidgets.so.6 -> libQt6WebEngineWidgets.so.6.12.0
+-rwxr-xr-x 1 root root    158472 Oct  7 10:26 libQt6WebEngineWidgets.so.6.12.0
+-rw-r--r-- 1 root root       393 Oct 14 15:28 libQt6Widgets.prl
+lrwxrwxrwx 1 root root        18 Oct 14 15:28 libQt6Widgets.so -> libQt6Widgets.so.6
+lrwxrwxrwx 1 root root        23 Oct 14 15:28 libQt6Widgets.so.6 -> libQt6Widgets.so.6.12.0
+-rwxr-xr-x 1 root root   8028416 Oct 14 15:28 libQt6Widgets.so.6.12.0
+-rw-r--r-- 1 root root       100 Oct 14 15:28 libQt6WlShellIntegration.prl
+lrwxrwxrwx 1 root root        29 Oct 14 15:28 libQt6WlShellIntegration.so -> libQt6WlShellIntegration.so.6
+lrwxrwxrwx 1 root root        34 Oct 14 15:28 libQt6WlShellIntegration.so.6 -> libQt6WlShellIntegration.so.6.12.0
+-rwxr-xr-x 1 root root     35088 Oct 14 15:28 libQt6WlShellIntegration.so.6.12.0
+-rw-r--r-- 1 root root      1948 Oct 14 15:28 libQt6XcbQpa.prl
+lrwxrwxrwx 1 root root        17 Oct 14 15:28 libQt6XcbQpa.so -> libQt6XcbQpa.so.6
+lrwxrwxrwx 1 root root        22 Oct 14 15:28 libQt6XcbQpa.so.6 -> libQt6XcbQpa.so.6.12.0
+-rwxr-xr-x 1 root root    696496 Oct 14 15:28 libQt6XcbQpa.so.6.12.0
+-rw-r--r-- 1 root root       197 Oct 14 15:28 libQt6Xml.prl
+lrwxrwxrwx 1 root root        14 Oct 14 15:28 libQt6Xml.so -> libQt6Xml.so.6
+lrwxrwxrwx 1 root root        19 Oct 14 15:28 libQt6Xml.so.6 -> libQt6Xml.so.6.12.0
+-rwxr-xr-x 1 root root    161920 Oct 14 15:28 libQt6Xml.so.6.12.0
+lrwxrwxrwx 1 root root        18 Oct 18 05:20 libRemarks.so -> libRemarks.so.23.1
+-rwxr-xr-x 1 root root      3888 Oct 18 05:20 libRemarks.so.23.1
+lrwxrwxrwx 1 root root        15 Jul  3  2024 libSDL-1.2.so -> libSDL-1.2.so.0
+lrwxrwxrwx 1 root root        20 Jul  3  2024 libSDL-1.2.so.0 -> libSDL-1.2.so.1.2.68
+-rwxr-xr-x 1 root root    207136 Jul  3  2024 libSDL-1.2.so.1.2.68
+lrwxrwxrwx 1 root root        13 Jul  3  2024 libSDL.so -> libSDL-1.2.so
+lrwxrwxrwx 1 root root        16 Oct  3 09:22 libSDL2-2.0.so -> libSDL2-2.0.so.0
+lrwxrwxrwx 1 root root        24 Oct  3 09:22 libSDL2-2.0.so.0 -> libSDL2-2.0.so.0.3200.74
+-rwxr-xr-x 1 root root    434784 Oct  3 09:22 libSDL2-2.0.so.0.3200.74
+lrwxrwxrwx 1 root root        14 Oct  3 09:22 libSDL2.so -> libSDL2-2.0.so
+lrwxrwxrwx 1 root root        29 Jul  9 17:36 libSDL2_image-2.0.so.0 -> libSDL2_image-2.0.so.0.800.12
+-rwxr-xr-x 1 root root    190416 Jul  9 17:36 libSDL2_image-2.0.so.0.800.12
+lrwxrwxrwx 1 root root        29 Jul  9 17:36 libSDL2_image.so -> libSDL2_image-2.0.so.0.800.12
+-rw-r--r-- 1 root root    337806 Oct  3 09:22 libSDL2_test.a
+-rw-r--r-- 1 root root      1462 Oct  3 09:22 libSDL2main.a
+lrwxrwxrwx 1 root root        12 Oct  3 09:23 libSDL3.so -> libSDL3.so.0
+lrwxrwxrwx 1 root root        17 Oct  3 09:23 libSDL3.so.0 -> libSDL3.so.0.4.18
+-rwxr-xr-x 1 root root   4704728 Oct  3 09:23 libSDL3.so.0.4.18
+-rw-r--r-- 1 root root    214244 Oct  3 09:23 libSDL3_test.a
+lrwxrwxrwx 1 root root        25 Sep 26 10:03 libSDL_image-1.2.so.0 -> libSDL_image-1.2.so.0.8.4
+-rwxr-xr-x 1 root root     92112 Sep 26 10:03 libSDL_image-1.2.so.0.8.4
+lrwxrwxrwx 1 root root        25 Sep 26 10:03 libSDL_image.so -> libSDL_image-1.2.so.0.8.4
+-rw-r--r-- 1 root root      1200 Jul  3  2024 libSDLmain.a
+lrwxrwxrwx 1 root root        14 Jun 14  2025 libSM.so -> libSM.so.6.0.1
+lrwxrwxrwx 1 root root        14 Jun 14  2025 libSM.so.6 -> libSM.so.6.0.1
+-rwxr-xr-x 1 root root     42888 Jun 14  2025 libSM.so.6.0.1
+-rwxr-xr-x 1 root root    161744 Oct  3 08:19 libSPIRV-Tools-diff.so
+-rwxr-xr-x 1 root root    206800 Oct  3 08:19 libSPIRV-Tools-link.so
+-rwxr-xr-x 1 root root     96208 Oct  3 08:19 libSPIRV-Tools-lint.so
+-rwxr-xr-x 1 root root   2717648 Oct  3 08:19 libSPIRV-Tools-opt.so
+-rwxr-xr-x 1 root root    174032 Oct  3 08:19 libSPIRV-Tools-reduce.so
+-rwxr-xr-x 1 root root   1960728 Oct  3 08:19 libSPIRV-Tools-shared.so
+-rwxr-xr-x 1 root root   2026256 Oct  3 08:19 libSPIRV-Tools.so

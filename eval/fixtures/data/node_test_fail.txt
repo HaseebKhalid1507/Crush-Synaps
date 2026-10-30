@@ -1,0 +1,118 @@
+▶ cart
+  ✔ cart handles case 0 (0.442204ms)
+  ✔ cart handles case 1 (0.061076ms)
+  ✔ cart handles case 2 (0.052036ms)
+  ✔ cart handles case 3 (0.056767ms)
+  ✔ cart handles case 4 (0.051589ms)
+  ✔ cart handles case 5 (0.042082ms)
+  ✔ cart handles case 6 (0.043554ms)
+  ✔ cart handles case 7 (0.078468ms)
+  ✔ cart handles case 8 (0.098997ms)
+  ✔ cart handles case 9 (0.253539ms)
+  ✔ cart handles case 10 (0.047175ms)
+  ✔ cart handles case 11 (0.031953ms)
+  ✔ cart handles case 12 (0.02624ms)
+  ✔ cart handles case 13 (0.025493ms)
+  ✔ cart handles case 14 (0.024678ms)
+  ✔ cart handles case 15 (0.456985ms)
+  ✔ cart handles case 16 (0.036556ms)
+  ✔ cart handles case 17 (0.024569ms)
+  ✔ cart handles case 18 (0.019844ms)
+  ✔ cart handles case 19 (0.019585ms)
+✔ cart (2.644576ms)
+▶ checkout
+  ✔ checkout handles case 0 (0.088141ms)
+  ✔ checkout handles case 1 (0.028051ms)
+  ✔ checkout handles case 2 (0.020915ms)
+  ✔ checkout handles case 3 (0.019393ms)
+  ✖ checkout handles case 4 (0.420131ms)
+  ✔ checkout handles case 5 (0.032587ms)
+  ✔ checkout handles case 6 (0.023703ms)
+  ✔ checkout handles case 7 (0.020938ms)
+  ✔ checkout handles case 8 (0.019682ms)
+  ✔ checkout handles case 9 (0.020745ms)
+  ✔ checkout handles case 10 (0.019792ms)
+  ✔ checkout handles case 11 (0.019911ms)
+  ✔ checkout handles case 12 (0.019876ms)
+  ✔ checkout handles case 13 (0.021305ms)
+  ✔ checkout handles case 14 (0.056772ms)
+  ✖ checkout handles case 15 (0.098892ms)
+  ✔ checkout handles case 16 (0.029362ms)
+  ✔ checkout handles case 17 (0.0256ms)
+  ✔ checkout handles case 18 (0.020556ms)
+  ✔ checkout handles case 19 (0.019453ms)
+✖ checkout (1.208908ms)
+▶ catalog
+  ✔ catalog handles case 0 (0.078972ms)
+  ✔ catalog handles case 1 (0.01975ms)
+  ✔ catalog handles case 2 (0.019149ms)
+  ✔ catalog handles case 3 (0.020818ms)
+  ✔ catalog handles case 4 (0.0186ms)
+  ✔ catalog handles case 5 (0.180781ms)
+  ✔ catalog handles case 6 (0.023693ms)
+  ✔ catalog handles case 7 (0.021822ms)
+  ✔ catalog handles case 8 (0.019266ms)
+  ✔ catalog handles case 9 (0.047899ms)
+  ✔ catalog handles case 10 (0.025329ms)
+  ✔ catalog handles case 11 (0.021937ms)
+  ✔ catalog handles case 12 (0.019374ms)
+  ✔ catalog handles case 13 (0.019535ms)
+  ✔ catalog handles case 14 (0.023115ms)
+  ✔ catalog handles case 15 (0.019139ms)
+  ✔ catalog handles case 16 (0.019036ms)
+  ✔ catalog handles case 17 (0.018597ms)
+  ✔ catalog handles case 18 (0.018731ms)
+  ✔ catalog handles case 19 (0.01871ms)
+✔ catalog (2.951122ms)
+ℹ tests 60
+ℹ suites 3
+ℹ pass 58
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53.896908
+
+✖ failing tests:
+
+test at app.test.js:31:3
+✖ checkout handles case 4 (0.420131ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  5 !== 6
+  
+      at TestContext.<anonymous> (/work/js/app.test.js:31:50)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+      at Test.postRun (node:internal/test_runner/test:1173:19)
+      at Test.run (node:internal/test_runner/test:1101:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:744:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 5,
+    expected: 6,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at app.test.js:42:3
+✖ checkout handles case 15 (0.098892ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  16 !== 17
+  
+      at TestContext.<anonymous> (/work/js/app.test.js:42:51)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+      at Test.postRun (node:internal/test_runner/test:1173:19)
+      at Test.run (node:internal/test_runner/test:1101:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:744:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 16,
+    expected: 17,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

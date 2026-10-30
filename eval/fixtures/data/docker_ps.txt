@@ -1,0 +1,3 @@
+CONTAINER ID   IMAGE                               COMMAND                  CREATED        STATUS                     PORTS   NAMES
+533fa5588d02   registry.example.com/app01:latest   "sh -c 'sleep infini…"   3 weeks ago    Exited (255) 3 weeks ago           container-01
+aadb688fac13   mongo:7                             "docker-entrypoint.s…"   4 months ago   Exited (0) 3 days ago              container-02

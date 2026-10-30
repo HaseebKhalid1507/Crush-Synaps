@@ -1,0 +1,473 @@
+{
+  "fixtures": [
+    {
+      "name": "cargo_test_pass",
+      "file": "data/cargo_test_pass.txt",
+      "tool": "bash",
+      "input": {
+        "command": "cargo test"
+      },
+      "class": "LOG",
+      "bytes": 8249,
+      "note": "exit 0; 160 tests, all pass"
+    },
+    {
+      "name": "cargo_test_fail",
+      "file": "data/cargo_test_fail.txt",
+      "tool": "bash",
+      "input": {
+        "command": "cargo test"
+      },
+      "class": "LOG",
+      "bytes": 9311,
+      "note": "exit 101; 160 tests, 4 fail"
+    },
+    {
+      "name": "cargo_build_warnings",
+      "file": "data/cargo_build_warnings.txt",
+      "tool": "bash",
+      "input": {
+        "command": "cargo build"
+      },
+      "class": "LOG",
+      "bytes": 28450,
+      "note": "exit 0; ~100 warnings, same 3 kinds at many locations"
+    },
+    {
+      "name": "cargo_build_error",
+      "file": "data/cargo_build_error.txt",
+      "tool": "bash",
+      "input": {
+        "command": "cargo build"
+      },
+      "class": "LOG",
+      "bytes": 5713,
+      "note": "exit 101; type errors + warnings"
+    },
+    {
+      "name": "cargo_metadata",
+      "file": "data/cargo_metadata.json",
+      "tool": "bash",
+      "input": {
+        "command": "cargo metadata --format-version 1"
+      },
+      "class": "STRUCTURED",
+      "bytes": 66648,
+      "note": "minified JSON"
+    },
+    {
+      "name": "cargo_metadata_packages_pretty",
+      "file": "data/cargo_metadata_packages_pretty.json",
+      "tool": "bash",
+      "input": {
+        "command": "cargo metadata --format-version 1 | jq '.packages[:12]'"
+      },
+      "class": "STRUCTURED",
+      "bytes": 60838,
+      "note": "pretty-printed JSON array of objects"
+    },
+    {
+      "name": "pytest_verbose_pass",
+      "file": "data/pytest_verbose_pass.txt",
+      "tool": "bash",
+      "input": {
+        "command": "pytest -v tests"
+      },
+      "class": "LOG",
+      "bytes": 10411,
+      "note": "exit 0; 126 tests pass"
+    },
+    {
+      "name": "pytest_fail",
+      "file": "data/pytest_fail.txt",
+      "tool": "bash",
+      "input": {
+        "command": "pytest tests"
+      },
+      "class": "LOG",
+      "bytes": 1410,
+      "note": "exit 1; 2 failures"
+    },
+    {
+      "name": "pytest_verbose_fail",
+      "file": "data/pytest_verbose_fail.txt",
+      "tool": "bash",
+      "input": {
+        "command": "pytest -v tests"
+      },
+      "class": "LOG",
+      "bytes": 11318,
+      "note": "exit 1; 2 failures, verbose"
+    },
+    {
+      "name": "node_test_fail",
+      "file": "data/node_test_fail.txt",
+      "tool": "bash",
+      "input": {
+        "command": "node --test"
+      },
+      "class": "LOG",
+      "bytes": 4263,
+      "note": "exit 1; 60 tests, 2 fail"
+    },
+    {
+      "name": "npm_install",
+      "file": "data/npm_install.txt",
+      "tool": "bash",
+      "input": {
+        "command": "npm install express@4"
+      },
+      "class": "LOG",
+      "bytes": 28,
+      "note": ""
+    },
+    {
+      "name": "npm_ls_all",
+      "file": "data/npm_ls_all.txt",
+      "tool": "bash",
+      "input": {
+        "command": "npm ls --all"
+      },
+      "class": "LISTING",
+      "bytes": 4904,
+      "note": "exit 0"
+    },
+    {
+      "name": "make_gcc_warnings",
+      "file": "data/make_gcc_warnings.txt",
+      "tool": "bash",
+      "input": {
+        "command": "make 2>&1"
+      },
+      "class": "LOG",
+      "bytes": 44777,
+      "note": "exit 0; long build-warning log, same warnings at many locations"
+    },
+    {
+      "name": "git_log_default",
+      "file": "data/git_log_default.txt",
+      "tool": "bash",
+      "input": {
+        "command": "git log -n 40"
+      },
+      "class": "VCS",
+      "bytes": 18716,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "git_log_oneline",
+      "file": "data/git_log_oneline.txt",
+      "tool": "bash",
+      "input": {
+        "command": "git log --oneline -n 300"
+      },
+      "class": "VCS",
+      "bytes": 13950,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "git_log_pipe",
+      "file": "data/git_log_pipe.txt",
+      "tool": "bash",
+      "input": {
+        "command": "git log --pretty=format:'%H|%an|%ae|%ad|%s' -n 400"
+      },
+      "class": "VCS",
+      "bytes": 53128,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "git_log_stat",
+      "file": "data/git_log_stat.txt",
+      "tool": "bash",
+      "input": {
+        "command": "git log --stat -n 12"
+      },
+      "class": "VCS",
+      "bytes": 7903,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "git_show",
+      "file": "data/git_show.txt",
+      "tool": "bash",
+      "input": {
+        "command": "git show HEAD~2"
+      },
+      "class": "CONTENT",
+      "bytes": 1449,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "git_diff",
+      "file": "data/git_diff.txt",
+      "tool": "bash",
+      "input": {
+        "command": "git diff HEAD~6 HEAD -- crates/"
+      },
+      "class": "CONTENT",
+      "bytes": 25149,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "grep_rn",
+      "file": "data/grep_rn.txt",
+      "tool": "bash",
+      "input": {
+        "command": "grep -rn 'pub fn' crates/"
+      },
+      "class": "SEARCH",
+      "bytes": 35464,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "grep_rn_pattern",
+      "file": "data/grep_rn_pattern.txt",
+      "tool": "bash",
+      "input": {
+        "command": "grep -rn 'unwrap()' crates/ --include=*.rs"
+      },
+      "class": "SEARCH",
+      "bytes": 98296,
+      "note": "exit 0; public repo, authors pseudonymised; cut at 96 KiB on a line boundary"
+    },
+    {
+      "name": "grep_n_single",
+      "file": "data/grep_n_single.txt",
+      "tool": "bash",
+      "input": {
+        "command": "grep -n 'fn ' crates/searcher/src/searcher/mod.rs"
+      },
+      "class": "SEARCH",
+      "bytes": 2652,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "find_rs",
+      "file": "data/find_rs.txt",
+      "tool": "bash",
+      "input": {
+        "command": "find . -name '*.rs' -not -path './target/*'"
+      },
+      "class": "LISTING",
+      "bytes": 3079,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "find_all",
+      "file": "data/find_all.txt",
+      "tool": "bash",
+      "input": {
+        "command": "find crates -maxdepth 4"
+      },
+      "class": "LISTING",
+      "bytes": 4618,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "cat_source",
+      "file": "data/cat_source.txt",
+      "tool": "bash",
+      "input": {
+        "command": "cat crates/searcher/src/searcher/mod.rs"
+      },
+      "class": "CONTENT",
+      "bytes": 41194,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "sed_range",
+      "file": "data/sed_range.txt",
+      "tool": "bash",
+      "input": {
+        "command": "sed -n '1,220p' crates/core/flags/defs.rs"
+      },
+      "class": "CONTENT",
+      "bytes": 5254,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "cat_markdown",
+      "file": "data/cat_markdown.txt",
+      "tool": "bash",
+      "input": {
+        "command": "cat GUIDE.md"
+      },
+      "class": "CONTENT",
+      "bytes": 40917,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "head_changelog",
+      "file": "data/head_changelog.txt",
+      "tool": "bash",
+      "input": {
+        "command": "head -n 400 CHANGELOG.md"
+      },
+      "class": "CONTENT",
+      "bytes": 19402,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "read_tool_rust",
+      "file": "data/read_tool_rust.txt",
+      "tool": "read",
+      "input": {
+        "path": "/work/rg/crates/printer/src/standard.rs",
+        "limit": 700
+      },
+      "class": "CONTENT",
+      "bytes": 29463,
+      "note": ""
+    },
+    {
+      "name": "git_status_long",
+      "file": "data/git_status_long.txt",
+      "tool": "bash",
+      "input": {
+        "command": "git status"
+      },
+      "class": "VCS",
+      "bytes": 611,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "git_status_short",
+      "file": "data/git_status_short.txt",
+      "tool": "bash",
+      "input": {
+        "command": "git status --short"
+      },
+      "class": "VCS",
+      "bytes": 205,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "ls_la_repo",
+      "file": "data/ls_la_repo.txt",
+      "tool": "bash",
+      "input": {
+        "command": "ls -la"
+      },
+      "class": "LISTING",
+      "bytes": 1628,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "ls_la_crate",
+      "file": "data/ls_la_crate.txt",
+      "tool": "bash",
+      "input": {
+        "command": "ls -la crates/core/flags"
+      },
+      "class": "LISTING",
+      "bytes": 493,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "ls_lR",
+      "file": "data/ls_lR.txt",
+      "tool": "bash",
+      "input": {
+        "command": "ls -lR crates/printer"
+      },
+      "class": "LISTING",
+      "bytes": 1040,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "tree_like_du",
+      "file": "data/tree_like_du.txt",
+      "tool": "bash",
+      "input": {
+        "command": "du -a crates | sort -k2"
+      },
+      "class": "LISTING",
+      "bytes": 5049,
+      "note": "exit 0; public repo, authors pseudonymised"
+    },
+    {
+      "name": "ls_la_usr_lib",
+      "file": "data/ls_la_usr_lib.txt",
+      "tool": "bash",
+      "input": {
+        "command": "ls -la /usr/lib"
+      },
+      "class": "LISTING",
+      "bytes": 98303,
+      "note": "system dir; cut at 96 KiB on a line boundary"
+    },
+    {
+      "name": "ls_lah_usr_bin",
+      "file": "data/ls_lah_usr_bin.txt",
+      "tool": "bash",
+      "input": {
+        "command": "ls -lah /usr/bin"
+      },
+      "class": "LISTING",
+      "bytes": 98254,
+      "note": "system dir; cut at 96 KiB on a line boundary"
+    },
+    {
+      "name": "ps_aux",
+      "file": "data/ps_aux.txt",
+      "tool": "bash",
+      "input": {
+        "command": "ps aux"
+      },
+      "class": "LISTING",
+      "bytes": 41103,
+      "note": "login-user processes removed"
+    },
+    {
+      "name": "docker_images",
+      "file": "data/docker_images.txt",
+      "tool": "bash",
+      "input": {
+        "command": "docker images"
+      },
+      "class": "LISTING",
+      "bytes": 1034,
+      "note": "repos/tags renamed; re-rendered in docker's column layout"
+    },
+    {
+      "name": "docker_ps",
+      "file": "data/docker_ps.txt",
+      "tool": "bash",
+      "input": {
+        "command": "docker ps -a"
+      },
+      "class": "LISTING",
+      "bytes": 414,
+      "note": "images/names renamed; re-rendered in docker's column layout"
+    },
+    {
+      "name": "gh_issue_list_json",
+      "file": "data/gh_issue_list_json.json",
+      "tool": "bash",
+      "input": {
+        "command": "gh issue list -R cli/cli --state all --limit 80 --json number,title,state,author,labels,createdAt,updatedAt"
+      },
+      "class": "STRUCTURED",
+      "bytes": 27319,
+      "note": "public repo; logins pseudonymised"
+    },
+    {
+      "name": "gh_pr_list",
+      "file": "data/gh_pr_list.txt",
+      "tool": "bash",
+      "input": {
+        "command": "gh pr list -R cli/cli --state all --limit 40"
+      },
+      "class": "VCS",
+      "bytes": 5016,
+      "note": "tab-separated"
+    }
+  ],
+  "skipped": [
+    {
+      "name": "gh_api_releases",
+      "why": "JSON over 98304 B (not cut: would be invalid)"
+    }
+  ]
+}

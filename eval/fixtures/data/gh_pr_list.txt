@@ -1,0 +1,40 @@
+14867	issue create: validate issue type before creating issue	someone:fix/issue-create-type-validation	CLOSED	2026-10-29T13:06:01Z
+14860	fix(issue develop): don't fail --base outside a git repository	someone:fix-14856-develop-base-outside-repo	CLOSED	2026-10-29T03:45:08Z
+14858	Require confirmation before `gh repo delete` deletes private forks	someone/private-fork-deletion-guard	MERGED	2026-10-28T19:26:30Z
+14857	pkg/cmd/auth: validate advertised required scopes in token flow	someone:fix/auth-token-workflow-scope	CLOSED	2026-10-28T18:35:05Z
+14854	Fix local extension install test path normalization	someone:ivan/normalize-tmp	MERGED	2026-10-28T05:45:42Z
+14848	ci: verify lint workflow on trunk	someone:ci/verify-lint-workflow	CLOSED	2026-10-28T02:53:55Z
+14846	Add shared team PR preparation skill	tidy-dev-prepare-team-pr-skill	OPEN	2026-10-28T02:05:57Z
+14845	Skip token refresh when gh's state directory is not writable	someone/skip-refresh-ro-lock	OPEN	2026-10-27T17:35:19Z
+14840	Only save Go caches from trunk	williammartin-review-pr-14837	MERGED	2026-10-27T13:58:06Z
+14837	Use separate Go caches for race and non-race builds	williammartin-copilot-discussion-relevance	CLOSED	2026-10-27T11:16:41Z
+14825	Add private vulnerability report form	someone/ghsa-submission-template	MERGED	2026-10-26T20:36:48Z
+14824	chore(deps): Bump the codeql-actions group with 3 updates	someone/github_actions/codeql-actions-52fc152648	MERGED	2026-10-26T14:06:17Z
+14823	fix(issue create): print issue URL when post-creation mutations fail (#14367)	someone:fix/issue-create-print-url-on-post-create-failure	CLOSED	2026-10-26T09:47:56Z
+14815	fix(gh auth status): explain expired expiring tokens with `--no-refresh`	someone/auth-status-expired-hint	MERGED	2026-10-24T18:51:08Z
+14805	Defer `--attach` credential checks to the server	someone/attach-with-installation-tokens	MERGED	2026-10-23T19:51:17Z
+14804	Allow server to arbitrate which GitHub App installation tokens can attach files	someone:attach-installation-tokens	MERGED	2026-10-23T18:13:59Z
+14801	Replace msgpack with a minimal node ID encoder	someone:remove-msgpack	MERGED	2026-10-23T17:06:12Z
+14798	feat(gh auth login): hint at `--expiring` when no preference is set	someone/polish-auth-login-expiring-ux	MERGED	2026-10-23T15:09:39Z
+14796	Document extrepo installation on Debian	williammartin-document-extrepo-install	MERGED	2026-10-23T09:03:03Z
+14791	Update github.com/digitorus/pkcs7 dependency	bdehamer-dependency-maintenance	MERGED	2026-10-22T17:17:41Z
+14784	Avoid repeating the skill installation safety warning	tommaso-moro-skill-install-warnings	MERGED	2026-10-21T17:32:10Z
+14783	release download: add --verify to check immutability and build provenance before downloading	someone:release-download-verify	DRAFT	2026-10-21T17:05:55Z
+14782	Document expiring tokens in the gh skill	someone/skill-gh-expiring-tokens	MERGED	2026-10-21T14:46:43Z
+14781	Add global feature flag infrastructure	williammartin-global-feature-flags	DRAFT	2026-10-21T10:05:39Z
+14770	Merge v2.102.1 release branch into trunk	someone/merge-v2.102.1	MERGED	2026-10-20T19:36:59Z
+14768	Refreshable tokens: bump cli/oauth to v1.3.0 and fix `gh status` column width	someone/refresh-token-bump-deps	MERGED	2026-10-20T16:40:41Z
+14767	Bump Go to 1.27.3	bump-go-1.27.3	MERGED	2026-10-20T15:05:10Z
+14766	chore(deps): bump github.com/gabriel-vasile/mimetype from 1.4.15 to 1.4.16	someone/go_modules/github.com/gabriel-vasile/mimetype-1.4.16	MERGED	2026-10-20T14:03:03Z
+14765	Add --json and --jq flags to pr create (#11247)	someone:feature/pr-create-json-flags	CLOSED	2026-10-20T14:01:51Z
+14763	Fix local branch deletion for PR URLs	someone:fix/pr-close-url-branch-safety	CLOSED	2026-10-20T09:34:59Z
+14752	Refreshable tokens: build-gated debug overrides for testing token expiry	someone/refresh-token-test-env	MERGED	2026-10-19T14:49:04Z
+14751	chore(deps): bump the codeql-actions group with 3 updates	someone/github_actions/codeql-actions-1b1ce9824d	MERGED	2026-10-19T14:04:47Z
+14750	Add deterministic Dependabot scheduler	williammartin-investigate-dependabot-aic	MERGED	2026-10-19T12:20:05Z
+14745	Refreshable tokens: show relative time-to-expiry in `gh auth status`	someone/refresh-token-relative-expiry	MERGED	2026-10-19T09:35:48Z
+14727	fix(issue create): resolve --type before creating the issue	someone:fix/issue-create-resolve-type-before-create	CLOSED	2026-10-17T15:21:58Z
+14722	Clarify release creation atomicity and immutability	bdehamer-release-create-atomicity-help	MERGED	2026-10-16T21:21:01Z
+14720	Support HTML documents in `gh issue artifact`	someone/artifact-html	MERGED	2026-10-16T18:54:56Z
+14719	Fix help text that references nonexistent flags	someone/fix-help-text-flag-references	MERGED	2026-10-16T18:10:58Z
+14717	Refreshable tokens: review fixes (round 2)	someone/refresh-token-review-fixes-round-2	MERGED	2026-10-16T15:02:35Z
+14716	chore(deps): bump actions/create-github-app-token from 3.2.0 to 3.3.0	someone/github_actions/actions/create-github-app-token-3.3.0	OPEN	2026-10-16T14:05:44Z

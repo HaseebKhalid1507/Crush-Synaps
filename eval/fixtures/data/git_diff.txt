@@ -1,0 +1,637 @@
+diff --git a/crates/globset/Cargo.toml b/crates/globset/Cargo.toml
+index 96c7d04..e56119d 100644
+--- a/crates/globset/Cargo.toml
++++ b/crates/globset/Cargo.toml
+@@ -1,6 +1,6 @@
+ [package]
+ name = "globset"
+-version = "0.4.20"  #:version
++version = "0.4.21"  #:version
+ authors = ["Dev01 <dev02@example.com>"]
+ description = """
+ Cross platform single glob and glob set matching. Glob set matching is the
+diff --git a/crates/globset/src/glob.rs b/crates/globset/src/glob.rs
+index ac1dd6d..8f84804 100644
+--- a/crates/globset/src/glob.rs
++++ b/crates/globset/src/glob.rs
+@@ -42,6 +42,8 @@ pub(crate) enum MatchStrategy {
+     /// Namely, if the extension matches, then a full regex search is still
+     /// required.
+     RequiredExtension(String),
++    /// A regex that only needs to inspect the final path component.
++    BasenameRegex(String),
+     /// A regex needs to be used for matching.
+     Regex,
+ }
+@@ -61,6 +63,8 @@ impl MatchStrategy {
+             MatchStrategy::Suffix { suffix, component }
+         } else if let Some(ext) = pat.required_ext() {
+             MatchStrategy::RequiredExtension(ext)
++        } else if let Some(re) = pat.basename_regex() {
++            MatchStrategy::BasenameRegex(re)
+         } else {
+             MatchStrategy::Regex
+         }
+@@ -196,6 +200,9 @@ impl GlobStrategic {
+                 let ext = ext.as_bytes();
+                 &*candidate.ext == ext && self.re.is_match(byte_path)
+             }
++            MatchStrategy::BasenameRegex(_) => {
++                self.re.is_match(candidate.basename_for_regex())
++            }
+             MatchStrategy::Regex => self.re.is_match(byte_path),
+         }
+     }
+@@ -299,8 +306,11 @@ impl Glob {
+     #[cfg(test)]
+     fn compile_strategic_matcher(&self) -> GlobStrategic {
+         let strategy = MatchStrategy::new(self);
+-        let re =
+-            new_regex(&self.re).expect("regex compilation shouldn't fail");
++        let pattern = match &strategy {
++            MatchStrategy::BasenameRegex(re) => re,
++            _ => &self.re,
++        };
++        let re = new_regex(pattern).expect("regex compilation shouldn't fail");
+         GlobStrategic { strategy, re }
+     }
+ 
+@@ -508,9 +518,6 @@ impl Glob {
+     /// doesn't *always* match when a file path has a basename of `foo`. e.g.,
+     /// `foo` doesn't match `abc/foo`.
+     fn basename_tokens(&self) -> Option<&[Token]> {
+-        if self.opts.case_insensitive {
+-            return None;
+-        }
+         let start = match *self.tokens.get(0)? {
+             Token::RecursivePrefix => 1,
+             _ => {
+@@ -540,10 +547,15 @@ impl Glob {
+                 | Token::RecursiveZeroOrMore => {
+                     return None;
+                 }
+-                Token::Class { .. } | Token::Alternates(..) => {
+-                    // We *could* be a little smarter here, but either one
+-                    // of these is going to prevent our literal optimizations
+-                    // anyway, so give up.
++                Token::Class { negated, ref ranges } => {
++                    let contains_slash = ranges
++                        .iter()
++                        .any(|&(start, end)| start <= '/' && '/' <= end);
++                    if contains_slash != negated {
++                        return None;
++                    }
++                }
++                Token::Alternates(..) => {
+                     return None;
+                 }
+             }
+@@ -557,6 +569,9 @@ impl Glob {
+     /// The basic format of these patterns is `**/{literal}`, where `{literal}`
+     /// does not contain a path separator.
+     fn basename_literal(&self) -> Option<String> {
++        if self.opts.case_insensitive {
++            return None;
++        }
+         let tokens = self.basename_tokens()?;
+         let mut lit = String::new();
+         for t in tokens {
+@@ -565,6 +580,12 @@ impl Glob {
+         }
+         Some(lit)
+     }
++
++    /// Returns a regex for the basename when it determines the whole match.
++    fn basename_regex(&self) -> Option<String> {
++        let tokens = self.basename_tokens()?;
++        Some(Tokens::to_regex_with(&self.opts, tokens))
++    }
+ }
+ 
+ impl<'a> GlobBuilder<'a> {
+@@ -602,7 +623,7 @@ impl<'a> GlobBuilder<'a> {
+             let tokens = p.branches.pop().unwrap();
+             Ok(Glob {
+                 glob: self.glob.to_string(),
+-                re: tokens.to_regex_with(&self.opts),
++                re: Tokens::to_regex_with(&self.opts, &tokens),
+                 opts: self.opts,
+                 tokens,
+             })
+@@ -670,7 +691,7 @@ impl Tokens {
+     /// Convert this pattern to a string that is guaranteed to be a valid
+     /// regular expression and will represent the matching semantics of this
+     /// glob pattern and the options given.
+-    fn to_regex_with(&self, options: &GlobOptions) -> String {
++    fn to_regex_with(options: &GlobOptions, tokens: &[Token]) -> String {
+         let mut re = String::new();
+         re.push_str("(?-u)");
+         if options.case_insensitive {
+@@ -679,18 +700,17 @@ impl Tokens {
+         re.push('^');
+         // Special case. If the entire glob is just `**`, then it should match
+         // everything.
+-        if self.len() == 1 && self[0] == Token::RecursivePrefix {
++        if tokens.len() == 1 && tokens[0] == Token::RecursivePrefix {
+             re.push_str(".*");
+             re.push('$');
+             return re;
+         }
+-        self.tokens_to_regex(options, &self, &mut re);
++        Self::tokens_to_regex(options, tokens, &mut re);
+         re.push('$');
+         re
+     }
+ 
+     fn tokens_to_regex(
+-        &self,
+         options: &GlobOptions,
+         tokens: &[Token],
+         re: &mut String,
+@@ -744,7 +764,7 @@ impl Tokens {
+                     let mut parts = vec![];
+                     for pat in patterns {
+                         let mut altre = String::new();
+-                        self.tokens_to_regex(options, &pat, &mut altre);
++                        Self::tokens_to_regex(options, &pat, &mut altre);
+                         if !altre.is_empty() || options.empty_alternates {
+                             parts.push(altre);
+                         }
+@@ -1430,6 +1450,15 @@ mod tests {
+     matches!(matchrec25, "test/**", "test/one/two");
+     matches!(matchrec26, "some/*/needle.txt", "some/one/needle.txt");
+ 
++    matches!(basename_empty, "**/*", "", SLASHLIT);
++    matches!(basename_trailing_separator, "**/*", "foo/", SLASHLIT);
++    matches!(basename_parent_component, "**/.*", "foo/..", SLASHLIT);
++    matches!(basename_class, "**/*.py[cod]", "src/module.pyc", SLASHLIT);
++    matches!(basename_negated_class, "**/[!/]", "foo/a", SLASHLIT);
++    matches!(class_includes_separator, "**/[!a]", "/", SLASHLIT);
++    matches!(class_separator_range, "**/[.-0]", "/", SLASHLIT);
++    nmatches!(basename_class_miss, "**/*.py[cod]", "src/module.pyi", SLASHLIT);
++
+     matches!(matchrange1, "a[0-9]b", "a0b");
+     matches!(matchrange2, "a[0-9]b", "a9b");
+     matches!(matchrange3, "a[!0-9]b", "a_b");
+@@ -1631,7 +1660,12 @@ mod tests {
+         "**/foo",
+         Some(&*vec![Literal('f'), Literal('o'), Literal('o'),])
+     );
+-    basetokens!(extract_basetoks2, "**/foo", None, CASEI);
++    basetokens!(
++        extract_basetoks2,
++        "**/foo",
++        Some(&*vec![Literal('f'), Literal('o'), Literal('o'),]),
++        CASEI
++    );
+     basetokens!(
+         extract_basetoks3,
+         "**/foo",
+diff --git a/crates/globset/src/lib.rs b/crates/globset/src/lib.rs
+index 1145753..24fd6b1 100644
+--- a/crates/globset/src/lib.rs
++++ b/crates/globset/src/lib.rs
+@@ -475,6 +475,7 @@ impl GlobSet {
+         let mut prefixes = MultiStrategyBuilder::new();
+         let mut suffixes = MultiStrategyBuilder::new();
+         let mut required_exts = RequiredExtensionStrategyBuilder::new();
++        let mut base_regexes = MultiStrategyBuilder::new();
+         let mut regexes = MultiStrategyBuilder::new();
+         for (i, p) in it.enumerate() {
+             len += 1;
+@@ -502,6 +503,9 @@ impl GlobSet {
+                 MatchStrategy::RequiredExtension(ext) => {
+                     required_exts.add(i, ext, p.regex().to_owned());
+                 }
++                MatchStrategy::BasenameRegex(re) => {
++                    base_regexes.add(i, re);
++                }
+                 MatchStrategy::Regex => {
+                     debug!(
+                         "glob `{:?}` converted to regex: `{:?}`",
+@@ -514,16 +518,18 @@ impl GlobSet {
+         }
+         debug!(
+             "built glob set; {} literals, {} basenames, {} extensions, \
+-                {} prefixes, {} suffixes, {} required extensions, {} regexes",
++             {} prefixes, {} suffixes, {} required extensions, \
++             {} basename regexes, {} regexes",
+             lits.literals.len(),
+             base_lits.literals.len(),
+             exts.0.len(),
+             prefixes.literals.len(),
+             suffixes.literals.len(),
+             required_exts.0.len(),
++            base_regexes.literals.len(),
+             regexes.literals.len()
+         );
+-        let mut strats = Vec::with_capacity(7);
++        let mut strats = Vec::with_capacity(8);
+         // Only add strategies that are populated
+         if !exts.0.is_empty() {
+             strats.push(GlobSetMatchStrategy::Extension(exts));
+@@ -545,6 +551,11 @@ impl GlobSet {
+                 required_exts.build()?,
+             ));
+         }
++        if !base_regexes.is_empty() {
++            let mut set = base_regexes.regex_set()?;
++            set.basename = true;
++            strats.push(GlobSetMatchStrategy::Regex(set));
++        }
+         if !regexes.is_empty() {
+             strats.push(GlobSetMatchStrategy::Regex(regexes.regex_set()?));
+         }
+@@ -641,6 +652,16 @@ impl<'a> Candidate<'a> {
+         if self.path.len() <= Dev55 { &*self.path } else { &self.path[..Dev55] }
+     }
+ 
++    /// Returns the final component, including `..` for regex matching.
++    fn basename_for_regex(&self) -> &[u8] {
++        // Literal basename strategies skip `..`, but a regex can match it.
++        if self.basename.is_empty() && self.path.ends_with(b"..") {
++            b".."
++        } else {
++            &self.basename
++        }
++    }
++
+     fn path_suffix(&self, Dev55: usize) -> &[u8] {
+         if self.path.len() <= Dev55 {
+             &*self.path
+@@ -950,6 +971,7 @@ impl RequiredExtensionStrategy {
+ struct RegexSetStrategy {
+     matcher: Regex,
+     map: Vec<usize>,
++    basename: bool,
+     // We use a pool of PatternSets to hopefully allocating a fresh one on each
+     // call.
+     //
+@@ -965,15 +987,24 @@ type PatternSetPoolFn =
+     Box<dyn Fn() -> PatternSet + Send + Sync + UnwindSafe + RefUnwindSafe>;
+ 
+ impl RegexSetStrategy {
++    /// Returns the part of the path matched by these regexes.
++    fn haystack<'a>(&self, candidate: &'a Candidate<'_>) -> &'a [u8] {
++        if self.basename {
++            candidate.basename_for_regex()
++        } else {
++            &candidate.path
++        }
++    }
++
+     fn is_match(&self, candidate: &Candidate<'_>) -> bool {
+-        self.matcher.is_match(candidate.path.as_bytes())
++        self.matcher.is_match(self.haystack(candidate))
+     }
+ 
+     fn find_matches(
+         &self,
+         candidate: &Candidate<'_>,
+     ) -> PoolGuard<'_, PatternSet, PatternSetPoolFn> {
+-        let input = regex_automata::Input::new(candidate.path.as_bytes());
++        let input = regex_automata::Input::new(self.haystack(candidate));
+         let mut patset = self.patset.get();
+         patset.clear();
+         self.matcher.which_overlapping_matches(&input, &mut patset);
+@@ -1042,6 +1073,7 @@ impl MultiStrategyBuilder {
+         Ok(RegexSetStrategy {
+             matcher,
+             map: self.map,
++            basename: false,
+             patset: Arc::new(Pool::new(create)),
+         })
+     }
+@@ -1240,6 +1272,41 @@ mod tests {
+         assert!(!set.matches_all("foo.c"));
+     }
+ 
++    #[test]
++    fn basename_regex_with_path_rules() {
++        let globs: Vec<_> = ["**/.venv*", "**/*.py[cod]", "src/*"]
++            .iter()
++            .map(|pattern| {
++                GlobBuilder::new(pattern)
++                    .literal_separator(true)
++                    .build()
++                    .unwrap()
++            })
++            .collect();
++        let set = GlobSet::new(globs).unwrap();
++        assert_eq!(set.matches("src/module.pyc"), vec![1, 2]);
++        assert_eq!(set.matches("src/nested/module.pyc"), vec![1]);
++        assert_eq!(set.matches("src/.venv-new"), vec![0, 2]);
++        assert!(set.matches_all("src/.venv.pyc"));
++        assert!(!set.matches_all("src/nested/.venv.pyc"));
++    }
++
++    #[test]
++    fn basename_regex_parent_component() {
++        let set = GlobSet::new([
++            GlobBuilder::new("**/.*").literal_separator(true).build().unwrap(),
++            Glob::new("**/[.][.]").unwrap(),
++        ])
++        .unwrap();
++        for path in ["..", "foo/..", "foo/bar/.."] {
++            assert!(set.is_match(path), "{path}");
++            assert!(set.matches_all(path), "{path}");
++            assert_eq!(set.matches(path), vec![0, 1], "{path}");
++        }
++        assert!(!set.matches_all("foo/."));
++        assert!(!set.matches_all("foo/a.."));
++    }
++
+     #[test]
+     fn default_set_is_empty_works() {
+         let set: GlobSet = Default::default();
+diff --git a/crates/ignore/Cargo.toml b/crates/ignore/Cargo.toml
+index 17c9173..51ad6de 100644
+--- a/crates/ignore/Cargo.toml
++++ b/crates/ignore/Cargo.toml
+@@ -1,6 +1,6 @@
+ [package]
+ name = "ignore"
+-version = "0.4.33"  #:version
++version = "0.4.34"  #:version
+ authors = ["Dev01 <dev02@example.com>"]
+ description = """
+ A fast library for efficiently matching ignore files such as `.gitignore`
+diff --git a/crates/ignore/src/dir.rs b/crates/ignore/src/dir.rs
+index 5afbf9d..a4fb51a 100644
+--- a/crates/ignore/src/dir.rs
++++ b/crates/ignore/src/dir.rs
+@@ -283,6 +283,31 @@ impl Ignore {
+         )
+     }
+ 
++    /// Like `add_child`, but reuse this matcher when the child adds no rules
++    /// or repository boundary. Incremental matching tracks directory paths
++    /// separately, so it doesn't need empty nodes in the matcher chain.
++    pub(crate) fn add_child_with_possible_reuse(
++        &self,
++        dir: &Path,
++    ) -> (Ignore, Option<Error>) {
++        let (ig, err) = self.add_child_path(dir);
++        if !ig.has_git
++            && ig.custom_ignore_matcher.is_empty()
++            && ig.ignore_matcher.is_empty()
++            && ig.git_ignore_matcher.is_empty()
++            && ig.git_exclude_matcher.is_empty()
++        {
++            return (self.clone(), err);
++        }
++        (
++            Ignore {
++                inner: Arc::new(ig),
++                absolute_base: self.absolute_base.clone(),
++            },
++            err,
++        )
++    }
++
+     /// Like add_child, but uses successful read_dir entries to reduce
+     /// probing when discovering ignore files.
+     pub(crate) fn add_child_with_entries<P: AsRef<Path>>(
+@@ -348,7 +373,7 @@ impl Ignore {
+     ) -> (IgnoreInner, Option<Error>) {
+         let check_vcs_dir = self.inner.opts.require_git
+             && (self.inner.opts.git_ignore || self.inner.opts.git_exclude);
+-        let git_type = if check_vcs_dir
++        let git_type = if (check_vcs_dir || self.inner.opts.git_exclude)
+             && ignore_files_list.is_none_or(|i| i.has_git_dir)
+         {
+             dir.join(".git").metadata().ok().map(|md| md.file_type())
+@@ -1644,6 +1669,13 @@ mod tests {
+         assert!(err.is_none());
+         assert!(ignore.matched("ignore_me", false).is_ignore());
+ 
++        let without_required_git =
++            IgnoreBuilder::new().require_git(false).build();
++        let (ignore, err) =
++            without_required_git.add_child(td.path().join("linked-worktree"));
++        assert!(err.is_none());
++        assert!(ignore.matched("ignore_me", false).is_ignore());
++
+         // absolute commondir
+         wfile(commondir_path(), git_dir.to_str().unwrap());
+         let (ignore, err) = ib.add_child(td.path().join("linked-worktree"));
+diff --git a/crates/ignore/src/incremental.rs b/crates/ignore/src/incremental.rs
+index 5030b0d..ba2fa2a 100644
+--- a/crates/ignore/src/incremental.rs
++++ b/crates/ignore/src/incremental.rs
+@@ -1,5 +1,6 @@
+ use std::{
+     collections::HashMap,
++    ffi::{OsStr, OsString},
+     path::{Path, PathBuf},
+     sync::OnceLock,
+ };
+@@ -62,7 +63,8 @@ pub struct IncrementalIgnore {
+     /// The matcher for the configured root directory, loaded on first use.
+     ignore: RootIgnore,
+     /// Directory paths relative to `root`, excluding the root itself.
+-    dirs: HashMap<PathBuf, CachedDir>,
++    /// Keys are assembled from components, so hashing need not normalize them.
++    dirs: HashMap<OsString, CachedDir>,
+     /// Options for additional filtering beyond gitignore.
+     options: IncrementalIgnoreOptions,
+ }
+@@ -102,6 +104,47 @@ enum CachedDir {
+     Ignored,
+ }
+ 
++/// Returns a parent key for the directory cache, provided the final component
++/// is normal. On Unix, a byte-wise lookup avoids parsing path components.
++/// Cache keys contain only normal components, so a hit also validates the
++/// parent. Other spellings are handled by the component walk after a miss.
++#[inline]
++fn parent_key(relative: &Path) -> Option<&OsStr> {
++    #[cfg(unix)]
++    {
++        use std::os::unix::ffi::OsStrExt;
++
++        let bytes = relative.as_os_str().as_bytes();
++        let slash = memchr::memrchr(b'/', bytes)?;
++        let name = &bytes[slash + 1..];
++        if name.is_empty() || name == b"." || name == b".." {
++            return None;
++        }
++        let mut parent = &bytes[..slash];
++        // As with `Components::as_path`, trim trailing separators and `.`
++        // components so these spellings can still hit the cache directly.
++        loop {
++            match parent.last() {
++                Some(b'/') => parent = &parent[..parent.len() - 1],
++                Some(b'.') if parent.ends_with(b"/.") => {
++                    parent = &parent[..parent.len() - 2];
++                }
++                _ => return Some(OsStr::from_bytes(parent)),
++            }
++        }
++    }
++    #[cfg(not(unix))]
++    {
++        let mut components = relative.components();
++        match components.next_back() {
++            Some(std::path::Component::Normal(_)) => {
++                Some(components.as_path().as_os_str())
++            }
++            _ => None,
++        }
++    }
++}
++
+ impl IncrementalIgnore {
+     pub(crate) fn new(
+         root: PathBuf,
+@@ -313,15 +356,6 @@ impl IncrementalIgnore {
+         is_dir: bool,
+         errs: &mut PartialErrorBuilder,
+     ) -> Option<IncrementalMatch> {
+-        let mut components = relative
+-            .components()
+-            .filter_map(|component| match component {
+-                std::path::Component::CurDir => None,
+-                component => Some(component),
+-            })
+-            .peekable();
+-        components.peek()?;
+-
+         // If the exact parent is cached, then all of its ancestors have
+         // already been checked. An allowed cache entry is the matcher to use
+         // for children of that directory, while an ignored cache entry is
+@@ -330,11 +364,9 @@ impl IncrementalIgnore {
+         //
+         // Only try the fast path when the final component is a normal path
+         // component. Invalid paths are handled by the component walk below.
+-        let has_normal_final_component =
+-            relative.components().next_back().is_some_and(|component| {
+-                matches!(component, std::path::Component::Normal(_))
+-            });
+-        if has_normal_final_component && let Some(parent) = relative.parent() {
++        // Non-normalized parent paths can miss this byte-wise lookup; the
++        // component walk below still finds their normalized cache entries.
++        if let Some(parent) = parent_key(relative) {
+             match self.dirs.get(parent) {
+                 Some(CachedDir::Allowed(ignore)) => {
+                     return Some(self.match_path(ignore, relative, is_dir));
+@@ -346,6 +378,15 @@ impl IncrementalIgnore {
+             }
+         }
+ 
++        let mut components = relative
++            .components()
++            .filter_map(|component| match component {
++                std::path::Component::CurDir => None,
++                component => Some(component),
++            })
++            .peekable();
++        components.peek()?;
++
+         let mut ignore = self.root_ignore(errs)?;
+         let mut dir = PathBuf::new();
+         while let Some(component) = components.next() {
+@@ -362,7 +403,7 @@ impl IncrementalIgnore {
+                 break;
+             }
+             dir.push(component.as_os_str());
+-            match self.dirs.get(&dir) {
++            match self.dirs.get(dir.as_os_str()) {
+                 Some(CachedDir::Allowed(cached)) => {
+                     ignore = cached.clone();
+                     continue;
+@@ -378,12 +419,16 @@ impl IncrementalIgnore {
+             let is_hidden =
+                 self.options.hidden && mat.is_none() && is_hidden_path(&path);
+             if mat.is_ignore() || is_hidden {
+-                self.dirs.insert(dir.clone(), CachedDir::Ignored);
++                self.dirs
++                    .insert(dir.as_os_str().to_owned(), CachedDir::Ignored);
+                 return Some(IncrementalMatch::ignore());
+             }
+-            let (child, err) = ignore.add_child(&path);
++            let (child, err) = ignore.add_child_with_possible_reuse(&path);
+             errs.maybe_push(err);
+-            self.dirs.insert(dir.clone(), CachedDir::Allowed(child.clone()));
++            self.dirs.insert(
++                dir.as_os_str().to_owned(),
++                CachedDir::Allowed(child.clone()),
++            );
+             ignore = child;
+         }
+ 
+@@ -838,10 +883,20 @@ mod tests {
+         let mut m = one_matcher(&builder(td.path()));
+         assert!(matchedf(&mut m, "a/b/allowed").is_none());
+         assert!(matches!(
+-            m.dirs.get(Path::new("a/b")),
++            m.dirs.get(Path::new("a").join("b").as_os_str()),
+             Some(CachedDir::Allowed(_))
+         ));
+         assert!(matchedf(&mut m, "a/b/ignored").is_ignore());
++
++        // Equivalent spellings still use the cached snapshot when the
++        // direct parent lookup misses.
++        wfile(td.path().join("a/b/.ignore"), "!ignored\nallowed\n");
++        assert!(matchedf(&mut m, "a/./b/ignored").is_ignore());
++        assert!(matchedf(&mut m, "a//b/allowed").is_none());
++        assert!(matchedf(&mut m, "./a/b/ignored").is_ignore());
++        assert!(matchedf(&mut m, "a/b/./ignored").is_ignore());
++        assert!(matchedf(&mut m, "a/b//ignored").is_ignore());
++        assert!(matchedf(&mut m, "a/b/.///allowed").is_none());
+     }
+ 
+     #[test]
+@@ -853,7 +908,7 @@ mod tests {
+         let mut m = one_matcher(&builder(td.path()));
+         assert!(matchedf(&mut m, "blocked/first").is_ignore());
+         assert!(matches!(
+-            m.dirs.get(Path::new("blocked")),
++            m.dirs.get(Path::new("blocked").as_os_str()),
+             Some(CachedDir::Ignored)
+         ));
+         assert!(matchedf(&mut m, "blocked/second").is_ignore());
+@@ -868,12 +923,14 @@ mod tests {
+         let mut m = one_matcher(&builder(td.path()));
+         assert!(matchedf(&mut m, "a/b/file").is_ignore());
+         assert!(matches!(
+-            m.dirs.get(Path::new("a/b")),
++            m.dirs.get(Path::new("a").join("b").as_os_str()),
+             Some(CachedDir::Allowed(_))
+         ));
+-        let dir = matchedd(&mut m, "a/b");
+-        assert!(dir.is_none());
+-        assert!(dir.should_descend());
++        for path in ["a/b", "a/b/", "a/b/.", "a//b/", "a/./b/."] {
++            let dir = matchedd(&mut m, path);
++            assert!(dir.is_none(), "{path}");
++            assert!(dir.should_descend(), "{path}");
++        }
+     }
+ 
+     // Like `compiled_matchers_are_reused`, but with multiple roots.
+@@ -1283,4 +1340,24 @@ mod tests {
+         assert!(dir.is_ignore());
+         assert!(!dir.is_within_depth());
+     }
++    #[test]
++    fn empty_directories_preserve_repository_boundaries() {
++        let td = tmpdir();
++        mkdirp(td.path().join(".git"));
++        mkdirp(td.path().join("a/b/.git"));
++        mkdirp(td.path().join("a/b/c"));
++        wfile(td.path().join(".gitignore"), "git-blocked\n");
++        wfile(td.path().join(".ignore"), "tool-blocked\n!allowed\n");
++
++        let mut m = one_matcher(&builder(td.path()));
++        assert!(matchedf(&mut m, "a/git-blocked").is_ignore());
++        assert!(matchedf(&mut m, "a/b/c/git-blocked").is_none());
++        assert!(matchedf(&mut m, "a/b/c/tool-blocked").is_ignore());
++        assert!(matchedf(&mut m, "a/b/c/allowed").is_whitelist());
++
++        wfile(td.path().join("a/b/c/.ignore"), "git-blocked\n");
++        assert!(matchedf(&mut m, "a/b/c/git-blocked").is_none());
++        let mut rebuilt = one_matcher(&builder(td.path()));
++        assert!(matchedf(&mut rebuilt, "a/b/c/git-blocked").is_ignore());
++    }
+ }

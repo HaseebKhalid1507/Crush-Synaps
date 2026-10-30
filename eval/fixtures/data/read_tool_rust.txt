@@ -1,0 +1,700 @@
+1	use std::{
+2	    cell::{Cell, RefCell},
+3	    cmp,
+4	    io::{self, Write},
+5	    path::Path,
+6	    sync::Arc,
+7	    time::Instant,
+8	};
+9	
+10	use {
+11	    bstr::ByteSlice,
+12	    grep_matcher::{Match, Matcher},
+13	    grep_searcher::{
+14	        LineStep, Searcher, Sink, SinkContext, SinkFinish, SinkMatch,
+15	    },
+16	    termcolor::{ColorSpec, NoColor, WriteColor},
+17	};
+18	
+19	use crate::{
+20	    color::ColorSpecs,
+21	    counter::CounterWriter,
+22	    hyperlink::{self, HyperlinkConfig},
+23	    stats::Stats,
+24	    util::{
+25	        DecimalFormatter, PrinterPath, Replacer, Sunk,
+26	        find_iter_at_in_context, trim_ascii_prefix, trim_line_terminator,
+27	    },
+28	};
+29	
+30	/// The configuration for the standard printer.
+31	///
+32	/// This is manipulated by the StandardBuilder and then referenced by the
+33	/// actual implementation. Once a printer is build, the configuration is frozen
+34	/// and cannot changed.
+35	#[derive(Debug, Clone)]
+36	struct Config {
+37	    colors: ColorSpecs,
+38	    hyperlink: HyperlinkConfig,
+39	    stats: bool,
+40	    heading: bool,
+41	    path: bool,
+42	    only_matching: bool,
+43	    per_match: bool,
+44	    per_match_one_line: bool,
+45	    replacement: Arc<Option<Vec<u8>>>,
+46	    max_columns: Option<u64>,
+47	    max_columns_preview: bool,
+48	    column: bool,
+49	    byte_offset: bool,
+50	    trim_ascii: bool,
+51	    separator_search: Arc<Option<Vec<u8>>>,
+52	    separator_context: Arc<Option<Vec<u8>>>,
+53	    separator_field_match: Arc<Vec<u8>>,
+54	    separator_field_context: Arc<Vec<u8>>,
+55	    separator_path: Option<u8>,
+56	    path_terminator: Option<u8>,
+57	}
+58	
+59	impl Default for Config {
+60	    fn default() -> Config {
+61	        Config {
+62	            colors: ColorSpecs::default(),
+63	            hyperlink: HyperlinkConfig::default(),
+64	            stats: false,
+65	            heading: false,
+66	            path: true,
+67	            only_matching: false,
+68	            per_match: false,
+69	            per_match_one_line: false,
+70	            replacement: Arc::new(None),
+71	            max_columns: None,
+72	            max_columns_preview: false,
+73	            column: false,
+74	            byte_offset: false,
+75	            trim_ascii: false,
+76	            separator_search: Arc::new(None),
+77	            separator_context: Arc::new(Some(b"--".to_vec())),
+78	            separator_field_match: Arc::new(b":".to_vec()),
+79	            separator_field_context: Arc::new(b"-".to_vec()),
+80	            separator_path: None,
+81	            path_terminator: None,
+82	        }
+83	    }
+84	}
+85	
+86	/// A builder for the "standard" grep-like printer.
+87	///
+88	/// The builder permits configuring how the printer behaves. Configurable
+89	/// behavior includes, but is not limited to, limiting the number of matches,
+90	/// tweaking separators, executing pattern replacements, recording statistics
+91	/// and setting colors.
+92	///
+93	/// Some configuration options, such as the display of line numbers or
+94	/// contextual lines, are drawn directly from the
+95	/// `grep_searcher::Searcher`'s configuration.
+96	///
+97	/// Once a `Standard` printer is built, its configuration cannot be changed.
+98	#[derive(Clone, Debug)]
+99	pub struct StandardBuilder {
+100	    config: Config,
+101	}
+102	
+103	impl StandardBuilder {
+104	    /// Return a new builder for configuring the standard printer.
+105	    pub fn new() -> StandardBuilder {
+106	        StandardBuilder { config: Config::default() }
+107	    }
+108	
+109	    /// Build a printer using any implementation of `termcolor::WriteColor`.
+110	    ///
+111	    /// The implementation of `WriteColor` used here controls whether colors
+112	    /// are used or not when colors have been configured using the
+113	    /// `color_specs` method.
+114	    ///
+115	    /// For maximum portability, callers should generally use either
+116	    /// `termcolor::StandardStream` or `termcolor::BufferedStandardStream`
+117	    /// where appropriate, which will automatically enable colors on Windows
+118	    /// when possible.
+119	    ///
+120	    /// However, callers may also provide an arbitrary writer using the
+121	    /// `termcolor::Ansi` or `termcolor::NoColor` wrappers, which always enable
+122	    /// colors via ANSI escapes or always disable colors, respectively.
+123	    ///
+124	    /// As a convenience, callers may use `build_no_color` to automatically
+125	    /// select the `termcolor::NoColor` wrapper to avoid needing to import
+126	    /// from `termcolor` explicitly.
+127	    pub fn build<W: WriteColor>(&self, wtr: W) -> Standard<W> {
+128	        Standard {
+129	            config: self.config.clone(),
+130	            wtr: RefCell::new(CounterWriter::new(wtr)),
+131	            matches: vec![],
+132	        }
+133	    }
+134	
+135	    /// Build a printer from any implementation of `io::Write` and never emit
+136	    /// any colors, regardless of the user color specification settings.
+137	    ///
+138	    /// This is a convenience routine for
+139	    /// `StandardBuilder::build(termcolor::NoColor::new(wtr))`.
+140	    pub fn build_no_color<W: io::Write>(
+141	        &self,
+142	        wtr: W,
+143	    ) -> Standard<NoColor<W>> {
+144	        self.build(NoColor::new(wtr))
+145	    }
+146	
+147	    /// Set the user color specifications to use for coloring in this printer.
+148	    ///
+149	    /// A [`UserColorSpec`](crate::UserColorSpec) can be constructed from
+150	    /// a string in accordance with the color specification format. See
+151	    /// the `UserColorSpec` type documentation for more details on the
+152	    /// format. A [`ColorSpecs`] can then be generated from zero or more
+153	    /// `UserColorSpec`s.
+154	    ///
+155	    /// Regardless of the color specifications provided here, whether color
+156	    /// is actually used or not is determined by the implementation of
+157	    /// `WriteColor` provided to `build`. For example, if `termcolor::NoColor`
+158	    /// is provided to `build`, then no color will ever be printed regardless
+159	    /// of the color specifications provided here.
+160	    ///
+161	    /// This completely overrides any previous color specifications. This does
+162	    /// not add to any previously provided color specifications on this
+163	    /// builder.
+164	    pub fn color_specs(&mut self, specs: ColorSpecs) -> &mut StandardBuilder {
+165	        self.config.colors = specs;
+166	        self
+167	    }
+168	
+169	    /// Set the configuration to use for hyperlinks output by this printer.
+170	    ///
+171	    /// Regardless of the hyperlink format provided here, whether hyperlinks
+172	    /// are actually used or not is determined by the implementation of
+173	    /// `WriteColor` provided to `build`. For example, if `termcolor::NoColor`
+174	    /// is provided to `build`, then no hyperlinks will ever be printed
+175	    /// regardless of the format provided here.
+176	    ///
+177	    /// This completely overrides any previous hyperlink format.
+178	    ///
+179	    /// The default configuration results in not emitting any hyperlinks.
+180	    pub fn hyperlink(
+181	        &mut self,
+182	        config: HyperlinkConfig,
+183	    ) -> &mut StandardBuilder {
+184	        self.config.hyperlink = config;
+185	        self
+186	    }
+187	
+188	    /// Enable the gathering of various aggregate statistics.
+189	    ///
+190	    /// When this is enabled (it's disabled by default), statistics will be
+191	    /// gathered for all uses of `Standard` printer returned by `build`,
+192	    /// including but not limited to, the total number of matches, the total
+193	    /// number of bytes searched and the total number of bytes printed.
+194	    ///
+195	    /// Aggregate statistics can be accessed via the sink's
+196	    /// [`StandardSink::stats`] method.
+197	    ///
+198	    /// When this is enabled, this printer may need to do extra work in order
+199	    /// to compute certain statistics, which could cause the search to take
+200	    /// longer.
+201	    ///
+202	    /// For a complete description of available statistics, see [`Stats`].
+203	    pub fn stats(&mut self, yes: bool) -> &mut StandardBuilder {
+204	        self.config.stats = yes;
+205	        self
+206	    }
+207	
+208	    /// Enable the use of "headings" in the printer.
+209	    ///
+210	    /// When this is enabled, and if a file path has been given to the printer,
+211	    /// then the file path will be printed once on its own line before showing
+212	    /// any matches. If the heading is not the first thing emitted by the
+213	    /// printer, then a line terminator is printed before the heading.
+214	    ///
+215	    /// By default, this option is disabled. When disabled, the printer will
+216	    /// not show any heading and will instead print the file path (if one is
+217	    /// given) on the same line as each matching (or context) line.
+218	    pub fn heading(&mut self, yes: bool) -> &mut StandardBuilder {
+219	        self.config.heading = yes;
+220	        self
+221	    }
+222	
+223	    /// When enabled, if a path was given to the printer, then it is shown in
+224	    /// the output (either as a heading or as a prefix to each matching line).
+225	    /// When disabled, then no paths are ever included in the output even when
+226	    /// a path is provided to the printer.
+227	    ///
+228	    /// This is enabled by default.
+229	    pub fn path(&mut self, yes: bool) -> &mut StandardBuilder {
+230	        self.config.path = yes;
+231	        self
+232	    }
+233	
+234	    /// Only print the specific matches instead of the entire line containing
+235	    /// each match. Each match is printed on its own line. When multi line
+236	    /// search is enabled, then matches spanning multiple lines are printed
+237	    /// such that only the matching portions of each line are shown.
+238	    pub fn only_matching(&mut self, yes: bool) -> &mut StandardBuilder {
+239	        self.config.only_matching = yes;
+240	        self
+241	    }
+242	
+243	    /// Print at least one line for every match.
+244	    ///
+245	    /// This is similar to the `only_matching` option, except the entire line
+246	    /// is printed for each match. This is typically useful in conjunction with
+247	    /// the `column` option, which will show the starting column number for
+248	    /// every match on every line.
+249	    ///
+250	    /// When multi-line mode is enabled, each match is printed, including every
+251	    /// line in the match. As with single line matches, if a line contains
+252	    /// multiple matches (even if only partially), then that line is printed
+253	    /// once for each match it participates in, assuming it's the first line in
+254	    /// that match. In multi-line mode, column numbers only indicate the start
+255	    /// of a match. Subsequent lines in a multi-line match always have a column
+256	    /// number of `1`.
+257	    ///
+258	    /// When a match contains multiple lines, enabling `per_match_one_line`
+259	    /// will cause only the first line each in match to be printed.
+260	    pub fn per_match(&mut self, yes: bool) -> &mut StandardBuilder {
+261	        self.config.per_match = yes;
+262	        self
+263	    }
+264	
+265	    /// Print at most one line per match when `per_match` is enabled.
+266	    ///
+267	    /// By default, every line in each match found is printed when `per_match`
+268	    /// is enabled. However, this is sometimes undesirable, e.g., when you
+269	    /// only ever want one line per match.
+270	    ///
+271	    /// This is only applicable when multi-line matching is enabled, since
+272	    /// otherwise, matches are guaranteed to span one line.
+273	    ///
+274	    /// This is disabled by default.
+275	    pub fn per_match_one_line(&mut self, yes: bool) -> &mut StandardBuilder {
+276	        self.config.per_match_one_line = yes;
+277	        self
+278	    }
+279	
+280	    /// Set the bytes that will be used to replace each occurrence of a match
+281	    /// found.
+282	    ///
+283	    /// The replacement bytes given may include references to capturing groups,
+284	    /// which may either be in index form (e.g., `$2`) or can reference named
+285	    /// capturing groups if present in the original pattern (e.g., `$foo`).
+286	    ///
+287	    /// For documentation on the full format, please see the `Capture` trait's
+288	    /// `interpolate` method in the
+289	    /// [grep-printer](https://docs.rs/grep-printer) crate.
+290	    pub fn replacement(
+291	        &mut self,
+292	        replacement: Option<Vec<u8>>,
+293	    ) -> &mut StandardBuilder {
+294	        self.config.replacement = Arc::new(replacement);
+295	        self
+296	    }
+297	
+298	    /// Set the maximum number of columns allowed for each line printed. A
+299	    /// single column is heuristically defined as a single byte.
+300	    ///
+301	    /// If a line is found which exceeds this maximum, then it is replaced
+302	    /// with a message indicating that the line has been omitted.
+303	    ///
+304	    /// The default is to not specify a limit, in which each matching or
+305	    /// contextual line is printed regardless of how long it is.
+306	    pub fn max_columns(&mut self, limit: Option<u64>) -> &mut StandardBuilder {
+307	        self.config.max_columns = limit;
+308	        self
+309	    }
+310	
+311	    /// When enabled, if a line is found to be over the configured maximum
+312	    /// column limit (measured in terms of bytes), then a preview of the long
+313	    /// line will be printed instead.
+314	    ///
+315	    /// The preview will correspond to the first `N` *grapheme clusters* of
+316	    /// the line, where `N` is the limit configured by `max_columns`.
+317	    ///
+318	    /// If no limit is set, then enabling this has no effect.
+319	    ///
+320	    /// This is disabled by default.
+321	    pub fn max_columns_preview(&mut self, yes: bool) -> &mut StandardBuilder {
+322	        self.config.max_columns_preview = yes;
+323	        self
+324	    }
+325	
+326	    /// Print the column number of the first match in a line.
+327	    ///
+328	    /// This option is convenient for use with `per_match` which will print a
+329	    /// line for every match along with the starting offset for that match.
+330	    ///
+331	    /// Column numbers are computed in terms of bytes from the start of the
+332	    /// line being printed.
+333	    ///
+334	    /// This is disabled by default.
+335	    pub fn column(&mut self, yes: bool) -> &mut StandardBuilder {
+336	        self.config.column = yes;
+337	        self
+338	    }
+339	
+340	    /// Print the absolute byte offset of the beginning of each line printed.
+341	    ///
+342	    /// The absolute byte offset starts from the beginning of each search and
+343	    /// is zero based.
+344	    ///
+345	    /// If the `only_matching` option is set, then this will print the absolute
+346	    /// byte offset of the beginning of each match.
+347	    pub fn byte_offset(&mut self, yes: bool) -> &mut StandardBuilder {
+348	        self.config.byte_offset = yes;
+349	        self
+350	    }
+351	
+352	    /// When enabled, all lines will have prefix ASCII whitespace trimmed
+353	    /// before being written.
+354	    ///
+355	    /// This is disabled by default.
+356	    pub fn trim_ascii(&mut self, yes: bool) -> &mut StandardBuilder {
+357	        self.config.trim_ascii = yes;
+358	        self
+359	    }
+360	
+361	    /// Set the separator used between sets of search results.
+362	    ///
+363	    /// When this is set, then it will be printed on its own line immediately
+364	    /// before the results for a single search if and only if a previous search
+365	    /// had already printed results. In effect, this permits showing a divider
+366	    /// between sets of search results that does not appear at the beginning
+367	    /// or end of all search results.
+368	    ///
+369	    /// To reproduce the classic grep format, this is typically set to `--`
+370	    /// (the same as the context separator) if and only if contextual lines
+371	    /// have been requested, but disabled otherwise.
+372	    ///
+373	    /// By default, this is disabled.
+374	    pub fn separator_search(
+375	        &mut self,
+376	        sep: Option<Vec<u8>>,
+377	    ) -> &mut StandardBuilder {
+378	        self.config.separator_search = Arc::new(sep);
+379	        self
+380	    }
+381	
+382	    /// Set the separator used between discontiguous runs of search context,
+383	    /// but only when the searcher is configured to report contextual lines.
+384	    ///
+385	    /// The separator is always printed on its own line, even if it's empty.
+386	    ///
+387	    /// If no separator is set, then nothing is printed when a context break
+388	    /// occurs.
+389	    ///
+390	    /// By default, this is set to `--`.
+391	    pub fn separator_context(
+392	        &mut self,
+393	        sep: Option<Vec<u8>>,
+394	    ) -> &mut StandardBuilder {
+395	        self.config.separator_context = Arc::new(sep);
+396	        self
+397	    }
+398	
+399	    /// Set the separator used between fields emitted for matching lines.
+400	    ///
+401	    /// For example, when the searcher has line numbers enabled, this printer
+402	    /// will print the line number before each matching line. The bytes given
+403	    /// here will be written after the line number but before the matching
+404	    /// line.
+405	    ///
+406	    /// By default, this is set to `:`.
+407	    pub fn separator_field_match(
+408	        &mut self,
+409	        sep: Vec<u8>,
+410	    ) -> &mut StandardBuilder {
+411	        self.config.separator_field_match = Arc::new(sep);
+412	        self
+413	    }
+414	
+415	    /// Set the separator used between fields emitted for context lines.
+416	    ///
+417	    /// For example, when the searcher has line numbers enabled, this printer
+418	    /// will print the line number before each context line. The bytes given
+419	    /// here will be written after the line number but before the context
+420	    /// line.
+421	    ///
+422	    /// By default, this is set to `-`.
+423	    pub fn separator_field_context(
+424	        &mut self,
+425	        sep: Vec<u8>,
+426	    ) -> &mut StandardBuilder {
+427	        self.config.separator_field_context = Arc::new(sep);
+428	        self
+429	    }
+430	
+431	    /// Set the path separator used when printing file paths.
+432	    ///
+433	    /// When a printer is configured with a file path, and when a match is
+434	    /// found, that file path will be printed (either as a heading or as a
+435	    /// prefix to each matching or contextual line, depending on other
+436	    /// configuration settings). Typically, printing is done by emitting the
+437	    /// file path as is. However, this setting provides the ability to use a
+438	    /// different path separator from what the current environment has
+439	    /// configured.
+440	    ///
+441	    /// A typical use for this option is to permit cygwin users on Windows to
+442	    /// set the path separator to `/` instead of using the system default of
+443	    /// `\`.
+444	    pub fn separator_path(&mut self, sep: Option<u8>) -> &mut StandardBuilder {
+445	        self.config.separator_path = sep;
+446	        self
+447	    }
+448	
+449	    /// Set the path terminator used.
+450	    ///
+451	    /// The path terminator is a byte that is printed after every file path
+452	    /// emitted by this printer.
+453	    ///
+454	    /// If no path terminator is set (the default), then paths are terminated
+455	    /// by either new lines (for when `heading` is enabled) or the match or
+456	    /// context field separators (e.g., `:` or `-`).
+457	    pub fn path_terminator(
+458	        &mut self,
+459	        terminator: Option<u8>,
+460	    ) -> &mut StandardBuilder {
+461	        self.config.path_terminator = terminator;
+462	        self
+463	    }
+464	}
+465	
+466	/// The standard printer, which implements grep-like formatting, including
+467	/// color support.
+468	///
+469	/// A default printer can be created with either of the `Standard::new` or
+470	/// `Standard::new_no_color` constructors. However, there are a considerable
+471	/// number of options that configure this printer's output. Those options can
+472	/// be configured using [`StandardBuilder`].
+473	///
+474	/// This type is generic over `W`, which represents any implementation
+475	/// of the `termcolor::WriteColor` trait. If colors are not desired,
+476	/// then the `new_no_color` constructor can be used, or, alternatively,
+477	/// the `termcolor::NoColor` adapter can be used to wrap any `io::Write`
+478	/// implementation without enabling any colors.
+479	#[derive(Clone, Debug)]
+480	pub struct Standard<W> {
+481	    config: Config,
+482	    wtr: RefCell<CounterWriter<W>>,
+483	    matches: Vec<Match>,
+484	}
+485	
+486	impl<W: WriteColor> Standard<W> {
+487	    /// Return a standard printer with a default configuration that writes
+488	    /// matches to the given writer.
+489	    ///
+490	    /// The writer should be an implementation of `termcolor::WriteColor`
+491	    /// and not just a bare implementation of `io::Write`. To use a normal
+492	    /// `io::Write` implementation (simultaneously sacrificing colors), use
+493	    /// the `new_no_color` constructor.
+494	    pub fn new(wtr: W) -> Standard<W> {
+495	        StandardBuilder::new().build(wtr)
+496	    }
+497	}
+498	
+499	impl<W: io::Write> Standard<NoColor<W>> {
+500	    /// Return a standard printer with a default configuration that writes
+501	    /// matches to the given writer.
+502	    ///
+503	    /// The writer can be any implementation of `io::Write`. With this
+504	    /// constructor, the printer will never emit colors.
+505	    pub fn new_no_color(wtr: W) -> Standard<NoColor<W>> {
+506	        StandardBuilder::new().build_no_color(wtr)
+507	    }
+508	}
+509	
+510	impl<W: WriteColor> Standard<W> {
+511	    /// Return an implementation of `Sink` for the standard printer.
+512	    ///
+513	    /// This does not associate the printer with a file path, which means this
+514	    /// implementation will never print a file path along with the matches.
+515	    pub fn sink<'s, M: Matcher>(
+516	        &'s mut self,
+517	        matcher: M,
+518	    ) -> StandardSink<'static, 's, M, W> {
+519	        let interpolator =
+520	            hyperlink::Interpolator::new(&self.config.hyperlink);
+521	        let stats = if self.config.stats { Some(Stats::new()) } else { None };
+522	        let needs_match_granularity = self.needs_match_granularity();
+523	        StandardSink {
+524	            matcher,
+525	            standard: self,
+526	            replacer: Replacer::new(),
+527	            interpolator,
+528	            path: None,
+529	            start_time: Instant::now(),
+530	            match_count: 0,
+531	            binary_byte_offset: None,
+532	            stats,
+533	            needs_match_granularity,
+534	        }
+535	    }
+536	
+537	    /// Return an implementation of `Sink` associated with a file path.
+538	    ///
+539	    /// When the printer is associated with a path, then it may, depending on
+540	    /// its configuration, print the path along with the matches found.
+541	    pub fn sink_with_path<'p, 's, M, P>(
+542	        &'s mut self,
+543	        matcher: M,
+544	        path: &'p P,
+545	    ) -> StandardSink<'p, 's, M, W>
+546	    where
+547	        M: Matcher,
+548	        P: ?Sized + AsRef<Path>,
+549	    {
+550	        if !self.config.path {
+551	            return self.sink(matcher);
+552	        }
+553	        let interpolator =
+554	            hyperlink::Interpolator::new(&self.config.hyperlink);
+555	        let stats = if self.config.stats { Some(Stats::new()) } else { None };
+556	        let ppath = PrinterPath::new(path.as_ref())
+557	            .with_separator(self.config.separator_path);
+558	        let needs_match_granularity = self.needs_match_granularity();
+559	        StandardSink {
+560	            matcher,
+561	            standard: self,
+562	            replacer: Replacer::new(),
+563	            interpolator,
+564	            path: Some(ppath),
+565	            start_time: Instant::now(),
+566	            match_count: 0,
+567	            binary_byte_offset: None,
+568	            stats,
+569	            needs_match_granularity,
+570	        }
+571	    }
+572	
+573	    /// Returns true if and only if the configuration of the printer requires
+574	    /// us to find each individual match in the lines reported by the searcher.
+575	    ///
+576	    /// We care about this distinction because finding each individual match
+577	    /// costs more, so we only do it when we need to.
+578	    fn needs_match_granularity(&self) -> bool {
+579	        let supports_color = self.wtr.borrow().supports_color();
+580	        let match_colored = !self.config.colors.matched().is_none();
+581	
+582	        // Coloring requires identifying each individual match.
+583	        (supports_color && match_colored)
+584	        // The column feature requires finding the position of the first match.
+585	        || self.config.column
+586	        // Requires finding each match for performing replacement.
+587	        || self.config.replacement.is_some()
+588	        // Emitting a line for each match requires finding each match.
+589	        || self.config.per_match
+590	        // Emitting only the match requires finding each match.
+591	        || self.config.only_matching
+592	        // Computing certain statistics requires finding each match.
+593	        || self.config.stats
+594	    }
+595	}
+596	
+597	impl<W> Standard<W> {
+598	    /// Returns true if and only if this printer has written at least one byte
+599	    /// to the underlying writer during any of the previous searches.
+600	    pub fn has_written(&self) -> bool {
+601	        self.wtr.borrow().total_count() > 0
+602	    }
+603	
+604	    /// Return a mutable reference to the underlying writer.
+605	    pub fn get_mut(&mut self) -> &mut W {
+606	        self.wtr.get_mut().get_mut()
+607	    }
+608	
+609	    /// Consume this printer and return back ownership of the underlying
+610	    /// writer.
+611	    pub fn into_inner(self) -> W {
+612	        self.wtr.into_inner().into_inner()
+613	    }
+614	}
+615	
+616	/// An implementation of `Sink` associated with a matcher and an optional file
+617	/// path for the standard printer.
+618	///
+619	/// A `Sink` can be created via the [`Standard::sink`] or
+620	/// [`Standard::sink_with_path`] methods, depending on whether you want to
+621	/// include a file path in the printer's output.
+622	///
+623	/// Building a `StandardSink` is cheap, and callers should create a new one
+624	/// for each thing that is searched. After a search has completed, callers may
+625	/// query this sink for information such as whether a match occurred or whether
+626	/// binary data was found (and if so, the offset at which it occurred).
+627	///
+628	/// This type is generic over a few type parameters:
+629	///
+630	/// * `'p` refers to the lifetime of the file path, if one is provided. When
+631	/// no file path is given, then this is `'static`.
+632	/// * `'s` refers to the lifetime of the [`Standard`] printer that this type
+633	/// borrows.
+634	/// * `M` refers to the type of matcher used by
+635	/// `grep_searcher::Searcher` that is reporting results to this sink.
+636	/// * `W` refers to the underlying writer that this printer is writing its
+637	/// output to.
+638	#[derive(Debug)]
+639	pub struct StandardSink<'p, 's, M: Matcher, W> {
+640	    matcher: M,
+641	    standard: &'s mut Standard<W>,
+642	    replacer: Replacer<M>,
+643	    interpolator: hyperlink::Interpolator,
+644	    path: Option<PrinterPath<'p>>,
+645	    start_time: Instant,
+646	    match_count: u64,
+647	    binary_byte_offset: Option<u64>,
+648	    stats: Option<Stats>,
+649	    needs_match_granularity: bool,
+650	}
+651	
+652	impl<'p, 's, M: Matcher, W: WriteColor> StandardSink<'p, 's, M, W> {
+653	    /// Returns true if and only if this printer received a match in the
+654	    /// previous search.
+655	    ///
+656	    /// This is unaffected by the result of searches before the previous
+657	    /// search on this sink.
+658	    pub fn has_match(&self) -> bool {
+659	        self.match_count > 0
+660	    }
+661	
+662	    /// Return the total number of matches reported to this sink.
+663	    ///
+664	    /// This corresponds to the number of times `Sink::matched` is called
+665	    /// on the previous search.
+666	    ///
+667	    /// This is unaffected by the result of searches before the previous
+668	    /// search on this sink.
+669	    pub fn match_count(&self) -> u64 {
+670	        self.match_count
+671	    }
+672	
+673	    /// If binary data was found in the previous search, this returns the
+674	    /// offset at which the binary data was first detected.
+675	    ///
+676	    /// The offset returned is an absolute offset relative to the entire
+677	    /// set of bytes searched.
+678	    ///
+679	    /// This is unaffected by the result of searches before the previous
+680	    /// search. e.g., If the search prior to the previous search found binary
+681	    /// data but the previous search found no binary data, then this will
+682	    /// return `None`.
+683	    pub fn binary_byte_offset(&self) -> Option<u64> {
+684	        self.binary_byte_offset
+685	    }
+686	
+687	    /// Return a reference to the stats produced by the printer for all
+688	    /// searches executed on this sink.
+689	    ///
+690	    /// This only returns stats if they were requested via the
+691	    /// [`StandardBuilder`] configuration.
+692	    pub fn stats(&self) -> Option<&Stats> {
+693	        self.stats.as_ref()
+694	    }
+695	
+696	    /// Execute the matcher over the given bytes and record the match
+697	    /// locations if the current configuration demands match granularity.
+698	    fn record_matches(
+699	        &mut self,
+700	        searcher: &Searcher,
