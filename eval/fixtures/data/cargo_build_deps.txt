@@ -1,0 +1,43 @@
+    Updating crates.io index
+     Locking 14 packages to latest compatible versions
+ Downloading crates ...
+  Downloaded smallvec v1.16.4
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling serde_core v1.0.229
+   Compiling memchr v2.8.3
+   Compiling regex-syntax v0.8.11
+   Compiling serde v1.0.229
+   Compiling itoa v1.0.18
+   Compiling smallvec v1.16.4
+   Compiling aho-corasick v1.1.5
+   Compiling syn v3.0.9
+   Compiling regex-automata v0.4.18
+   Compiling serde_derive v1.0.229
+   Compiling regex v1.13.1
+   Compiling ingest v0.2.0 (/work/deps)
+warning: unused variable: `unused_capture_count`
+ --> src/main.rs:6:9
+  |
+6 |     let unused_capture_count = re.captures_len();
+  |         ^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_unused_capture_count`
+  |
+  = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `scratch`
+  --> src/main.rs:10:36
+   |
+10 | fn legacy(total: u64) -> u64 { let scratch = total * 2; return 0; }
+   |                                    ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_scratch`
+
+warning: function `legacy` is never used
+  --> src/main.rs:10:4
+   |
+10 | fn legacy(total: u64) -> u64 { let scratch = total * 2; return 0; }
+   |    ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `ingest` (bin "ingest") generated 3 warnings (run `cargo fix --bin "ingest" -p ingest` to apply 2 suggestions)
+    Finished `dev` profile [unoptimized] target(s) in 2.81s

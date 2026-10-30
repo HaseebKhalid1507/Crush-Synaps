@@ -1,0 +1,128 @@
+FAIL src/checkout.test.js
+  checkout
+    happy path
+      ✓ validates the address (3 ms)
+      ✓ requires a payment method
+      ✕ creates an order (2 ms)
+      ✓ sends a receipt (2 ms)
+      ✓ retries a declined card for us-east
+      ✓ retries a declined card for eu-west
+      ✓ retries a declined card for ap-south (5 ms)
+      ✓ retries a declined card for sa-east
+      ✓ handles a timeout for us-east
+      ✓ handles a timeout for eu-west
+      ✓ handles a timeout for ap-south
+      ✓ handles a timeout for sa-east
+    edge cases
+      ✓ validates the address
+      ✓ requires a payment method (2 ms)
+      ✓ creates an order
+      ✓ sends a receipt
+      ✓ retries a declined card for us-east
+      ✓ retries a declined card for eu-west
+      ✓ retries a declined card for ap-south
+      ✓ retries a declined card for sa-east
+      ✓ handles a timeout for us-east
+      ✓ handles a timeout for eu-west
+      ✓ handles a timeout for ap-south
+      ✓ handles a timeout for sa-east
+
+  ● checkout › happy path › creates an order
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 21
+    Received: 20
+
+      3 |     test('validates the address', () => { expect(30 * 2).toBe(60); });
+      4 |     test('requires a payment method', () => { expect(10 * 2).toBe(20); });
+    > 5 |     test('creates an order', () => { expect(10 * 2).toBe(21); });
+        |                                                     ^
+      6 |     test('sends a receipt', () => { expect(2 * 2).toBe(4); });
+      7 |     test('retries a declined card for us-east', () => { expect(2 * 2).toBe(4); });
+      8 |     test('retries a declined card for eu-west', () => { expect(15 * 2).toBe(30); });
+
+      at Object.toBe (src/checkout.test.js:5:53)
+
+PASS src/cart.test.js
+  cart
+    happy path
+      ✓ adds an item (4 ms)
+      ✓ removes an item (2 ms)
+      ✓ updates quantity (3 ms)
+      ✓ applies a coupon
+      ✓ rejects an expired coupon (2 ms)
+      ✓ computes tax for us-east
+      ✓ computes tax for eu-west
+      ✓ computes tax for ap-south
+      ✓ computes tax for sa-east
+      ✓ rounds totals for us-east (2 ms)
+      ✓ rounds totals for eu-west
+      ✓ rounds totals for ap-south
+      ✓ rounds totals for sa-east
+    edge cases
+      ✓ adds an item
+      ✓ removes an item
+      ✓ updates quantity
+      ✓ applies a coupon
+      ✓ rejects an expired coupon
+      ✓ computes tax for us-east
+      ✓ computes tax for eu-west
+      ✓ computes tax for ap-south
+      ✓ computes tax for sa-east
+      ✓ rounds totals for us-east
+      ✓ rounds totals for eu-west (2 ms)
+      ✓ rounds totals for ap-south
+      ✓ rounds totals for sa-east
+
+FAIL src/catalog.test.js
+  catalog
+    happy path
+      ✓ lists products (4 ms)
+      ✓ filters by category
+      ✓ sorts by price
+      ✓ paginates results (2 ms)
+      ✓ shows stock for us-east
+      ✕ shows stock for eu-west (2 ms)
+      ✓ shows stock for ap-south (3 ms)
+      ✓ shows stock for sa-east (2 ms)
+      ✓ hides discontinued items for us-east
+      ✓ hides discontinued items for eu-west
+      ✓ hides discontinued items for ap-south
+      ✓ hides discontinued items for sa-east
+    edge cases
+      ✓ lists products
+      ✓ filters by category
+      ✓ sorts by price
+      ✓ paginates results
+      ✓ shows stock for us-east (2 ms)
+      ✓ shows stock for eu-west
+      ✓ shows stock for ap-south
+      ✓ shows stock for sa-east
+      ✓ hides discontinued items for us-east
+      ✓ hides discontinued items for eu-west
+      ✓ hides discontinued items for ap-south
+      ✓ hides discontinued items for sa-east
+
+  ● catalog › happy path › shows stock for eu-west
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 5
+    Received: 4
+
+       6 |     test('paginates results', () => { expect(40 * 2).toBe(80); });
+       7 |     test('shows stock for us-east', () => { expect(39 * 2).toBe(78); });
+    >  8 |     test('shows stock for eu-west', () => { expect(2 * 2).toBe(5); });
+         |                                                           ^
+       9 |     test('shows stock for ap-south', () => { expect(40 * 2).toBe(80); });
+      10 |     test('shows stock for sa-east', () => { expect(23 * 2).toBe(46); });
+      11 |     test('hides discontinued items for us-east', () => { expect(6 * 2).toBe(12); });
+
+      at Object.toBe (src/catalog.test.js:8:59)
+
+Test Suites: 2 failed, 1 passed, 3 total
+Tests:       2 failed, 72 passed, 74 total
+Snapshots:   0 total
+Time:        2.31 s
+Ran all test suites.
