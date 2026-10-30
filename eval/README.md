@@ -47,6 +47,10 @@ and an Anthropic credential (below). Build output goes to `$CARGO_TARGET_DIR`
 | `p2b_layouts.py` | the git log / git status / JSON layout measurements (real tokens) that decided what Phase 2B built. |
 | `report_p2b.py` | the Phase 2B sections of `RESULTS.md` (`p2b_*` markers). |
 | `accuracy/run_accuracy.py` | asks each question set about RAW and CRUSHED in separate fresh sessions via `synaps rpc`, Haiku and Sonnet, plus a raw re-ask on a subset (noise floor). Hard cap `--max-calls` (default 400). |
+| `shim_checks.py` | Phase 3: the real `crush-ext` binary over JSON-RPC: host-truncated input, runtime name, raw kept before a lossy replace (modes, absolute path), unwritable store, the spill rule, live config, `/crush`, retention sweep, malformed frames, per-request time. Writes `out/shim.json`; `gate.py` fails on any broken check. |
+| `p3_spill.py` | Phase 3: every fired result through `crush-ext` with its spill rule on; real tokens after Synaps' spill for raw, an always-replace hook (2B's policy A) and the shim; failure lines still visible. |
+| `smoke_synaps.py` | Phase 3 (`make smoke`): installs the plugin (copy + `scripts/setup.sh`) into an isolated `synaps-dev rpc` (same credential rules as the accuracy harness), has the model run three scripts with bash and checks history, raw store, Synaps' spill and audit, and crush's stats. ~4 model calls. |
+| `report_p3.py` | the Phase 3 sections of `RESULTS.md` (`p3_*` markers). |
 | `report.py` | regenerates the marked sections of `RESULTS.md` (aggregates only for real data); `report_v01.py` did the same for `BASELINE.md`. |
 
 ## Privacy
@@ -97,6 +101,22 @@ CRUSH_EVAL_ACC_TAG=p2a_ls2 python3 eval/accuracy/run_accuracy.py --sets corpus -
   --max-q 8 --max-calls 110 --seed 11 --only-samples @$CRUSH_CORPUS_DIR/regate_ls_ids.txt
 CRUSH_EVAL_ACC_TAG=p2a_el2 python3 eval/accuracy/run_accuracy.py --sets corpus --quota search_elide:105 --corpus-samples 105 \
   --max-q 8 --max-calls 85 --seed 17 --only-samples @$CRUSH_CORPUS_DIR/regate_el_ids.txt
+```
+
+## Phase 3 runs (test_pass v2 = `test_group`)
+
+`test_group` (passing libtest lines from one module on one line, every name
+kept, lossless) is measured under the `p3_tg` tag and gated in its own capped
+run. Rule fixed before the run: a "quote the next line" question whose answer
+line was rewritten is dropped, as for the 2B collapses; "did test X pass?" is
+asked about names that moved onto a grouped line, plus one test that never ran.
+
+```sh
+export CRUSH_EVAL_TAG=p3_tg CRUSH_EVAL_CONFIG=eval/configs/p3_test_group.json
+python3 eval/run_crush.py --set fixtures && python3 eval/run_crush.py --set corpus
+python3 eval/p3_spill.py --set fixtures && python3 eval/p3_spill.py --set corpus
+CRUSH_EVAL_ACC_TAG=p3_tg python3 eval/accuracy/run_accuracy.py --sets fixtures,corpus --labels test_group \
+  --corpus-samples 40 --max-q 10 --max-calls 200 --seed 23
 ```
 
 ## Gating a new transform
