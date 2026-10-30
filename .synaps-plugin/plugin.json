@@ -245,6 +245,12 @@
         "description": "Passing-test runs collapsed. Off: failed accuracy parity (\"did test X pass?\")."
       },
       {
+        "key": "transform_test_group",
+        "type": "bool",
+        "default": false,
+        "description": "Passing libtest runs from one module on one line, every name kept (test_pass v2, lossless). Off: missed accuracy parity on Sonnet by two answers (eval/RESULTS.md, Phase 3)."
+      },
+      {
         "key": "transform_json_minify",
         "type": "bool",
         "default": false,

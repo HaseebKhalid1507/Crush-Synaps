@@ -230,8 +230,9 @@ pub fn render(s: &Stats, store: Option<(&Path, crate::store::Usage, u64, u64)>) 
     }
     match store {
         Some((root, u, days, cap)) => out.push(format!(
-            "raw store: {} files, {} in {} (kept {days} days, capped at {cap} MiB)",
+            "raw store: {} file{}, {} in {} (kept {days} days, capped at {cap} MiB)",
             n(u.files),
+            if u.files == 1 { "" } else { "s" },
             mib(u.bytes),
             root.display()
         )),
