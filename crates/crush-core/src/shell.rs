@@ -354,8 +354,25 @@ fn skip_parens(b: &[u8], open: usize) -> usize {
 }
 
 const WRAPPERS: &[&str] = &[
-    "sudo", "time", "nice", "ionice", "command", "env", "exec", "nohup", "stdbuf", "unbuffer",
-    "timeout", "xargs", "watch", "doas", "builtin", "setsid", "chronic", "caffeinate", "taskset",
+    "sudo",
+    "time",
+    "nice",
+    "ionice",
+    "command",
+    "env",
+    "exec",
+    "nohup",
+    "stdbuf",
+    "unbuffer",
+    "timeout",
+    "xargs",
+    "watch",
+    "doas",
+    "builtin",
+    "setsid",
+    "chronic",
+    "caffeinate",
+    "taskset",
 ];
 const KEYWORDS: &[&str] = &["do", "then", "else", "elif", "if", "while", "until", "!", "time"];
 const ENDERS: &[&str] = &["done", "fi", "esac", "}", ";;"];
@@ -363,7 +380,10 @@ const ENDERS: &[&str] = &["done", "fi", "esac", "}", ";;"];
 fn is_assignment(w: &str) -> bool {
     let Some(eq) = w.find('=') else { return false };
     eq > 0
-        && w[..eq].bytes().enumerate().all(|(k, c)| c == b'_' || c.is_ascii_alphabetic() || (k > 0 && c.is_ascii_digit()))
+        && w[..eq]
+            .bytes()
+            .enumerate()
+            .all(|(k, c)| c == b'_' || c.is_ascii_alphabetic() || (k > 0 && c.is_ascii_digit()))
 }
 
 fn basename(w: &str) -> &str {

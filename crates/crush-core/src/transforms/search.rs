@@ -25,9 +25,30 @@ pub const NAME: &str = "search_group";
 
 /// Extension-less file names accepted as grep paths.
 const BARE_FILES: &[&str] = &[
-    "Makefile", "makefile", "GNUmakefile", "Dockerfile", "Containerfile", "Justfile", "justfile", "Rakefile",
-    "Gemfile", "Procfile", "LICENSE", "README", "CHANGELOG", "NOTICE", "AUTHORS", "COPYING", "Jenkinsfile",
-    "Vagrantfile", "BUILD", "WORKSPACE", "CODEOWNERS", "Brewfile", "Pipfile", "Caddyfile",
+    "Makefile",
+    "makefile",
+    "GNUmakefile",
+    "Dockerfile",
+    "Containerfile",
+    "Justfile",
+    "justfile",
+    "Rakefile",
+    "Gemfile",
+    "Procfile",
+    "LICENSE",
+    "README",
+    "CHANGELOG",
+    "NOTICE",
+    "AUTHORS",
+    "COPYING",
+    "Jenkinsfile",
+    "Vagrantfile",
+    "BUILD",
+    "WORKSPACE",
+    "CODEOWNERS",
+    "Brewfile",
+    "Pipfile",
+    "Caddyfile",
 ];
 
 /// Layout knobs (the default is what ships; the others exist for measurement).
@@ -60,7 +81,16 @@ fn plausible_path(p: &str) -> bool {
             letter = true;
         }
         // no whitespace, no ':' (we split at the first one), no controls/quotes
-        if c <= b' ' || c == b':' || c == b'"' || c == b'\'' || c == b'`' || c == 0x7f || c == b'<' || c == b'>' || c == b'|' {
+        if c <= b' '
+            || c == b':'
+            || c == b'"'
+            || c == b'\''
+            || c == b'`'
+            || c == 0x7f
+            || c == b'<'
+            || c == b'>'
+            || c == b'|'
+        {
             return false;
         }
     }
@@ -71,7 +101,10 @@ fn plausible_path(p: &str) -> bool {
     p.contains('/') || BARE_FILES.contains(&base) || {
         match base.rsplit_once('.') {
             Some((stem, ext)) => {
-                !ext.is_empty() && ext.len() <= 12 && ext.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'_' || c == b'-') && (!stem.is_empty() || base.len() > 1)
+                !ext.is_empty()
+                    && ext.len() <= 12
+                    && ext.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'_' || c == b'-')
+                    && (!stem.is_empty() || base.len() > 1)
             }
             None => false,
         }
@@ -122,9 +155,13 @@ fn parse_match(line: &str) -> Option<Hit<'_>> {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Kind {
     Other,
-    Match { numbered: bool },
+    Match {
+        numbered: bool,
+    },
     /// `path-N-text` (numbered) or `path-text`.
-    Context { numbered: bool },
+    Context {
+        numbered: bool,
+    },
     /// `--` group separator.
     Sep,
 }
@@ -380,10 +417,7 @@ mod tests {
     #[test]
     fn context_and_separators() {
         let raw = "x/foo-12-bar.rs-3-before\nx/foo-12-bar.rs:4:hit\nx/foo-12-bar.rs-5-after\n--\nx/foo-12-bar.rs:40:again\n--\ny.rs-1-c\ny.rs:2:d";
-        assert_eq!(
-            group(raw).unwrap(),
-            "x/foo-12-bar.rs\n3-before\n4:hit\n5-after\n--\n40:again\n--\ny.rs\n1-c\n2:d"
-        );
+        assert_eq!(group(raw).unwrap(), "x/foo-12-bar.rs\n3-before\n4:hit\n5-after\n--\n40:again\n--\ny.rs\n1-c\n2:d");
     }
 
     #[test]

@@ -8,11 +8,11 @@ pub(crate) const MARKER: &str = "[crush:";
 
 /// Foreign markers and boundary shapes (matched case-sensitively, anywhere).
 const FOREIGN: &[&str] = &[
-    "@crush/",               // crush v0.1 wire format
-    "[Output virtualised",   // SynapsCLI #334 spill note
-    "[truncated \u{2014}",   // Synaps legacy cut
-    "[output truncated at",  // Synaps bash cap
-    "lower-authority",       // forum/memory provenance banners
+    "@crush/",              // crush v0.1 wire format
+    "[Output virtualised",  // SynapsCLI #334 spill note
+    "[truncated \u{2014}",  // Synaps legacy cut
+    "[output truncated at", // Synaps bash cap
+    "lower-authority",      // forum/memory provenance banners
     "<system-reminder",
     "</system-reminder",
     "<tool_result",

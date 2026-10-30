@@ -93,9 +93,7 @@ impl Shim {
         let Some(output) = p.get("tool_output").and_then(Value::as_str) else { return cont };
         let tool = p.get("tool_name").and_then(Value::as_str).unwrap_or("");
         let inp = p.get("tool_input");
-        let command = inp
-            .and_then(|i| i.get("command").or_else(|| i.get("input")))
-            .and_then(Value::as_str);
+        let command = inp.and_then(|i| i.get("command").or_else(|| i.get("input"))).and_then(Value::as_str);
         let raw_path = self.keep_raw_dir.as_ref().map(|d| d.join(format!("{:016x}.txt", fnv64(output))));
         let raw_ref = raw_path.as_ref().map(|p| p.to_string_lossy().into_owned());
         let input = Input { tool, command, output, raw_ref: raw_ref.as_deref() };
@@ -105,7 +103,8 @@ impl Shim {
         }
         if !o.lossless {
             let ok = raw_path.as_ref().is_some_and(|path| {
-                std::fs::create_dir_all(path.parent().unwrap_or(Path::new("."))).is_ok() && write_private(path, output).is_ok()
+                std::fs::create_dir_all(path.parent().unwrap_or(Path::new("."))).is_ok()
+                    && write_private(path, output).is_ok()
             });
             if !ok {
                 log("could not keep the raw output; passing through");
@@ -125,7 +124,10 @@ fn main() {
             "--keep-raw-dir" => shim.keep_raw_dir = args.next().map(PathBuf::from),
             "--config" => {
                 if let Some(p) = args.next() {
-                    match std::fs::read_to_string(&p).map_err(|e| e.to_string()).and_then(|s| serde_json::from_str(&s).map_err(|e| e.to_string())) {
+                    match std::fs::read_to_string(&p)
+                        .map_err(|e| e.to_string())
+                        .and_then(|s| serde_json::from_str(&s).map_err(|e| e.to_string()))
+                    {
                         Ok(c) => shim.cfg = c,
                         Err(e) => log(&format!("--config {p}: {e}; using defaults")),
                     }
@@ -184,7 +186,9 @@ fn respond<W: Write>(w: &mut W, id: &Value, result: Value) {
 }
 
 fn notify<W: Write>(w: &mut W, request_id: &str, event: Value) {
-    if let Err(e) = protocol::write_notification(w, "command.output", json!({ "request_id": request_id, "event": event })) {
+    if let Err(e) =
+        protocol::write_notification(w, "command.output", json!({ "request_id": request_id, "event": event }))
+    {
         log(&format!("notification write error: {e}"));
     }
 }
@@ -209,11 +213,16 @@ mod tests {
     #[test]
     fn groups_grep_hits() {
         let mut s = shim();
-        let out: String = (1..40).map(|i| format!("crates/agent-engine/src/runtime/stream.rs:{i}:    let value_{i} = compute();\n")).collect();
+        let out: String = (1..40)
+            .map(|i| format!("crates/agent-engine/src/runtime/stream.rs:{i}:    let value_{i} = compute();\n"))
+            .collect();
         let p = json!({"kind": "after_tool_call", "tool_name": "bash", "tool_input": {"command": "grep -rn value crates"}, "tool_output": out});
         let r = s.hook(Some(&p));
         assert_eq!(r["action"], "replace");
-        assert!(r["output"].as_str().unwrap().starts_with("crates/agent-engine/src/runtime/stream.rs\n1:    let value_1"));
+        assert!(r["output"]
+            .as_str()
+            .unwrap()
+            .starts_with("crates/agent-engine/src/runtime/stream.rs\n1:    let value_1"));
         assert!(s.stats.render().contains("SEARCH/search_group"));
     }
 

@@ -155,10 +155,20 @@ const fn run_table() -> [u128; 64] {
         while len <= RUN_CAP {
             let r = rc as u8;
             t[rc * 8 + len] = lanes(&[
-                false, false, false, false, false, false, false, false, false, false, false,
-                r == LO && len > LONG_WORD,    // letters_long
-                r == DI && len > LONG_DIGITS,  // digits_long (capped run: >3 still counts)
-                r == SP && len == 2,           // space_runs (len >= 2)
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                r == LO && len > LONG_WORD,   // letters_long
+                r == DI && len > LONG_DIGITS, // digits_long (capped run: >3 still counts)
+                r == SP && len == 2,          // space_runs (len >= 2)
             ]);
             len += 1;
         }
@@ -176,8 +186,8 @@ fn flush(f: &mut Features, a: u128) {
     }
 }
 
-/// Shape features of `s`, one branch-free pass.
-pub fn features(s: &str) -> Features {
+/// Reference implementation (scalar, one pass): `features` must equal it.
+pub fn features_scalar(s: &str) -> Features {
     let mut f = [0u32; K];
     let bytes = s.as_bytes();
     f[0] = 1;
@@ -196,6 +206,108 @@ pub fn features(s: &str) -> Features {
             prc = rc;
         }
         flush(&mut f, a);
+    }
+    f
+}
+
+// ── fast path: byte flags in blocks, counted with u8 lanes (vectorises) ────
+
+const F_LET: u8 = 1;
+const F_UP: u8 = 2;
+const F_LO: u8 = 4;
+const F_DI: u8 = 8;
+const F_SP: u8 = 16;
+const F_NL: u8 = 32;
+const F_PU: u8 = 64;
+const F_HI: u8 = 128;
+
+#[inline(always)]
+fn flag(b: u8) -> u8 {
+    let lo = b.wrapping_sub(b'a') < 26;
+    let up = b.wrapping_sub(b'A') < 26;
+    let di = b.wrapping_sub(b'0') < 10;
+    let sp = (b == b' ') | (b == b'\t');
+    let nl = b == b'\n';
+    let hi = b >= 0xC0;
+    let pu = (b < 0x80) & !(lo | up | di | sp | nl);
+    (((lo | up) as u8) * F_LET)
+        | ((up as u8) * F_UP)
+        | ((lo as u8) * F_LO)
+        | ((di as u8) * F_DI)
+        | ((sp as u8) * F_SP)
+        | ((nl as u8) * F_NL)
+        | ((pu as u8) * F_PU)
+        | ((hi as u8) * F_HI)
+}
+
+#[inline(always)]
+fn sum1(a: &[u8], f: impl Fn(u8) -> bool) -> u32 {
+    let mut acc = 0u8;
+    for &x in a {
+        acc = acc.wrapping_add(f(x) as u8);
+    }
+    acc as u32
+}
+
+#[inline(always)]
+fn sum2(a: &[u8], b: &[u8], f: impl Fn(u8, u8) -> bool) -> u32 {
+    let mut acc = 0u8;
+    for (&x, &y) in a.iter().zip(b) {
+        acc = acc.wrapping_add(f(x, y) as u8);
+    }
+    acc as u32
+}
+
+const BLOCK: usize = 255;
+const BACK: usize = 7;
+
+/// Shape features of `s`: identical to [`features_scalar`], faster on big text.
+pub fn features(s: &str) -> Features {
+    let bytes = s.as_bytes();
+    if bytes.len() < 64 {
+        return features_scalar(s);
+    }
+    let mut f = [0u32; K];
+    f[0] = 1;
+    f[1] = bytes.len() as u32;
+    let mut buf = [0u8; BACK + BLOCK];
+    buf[..BACK].fill(F_NL);
+    let mut and_l = [0u8; BLOCK];
+    for blk in bytes.chunks(BLOCK) {
+        let n = blk.len();
+        for (d, &b) in buf[BACK..BACK + n].iter_mut().zip(blk) {
+            *d = flag(b);
+        }
+        let p = |k: usize| &buf[BACK - k..BACK - k + n];
+        let c = p(0);
+        let p1 = p(1);
+        f[2] += sum2(c, p1, |x, y| (x & !y) & F_LET != 0);
+        f[4] += sum2(c, p1, |x, y| (x & F_UP != 0) & (y & F_LO != 0));
+        f[5] += sum1(c, |x| x & F_UP != 0);
+        f[6] += sum2(c, p1, |x, y| (x & !y) & F_DI != 0);
+        f[8] += sum1(c, |x| x & F_PU != 0);
+        f[9] += sum2(c, p1, |x, y| (x & !y) & F_PU != 0);
+        f[11] += sum2(c, p1, |x, y| (x & y) & F_SP != 0);
+        f[12] += sum1(c, |x| x & F_NL != 0);
+        f[13] += sum1(c, |x| x & F_HI != 0);
+        f[14] += sum2(c, p1, |x, y| (x & F_DI != 0) & (y & F_LET != 0));
+        f[15] += sum2(c, p1, |x, y| (x & F_LET != 0) & (y & F_DI != 0));
+        // space runs of >= 2 start where two spaces follow a non-space
+        let a = &mut and_l[..n];
+        for ((d, &x), &y) in a.iter_mut().zip(c).zip(p1) {
+            *d = x & y;
+        }
+        f[10] += sum2(a, p(2), |xy, z| (xy & !z) & F_SP != 0);
+        // digits: 4 in a row; letters: 7 in a row
+        for ((d, &y), &z) in a.iter_mut().zip(p(2)).zip(p(3)) {
+            *d &= y & z;
+        }
+        f[7] += sum1(a, |x| x & F_DI != 0);
+        for (((d, &y), &z), &w) in a.iter_mut().zip(p(4)).zip(p(5)).zip(p(6)) {
+            *d &= y & z & w;
+        }
+        f[3] += sum1(a, |x| x & F_LET != 0);
+        buf.copy_within(n..n + BACK, 0);
     }
     f
 }
@@ -247,6 +359,25 @@ mod tests {
         assert_eq!(long[3], 994);
         assert_eq!(long[2], 1);
         assert_eq!(estimate_tokens("", Tokenizer::V5), 0);
+    }
+
+    #[test]
+    fn fast_equals_scalar() {
+        let samples = [
+            "fooBar  12345\n\tx: ü".repeat(40),
+            "src/foo/bar.rs:12:    let x = y;\n".repeat(30),
+            "aaaaaaaaaaaa 123456789 a1b2c3 ABCdef\r\n  \t  ".repeat(25),
+            (0..3000).map(|i| char::from_u32(32 + (i * 7919) % 5000).unwrap_or('x')).collect::<String>(),
+        ];
+        for s in &samples {
+            for cut in [s.len(), s.len() / 3, 300, 256, 255, 254, 70] {
+                let mut c = cut.min(s.len());
+                while !s.is_char_boundary(c) {
+                    c -= 1;
+                }
+                assert_eq!(features(&s[..c]), features_scalar(&s[..c]), "len {c}");
+            }
+        }
     }
 
     #[test]

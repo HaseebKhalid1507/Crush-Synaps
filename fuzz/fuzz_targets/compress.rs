@@ -7,8 +7,18 @@ use libfuzzer_sys::fuzz_target;
 
 const TOOLS: &[&str] = &["bash", "read", "grep", "ls", "forum_read", "x"];
 const CMDS: &[&str] = &[
-    "grep -rn x .", "grep -n x f", "git grep -n x origin/main", "cat f", "sed -n 1,9p f", "git diff",
-    "cargo test", "ls -la", "git log", "curl x", "python3 - <<'E'\nx\nE", "for f in *.log; do tail $f; done",
+    "grep -rn x .",
+    "grep -n x f",
+    "git grep -n x origin/main",
+    "cat f",
+    "sed -n 1,9p f",
+    "git diff",
+    "cargo test",
+    "ls -la",
+    "git log",
+    "curl x",
+    "python3 - <<'E'\nx\nE",
+    "for f in *.log; do tail $f; done",
 ];
 
 fuzz_target!(|data: &[u8]| {

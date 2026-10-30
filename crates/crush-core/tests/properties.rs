@@ -33,10 +33,7 @@ const COMMANDS: &[&str] = &[
 const TOOLS: &[&str] = &["bash", "read", "grep", "ls", "forum_read", "web-tools_fetch", "unknown_tool"];
 
 fn cfgs() -> Vec<Config> {
-    let mut small = Config::default();
-    small.min_bytes = 0;
-    small.min_gain_tokens = 0;
-    small.min_gain_ratio = 0.0;
+    let small = Config { min_bytes: 0, min_gain_tokens: 0, min_gain_ratio: 0.0, ..Config::default() };
     vec![Config::default(), small]
 }
 

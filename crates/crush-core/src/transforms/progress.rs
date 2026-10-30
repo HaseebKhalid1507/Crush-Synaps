@@ -42,9 +42,7 @@ fn replay(line: &str) -> Option<(String, usize)> {
 }
 
 pub fn collapse(text: &str, raw_ref: &str) -> Option<String> {
-    if memchr::memchr(b'\r', text.as_bytes()).is_none() {
-        return None;
-    }
+    memchr::memchr(b'\r', text.as_bytes())?;
     let (ls, trailing) = lines(text);
     let mut out = String::with_capacity(text.len());
     let mut frames = 0usize;
