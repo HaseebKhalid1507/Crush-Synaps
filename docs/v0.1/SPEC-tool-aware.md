@@ -21,12 +21,12 @@ Two compression mechanisms in the columnar engine:
 
 Example — `ls -la` (the 239KB fixture):
 ```
-drwxr-xr-x  2 haseeb haseeb   4096 Jun 29 04:29 main.py
--rw-r--r--  1 haseeb haseeb   5209 Jun 29 02:13 spec.md
+drwxr-xr-x  2 user user   4096 Jun 29 04:29 main.py
+-rw-r--r--  1 user user   5209 Jun 29 02:13 spec.md
 ```
 folds to:
 ```
-@crush.cols perms links size date name  [owner=haseeb group=haseeb]
+@crush.cols perms links size date name  [owner=user group=user]
 drwxr-xr-x 2 4096 "Jun 29 04:29" main.py
 -rw-r--r-- 1 5209 "Jun 29 02:13" spec.md
 ```

@@ -318,6 +318,8 @@ def main() -> int:
     md = report_p2a.apply(md, replace)
     import report_p2b  # Phase 2B: LOG / VCS / STRUCTURED
     md = report_p2b.render(md, replace)
+    import report_p3  # Phase 3: the crush-ext shim, after-spill savings, test_pass v2
+    md = report_p3.render(md, replace)
     RESULTS.write_text(md)
     print(f"wrote {RESULTS}")
     return 0

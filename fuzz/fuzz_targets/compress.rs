@@ -48,7 +48,11 @@ fuzz_target!(|data: &[u8]| {
     small.transforms.test_pass = true;
     small.transforms.json_minify = true;
     small.classes.prose = true;
-    for cfg in [Config::default(), small] {
+    // test_pass v2 (test_group) runs only where test_pass didn't collapse first
+    let mut grouped = small.clone();
+    grouped.transforms.test_pass = false;
+    grouped.transforms.test_group = true;
+    for cfg in [Config::default(), small, grouped] {
         for raw_ref in [None, Some("/r/raw.txt")] {
             let inp = Input { tool, command: Some(cmd), output: &text, raw_ref };
             let o = compress(&inp, &cfg);

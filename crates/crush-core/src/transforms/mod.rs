@@ -33,7 +33,7 @@ fn pipeline(class: Class) -> &'static [&'static str] {
         // `ls -l` factoring last: its round trip is checked on its own input
         Class::Listing => &[progress::NAME, repeats::NAME, blobs::NAME, listing::NAME],
         // test/build collapse before the generic text chain
-        Class::Log => &[progress::NAME, log::BUILD, log::TESTS, repeats::NAME, blobs::NAME],
+        Class::Log => &[progress::NAME, log::BUILD, log::TESTS, log::GROUP, repeats::NAME, blobs::NAME],
         // minify first: it parses the raw JSON, and blobs never touch JSON lines
         Class::Structured => &[json::NAME, progress::NAME, repeats::NAME, blobs::NAME],
         Class::Vcs | Class::Unknown | Class::Prose => &[progress::NAME, repeats::NAME, blobs::NAME],
@@ -48,6 +48,7 @@ fn verify_step(name: &str, src: &str, next: &str) -> bool {
         search::NAME => search::rebuilds(src, next),
         search_elide::NAME => search_elide::verify(src, next),
         listing::NAME => listing::verify(src, next),
+        log::GROUP => log::expand_test_groups(next) == src,
         _ => true,
     }
 }
@@ -70,6 +71,7 @@ pub fn run(class: Class, text: &str, command: Option<&str>, raw_ref: Option<&str
             listing::NAME => (cfg.transforms.ls_columns, false),
             log::TESTS => (cfg.transforms.test_pass, true),
             log::BUILD => (cfg.transforms.build_progress, true),
+            log::GROUP => (cfg.transforms.test_group, false),
             json::NAME => (cfg.transforms.json_minify, false),
             _ => (false, false),
         };
@@ -85,6 +87,7 @@ pub fn run(class: Class, text: &str, command: Option<&str>, raw_ref: Option<&str
             listing::NAME => listing::factor(src, command),
             log::TESTS => log::collapse_tests(src, raw_ref.unwrap_or("")),
             log::BUILD => log::collapse_build(src, raw_ref.unwrap_or("")),
+            log::GROUP => log::group_tests(src),
             json::NAME => json::minify(src),
             _ => None,
         };

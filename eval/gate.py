@@ -17,6 +17,9 @@ Checked (each only if its input exists):
   keeps the token stream byte for byte; no fired result costs more after
   Synaps' spill step when the spill is decided on the raw's size (the
   crushed-size policy is reported); the 256 KiB LOG/JSON shapes < 1 ms p99
+- Phase 3 (shim.json): every crush-ext shim check (host-truncated input
+  passes through, runtime name preferred, raw kept before a lossy replace,
+  spill rule, live config, /crush, retention sweep, malformed frames)
 """
 from __future__ import annotations
 
@@ -114,6 +117,25 @@ for tag in ("", ".search_on"):
                     check(a.get("grew_after_spill_b", 0) == 0,
                           f"{s}{tag} {k}: fired results costlier after spill, spill-on-raw-size ({m}): {a.get('grew_after_spill_b', 0)} "
                           f"(spill-on-crushed-size: {a.get('grew_after_spill', 0)}, reported)")
+# Phase 3: the extension shim (eval/shim_checks.py, the real binary over JSON-RPC)
+shim = load("shim.json")
+if shim:
+    for c in shim["checks"]:
+        check(c["ok"], f"shim: {c['check']}" + ("" if c["ok"] else f" ({c.get('detail')})"))
+# ... and after Synaps' spill step, in real tokens (eval/p3_spill.py): the only
+# results the shim may hand over costlier are LOG results whose failures the
+# raw's preview would have cut
+for s in ("fixtures", "corpus"):
+    p3 = load(f"p3_spill.{s}.json")
+    if p3:
+        bad = [r for r in p3["shim_costlier"]
+               if not (r["class"] == "LOG" and (r.get("fail_visible_shim") or 0) > (r.get("fail_visible_raw") or 0))]
+        check(not bad, f"{s}: shim results costlier after spill (real tokens, either family), other than kept failures: {len(bad)}")
+        a = p3["by_label"].get("all", {})
+        if a.get("fail_lines"):
+            check(a["fail_visible_shim"] >= a["fail_visible_raw"],
+                  f"{s}: failure lines visible after spill, shim {a['fail_visible_shim']} >= raw {a['fail_visible_raw']}")
+
 syn = load("synthetic.json")
 if syn:
     for x in syn:

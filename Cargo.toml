@@ -4,7 +4,7 @@ members = ["crates/crush-core", "crates/crush", "crates/crush-ext"]
 exclude = ["eval/driver", "fuzz"]
 
 [workspace.package]
-version = "0.2.0"
+version = "2.0.0"
 edition = "2021"
 license = "MIT"
 authors = ["Jawz"]

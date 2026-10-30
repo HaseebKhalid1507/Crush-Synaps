@@ -103,7 +103,7 @@ dependencies = [
 
 [[package]]
 name = "crush"
-version = "0.2.0"
+version = "2.0.0"
 dependencies = [
  "crush-core",
  "serde_json",
@@ -111,7 +111,7 @@ dependencies = [
 
 [[package]]
 name = "crush-core"
-version = "0.2.0"
+version = "2.0.0"
 dependencies = [
  "memchr",
  "proptest",
@@ -121,10 +121,13 @@ dependencies = [
 
 [[package]]
 name = "crush-ext"
-version = "0.2.0"
+version = "2.0.0"
 dependencies = [
  "crush-core",
+ "memchr",
+ "serde",
  "serde_json",
+ "tempfile",
 ]
 
 [[package]]

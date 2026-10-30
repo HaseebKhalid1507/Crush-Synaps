@@ -582,11 +582,33 @@ def gen_log_p2b(out, rng, sample):
     in_run = [t for t in tests if t[2] == "PASS" and (
         {t[0] - 2, t[0] - 1} <= idx or {t[0] - 1, t[0] + 1} <= idx or {t[0] + 1, t[0] + 2} <= idx)]
     fails = [t for t in tests if t[2] == "FAIL"]
-    picks = rng.sample(in_run, min(2, len(in_run))) + rng.sample(fails, min(1, len(fails)))
+    grouped = "test_group" in (sample.get("label") or "").split("+")
+    if grouped:
+        # test_pass v2 (Phase 3): probe names that sit on a grouped line (their
+        # own line is gone from the crushed text), more of them, plus a test of
+        # a listed module that never ran (a brace list must not invite "PASS")
+        crushed = sample.get("_crushed") or ""
+        moved = [t for t in in_run if f"test {t[1]} ... ok" not in crushed]
+        picks = rng.sample(moved, min(4, len(moved))) + rng.sample(fails, min(1, len(fails)))
+    else:
+        picks = rng.sample(in_run, min(2, len(in_run))) + rng.sample(fails, min(1, len(fails)))
     rng.shuffle(picks)
     for _, n, st in picks:
         q(qs, f"Did the test `{n}` pass or fail? Answer PASS or FAIL.", st,
           "test:status_run" if st == "PASS" else "test:status_fail", "enum")
+    if grouped and picks:
+        names = {t[1] for t in tests}
+        mods = {}
+        for _, n, _ in tests:
+            if "::" in n:
+                m, leaf = n.rsplit("::", 1)
+                mods.setdefault(m, set()).add(leaf)
+        cand = sorted((m, leaf) for m in mods for o in mods if o != m for leaf in mods[o]
+                      if f"{m}::{leaf}" not in names and "`" not in leaf)
+        if cand:
+            m, leaf = rng.choice(cand)
+            q(qs, f"Did the test `{m}::{leaf}` pass or fail, or does the output not show it running? "
+                  "Answer PASS, FAIL or NOT RUN.", "NOT RUN", "test:absent", "enum")
     sums = [m for m in (CARGO_SUMMARY.match(l) for l in lines) if m]
     if sums:
         q(qs, "Adding up every `test result:` line, how many tests passed in total?", sum(int(m.group(1)) for m in sums), "test:npass", "int")
