@@ -207,6 +207,8 @@ proptest! {
         prop_assert_eq!(json::minify(&(serde_json::to_string(&v).unwrap() + "\n")), None, "compact JSON untouched");
         // through the gate: STRUCTURED, lossless, no raw_ref needed
         let o = compress(&Input { tool: "bash", command: Some("jq . "), output: &text, raw_ref: None }, &all_on());
+        prop_assert!(!compress(&Input { tool: "bash", command: Some("jq . "), output: &text, raw_ref: None }, &Config::default()).changed(),
+            "json_minify ships disabled");
         prop_assert!(o.lossless);
         if o.changed() {
             prop_assert_eq!(tokens(&o.text), tokens(&text));
