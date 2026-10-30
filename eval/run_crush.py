@@ -169,7 +169,7 @@ def main() -> int:
     sub = [s for s in samples if s["id"] in fired_ids] + rng.sample(rest, min(args.e2e_sample, len(rest)))
     rng.shuffle(sub)
     init, e2e, rc, err_lines, kept = run_e2e(sub)
-    mismatch = 0
+    mismatch = margin = 0
     for e in e2e:
         r = by_id[e["id"]]
         want = r.get("output") if r["fired"] else None
@@ -179,7 +179,14 @@ def main() -> int:
         if got is not None:
             got = RAW_REF_RE.sub("raw output: R]", got)
         if want != got:
-            mismatch += 1
+            # crush-ext keeps the raw at a shorter path than the driver's
+            # spill-like raw_ref, so a lossy result's pointer costs fewer
+            # tokens there: a borderline one can clear the gain margin on one
+            # side only. Counted apart; any other difference is a mismatch.
+            if (want is None) != (got is None) and ("raw output: R]" in (want or got) or not r.get("lossless", True)):
+                margin += 1
+            else:
+                mismatch += 1
     e2e_ns = [e["ns"] for e in e2e]
     big = {s["id"] for s in sub if s["bytes"] >= 2048}
     e2e_big = [e["ns"] for e in e2e if e["id"] in big]
@@ -214,7 +221,7 @@ def main() -> int:
                           "max_fired": max(ns_fired) if ns_fired else None, "reps": args.reps},
         "e2e": {"initialize_ok": bool(init and init.get("result", {}).get("protocol_version") == 1),
                 "requests": len(e2e), "ok": sum(e["ok"] for e in e2e), "exit_code": rc,
-                "mismatch_vs_inprocess": mismatch, "raw_files_kept": kept,
+                "mismatch_vs_inprocess": mismatch, "raw_ref_margin_differences": margin, "raw_files_kept": kept,
                 "stderr_panics": sum("panicked" in l for l in err_lines),
                 "stderr_frame_errors": sum("frame error" in l for l in err_lines),
                 "rtt_ns": {"p50": quantile(e2e_ns, .5), "p99": quantile(e2e_ns, .99), "max": max(e2e_ns) if e2e_ns else None,

@@ -65,6 +65,8 @@ ACC_TAG = os.environ.get("CRUSH_EVAL_ACC_TAG", "")
 SUMMARY = f"accuracy.summary.{ACC_TAG}.json" if ACC_TAG else "accuracy.summary.json"
 FXREC = f"accuracy.fixtures.{ACC_TAG}.jsonl" if ACC_TAG else "accuracy.fixtures.jsonl"
 QUOTA: dict[str, int] = {}
+LABELS: set[str] = set()  # --labels: only samples one of these transforms fired on
+COLLAPSE = ("test_pass", "build_progress")
 
 
 def auth_digest() -> str:
@@ -208,6 +210,8 @@ def select(which: str, n_corpus: int, seed: int, max_q: int):
         s = samples[i]
         if len(s["output"]) > MAX_PROMPT or len(r["output"]) > MAX_PROMPT:
             continue
+        if LABELS and not any(t in LABELS for t in (r["label"] or "").split("+")):
+            continue
         qs, dropped = fair_for(gen_questions(s, max_q), r["output"])
         DROPPED[which] = DROPPED.get(which, 0) + dropped
         # a question quoting text crush cut (moved to the raw file) is still
@@ -216,6 +220,16 @@ def select(which: str, n_corpus: int, seed: int, max_q: int):
             if x.get("needle") and x["needle"] not in r["output"]:
                 x["kind"] = "cut:" + x["kind"]
                 x["cut"] = True
+        if any(t in COLLAPSE for t in (r["label"] or "").split("+")):
+            # "quote the next line" whose answer is a line the LOG collapse
+            # removed (a passing test / progress line, counted in a note)
+            # asks for dropped text verbatim; what it carried is probed
+            # directly (test:status_run, build:ncompiled/ncollected)
+            flat = re.sub(r"[ \t]+", " ", r["output"])
+            keep = [x for x in qs if x["kind"] not in ("lines:next", "lines:gap")
+                    or re.sub(r"[ \t]+", " ", x["answer"]) in flat]
+            DROPPED[f"{which}:collapsed"] = DROPPED.get(f"{which}:collapsed", 0) + len(qs) - len(keep)
+            qs = keep
         if qs:
             cands.append((s, r["output"], qs))
     if which == "fixtures":
@@ -257,6 +271,7 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--only-samples", default="", help="comma list of sample ids/names to ask, or @file with one id per line")
     ap.add_argument("--quota", default="", help="per-transform corpus quotas, e.g. search_group:44,repeats:16")
+    ap.add_argument("--labels", default="", help="only ask about samples one of these transforms fired on (comma list)")
     ap.add_argument("--merge", action="store_true", help="merge into the previous run's records/summary instead of replacing")
     ap.add_argument("--resummarize", action="store_true", help="rebuild the summary from stored records (no model calls)")
     args = ap.parse_args()
@@ -268,6 +283,7 @@ def main() -> int:
         print(json.dumps(prev["by_model_set"], indent=1))
         return 0
     models = [MODELS.get(m, m) for m in args.models.split(",")]
+    LABELS.update(filter(None, args.labels.split(",")))
     for kv in filter(None, args.quota.split(",")):
         k, v = kv.split(":")
         QUOTA[k] = int(v)
