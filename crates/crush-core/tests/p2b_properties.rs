@@ -123,7 +123,7 @@ fn json_value() -> impl Strategy<Value = serde_json::Value> {
         Just(Value::Null),
         Just(Value::String(String::new())),
         any::<bool>().prop_map(Value::Bool),
-        any::<i64>().prop_map(|n| Value::from(n)),
+        any::<i64>().prop_map(Value::from),
         (-1e6f64..1e6).prop_map(|f| serde_json::Number::from_f64(f).map_or(Value::Null, Value::Number)),
         "[ -~é\"\\\\\\n\\t]{0,20}".prop_map(Value::String),
     ];
