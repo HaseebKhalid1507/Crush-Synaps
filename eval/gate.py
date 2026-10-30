@@ -15,7 +15,8 @@ Checked (each only if its input exists):
   kept verbatim and in order (failures, summaries, diagnostics and code
   frames called out), notes count exactly what they replaced, JSON layout
   keeps the token stream byte for byte; no fired result costs more after
-  Synaps' spill step; the 256 KiB LOG/JSON shapes < 1 ms p99
+  Synaps' spill step when the spill is decided on the raw's size (the
+  crushed-size policy is reported); the 256 KiB LOG/JSON shapes < 1 ms p99
 """
 from __future__ import annotations
 
@@ -103,9 +104,16 @@ for tag in ("", ".search_on"):
         sp = load(f"spill.{s}{tag}.json")
         if sp:
             for m, by in sp["fired_by"].items():
-                a = by.get("*|*", {})
-                check(a.get("grew_after_spill", 0) == 0,
-                      f"{s}{tag}: fired results costlier after spill ({m}): {a.get('grew_after_spill', 0)}")
+                # host policy B (spill decided on the raw's size, preview of the
+                # crushed text): what Phase 3 should wire; policy A is reported.
+                # Default config: everything that ships. Candidates: the Phase 2B
+                # ones (other phases' candidates are reported in their sections).
+                rows = {"*": by.get("*|*", {})} if not tag else \
+                    {k: v for k, v in by.items() if any(t in k for t in ("test_pass", "build_progress", "json_minify"))}
+                for k, a in rows.items():
+                    check(a.get("grew_after_spill_b", 0) == 0,
+                          f"{s}{tag} {k}: fired results costlier after spill, spill-on-raw-size ({m}): {a.get('grew_after_spill_b', 0)} "
+                          f"(spill-on-crushed-size: {a.get('grew_after_spill', 0)}, reported)")
 syn = load("synthetic.json")
 if syn:
     for x in syn:
