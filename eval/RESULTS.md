@@ -258,16 +258,16 @@ fresh sheet is labelled.
 
 | shape | bytes | result | transforms | best µs | p50 µs | p99 µs |
 |---|---:|---:|---:|---:|---:|---:|
-| grep_hits | 262,143 | nothing-to-do | – | 307 | 424 | 497 |
-| source_file | 262,044 | byte-identical-class | – | 188 | 214 | 240 |
-| ls_listing | 262,118 | nothing-to-do | – | 363 | 414 | 456 |
-| minified_json | 262,153 | nothing-to-do | – | 473 | 537 | 637 |
-| progress_cr | 262,131 | compressed | progress | 440 | 503 | 602 |
-| repeats_log | 262,140 | compressed | repeats | 308 | 344 | 383 |
-| base64_blobs | 261,976 | compressed | blobs | 801 | 909 | 1129 |
-| grep_long_lines | 258,585 | compressed | search_elide | 624 | 708 | 777 |
-| ls_mixed_owner | 262,105 | nothing-to-do | – | 389 | 424 | 458 |
-| ls_64k_fires | 65,349 | nothing-to-do | – | 99 | 108 | 121 |
+| grep_hits | 262,143 | nothing-to-do | – | 294 | 366 | 436 |
+| source_file | 262,044 | byte-identical-class | – | 158 | 166 | 181 |
+| ls_listing | 262,118 | nothing-to-do | – | 319 | 328 | 342 |
+| minified_json | 262,153 | nothing-to-do | – | 442 | 453 | 464 |
+| progress_cr | 262,131 | compressed | progress | 386 | 406 | 426 |
+| repeats_log | 262,140 | compressed | repeats | 253 | 265 | 289 |
+| base64_blobs | 261,976 | compressed | blobs | 713 | 734 | 760 |
+| grep_long_lines | 258,585 | compressed | search_elide | 560 | 595 | 638 |
+| ls_mixed_owner | 262,105 | nothing-to-do | – | 323 | 332 | 347 |
+| ls_64k_fires | 65,349 | nothing-to-do | – | 80 | 84 | 90 |
 <!-- END:latency -->
 
 With SEARCH grouping on (its fired results are the slowest path: transform,
@@ -284,16 +284,16 @@ with three fuzzers on the box):
 
 | shape | bytes | result | transforms | best µs | p50 µs | p99 µs |
 |---|---:|---:|---:|---:|---:|---:|
-| grep_hits | 262,143 | compressed | search_group | 703 | 787 | 867 |
-| source_file | 262,044 | byte-identical-class | – | 169 | 192 | 221 |
-| ls_listing | 262,118 | nothing-to-do | – | 325 | 360 | 403 |
-| minified_json | 262,153 | nothing-to-do | – | 439 | 472 | 506 |
-| progress_cr | 262,131 | compressed | progress | 391 | 442 | 490 |
-| repeats_log | 262,140 | compressed | repeats | 272 | 306 | 413 |
-| base64_blobs | 261,976 | compressed | blobs | 707 | 756 | 914 |
-| grep_long_lines | 258,585 | no-gain | – | 629 | 736 | 841 |
-| ls_mixed_owner | 262,105 | nothing-to-do | – | 325 | 371 | 432 |
-| ls_64k_fires | 65,349 | nothing-to-do | – | 82 | 91 | 107 |
+| grep_hits | 262,143 | compressed | search_group | 723 | 891 | 975 |
+| source_file | 262,044 | byte-identical-class | – | 186 | 203 | 222 |
+| ls_listing | 262,118 | nothing-to-do | – | 374 | 402 | 438 |
+| minified_json | 262,153 | nothing-to-do | – | 488 | 521 | 558 |
+| progress_cr | 262,131 | compressed | progress | 443 | 482 | 521 |
+| repeats_log | 262,140 | compressed | repeats | 290 | 323 | 352 |
+| base64_blobs | 261,976 | compressed | blobs | 779 | 835 | 897 |
+| grep_long_lines | 258,585 | no-gain | – | 733 | 811 | 909 |
+| ls_mixed_owner | 262,105 | nothing-to-do | – | 374 | 401 | 427 |
+| ls_64k_fires | 65,349 | nothing-to-do | – | 90 | 101 | 108 |
 <!-- END:latency_search_on -->
 
 Measured on a shared 24-core box under load (load average ≈ 12 from other
@@ -541,16 +541,16 @@ The table shows it firing at that bound.
 <!-- BEGIN:p2a_latency -->
 | shape (candidates on) | bytes | result | transforms | best µs | p50 µs | p99 µs |
 |---|---:|---:|---:|---:|---:|---:|
-| grep_hits | 262,143 | nothing-to-do | – | 387 | 450 | 525 |
-| source_file | 262,044 | byte-identical-class | – | 192 | 217 | 238 |
-| ls_listing | 262,118 | nothing-to-do | – | 362 | 425 | 466 |
-| minified_json | 262,153 | nothing-to-do | – | 477 | 545 | 609 |
-| progress_cr | 262,131 | compressed | progress | 439 | 515 | 566 |
-| repeats_log | 262,140 | compressed | repeats | 309 | 346 | 394 |
-| base64_blobs | 261,976 | compressed | blobs | 789 | 876 | 958 |
-| grep_long_lines | 258,585 | compressed | search_elide | 618 | 697 | 773 |
-| ls_mixed_owner | 262,105 | nothing-to-do | – | 374 | 424 | 549 |
-| ls_64k_fires | 65,349 | compressed | ls_columns | 251 | 280 | 310 |
+| grep_hits | 262,143 | nothing-to-do | – | 353 | 430 | 631 |
+| source_file | 262,044 | byte-identical-class | – | 159 | 176 | 209 |
+| ls_listing | 262,118 | nothing-to-do | – | 315 | 346 | 426 |
+| minified_json | 262,153 | nothing-to-do | – | 447 | 457 | 495 |
+| progress_cr | 262,131 | compressed | progress | 391 | 425 | 458 |
+| repeats_log | 262,140 | compressed | repeats | 261 | 296 | 335 |
+| base64_blobs | 261,976 | compressed | blobs | 701 | 735 | 799 |
+| grep_long_lines | 258,585 | compressed | search_elide | 568 | 604 | 643 |
+| ls_mixed_owner | 262,105 | nothing-to-do | – | 323 | 349 | 381 |
+| ls_64k_fires | 65,349 | compressed | ls_columns | 216 | 236 | 256 |
 
 Real corpus, candidates on: p50 / p99 5.2 / 74 µs (all), 22 / 114 µs (fired), max 212 µs; panics 0, not idempotent 0, crush-ext ≠ library 0 / 3253.
 <!-- END:p2a_latency -->
