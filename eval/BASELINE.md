@@ -113,6 +113,10 @@ tables are synthetic fixtures.
   - a 115-call SEARCH + new-fixture re-ask, merged (main + re-ask: $4.54).
 
   The per-run cap is 400 (`--max-calls`).
+- **Drift.** `edit_sources.py` and `redundancy.py` read the live session store,
+  not the frozen corpus, so they move slightly between runs: a rerun an hour
+  later saw 1,272 edits instead of 1,261, with the same shares to ±0.4 points.
+  Everything else regenerates identically from the corpus and the token cache.
 - **Not covered here:** thinking-on accuracy (real sessions run with thinking;
   this is the harsher setting), multi-turn task success (cachebench Scenario A,
   Phase 4), and the 5.x models for accuracy.
