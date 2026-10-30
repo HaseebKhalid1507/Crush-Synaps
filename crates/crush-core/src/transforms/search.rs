@@ -41,7 +41,9 @@ pub struct Style {
     pub group_singles: bool,
 }
 
-pub const DEFAULT_STYLE: Style = Style { blank_between: false, colon: false, group_singles: true };
+/// Blank lines between adjacent groups measured free (`\n\n` is one token in
+/// both families; eval/search_layout.py) and make the layout rg's own.
+pub const DEFAULT_STYLE: Style = Style { blank_between: true, colon: false, group_singles: true };
 
 /// Is `p` plausibly a path grep printed?
 fn plausible_path(p: &str) -> bool {
@@ -241,8 +243,17 @@ pub fn group_with(text: &str, style: Style) -> Option<String> {
             }
         }
         let min = if style.group_singles { 1 } else { 2 };
-        // unnumbered matches mixed with context can't be told apart afterwards
-        let ok = has_match && count >= min && (numbered_all || !has_ctx);
+        // unnumbered matches mixed with context can't be told apart afterwards;
+        // an unnumbered line that is empty or looks like a path or a hit would
+        // read as a heading or a hit once grouped
+        let ambiguous = !numbered_all
+            && (start..end).any(|k| {
+                kind[k] != Kind::Sep && {
+                    let rest = &lines[k][plen[k] + 1..];
+                    rest.is_empty() || rest == "--" || plausible_path(rest.trim_end()) || parse_match(rest).is_some()
+                }
+            });
+        let ok = has_match && count >= min && (numbered_all || !has_ctx) && !ambiguous;
         if ok {
             blocks.push(Block { start, end, lines: count });
         }
@@ -271,15 +282,16 @@ pub fn group_with(text: &str, style: Style) -> Option<String> {
     let mut out = String::with_capacity(text.len());
     let mut bi = 0;
     let mut i = 0;
-    let mut first_block = true;
+    let mut prev_end = usize::MAX;
     while i < n {
         if bi < blocks.len() && blocks[bi].start == i {
             let b = &blocks[bi];
             let p = &lines[i][..plen[i]];
-            if style.blank_between && !first_block {
+            // only between two groups that touch (never next to other lines)
+            if style.blank_between && prev_end == i {
                 out.push('\n');
             }
-            first_block = false;
+            prev_end = b.end;
             out.push_str(p);
             if style.colon {
                 out.push(':');
@@ -303,8 +315,55 @@ pub fn group_with(text: &str, style: Style) -> Option<String> {
     }
     if !trailing {
         out.pop();
+        if out.ends_with('\n') {
+            // last line empty and no final newline: ambiguous once grouped
+            return None;
+        }
     }
     Some(out)
+}
+
+/// Does `grouped` rebuild `original` exactly? A line of `original` must appear
+/// either verbatim, or as `heading` + `:`/`-` + a line of `grouped` under that
+/// heading. This is the byte-exactness check the gate runs on every SEARCH
+/// result (and the eval and fuzzers run independently).
+pub fn rebuilds(original: &str, grouped: &str) -> bool {
+    let (x, tx) = super::lines(original);
+    let (y, ty) = super::lines(grouped);
+    if tx != ty {
+        return false;
+    }
+    let mut j = 0;
+    let mut heading: Option<&str> = None;
+    let under = |l: &str, h: &str, rest: &str| {
+        l.len() == h.len() + 1 + rest.len()
+            && l.starts_with(h)
+            && matches!(l.as_bytes()[h.len()], b':' | b'-')
+            && l.ends_with(rest)
+    };
+    for l in x {
+        if j < y.len() && y[j] == l {
+            j += 1;
+            if l != "--" {
+                heading = None;
+            }
+            continue;
+        }
+        // a blank line crush put between two touching groups
+        if heading.is_some() && j + 2 < y.len() && y[j].is_empty() && under(l, y[j + 1], y[j + 2]) {
+            j += 1;
+        }
+        if j + 1 < y.len() && under(l, y[j], y[j + 1]) {
+            heading = Some(y[j]);
+            j += 2;
+            continue;
+        }
+        match heading {
+            Some(h) if j < y.len() && under(l, h, y[j]) => j += 1,
+            _ => return false,
+        }
+    }
+    j == y.len()
 }
 
 #[cfg(test)]
@@ -314,7 +373,8 @@ mod tests {
     #[test]
     fn groups_numbered_hits() {
         let raw = "src/a.rs:12:foo\nsrc/a.rs:13:bar\nsrc/b.rs:7:baz\n";
-        assert_eq!(group(raw).unwrap(), "src/a.rs\n12:foo\n13:bar\nsrc/b.rs\n7:baz\n");
+        assert_eq!(group(raw).unwrap(), "src/a.rs\n12:foo\n13:bar\n\nsrc/b.rs\n7:baz\n");
+        assert!(rebuilds(raw, &group(raw).unwrap()));
     }
 
     #[test]
@@ -344,7 +404,7 @@ mod tests {
     #[test]
     fn unnumbered_hits() {
         let raw = "src/a.rs:    let x: u8 = 1;\nsrc/a.rs:    y();\nsrc/b.rs:z\n";
-        assert_eq!(group(raw).unwrap(), "src/a.rs\n    let x: u8 = 1;\n    y();\nsrc/b.rs\nz\n");
+        assert_eq!(group(raw).unwrap(), "src/a.rs\n    let x: u8 = 1;\n    y();\n\nsrc/b.rs\nz\n");
         // unnumbered matches mixed with context: left alone
         assert_eq!(group("a.rs:x\na.rs-y\nb.rs:z\nb.rs:w\n").unwrap(), "a.rs:x\na.rs-y\nb.rs\nz\nw\n");
     }
@@ -353,7 +413,26 @@ mod tests {
     fn rebuilds_exactly() {
         let raw = "a/b.rs:1:x\na/b.rs:2:y:z\nc.py:3:\n";
         let g = group(raw).unwrap();
-        assert_eq!(g, "a/b.rs\n1:x\n2:y:z\nc.py\n3:\n");
+        assert_eq!(g, "a/b.rs\n1:x\n2:y:z\n\nc.py\n3:\n");
+        assert!(rebuilds(raw, &g));
+        assert!(!rebuilds(raw, "a/b.rs\n1:x\n2:y:Z\n\nc.py\n3:\n"));
+        assert!(!rebuilds(raw, "b.rs\n1:x\n2:y:z\n\nc.py\n3:\n"));
+        assert!(!rebuilds(raw, "a/b.rs\n1:x\n\n2:y:z\n\nc.py\n3:\n"));
+        // a real blank line between groups is kept, and no second one is added
+        let gap = "a.rs:1:x\na.rs:2:x\n\nb.rs:2:y\n";
+        assert_eq!(group(gap).unwrap(), "a.rs\n1:x\n2:x\n\nb.rs\n2:y\n");
+        assert!(rebuilds(gap, &group(gap).unwrap()));
+        let ctx = "x/a.rs-3-before\nx/a.rs:4:hit\n--\nx/a.rs:9:w\nother\n";
+        assert!(rebuilds(ctx, &group(ctx).unwrap()));
+    }
+
+    #[test]
+    fn fuzz_regressions() {
+        let x = "cratch{\ncrates/m/src/lib.rs:\ncrates/m/src/lib.rs:";
+        assert!(group(x).is_none_or(|g| rebuilds(x, &g)));
+        let p = "/work/rg/crates/searcher/src/lines.rs";
+        let x = format!("\n{p}:383\n{p}:{p}\n{p}");
+        assert!(group(&x).is_none_or(|g| rebuilds(&x, &g)));
     }
 
     #[test]

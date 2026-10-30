@@ -36,146 +36,166 @@ pub const FEATURE_NAMES: [&str; K] = [
     "punct",
     "punct_runs",
     "space_runs",
-    "spaces_in_runs",
+    "space_pairs",
     "newlines",
     "nonascii",
-    "mixed_runs",
-    "mixed_chars",
+    "letter_digit",
+    "digit_letter",
 ];
 
 // byte classes
-const L: u8 = 0; // lowercase ASCII letter
-const U: u8 = 1; // uppercase ASCII letter
-const D: u8 = 2; // digit
-const S: u8 = 3; // space / tab
-const N: u8 = 4; // newline
-const P: u8 = 5; // ASCII punctuation / other control
-const H: u8 = 6; // non-ASCII lead byte
-const C: u8 = 7; // UTF-8 continuation byte
+const LO: u8 = 0; // lowercase ASCII letter
+const UP: u8 = 1; // uppercase ASCII letter
+const DI: u8 = 2; // digit
+const SP: u8 = 3; // space / tab
+const NL: u8 = 4; // newline
+const PU: u8 = 5; // ASCII punctuation / control
+const HI: u8 = 6; // non-ASCII lead byte
+const CO: u8 = 7; // UTF-8 continuation byte
 
-const fn table() -> [u8; 256] {
-    let mut t = [P; 256];
+const fn class_table() -> [u8; 256] {
+    let mut t = [PU; 256];
     let mut i = 0;
     while i < 256 {
         let c = i as u8;
         t[i] = if c.is_ascii_lowercase() {
-            L
+            LO
         } else if c.is_ascii_uppercase() {
-            U
+            UP
         } else if c.is_ascii_digit() {
-            D
+            DI
         } else if c == b' ' || c == b'\t' {
-            S
+            SP
         } else if c == b'\n' {
-            N
+            NL
         } else if c >= 0xC0 {
-            H
+            HI
         } else if c >= 0x80 {
-            C
+            CO
         } else {
-            P
+            PU
         };
         i += 1;
     }
     t
 }
-static TABLE: [u8; 256] = table();
+static CLASS: [u8; 256] = class_table();
+
+/// Every feature but the first two is a count of events that depend on the
+/// (previous class, class) pair, or on (run class, run length so far). Each
+/// event table entry packs its increments as 8-bit lanes of a u128, so one
+/// wide add per table per byte counts all of them; lanes are flushed every 255
+/// bytes. LANES[i] is the feature lane i counts.
+const LANES: [usize; 14] = [2, 4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 3, 7, 10];
+
+const fn is_letter(c: u8) -> bool {
+    c == LO || c == UP
+}
 
 /// Letters past this length in one run cost extra (long identifiers split).
-const LONG_WORD: u32 = 6;
+const LONG_WORD: usize = 6;
 /// Digits past this length in one run cost extra (numbers chunk by ~3).
-const LONG_DIGITS: u32 = 3;
+const LONG_DIGITS: usize = 3;
+/// Run lengths are tracked up to this (enough for LONG_WORD + 1).
+const RUN_CAP: usize = 7;
 
-/// Shape features of `s`, one pass.
+const fn lanes(ev: &[bool]) -> u128 {
+    let mut x = 0u128;
+    let mut k = 0;
+    while k < ev.len() {
+        if ev[k] {
+            x |= 1u128 << (8 * k);
+        }
+        k += 1;
+    }
+    x
+}
+
+const fn pair_table() -> [u128; 64] {
+    let mut t = [0u128; 64];
+    let mut p = 0;
+    while p < 8 {
+        let mut c = 0;
+        while c < 8 {
+            let (pu, cu) = (p as u8, c as u8);
+            t[p * 8 + c] = lanes(&[
+                is_letter(cu) && !is_letter(pu), // letter_runs
+                cu == UP && pu == LO,            // camel
+                cu == UP,                        // upper
+                cu == DI && pu != DI,            // digit_runs
+                cu == PU,                        // punct
+                cu == PU && pu != PU,            // punct_runs
+                cu == SP && pu == SP,            // space_pairs
+                cu == NL,                        // newlines
+                cu == HI,                        // nonascii
+                cu == DI && is_letter(pu),       // letter_digit
+                is_letter(cu) && pu == DI,       // digit_letter
+            ]);
+            c += 1;
+        }
+        p += 1;
+    }
+    t
+}
+
+/// Run classes: letters (either case) are one run class.
+const fn run_class(c: u8) -> u8 {
+    if c == UP {
+        LO
+    } else {
+        c
+    }
+}
+
+const fn run_table() -> [u128; 64] {
+    let mut t = [0u128; 64];
+    let mut rc = 0;
+    while rc < 8 {
+        let mut len = 1;
+        while len <= RUN_CAP {
+            let r = rc as u8;
+            t[rc * 8 + len] = lanes(&[
+                false, false, false, false, false, false, false, false, false, false, false,
+                r == LO && len > LONG_WORD,    // letters_long
+                r == DI && len > LONG_DIGITS,  // digits_long (capped run: >3 still counts)
+                r == SP && len == 2,           // space_runs (len >= 2)
+            ]);
+            len += 1;
+        }
+        rc += 1;
+    }
+    t
+}
+
+static PAIR: [u128; 64] = pair_table();
+static RUN: [u128; 64] = run_table();
+
+fn flush(f: &mut Features, a: u128) {
+    for (i, &k) in LANES.iter().enumerate() {
+        f[k] += ((a >> (8 * i)) & 0xff) as u32;
+    }
+}
+
+/// Shape features of `s`, one branch-free pass.
 pub fn features(s: &str) -> Features {
     let mut f = [0u32; K];
-    let b = s.as_bytes();
+    let bytes = s.as_bytes();
     f[0] = 1;
-    f[1] = b.len() as u32;
-    let mut letter_run = 0u32;
-    let mut digit_run = 0u32;
-    let mut space_run = 0u32;
-    let mut punct_run = 0u32;
-    let mut alnum_run = 0u32;
-    let mut alnum_letters = false;
-    let mut alnum_digits = false;
-    let mut prev = N;
-    for &byte in b {
-        let k = TABLE[byte as usize];
-        // close runs that end here
-        if letter_run > 0 && k != L && k != U {
-            f[3] += letter_run.saturating_sub(LONG_WORD);
-            letter_run = 0;
+    f[1] = bytes.len() as u32;
+    let mut prev = NL as usize;
+    let mut prc = NL as usize;
+    let mut run = 0usize;
+    for chunk in bytes.chunks(255) {
+        let mut a = 0u128;
+        for &byte in chunk {
+            let c = CLASS[byte as usize] as usize;
+            let rc = run_class(c as u8) as usize;
+            run = if rc == prc { (run + 1).min(RUN_CAP) } else { 1 };
+            a += PAIR[(prev << 3) | c] + RUN[(rc << 3) | run];
+            prev = c;
+            prc = rc;
         }
-        if digit_run > 0 && k != D {
-            f[7] += digit_run.saturating_sub(LONG_DIGITS);
-            digit_run = 0;
-        }
-        if space_run > 0 && k != S {
-            if space_run > 1 {
-                f[10] += 1;
-                f[11] += space_run;
-            }
-            space_run = 0;
-        }
-        if punct_run > 0 && k != P {
-            punct_run = 0;
-        }
-        if alnum_run > 0 && !matches!(k, L | U | D) {
-            if alnum_letters && alnum_digits {
-                f[14] += 1;
-                f[15] += alnum_run;
-            }
-            alnum_run = 0;
-            alnum_letters = false;
-            alnum_digits = false;
-        }
-        match k {
-            L | U => {
-                if letter_run == 0 {
-                    f[2] += 1;
-                } else if k == U && prev == L {
-                    f[4] += 1;
-                }
-                if k == U {
-                    f[5] += 1;
-                }
-                letter_run += 1;
-                alnum_run += 1;
-                alnum_letters = true;
-            }
-            D => {
-                if digit_run == 0 {
-                    f[6] += 1;
-                }
-                digit_run += 1;
-                alnum_run += 1;
-                alnum_digits = true;
-            }
-            S => space_run += 1,
-            N => f[12] += 1,
-            P => {
-                f[8] += 1;
-                if punct_run == 0 {
-                    f[9] += 1;
-                }
-                punct_run += 1;
-            }
-            H => f[13] += 1,
-            _ => {}
-        }
-        prev = k;
-    }
-    // close trailing runs
-    f[3] += letter_run.saturating_sub(LONG_WORD);
-    f[7] += digit_run.saturating_sub(LONG_DIGITS);
-    if space_run > 1 {
-        f[10] += 1;
-        f[11] += space_run;
-    }
-    if alnum_run > 0 && alnum_letters && alnum_digits {
-        f[14] += 1;
-        f[15] += alnum_run;
+        flush(&mut f, a);
     }
     f
 }
@@ -214,11 +234,18 @@ mod tests {
         assert_eq!(f[1], 20);
         assert_eq!(f[2], 2); // fooBar, x (ü is not ASCII)
         assert_eq!(f[4], 1); // camel hump
+        assert_eq!(f[5], 1);
         assert_eq!(f[6], 1);
         assert_eq!(f[7], 2); // 5 digits, 3 free
         assert_eq!(f[10], 1); // the double space
+        assert_eq!(f[11], 1);
         assert_eq!(f[12], 1);
         assert_eq!(f[13], 1);
+        let g = features("ab12cd");
+        assert_eq!((g[14], g[15]), (1, 1));
+        let long = features(&"x".repeat(1000));
+        assert_eq!(long[3], 994);
+        assert_eq!(long[2], 1);
         assert_eq!(estimate_tokens("", Tokenizer::V5), 0);
     }
 

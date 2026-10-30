@@ -282,6 +282,10 @@ fn gate<'a>(input: &Input<'a>, cfg: &Config, class: Class) -> Result<Outcome<'a>
     if class.byte_identical() || applied.text == out {
         return Err(Why::NothingToDo);
     }
+    // SEARCH: every line must rebuild byte for byte (`heading` + sep + line).
+    if applied.names.contains(&transforms::search::NAME) && !transforms::search::rebuilds(out, &applied.text) {
+        return Err(Why::InternalError);
+    }
     // Never larger, under both tokenizer families, with a margin.
     let f_in = estimate::features(out);
     let f_out = estimate::features(&applied.text);
@@ -289,7 +293,7 @@ fn gate<'a>(input: &Input<'a>, cfg: &Config, class: Class) -> Result<Outcome<'a>
     for tk in [Tokenizer::V5, Tokenizer::V4] {
         let before = estimate::from_features(&f_in, tk);
         let after = estimate::from_features(&f_out, tk);
-        let need = (cfg.min_gain_tokens as f64).max(before as f64 * cfg.min_gain_ratio as f64);
+        let need = (cfg.min_gain_tokens as f64).max(before as f64 * cfg.min_gain_ratio as f64).max(1.0);
         if (after as f64) + need > before as f64 {
             ok = false;
         }
