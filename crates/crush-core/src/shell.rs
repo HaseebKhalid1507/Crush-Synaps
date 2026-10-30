@@ -277,8 +277,14 @@ fn lex(s: &str) -> Vec<Tok> {
                 in_word = true;
                 i += 1;
                 while i < b.len() && b[i] != b'"' {
-                    if b[i] == b'\\' && i + 1 < b.len() {
+                    // inside "...", a backslash only escapes $ ` " \ and newline
+                    // (POSIX); `"foo\|bar"` keeps its backslash
+                    if b[i] == b'\\' && i + 1 < b.len() && matches!(b[i + 1], b'$' | b'`' | b'"' | b'\\' | b'\n') {
                         i += 1;
+                        if b[i] == b'\n' {
+                            i += 1;
+                            continue;
+                        }
                     }
                     let ch = s[i..].chars().next().unwrap_or(' ');
                     word.push(ch);
@@ -551,6 +557,15 @@ mod tests {
         assert_eq!(progs("FOO=1 timeout 30 git -C repo status"), vec![vec!["git"]]);
         assert_eq!(progs("sudo -u bob nice -n 5 ls -la"), vec![vec!["ls"]]);
         assert_eq!(progs("cargo test 2>&1 | tail -20"), vec![vec!["cargo", "tail"]]);
+    }
+
+    #[test]
+    fn double_quotes_keep_backslashes_posix() {
+        let args = |c: &str| parse(c)[0].first().args.clone();
+        assert_eq!(args(r#"grep -n "foo\|bar" f"#), vec!["-n", r"foo\|bar", "f"]);
+        assert_eq!(args(r#"echo "a\"b\\c\$d\`e""#), vec![r#"a"b\c$d`e"#]);
+        assert_eq!(args("echo \"a\\\nb\""), vec!["ab"]);
+        assert_eq!(args(r"grep foo\|bar f"), vec!["foo|bar", "f"]);
     }
 
     #[test]

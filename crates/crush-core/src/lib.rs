@@ -113,11 +113,17 @@ pub struct TransformSwitches {
     pub repeats: bool,
     /// Long base64 / hex / minified blobs elided (lossy).
     pub blobs: bool,
+    /// SEARCH hit lines over 1 KiB cut to the text around the match, with
+    /// exact cut counts and a raw pointer (lossy). Phase 2 candidate.
+    pub search_elide: bool,
+    /// LISTING `ls -l` owner/group said once in words when (nearly) every row
+    /// has the same pair (lossless). Phase 2 candidate.
+    pub ls_columns: bool,
 }
 
 impl Default for TransformSwitches {
     fn default() -> Self {
-        Self { search_group: false, progress: true, repeats: true, blobs: true }
+        Self { search_group: false, progress: true, repeats: true, blobs: true, search_elide: false, ls_columns: false }
     }
 }
 
@@ -284,7 +290,7 @@ pub fn compress_classified<'a>(input: &Input<'a>, cfg: &Config, class: Class) ->
 /// Run the class pipeline, then the invariant checks.
 fn gate<'a>(input: &Input<'a>, cfg: &Config, class: Class) -> Result<Outcome<'a>, Why> {
     let out = input.output;
-    let Some(applied) = transforms::run(class, out, input.raw_ref, cfg) else {
+    let Some(applied) = transforms::run(class, out, input.command, input.raw_ref, cfg) else {
         return Err(Why::NothingToDo);
     };
     // Belt and braces: byte-identical classes never reach here.
@@ -292,7 +298,9 @@ fn gate<'a>(input: &Input<'a>, cfg: &Config, class: Class) -> Result<Outcome<'a>
         return Err(Why::NothingToDo);
     }
     // SEARCH: every line must rebuild byte for byte (`heading` + sep + line).
-    if applied.names.contains(&transforms::search::NAME) && !transforms::search::rebuilds(out, &applied.text) {
+    // (`transforms::run` checks every step against its own input; this is the
+    // end-to-end check when grouping ran alone.)
+    if applied.names == [transforms::search::NAME] && !transforms::search::rebuilds(out, &applied.text) {
         return Err(Why::InternalError);
     }
     // Never larger, under both tokenizer families, with a margin.
@@ -324,7 +332,7 @@ fn gate<'a>(input: &Input<'a>, cfg: &Config, class: Class) -> Result<Outcome<'a>
         && y.len() >= cfg.min_bytes
         && y.len() <= cfg.max_bytes
         && !guard::marker_like(y)
-        && transforms::run(again, y, input.raw_ref, cfg).is_some_and(|t| t.text != y);
+        && transforms::run(again, y, input.command, input.raw_ref, cfg).is_some_and(|t| t.text != y);
     if would_change {
         return Err(Why::NotIdempotent);
     }
