@@ -1,0 +1,522 @@
+    Finished `test` profile [unoptimized] target(s) in 0.00s
+     Running unittests src/lib.rs (/work/target/debug/deps/ledger-fa1b2c6689e45c48)
+
+running 84 tests
+test accounts::apply_tests::case_00 ... ok
+test accounts::apply_tests::case_02 ... ok
+test accounts::apply_tests::case_04 ... ok
+test accounts::apply_tests::case_03 ... ok
+test accounts::apply_tests::case_05 ... ok
+test accounts::apply_tests::case_07 ... ok
+test accounts::apply_tests::case_08 ... ok
+test accounts::apply_tests::case_06 ... ok
+test accounts::apply_tests::case_09 ... ok
+test accounts::apply_tests::case_10 ... ok
+test accounts::apply_tests::case_11 ... ok
+test accounts::apply_tests::case_12 ... ok
+test accounts::apply_tests::case_13 ... ok
+test accounts::parse_tests::case_00 ... ok
+test accounts::parse_tests::case_01 ... ok
+test accounts::parse_tests::case_02 ... ok
+test accounts::parse_tests::case_03 ... ok
+test accounts::parse_tests::case_04 ... ok
+test accounts::parse_tests::case_05 ... ok
+test accounts::parse_tests::case_06 ... ok
+test accounts::parse_tests::case_07 ... ok
+test accounts::parse_tests::case_08 ... ok
+test accounts::parse_tests::case_09 ... ok
+test accounts::parse_tests::case_10 ... ok
+test accounts::parse_tests::case_11 ... ok
+test accounts::parse_tests::case_12 ... ok
+test accounts::parse_tests::case_13 ... ok
+test journal::apply_tests::case_01 ... ok
+test journal::apply_tests::case_02 ... ok
+test journal::apply_tests::case_03 ... ok
+test journal::apply_tests::case_05 ... ok
+test journal::apply_tests::case_04 ... ok
+test journal::apply_tests::case_07 ... ok
+test journal::apply_tests::case_06 ... ok
+test journal::apply_tests::case_08 ... ok
+test accounts::apply_tests::case_01 ... ok
+test journal::parse_tests::case_09 ... ok
+test journal::parse_tests::case_11 ... ok
+test journal::parse_tests::case_12 ... ok
+test reports::apply_tests::case_02 ... ok
+test reports::apply_tests::case_04 ... ok
+test journal::parse_tests::case_10 ... ok
+test journal::parse_tests::case_04 ... ok
+test reports::apply_tests::case_06 ... ok
+test reports::apply_tests::case_07 ... ok
+test reports::apply_tests::case_08 ... ok
+test reports::apply_tests::case_05 ... ok
+test reports::apply_tests::case_09 ... ok
+test reports::apply_tests::case_13 ... ok
+test journal::apply_tests::case_09 ... ok
+test journal::apply_tests::case_12 ... ok
+test reports::parse_tests::case_00 ... ok
+test reports::apply_tests::case_11 ... ok
+test reports::parse_tests::case_01 ... ok
+test reports::parse_tests::case_02 ... ok
+test journal::apply_tests::case_11 ... ok
+test journal::apply_tests::case_00 ... ok
+test journal::parse_tests::case_03 ... ok
+test reports::parse_tests::case_03 ... ok
+test journal::parse_tests::case_07 ... ok
+test reports::parse_tests::case_04 ... ok
+test journal::parse_tests::case_13 ... ok
+test journal::parse_tests::case_08 ... ok
+test reports::parse_tests::case_05 ... ok
+test journal::apply_tests::case_13 ... ok
+test journal::parse_tests::case_02 ... ok
+test journal::apply_tests::case_10 ... ok
+test reports::parse_tests::case_07 ... ok
+test reports::parse_tests::case_06 ... ok
+test reports::parse_tests::case_08 ... ok
+test reports::apply_tests::case_00 ... ok
+test reports::apply_tests::case_03 ... ok
+test reports::parse_tests::case_09 ... ok
+test journal::parse_tests::case_05 ... ok
+test reports::parse_tests::case_10 ... ok
+test reports::apply_tests::case_01 ... ok
+test journal::parse_tests::case_06 ... ok
+test reports::parse_tests::case_11 ... ok
+test journal::parse_tests::case_01 ... ok
+test reports::apply_tests::case_12 ... ok
+test reports::parse_tests::case_12 ... ok
+test reports::apply_tests::case_10 ... ok
+test journal::parse_tests::case_00 ... ok
+test reports::parse_tests::case_13 ... ok
+
+test result: ok. 84 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/limits.rs (/work/target/debug/deps/limits-10997341202ea63b)
+
+running 10 tests
+test limits_00 ... ok
+test limits_01 ... ok
+test limits_04 ... ok
+test limits_02 ... ok
+test limits_03 ... ok
+test limits_05 ... ok
+test limits_06 ... ok
+test limits_07 ... ok
+test limits_08 ... ok
+test limits_09 ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/regressions.rs (/work/target/debug/deps/regressions-15598ebebfaba345)
+
+running 10 tests
+test regressions_01 ... ok
+test regressions_02 ... ok
+test regressions_03 ... ok
+test regressions_04 ... ok
+test regressions_05 ... ok
+test regressions_06 ... ok
+test regressions_07 ... ok
+test regressions_08 ... ok
+test regressions_09 ... ok
+test regressions_00 ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/roundtrip.rs (/work/target/debug/deps/roundtrip-539d34e472c36f2e)
+
+running 10 tests
+test roundtrip_00 ... ok
+test roundtrip_01 ... ok
+test roundtrip_02 ... ok
+test roundtrip_03 ... ok
+test roundtrip_04 ... ok
+test roundtrip_05 ... ok
+test roundtrip_06 ... ok
+test roundtrip_07 ... ok
+test roundtrip_08 ... ok
+test roundtrip_09 ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/smoke.rs (/work/target/debug/deps/smoke-302fc1d6d9db5f1d)
+
+running 10 tests
+test smoke_00 ... ok
+test smoke_02 ... ok
+test smoke_03 ... ok
+test smoke_04 ... ok
+test smoke_01 ... ok
+test smoke_05 ... ok
+test smoke_07 ... ok
+test smoke_06 ... ok
+test smoke_08 ... ok
+test smoke_09 ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/work/target/debug/deps/scheduler-a61b1ae8251d10d7)
+
+running 84 tests
+test queue::apply_tests::case_00 ... ok
+test queue::apply_tests::case_01 ... ok
+test queue::apply_tests::case_02 ... ok
+test queue::apply_tests::case_03 ... ok
+test queue::apply_tests::case_04 ... ok
+test queue::apply_tests::case_05 ... ok
+test queue::apply_tests::case_06 ... ok
+test queue::apply_tests::case_07 ... ok
+test queue::apply_tests::case_08 ... ok
+test queue::apply_tests::case_09 ... ok
+test queue::apply_tests::case_10 ... ok
+test queue::apply_tests::case_11 ... ok
+test queue::apply_tests::case_12 ... ok
+test queue::apply_tests::case_13 ... ok
+test queue::parse_tests::case_00 ... ok
+test queue::parse_tests::case_01 ... ok
+test queue::parse_tests::case_02 ... ok
+test queue::parse_tests::case_03 ... ok
+test queue::parse_tests::case_04 ... ok
+test queue::parse_tests::case_05 ... ok
+test queue::parse_tests::case_06 ... ok
+test queue::parse_tests::case_07 ... ok
+test queue::parse_tests::case_08 ... ok
+test queue::parse_tests::case_09 ... ok
+test queue::parse_tests::case_10 ... ok
+test queue::parse_tests::case_12 ... ok
+test queue::parse_tests::case_13 ... ok
+test queue::parse_tests::case_11 ... FAILED
+test timers::apply_tests::case_00 ... ok
+test timers::apply_tests::case_01 ... ok
+test timers::apply_tests::case_02 ... ok
+test timers::apply_tests::case_03 ... ok
+test timers::apply_tests::case_04 ... ok
+test timers::apply_tests::case_05 ... ok
+test timers::apply_tests::case_07 ... ok
+test timers::apply_tests::case_06 ... FAILED
+test timers::apply_tests::case_08 ... ok
+test timers::apply_tests::case_09 ... ok
+test timers::apply_tests::case_10 ... ok
+test timers::apply_tests::case_11 ... ok
+test timers::apply_tests::case_12 ... ok
+test timers::apply_tests::case_13 ... ok
+test timers::parse_tests::case_00 ... ok
+test timers::parse_tests::case_01 ... ok
+test timers::parse_tests::case_02 ... ok
+test timers::parse_tests::case_03 ... ok
+test timers::parse_tests::case_04 ... ok
+test timers::parse_tests::case_05 ... ok
+test timers::parse_tests::case_06 ... ok
+test timers::parse_tests::case_07 ... ok
+test timers::parse_tests::case_08 ... ok
+test timers::parse_tests::case_09 ... ok
+test timers::parse_tests::case_10 ... ok
+test timers::parse_tests::case_11 ... ok
+test timers::parse_tests::case_12 ... ok
+test timers::parse_tests::case_13 ... ok
+test workers::apply_tests::case_00 ... ok
+test workers::apply_tests::case_01 ... ok
+test workers::apply_tests::case_02 ... ok
+test workers::apply_tests::case_03 ... ok
+test workers::apply_tests::case_04 ... ok
+test workers::apply_tests::case_05 ... ok
+test workers::apply_tests::case_06 ... ok
+test workers::apply_tests::case_07 ... ok
+test workers::apply_tests::case_08 ... ok
+test workers::apply_tests::case_09 ... ok
+test workers::apply_tests::case_10 ... ok
+test workers::apply_tests::case_11 ... ok
+test workers::apply_tests::case_12 ... ok
+test workers::apply_tests::case_13 ... ok
+test workers::parse_tests::case_00 ... ok
+test workers::parse_tests::case_01 ... ok
+test workers::parse_tests::case_02 ... ok
+test workers::parse_tests::case_03 ... ok
+test workers::parse_tests::case_04 ... ok
+test workers::parse_tests::case_05 ... ok
+test workers::parse_tests::case_06 ... ok
+test workers::parse_tests::case_07 ... ok
+test workers::parse_tests::case_08 ... ok
+test workers::parse_tests::case_09 ... ok
+test workers::parse_tests::case_10 ... ok
+test workers::parse_tests::case_11 ... ok
+test workers::parse_tests::case_12 ... ok
+test workers::parse_tests::case_13 ... ok
+
+failures:
+
+---- queue::parse_tests::case_11 stdout ----
+
+thread 'queue::parse_tests::case_11' (4045331) panicked at scheduler/src/lib.rs:30:24:
+assertion `left == right` failed: queue parse case 11
+  left: 34
+ right: 35
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- timers::apply_tests::case_06 stdout ----
+
+thread 'timers::apply_tests::case_06' (4045340) panicked at scheduler/src/lib.rs:120:24:
+assertion `left == right` failed: timers apply case 6
+  left: 19
+ right: 20
+
+
+failures:
+    queue::parse_tests::case_11
+    timers::apply_tests::case_06
+
+test result: FAILED. 82 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p scheduler --lib`
+     Running tests/limits.rs (/work/target/debug/deps/limits-086205012ca7e242)
+
+running 10 tests
+test limits_00 ... ok
+test limits_02 ... ok
+test limits_03 ... ok
+test limits_05 ... ok
+test limits_04 ... FAILED
+test limits_01 ... ok
+test limits_06 ... ok
+test limits_07 ... ok
+test limits_08 ... ok
+test limits_09 ... ok
+
+failures:
+
+---- limits_04 stdout ----
+
+thread 'limits_04' (4045395) panicked at scheduler/tests/limits.rs:11:18:
+assertion `left == right` failed
+  left: 13
+ right: 14
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    limits_04
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p scheduler --test limits`
+     Running tests/regressions.rs (/work/target/debug/deps/regressions-19ccbd9cdbf3652f)
+
+running 10 tests
+test regressions_00 ... ok
+test regressions_01 ... ok
+test regressions_02 ... ok
+test regressions_03 ... ok
+test regressions_04 ... ok
+test regressions_05 ... ok
+test regressions_06 ... ok
+test regressions_07 ... ok
+test regressions_08 ... ok
+test regressions_09 ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/roundtrip.rs (/work/target/debug/deps/roundtrip-197403f30a5dcde4)
+
+running 10 tests
+test roundtrip_00 ... ok
+test roundtrip_01 ... ok
+test roundtrip_02 ... ok
+test roundtrip_03 ... ok
+test roundtrip_04 ... ok
+test roundtrip_05 ... ok
+test roundtrip_06 ... ok
+test roundtrip_07 ... ok
+test roundtrip_08 ... ok
+test roundtrip_09 ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/smoke.rs (/work/target/debug/deps/smoke-16a41ec7f3d0b431)
+
+running 10 tests
+test smoke_00 ... ok
+test smoke_01 ... ok
+test smoke_03 ... ok
+test smoke_02 ... ok
+test smoke_04 ... ok
+test smoke_05 ... ok
+test smoke_06 ... ok
+test smoke_07 ... ok
+test smoke_08 ... ok
+test smoke_09 ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/work/target/debug/deps/wire-21069c0ebe3c7457)
+
+running 84 tests
+test codec::apply_tests::case_00 ... ok
+test codec::apply_tests::case_01 ... ok
+test codec::apply_tests::case_02 ... ok
+test codec::apply_tests::case_03 ... ok
+test codec::apply_tests::case_04 ... ok
+test codec::apply_tests::case_05 ... ok
+test codec::apply_tests::case_06 ... ok
+test codec::apply_tests::case_07 ... ok
+test codec::apply_tests::case_08 ... ok
+test codec::apply_tests::case_09 ... ok
+test codec::apply_tests::case_10 ... ok
+test codec::apply_tests::case_11 ... ok
+test codec::apply_tests::case_12 ... ok
+test codec::apply_tests::case_13 ... ok
+test codec::parse_tests::case_00 ... ok
+test codec::parse_tests::case_01 ... ok
+test codec::parse_tests::case_02 ... ok
+test codec::parse_tests::case_03 ... ok
+test codec::parse_tests::case_04 ... ok
+test codec::parse_tests::case_05 ... ok
+test codec::parse_tests::case_06 ... ok
+test codec::parse_tests::case_07 ... ok
+test codec::parse_tests::case_08 ... ok
+test codec::parse_tests::case_09 ... ok
+test codec::parse_tests::case_10 ... ok
+test codec::parse_tests::case_11 ... ok
+test codec::parse_tests::case_12 ... ok
+test codec::parse_tests::case_13 ... ok
+test frames::apply_tests::case_00 ... ok
+test frames::apply_tests::case_01 ... ok
+test frames::apply_tests::case_02 ... ok
+test frames::apply_tests::case_03 ... ok
+test frames::apply_tests::case_04 ... ok
+test frames::apply_tests::case_05 ... ok
+test frames::apply_tests::case_06 ... ok
+test frames::apply_tests::case_07 ... ok
+test frames::apply_tests::case_08 ... ok
+test frames::apply_tests::case_09 ... ok
+test frames::apply_tests::case_10 ... ok
+test frames::apply_tests::case_11 ... ok
+test frames::apply_tests::case_12 ... ok
+test frames::apply_tests::case_13 ... ok
+test frames::parse_tests::case_00 ... ok
+test frames::parse_tests::case_01 ... ok
+test frames::parse_tests::case_02 ... ok
+test frames::parse_tests::case_03 ... ok
+test frames::parse_tests::case_04 ... ok
+test frames::parse_tests::case_05 ... ok
+test frames::parse_tests::case_06 ... ok
+test frames::parse_tests::case_07 ... ok
+test frames::parse_tests::case_08 ... ok
+test frames::parse_tests::case_09 ... ok
+test frames::parse_tests::case_10 ... ok
+test frames::parse_tests::case_11 ... ok
+test frames::parse_tests::case_12 ... ok
+test frames::parse_tests::case_13 ... ok
+test handshake::apply_tests::case_00 ... ok
+test handshake::apply_tests::case_01 ... ok
+test handshake::apply_tests::case_02 ... ok
+test handshake::apply_tests::case_03 ... ok
+test handshake::apply_tests::case_04 ... ok
+test handshake::apply_tests::case_05 ... ok
+test handshake::apply_tests::case_06 ... ok
+test handshake::apply_tests::case_07 ... ok
+test handshake::apply_tests::case_08 ... ok
+test handshake::apply_tests::case_09 ... ok
+test handshake::apply_tests::case_10 ... ok
+test handshake::apply_tests::case_11 ... ok
+test handshake::apply_tests::case_12 ... ok
+test handshake::apply_tests::case_13 ... ok
+test handshake::parse_tests::case_00 ... ok
+test handshake::parse_tests::case_01 ... ok
+test handshake::parse_tests::case_02 ... ok
+test handshake::parse_tests::case_03 ... ok
+test handshake::parse_tests::case_04 ... ok
+test handshake::parse_tests::case_05 ... ok
+test handshake::parse_tests::case_06 ... ok
+test handshake::parse_tests::case_07 ... ok
+test handshake::parse_tests::case_08 ... ok
+test handshake::parse_tests::case_09 ... ok
+test handshake::parse_tests::case_10 ... ok
+test handshake::parse_tests::case_11 ... ok
+test handshake::parse_tests::case_12 ... ok
+test handshake::parse_tests::case_13 ... ok
+
+test result: ok. 84 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/limits.rs (/work/target/debug/deps/limits-b3e6ac3be99e0d24)
+
+running 10 tests
+test limits_00 ... ok
+test limits_01 ... ok
+test limits_02 ... ok
+test limits_03 ... ok
+test limits_04 ... ok
+test limits_05 ... ok
+test limits_06 ... ok
+test limits_07 ... ok
+test limits_08 ... ok
+test limits_09 ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/regressions.rs (/work/target/debug/deps/regressions-2970bf4d3a9f997d)
+
+running 10 tests
+test regressions_01 ... ok
+test regressions_02 ... ok
+test regressions_00 ... ok
+test regressions_04 ... ok
+test regressions_03 ... ok
+test regressions_05 ... ok
+test regressions_06 ... ok
+test regressions_07 ... ok
+test regressions_08 ... ok
+test regressions_09 ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/roundtrip.rs (/work/target/debug/deps/roundtrip-f74aa9c4e3d0bf2c)
+
+running 10 tests
+test roundtrip_01 ... ok
+test roundtrip_02 ... ok
+test roundtrip_04 ... ok
+test roundtrip_03 ... ok
+test roundtrip_05 ... ok
+test roundtrip_06 ... ok
+test roundtrip_07 ... ok
+test roundtrip_08 ... ok
+test roundtrip_09 ... ok
+test roundtrip_00 ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/smoke.rs (/work/target/debug/deps/smoke-ad8e785e720f626f)
+
+running 10 tests
+test smoke_00 ... ok
+test smoke_01 ... ok
+test smoke_02 ... ok
+test smoke_03 ... ok
+test smoke_04 ... ok
+test smoke_05 ... ok
+test smoke_06 ... ok
+test smoke_08 ... ok
+test smoke_09 ... ok
+test smoke_07 ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ledger
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests scheduler
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests wire
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: 2 targets failed:
+    `-p scheduler --lib`
+    `-p scheduler --test limits`

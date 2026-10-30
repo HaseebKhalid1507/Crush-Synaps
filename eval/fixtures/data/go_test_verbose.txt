@@ -1,0 +1,138 @@
+=== RUN   TestTotal
+=== RUN   TestTotal/zero_rate
+=== RUN   TestTotal/negative
+=== RUN   TestTotal/many_items
+=== RUN   TestTotal/large_values
+--- PASS: TestTotal (0.08s)
+    --- PASS: TestTotal/zero_rate (0.02s)
+    --- PASS: TestTotal/negative (0.02s)
+    --- PASS: TestTotal/many_items (0.00s)
+    --- PASS: TestTotal/large_values (0.05s)
+=== RUN   TestTax
+=== RUN   TestTax/zero_rate
+=== RUN   TestTax/negative
+=== RUN   TestTax/empty
+=== RUN   TestTax/many_items
+--- PASS: TestTax (0.02s)
+    --- PASS: TestTax/zero_rate (0.08s)
+    --- PASS: TestTax/negative (0.09s)
+    --- PASS: TestTax/empty (0.00s)
+    --- PASS: TestTax/many_items (0.06s)
+=== RUN   TestRounding
+=== RUN   TestRounding/large_values
+=== RUN   TestRounding/zero_rate
+=== RUN   TestRounding/unicode_names
+=== RUN   TestRounding/single_item
+--- PASS: TestRounding (0.02s)
+    --- PASS: TestRounding/large_values (0.02s)
+    --- PASS: TestRounding/zero_rate (0.03s)
+    --- PASS: TestRounding/unicode_names (0.00s)
+    --- PASS: TestRounding/single_item (0.01s)
+=== RUN   TestDiscount
+=== RUN   TestDiscount/negative
+=== RUN   TestDiscount/unicode_names
+=== RUN   TestDiscount/empty
+=== RUN   TestDiscount/zero_rate
+--- PASS: TestDiscount (0.06s)
+    --- PASS: TestDiscount/negative (0.01s)
+    --- PASS: TestDiscount/unicode_names (0.04s)
+    --- PASS: TestDiscount/empty (0.03s)
+    --- PASS: TestDiscount/zero_rate (0.03s)
+=== RUN   TestCurrency
+=== RUN   TestCurrency/empty
+=== RUN   TestCurrency/many_items
+=== RUN   TestCurrency/single_item
+=== RUN   TestCurrency/zero_rate
+--- PASS: TestCurrency (0.00s)
+    --- PASS: TestCurrency/empty (0.04s)
+    --- PASS: TestCurrency/many_items (0.05s)
+    --- PASS: TestCurrency/single_item (0.00s)
+    --- PASS: TestCurrency/zero_rate (0.03s)
+PASS
+ok  	example.test/billing/internal/invoice	0.62s
+=== RUN   TestAppend
+=== RUN   TestAppend/empty
+=== RUN   TestAppend/zero_rate
+=== RUN   TestAppend/large_values
+=== RUN   TestAppend/single_item
+--- PASS: TestAppend (0.09s)
+    --- PASS: TestAppend/empty (0.00s)
+    --- PASS: TestAppend/zero_rate (0.03s)
+    --- PASS: TestAppend/large_values (0.06s)
+    --- PASS: TestAppend/single_item (0.01s)
+=== RUN   TestBalance
+=== RUN   TestBalance/empty
+=== RUN   TestBalance/unicode_names
+=== RUN   TestBalance/negative
+=== RUN   TestBalance/single_item
+--- PASS: TestBalance (0.02s)
+    --- PASS: TestBalance/empty (0.03s)
+    --- PASS: TestBalance/unicode_names (0.05s)
+    --- PASS: TestBalance/negative (0.00s)
+    --- PASS: TestBalance/single_item (0.01s)
+=== RUN   TestReconcile
+=== RUN   TestReconcile/negative
+=== RUN   TestReconcile/partial_refund
+    ledger_test.go:294: balance = 1250, want 1200
+=== RUN   TestReconcile/unicode_names
+=== RUN   TestReconcile/large_values
+--- FAIL: TestReconcile (0.06s)
+    --- PASS: TestReconcile/negative (0.09s)
+    --- FAIL: TestReconcile/partial_refund (0.00s)
+    --- PASS: TestReconcile/unicode_names (0.08s)
+    --- PASS: TestReconcile/large_values (0.03s)
+=== RUN   TestSnapshot
+=== RUN   TestSnapshot/empty
+=== RUN   TestSnapshot/zero_rate
+=== RUN   TestSnapshot/single_item
+=== RUN   TestSnapshot/unicode_names
+--- PASS: TestSnapshot (0.00s)
+    --- PASS: TestSnapshot/empty (0.09s)
+    --- PASS: TestSnapshot/zero_rate (0.02s)
+    --- PASS: TestSnapshot/single_item (0.02s)
+    --- PASS: TestSnapshot/unicode_names (0.09s)
+FAIL
+FAIL	example.test/billing/internal/ledger	0.16s
+=== RUN   TestCreateInvoice
+=== RUN   TestCreateInvoice/many_items
+=== RUN   TestCreateInvoice/negative
+=== RUN   TestCreateInvoice/large_values
+=== RUN   TestCreateInvoice/single_item
+--- PASS: TestCreateInvoice (0.06s)
+    --- PASS: TestCreateInvoice/many_items (0.04s)
+    --- PASS: TestCreateInvoice/negative (0.09s)
+    --- PASS: TestCreateInvoice/large_values (0.00s)
+    --- PASS: TestCreateInvoice/single_item (0.01s)
+=== RUN   TestGetInvoice
+=== RUN   TestGetInvoice/single_item
+=== RUN   TestGetInvoice/unicode_names
+=== RUN   TestGetInvoice/negative
+=== RUN   TestGetInvoice/empty
+--- PASS: TestGetInvoice (0.01s)
+    --- PASS: TestGetInvoice/single_item (0.05s)
+    --- PASS: TestGetInvoice/unicode_names (0.08s)
+    --- PASS: TestGetInvoice/negative (0.09s)
+    --- PASS: TestGetInvoice/empty (0.09s)
+=== RUN   TestListInvoices
+=== RUN   TestListInvoices/unicode_names
+=== RUN   TestListInvoices/many_items
+=== RUN   TestListInvoices/empty
+=== RUN   TestListInvoices/large_values
+--- PASS: TestListInvoices (0.09s)
+    --- PASS: TestListInvoices/unicode_names (0.07s)
+    --- PASS: TestListInvoices/many_items (0.03s)
+    --- PASS: TestListInvoices/empty (0.06s)
+    --- PASS: TestListInvoices/large_values (0.03s)
+=== RUN   TestAuth
+=== RUN   TestAuth/large_values
+=== RUN   TestAuth/empty
+=== RUN   TestAuth/zero_rate
+=== RUN   TestAuth/many_items
+--- PASS: TestAuth (0.03s)
+    --- PASS: TestAuth/large_values (0.00s)
+    --- PASS: TestAuth/empty (0.06s)
+    --- PASS: TestAuth/zero_rate (0.01s)
+    --- PASS: TestAuth/many_items (0.03s)
+PASS
+ok  	example.test/billing/api	0.66s
+FAIL

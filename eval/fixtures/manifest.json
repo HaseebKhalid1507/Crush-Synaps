@@ -583,6 +583,116 @@
       "class": "LISTING",
       "bytes": 1053,
       "note": "real ls -la of a scratch dir in /tmp (.. is root's)"
+    },
+    {
+      "name": "cargo_workspace_test_fail",
+      "file": "data/cargo_workspace_test_fail.txt",
+      "tool": "bash",
+      "input": {
+        "command": "cargo test --workspace --no-fail-fast"
+      },
+      "class": "LOG",
+      "bytes": 17861,
+      "note": "exit 101; 3 crates, 12 integration binaries + 3 libs + doc-tests, 3 failures in the middle crate"
+    },
+    {
+      "name": "cargo_test_filtered",
+      "file": "data/cargo_test_filtered.txt",
+      "tool": "bash",
+      "input": {
+        "command": "cargo test case_03 --workspace"
+      },
+      "class": "LOG",
+      "bytes": 3764,
+      "note": "exit 0; a name filter: most binaries run 0 tests"
+    },
+    {
+      "name": "cargo_test_nocapture",
+      "file": "data/cargo_test_nocapture.txt",
+      "tool": "bash",
+      "input": {
+        "command": "cargo test -- --nocapture"
+      },
+      "class": "LOG",
+      "bytes": 1952,
+      "note": "exit 101; test stdout interleaved with result lines; 1 failure"
+    },
+    {
+      "name": "cargo_build_deps",
+      "file": "data/cargo_build_deps.txt",
+      "tool": "bash",
+      "input": {
+        "command": "cargo build"
+      },
+      "class": "LOG",
+      "bytes": 1612,
+      "note": "exit 0; first build with crates.io deps + warnings"
+    },
+    {
+      "name": "jest_verbose_fail",
+      "file": "data/jest_verbose_fail.txt",
+      "tool": "bash",
+      "input": {
+        "command": "npx jest --verbose"
+      },
+      "class": "LOG",
+      "bytes": 4655,
+      "note": "exit 1; real jest 29, 2 failures"
+    },
+    {
+      "name": "pip_install",
+      "file": "data/pip_install.txt",
+      "tool": "bash",
+      "input": {
+        "command": "pip install requests rich python-dateutil"
+      },
+      "class": "LOG",
+      "bytes": 2574,
+      "note": "exit 0; real pip into a throwaway venv"
+    },
+    {
+      "name": "gh_issues_jq",
+      "file": "data/gh_issues_jq.json",
+      "tool": "bash",
+      "input": {
+        "command": "gh api 'repos/cli/cli/issues?state=all&per_page=18' | jq '[.[] | {number, title, state, user: .user.login, labels: [.labels[].name], comments, milestone: .milestone.title, closed_at, draft: (.draft // null), body: ((.body // \"\") | .[0:60])}]'"
+      },
+      "class": "STRUCTURED",
+      "bytes": 6359,
+      "note": "real gh api + jq; logins pseudonymised; nulls and empty strings"
+    },
+    {
+      "name": "gh_issues_jq_stream",
+      "file": "data/gh_issues_jq_stream.json",
+      "tool": "bash",
+      "input": {
+        "command": "gh api 'repos/cli/cli/issues?state=closed&per_page=12' | jq '.[] | {number, state, closed_at, comments, author_association}'"
+      },
+      "class": "STRUCTURED",
+      "bytes": 1581,
+      "note": "real jq stream of pretty objects"
+    },
+    {
+      "name": "gh_repo_api",
+      "file": "data/gh_repo_api.json",
+      "tool": "bash",
+      "input": {
+        "command": "gh api repos/cli/cli | jq ."
+      },
+      "class": "STRUCTURED",
+      "bytes": 6422,
+      "note": "real gh api; one nested object"
+    },
+    {
+      "name": "go_test_verbose",
+      "file": "data/go_test_verbose.txt",
+      "tool": "bash",
+      "input": {
+        "command": "go test -v ./..."
+      },
+      "class": "LOG",
+      "bytes": 4993,
+      "note": "go test -v shape generated from go's line formats (no Go toolchain here); 1 failing subtest"
     }
   ],
   "skipped": []

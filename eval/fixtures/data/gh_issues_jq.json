@@ -1,0 +1,258 @@
+[
+  {
+    "number": 14872,
+    "title": "Remove memory.md and SECURITY.md files",
+    "state": "open",
+    "user": "user001",
+    "labels": [
+      "external",
+      "unmet-requirements"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": null,
+    "draft": null,
+    "body": "<!--\nThank you for contributing to GitHub CLI!\n\nIf you are p"
+  },
+  {
+    "number": 14871,
+    "title": "test",
+    "state": "closed",
+    "user": "user002",
+    "labels": [
+      "suspected-spam"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": "2026-10-30T03:10:17Z",
+    "draft": null,
+    "body": ""
+  },
+  {
+    "number": 14870,
+    "title": "malik",
+    "state": "closed",
+    "user": "user003",
+    "labels": [
+      "suspected-spam"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": "2026-10-30T02:16:48Z",
+    "draft": null,
+    "body": "<!--\nFor security vulnerabilities, first report through GitH"
+  },
+  {
+    "number": 14869,
+    "title": "someone@example.com",
+    "state": "closed",
+    "user": "user003",
+    "labels": [
+      "suspected-spam"
+    ],
+    "comments": 2,
+    "milestone": null,
+    "closed_at": "2026-10-30T02:14:13Z",
+    "draft": null,
+    "body": "<!--\nFor security vulnerabilities, first report through GitH"
+  },
+  {
+    "number": 14868,
+    "title": "Windows: `gh extension upgrade`/`remove` delete the installed extension folder and leave it broken when a file in it is in use",
+    "state": "open",
+    "user": "user004",
+    "labels": [
+      "needs-triage"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": null,
+    "draft": null,
+    "body": "### Describe the bug\n\nOn Windows, `gh extension upgrade`, `g"
+  },
+  {
+    "number": 14867,
+    "title": "issue create: validate issue type before creating issue",
+    "state": "closed",
+    "user": "user005",
+    "labels": [
+      "external",
+      "unmet-requirements"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": "2026-10-29T16:15:32Z",
+    "draft": null,
+    "body": "Fixes #14703\n\n### Description\n\nWhen `gh issue create --type "
+  },
+  {
+    "number": 14861,
+    "title": "brew install gh",
+    "state": "closed",
+    "user": "user006",
+    "labels": [
+      "suspected-spam"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": "2026-10-29T04:35:12Z",
+    "draft": null,
+    "body": "<!--\nFor security vulnerabilities, first report through GitH"
+  },
+  {
+    "number": 14860,
+    "title": "fix(issue develop): don't fail --base outside a git repository",
+    "state": "closed",
+    "user": "user007",
+    "labels": [
+      "needs-triage",
+      "external"
+    ],
+    "comments": 0,
+    "milestone": null,
+    "closed_at": "2026-10-29T03:59:04Z",
+    "draft": null,
+    "body": "Fixes #14856\n\n### Description\n\n`gh issue develop --base` run"
+  },
+  {
+    "number": 14859,
+    "title": "Hanvantinh9",
+    "state": "closed",
+    "user": "user008",
+    "labels": [
+      "suspected-spam"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": "2026-10-28T20:32:05Z",
+    "draft": null,
+    "body": "<!--\nFor security vulnerabilities, first report through GitH"
+  },
+  {
+    "number": 14858,
+    "title": "Require confirmation before `gh repo delete` deletes private forks",
+    "state": "closed",
+    "user": "user009",
+    "labels": [],
+    "comments": 0,
+    "milestone": null,
+    "closed_at": "2026-10-29T17:23:33Z",
+    "draft": null,
+    "body": "<!--\nThank you for contributing to GitHub CLI!\n\nIf you are p"
+  },
+  {
+    "number": 14857,
+    "title": "pkg/cmd/auth: validate advertised required scopes in token flow",
+    "state": "closed",
+    "user": "user005",
+    "labels": [
+      "external",
+      "unmet-requirements"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": "2026-10-28T19:00:23Z",
+    "draft": null,
+    "body": "### Description\nFixes #14754\n\nWhen authenticating via a pers"
+  },
+  {
+    "number": 14856,
+    "title": "`gh issue develop --base` outside a git repository creates the branch, then exits 1 without printing its URL",
+    "state": "open",
+    "user": "user010",
+    "labels": [
+      "needs-triage"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": null,
+    "draft": null,
+    "body": "### Describe the bug\n\n`gh issue develop <n> -R OWNER/REPO --"
+  },
+  {
+    "number": 14855,
+    "title": "`gh repo fork --remote` does not set a default repository, so `gh pr create` fails right after forking",
+    "state": "open",
+    "user": "user011",
+    "labels": [
+      "needs-triage"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": null,
+    "draft": null,
+    "body": "### Describe the bug\n\nI had a clone of `mesonbuild/meson` wi"
+  },
+  {
+    "number": 14854,
+    "title": "Fix local extension install test path normalization",
+    "state": "closed",
+    "user": "user012",
+    "labels": [
+      "needs-triage",
+      "external",
+      "ready-for-review"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": "2026-10-28T09:58:30Z",
+    "draft": null,
+    "body": "\n\n<!--\nThank you for contributing to GitHub CLI!\n\nIf you are"
+  },
+  {
+    "number": 14852,
+    "title": "Jijo",
+    "state": "closed",
+    "user": "user013",
+    "labels": [
+      "suspected-spam"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": "2026-10-28T04:10:54Z",
+    "draft": null,
+    "body": ""
+  },
+  {
+    "number": 14851,
+    "title": "Jijo",
+    "state": "closed",
+    "user": "user013",
+    "labels": [
+      "suspected-spam"
+    ],
+    "comments": 1,
+    "milestone": null,
+    "closed_at": "2026-10-28T04:11:38Z",
+    "draft": null,
+    "body": "<!-- See [CONTRIBUTING.md](../CONTRIBUTING.md#proposing-a-de"
+  },
+  {
+    "number": 14850,
+    "title": "Jijokj",
+    "state": "closed",
+    "user": "user013",
+    "labels": [
+      "suspected-spam"
+    ],
+    "comments": 3,
+    "milestone": null,
+    "closed_at": "2026-10-28T04:09:50Z",
+    "draft": null,
+    "body": "> (fgg) \n\n _Originally posted by @jijosijikallur04-source in"
+  },
+  {
+    "number": 14849,
+    "title": "jijo",
+    "state": "closed",
+    "user": "user013",
+    "labels": [
+      "suspected-spam"
+    ],
+    "comments": 2,
+    "milestone": null,
+    "closed_at": "2026-10-28T04:09:08Z",
+    "draft": null,
+    "body": "<!--\nFor security vulnerabilities, first report through GitH"
+  }
+]
