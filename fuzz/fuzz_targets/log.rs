@@ -1,6 +1,7 @@
 //! LOG test/build collapse: never panics; every output line is either a note
 //! or an input line, in input order; the notes' counts never exceed what was
-//! removed; trailing newline kept; a second pass changes nothing.
+//! removed; trailing newline kept; a second pass changes nothing. test_group
+//! (test_pass v2) rebuilds its input byte for byte.
 #![no_main]
 use crush_core::transforms::log;
 use libfuzzer_sys::fuzz_target;
@@ -38,5 +39,10 @@ fuzz_target!(|data: &[u8]| {
         }
         assert!(counted <= raw.len() - kept, "notes count more lines than were removed");
         assert_eq!(f(&out, R), None, "not idempotent");
+    }
+    // test_pass v2: lossless, a fixed point
+    if let Some(g) = log::group_tests(&s) {
+        assert_eq!(log::expand_test_groups(&g), s, "test_group must rebuild its input");
+        assert_eq!(log::group_tests(&g), None, "test_group not idempotent");
     }
 });

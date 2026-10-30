@@ -66,7 +66,10 @@ SUMMARY = f"accuracy.summary.{ACC_TAG}.json" if ACC_TAG else "accuracy.summary.j
 FXREC = f"accuracy.fixtures.{ACC_TAG}.jsonl" if ACC_TAG else "accuracy.fixtures.jsonl"
 QUOTA: dict[str, int] = {}
 LABELS: set[str] = set()  # --labels: only samples one of these transforms fired on
-COLLAPSE = ("test_pass", "build_progress")
+# LOG transforms that rewrite lines: a "quote the next line" question whose
+# answer line no longer exists verbatim is dropped (rule fixed before each
+# run; test_group's added before Phase 3's run)
+COLLAPSE = ("test_pass", "build_progress", "test_group")
 
 
 def auth_digest() -> str:
@@ -212,7 +215,9 @@ def select(which: str, n_corpus: int, seed: int, max_q: int):
             continue
         if LABELS and not any(t in LABELS for t in (r["label"] or "").split("+")):
             continue
+        s["_crushed"] = r["output"]  # generators may probe what moved (test_group)
         qs, dropped = fair_for(gen_questions(s, max_q), r["output"])
+        s.pop("_crushed", None)
         DROPPED[which] = DROPPED.get(which, 0) + dropped
         # a question quoting text crush cut (moved to the raw file) is still
         # asked, but marked: it measures what was moved out, not misreading
