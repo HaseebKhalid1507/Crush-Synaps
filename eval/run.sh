@@ -9,7 +9,8 @@
 # Phase 2A accuracy (search_elide, ls_columns) is its own capped run; see eval/README.md.
 # Env: CRUSH_EVAL_DAYS (30) corpus window · CRUSH_EVAL_MAX_CALLS (400) model-call cap
 #      CRUSH_EVAL_SAMPLES (80) real samples in the accuracy slice · CRUSH_EVAL_MODELS (haiku,sonnet)
-#      CRUSH_EVAL_QUOTA (search_group:46,repeats:16,progress:10,blobs:8) accuracy quotas per transform
+#      CRUSH_EVAL_QUOTA (search_group:46,repeats:16,progress:10,blobs:8,test_pass:30,build_progress:12,json_minify:20)
+#        accuracy quotas per transform
 #      CRUSH_CORPUS_DIR (~/.cache/crush-corpus) · CARGO_TARGET_DIR (./target)
 # Accuracy runs on the candidate variant (every transform on, incl. the ones that
 # ship disabled), so a disabled transform is re-tested by every `make eval`.
@@ -99,13 +100,23 @@ if [ "$ACC" = 1 ]; then
   step "accuracy: raw vs crushed through synaps rpc (cap ${CRUSH_EVAL_MAX_CALLS:-400} model calls)"
   "${VARIANT[@]}" python3 eval/accuracy/run_accuracy.py --sets "$SETS" --models "${CRUSH_EVAL_MODELS:-haiku,sonnet}" \
     --max-calls "${CRUSH_EVAL_MAX_CALLS:-400}" --corpus-samples "${CRUSH_EVAL_SAMPLES:-80}" \
-    --quota "${CRUSH_EVAL_QUOTA:-search_group:46,repeats:16,progress:10,blobs:8}"
+    --quota "${CRUSH_EVAL_QUOTA:-search_group:46,repeats:16,progress:10,blobs:8,test_pass:30,build_progress:12,json_minify:20}"
 fi
 
 step "edit-safety gate (CONTENT byte-identical, SEARCH lines rebuild)"
 python3 eval/edit_safety.py --sets "$SETS" --strict >/dev/null
 "${VARIANT[@]}" python3 eval/edit_safety.py --sets "$SETS" --strict >/dev/null
 "${P2A[@]}" python3 eval/edit_safety.py --sets "$SETS" --strict >/dev/null
+
+step "Phase 2B checks (LOG lines verbatim, note counts, JSON tokens) + savings after Synaps' spill step"
+python3 eval/p2b_checks.py >/dev/null
+"${VARIANT[@]}" python3 eval/p2b_checks.py >/dev/null
+python3 eval/spill_report.py --set fixtures >/dev/null
+"${VARIANT[@]}" python3 eval/spill_report.py --set fixtures >/dev/null
+if [ "$CORPUS" = 1 ]; then
+  python3 eval/spill_report.py --set corpus >/dev/null
+  "${VARIANT[@]}" python3 eval/spill_report.py --set corpus --skip-denominators >/dev/null
+fi
 
 step "gate + report"
 python3 eval/gate.py

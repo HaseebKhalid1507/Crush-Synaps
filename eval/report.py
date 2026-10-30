@@ -316,6 +316,8 @@ def main() -> int:
     md = replace(md, "estimator", sec_estimator(load("estimator.json"), load("search_layout.json")))
     import report_p2a  # Phase 2A: SEARCH layout and LISTING transforms
     md = report_p2a.apply(md, replace)
+    import report_p2b  # Phase 2B: LOG / VCS / STRUCTURED
+    md = report_p2b.render(md, replace)
     RESULTS.write_text(md)
     print(f"wrote {RESULTS}")
     return 0

@@ -7,7 +7,9 @@
 use crate::{Class, Config};
 
 pub mod blobs;
+pub mod json;
 pub mod listing;
+pub mod log;
 pub mod progress;
 pub mod repeats;
 pub mod search;
@@ -30,9 +32,11 @@ fn pipeline(class: Class) -> &'static [&'static str] {
         Class::Search => &[search_elide::NAME, search::NAME],
         // `ls -l` factoring last: its round trip is checked on its own input
         Class::Listing => &[progress::NAME, repeats::NAME, blobs::NAME, listing::NAME],
-        Class::Log | Class::Vcs | Class::Structured | Class::Unknown | Class::Prose => {
-            &[progress::NAME, repeats::NAME, blobs::NAME]
-        }
+        // test/build collapse before the generic text chain
+        Class::Log => &[progress::NAME, log::BUILD, log::TESTS, repeats::NAME, blobs::NAME],
+        // minify first: it parses the raw JSON, and blobs never touch JSON lines
+        Class::Structured => &[json::NAME, progress::NAME, repeats::NAME, blobs::NAME],
+        Class::Vcs | Class::Unknown | Class::Prose => &[progress::NAME, repeats::NAME, blobs::NAME],
     }
 }
 
@@ -64,6 +68,9 @@ pub fn run(class: Class, text: &str, command: Option<&str>, raw_ref: Option<&str
             blobs::NAME => (cfg.transforms.blobs, true),
             search_elide::NAME => (cfg.transforms.search_elide, true),
             listing::NAME => (cfg.transforms.ls_columns, false),
+            log::TESTS => (cfg.transforms.test_pass, true),
+            log::BUILD => (cfg.transforms.build_progress, true),
+            json::NAME => (cfg.transforms.json_minify, false),
             _ => (false, false),
         };
         if !on || (lossy && raw_ref.is_none()) {
@@ -76,6 +83,9 @@ pub fn run(class: Class, text: &str, command: Option<&str>, raw_ref: Option<&str
             blobs::NAME => blobs::elide(src, raw_ref.unwrap_or("")),
             search_elide::NAME => search_elide::elide(src, command, raw_ref.unwrap_or("")),
             listing::NAME => listing::factor(src, command),
+            log::TESTS => log::collapse_tests(src, raw_ref.unwrap_or("")),
+            log::BUILD => log::collapse_build(src, raw_ref.unwrap_or("")),
+            json::NAME => json::minify(src),
             _ => None,
         };
         if let Some(n) = next {

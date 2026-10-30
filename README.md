@@ -50,6 +50,20 @@ The transforms that lose information (progress frames, blobs, cut grep lines) on
 host promises to keep the raw output (`Input::raw_ref`); their markers say where
 it is.
 
+Phase 2B (LOG, VCS, STRUCTURED):
+- **LOG**: runs of build-progress lines (cargo `Compiling`/`Checking`/`Downloaded`…,
+  pip `Collecting`/`Downloading`…) become `[crush: 15 build-progress lines not shown:
+  14 Compiling, 1 Downloaded]` (`build_progress`). Warnings, errors and code frames are
+  kept as printed.
+- **Passing-test collapse** (`test_pass`) is built and gated, and **ships disabled**:
+  failures, totals and panics stayed at parity, but asked "did test X pass?" about a
+  collapsed test, the models answered "unknown" (200/200 → 55/200).
+- **STRUCTURED**: pretty JSON one top-level element per line (`json_minify`, −20%
+  tokens, lossless in meaning) **ships disabled**: Sonnet's misses exceeded its noise
+  floor by two "quote the next line" answers.
+- **VCS** has no transform of its own: compact `git log` headers save under 1% of tokens,
+  and dropping `git status` hints doesn't pay for the raw-output pointer it needs.
+
 ## Layout
 
 | crate | what |

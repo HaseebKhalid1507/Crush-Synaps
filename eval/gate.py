@@ -11,6 +11,12 @@ Checked (each only if its input exists):
 - latency: corpus in-process p99 < 1 ms; every 256 KiB worst case < 1 ms
   best-of-200 (p99 is reported, not gated: it measures machine load)
 - estimator: held-out median |error| < 10% (both families)
+- Phase 2B (p2b_checks.json, spill.*.json): every non-collapsible LOG line
+  kept verbatim and in order (failures, summaries, diagnostics and code
+  frames called out), notes count exactly what they replaced, JSON layout
+  keeps the token stream byte for byte; no fired result costs more after
+  Synaps' spill step when the spill is decided on the raw's size (the
+  crushed-size policy is reported); the 256 KiB LOG/JSON shapes < 1 ms p99
 """
 from __future__ import annotations
 
@@ -85,6 +91,34 @@ if est:
     for k, v in est["fit"].items():
         e = v["test"]["median_abs_rel_err"]
         check(e < 0.10, f"estimator {k} held-out median |err| {e:.1%} < 10%")
+
+# Phase 2B: LOG / STRUCTURED invariants, re-checked independently of crush-core
+for tag in ("", ".search_on"):
+    p2b = load(f"p2b_checks{tag}.json")
+    if p2b:
+        for s, r in p2b.items():
+            for k in ("log_lines_missing", "failure_lines_missing", "summary_lines_missing", "diagnostic_lines_missing",
+                      "note_count_mismatches", "json_token_mismatches"):
+                check(r.get(k, 0) == 0, f"{s}{tag}: p2b {k} {r.get(k, 0)}")
+    for s in ("fixtures", "corpus"):
+        sp = load(f"spill.{s}{tag}.json")
+        if sp:
+            for m, by in sp["fired_by"].items():
+                # host policy B (spill decided on the raw's size, preview of the
+                # crushed text): what Phase 3 should wire; policy A is reported.
+                # Phase 2B's transforms, shipped and candidates (other phases'
+                # after-spill effects are counted in their own sections, e.g.
+                # search_elide's in Phase 2A's after_spill.py)
+                rows = {k: v for k, v in by.items() if any(t in k for t in ("test_pass", "build_progress", "json_minify"))}
+                for k, a in rows.items():
+                    check(a.get("grew_after_spill_b", 0) == 0,
+                          f"{s}{tag} {k}: fired results costlier after spill, spill-on-raw-size ({m}): {a.get('grew_after_spill_b', 0)} "
+                          f"(spill-on-crushed-size: {a.get('grew_after_spill', 0)}, reported)")
+syn = load("synthetic.json")
+if syn:
+    for x in syn:
+        if x["shape"] in ("cargo_test_log", "cargo_build_log", "pretty_json", "pretty_json_128k"):
+            check(x["p99_us"] < 1000, f"256 KiB {x['shape']}: p99 {x['p99_us']:.0f} µs < 1 ms")
 
 for o in oks:
     print("  ok  ", o)
