@@ -111,12 +111,14 @@ python3 eval/edit_safety.py --sets "$SETS" --strict >/dev/null
 "${VARIANT[@]}" python3 eval/edit_safety.py --sets "$SETS" --strict >/dev/null
 "${P2A[@]}" python3 eval/edit_safety.py --sets "$SETS" --strict >/dev/null
 
-step "Phase 2B checks (LOG lines verbatim, note counts, JSON tokens) + savings after Synaps' spill step"
+step "Phase 2B checks (LOG lines verbatim, note counts, JSON tokens) + savings after Synaps' spill step (2B policies, Phase 3 shim)"
 python3 eval/p2b_checks.py >/dev/null
 "${VARIANT[@]}" python3 eval/p2b_checks.py >/dev/null
 python3 eval/spill_report.py --set fixtures >/dev/null
 "${VARIANT[@]}" python3 eval/spill_report.py --set fixtures >/dev/null
+python3 eval/p3_spill.py --set fixtures >/dev/null
 if [ "$CORPUS" = 1 ]; then
+  python3 eval/p3_spill.py --set corpus >/dev/null
   python3 eval/spill_report.py --set corpus >/dev/null
   "${VARIANT[@]}" python3 eval/spill_report.py --set corpus --skip-denominators >/dev/null
 fi

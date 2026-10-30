@@ -122,6 +122,19 @@ shim = load("shim.json")
 if shim:
     for c in shim["checks"]:
         check(c["ok"], f"shim: {c['check']}" + ("" if c["ok"] else f" ({c.get('detail')})"))
+# ... and after Synaps' spill step, in real tokens (eval/p3_spill.py): the only
+# results the shim may hand over costlier are LOG results whose failures the
+# raw's preview would have cut
+for s in ("fixtures", "corpus"):
+    p3 = load(f"p3_spill.{s}.json")
+    if p3:
+        bad = [r for r in p3["shim_costlier"]
+               if not (r["class"] == "LOG" and (r.get("fail_visible_shim") or 0) > (r.get("fail_visible_raw") or 0))]
+        check(not bad, f"{s}: shim results costlier after spill (real tokens, either family), other than kept failures: {len(bad)}")
+        a = p3["by_label"].get("all", {})
+        if a.get("fail_lines"):
+            check(a["fail_visible_shim"] >= a["fail_visible_raw"],
+                  f"{s}: failure lines visible after spill, shim {a['fail_visible_shim']} >= raw {a['fail_visible_raw']}")
 
 syn = load("synthetic.json")
 if syn:
