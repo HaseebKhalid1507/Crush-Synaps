@@ -4,25 +4,53 @@
 //! `Content-Length: N\r\n\r\n<N bytes of UTF-8 JSON>`. This module is the
 //! transport — it knows nothing about hooks or compression.
 
-use std::io::{BufRead, Write};
+use std::io::{BufRead, Read, Write};
 
 /// Reject frames larger than this to bound memory against a malformed or
 /// malicious Content-Length. Tool output is capped at 256 KiB upstream; 64 MiB
 /// is generous headroom for the framed JSON envelope.
 const MAX_FRAME_BYTES: usize = 64 * 1024 * 1024;
+/// A header line longer than this is malformed.
+const MAX_HEADER_LINE: u64 = 8 * 1024;
+/// Most header lines in one frame.
+const MAX_HEADERS: usize = 32;
+
+fn invalid(msg: impl Into<String>) -> std::io::Error {
+    std::io::Error::new(std::io::ErrorKind::InvalidData, msg.into())
+}
+
 /// Read one Content-Length-framed JSON message. Returns `Ok(None)` on clean
-/// EOF (peer closed the pipe), `Err` on a malformed frame.
+/// EOF (peer closed the pipe), `Err` (`InvalidData`) on a malformed frame,
+/// after which the next call reads on from where this one stopped. Memory
+/// stays bounded by what actually arrived, whatever the header claims.
 pub fn read_message<R: BufRead>(reader: &mut R) -> std::io::Result<Option<serde_json::Value>> {
     let mut content_length: Option<usize> = None;
-    let mut line = String::new();
+    let mut line = Vec::new();
+    let mut headers = 0;
     loop {
         line.clear();
-        let n = reader.read_line(&mut line)?;
+        let n = reader.by_ref().take(MAX_HEADER_LINE).read_until(b'\n', &mut line)?;
         if n == 0 {
-            return Ok(None); // EOF
+            if headers == 0 {
+                return Ok(None); // EOF
+            }
+            return Err(std::io::Error::new(std::io::ErrorKind::UnexpectedEof, "EOF inside headers"));
         }
-        let trimmed = line.trim_end_matches(['\r', '\n']);
+        if line.last() != Some(&b'\n') && n as u64 >= MAX_HEADER_LINE {
+            return Err(invalid("header line too long"));
+        }
+        headers += 1;
+        if headers > MAX_HEADERS {
+            return Err(invalid("too many header lines"));
+        }
+        let text = String::from_utf8_lossy(&line);
+        let trimmed = text.trim_end_matches(['\r', '\n']);
         if trimmed.is_empty() {
+            if headers == 1 {
+                // a stray blank line between frames
+                headers = 0;
+                continue;
+            }
             break; // end of headers
         }
         if let Some((name, value)) = trimmed.split_once(':') {
@@ -31,18 +59,21 @@ pub fn read_message<R: BufRead>(reader: &mut R) -> std::io::Result<Option<serde_
             }
         }
     }
-    let len =
-        content_length.ok_or_else(|| std::io::Error::new(std::io::ErrorKind::InvalidData, "missing Content-Length"))?;
+    let len = content_length.ok_or_else(|| invalid("missing Content-Length"))?;
     if len > MAX_FRAME_BYTES {
-        return Err(std::io::Error::new(
-            std::io::ErrorKind::InvalidData,
-            format!("frame too large: {len} > {MAX_FRAME_BYTES}"),
-        ));
+        return Err(invalid(format!("frame too large: {len} > {MAX_FRAME_BYTES}")));
     }
-    let mut buf = vec![0u8; len];
-    reader.read_exact(&mut buf)?;
-    let value = serde_json::from_slice(&buf).map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
+    let mut buf = Vec::with_capacity(len.min(1 << 20));
+    reader.by_ref().take(len as u64).read_to_end(&mut buf)?;
+    if buf.len() < len {
+        return Err(std::io::Error::new(std::io::ErrorKind::UnexpectedEof, "EOF inside a frame body"));
+    }
+    let value = serde_json::from_slice(&buf).map_err(invalid_json)?;
     Ok(Some(value))
+}
+
+fn invalid_json(e: serde_json::Error) -> std::io::Error {
+    std::io::Error::new(std::io::ErrorKind::InvalidData, e)
 }
 
 /// Write a JSON-RPC response (`{"jsonrpc":"2.0","id":<id>,"result":<result>}`)
@@ -102,8 +133,29 @@ mod tests {
 
     #[test]
     fn errors_on_missing_content_length() {
-        let mut cursor = Cursor::new(b"\r\n{}".to_vec());
+        let mut cursor = Cursor::new(b"X-Other: 1\r\n\r\n{}".to_vec());
         assert!(read_message(&mut cursor).is_err());
+    }
+
+    #[test]
+    fn a_huge_claimed_length_allocates_only_what_arrived() {
+        let mut cursor = Cursor::new(b"Content-Length: 60000000\r\n\r\n{}".to_vec());
+        let e = read_message(&mut cursor).unwrap_err();
+        assert_eq!(e.kind(), std::io::ErrorKind::UnexpectedEof);
+        let mut cursor = Cursor::new(b"Content-Length: 99999999999\r\n\r\n{}".to_vec());
+        assert_eq!(read_message(&mut cursor).unwrap_err().kind(), std::io::ErrorKind::InvalidData);
+    }
+
+    #[test]
+    fn a_bad_frame_does_not_eat_the_next_one() {
+        let good = r#"{"id":2,"method":"b"}"#;
+        let frame = format!("Content-Length: 3\r\n\r\n{{x}}Content-Length: {}\r\n\r\n{good}", good.len());
+        let mut cursor = Cursor::new(frame.into_bytes());
+        assert_eq!(read_message(&mut cursor).unwrap_err().kind(), std::io::ErrorKind::InvalidData);
+        assert_eq!(read_message(&mut cursor).unwrap().unwrap()["id"], 2);
+        let mut long = vec![b'X'; 20_000];
+        long.extend_from_slice(b"\r\n\r\n");
+        assert!(read_message(&mut Cursor::new(long)).is_err());
     }
 
     #[test]
