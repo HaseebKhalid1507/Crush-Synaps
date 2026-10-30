@@ -89,7 +89,7 @@ fn ls_row(owner: &'static str, group: &'static str) -> impl Strategy<Value = Str
 
 fn ls_text() -> impl Strategy<Value = String> {
     let row = prop_oneof![
-        8 => ls_row("haseeb", "haseeb"),
+        8 => ls_row("worker", "worker"),
         2 => ls_row("root", "root"),
         1 => ls_row("1000", "1000"),
         1 => ls_row("u", "staff"),
@@ -220,7 +220,7 @@ fn worst_cases_stay_fast() {
         let mut s = String::new();
         let mut i = 0;
         while s.len() < cap - 200 {
-            s.push_str(&format!("-rw-r--r-- 1 haseeb haseeb {:>8} Oct 12 09:41 file{i}.so\n", i * 7));
+            s.push_str(&format!("-rw-r--r-- 1 worker worker {:>8} Oct 12 09:41 file{i}.so\n", i * 7));
             i += 1;
         }
         s
