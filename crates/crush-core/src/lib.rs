@@ -99,7 +99,8 @@ impl ClassSwitches {
 }
 
 /// Per-transform switches. Defaults reflect the accuracy gate: a transform
-/// that failed parity ships disabled (`search_group`, see eval/RESULTS.md).
+/// that failed parity ships disabled (`search_group`, `ls_columns`, see
+/// eval/RESULTS.md).
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(default, deny_unknown_fields)]
 pub struct TransformSwitches {
@@ -114,16 +115,19 @@ pub struct TransformSwitches {
     /// Long base64 / hex / minified blobs elided (lossy).
     pub blobs: bool,
     /// SEARCH hit lines over 1 KiB cut to the text around the match, with
-    /// exact cut counts and a raw pointer (lossy). Phase 2 candidate.
+    /// exact cut counts and a raw pointer (lossy). On: at parity on Haiku and
+    /// Sonnet over two rounds (eval/RESULTS.md, Phase 2A).
     pub search_elide: bool,
     /// LISTING `ls -l` owner/group said once in words when (nearly) every row
-    /// has the same pair (lossless). Phase 2 candidate.
+    /// has the same pair (lossless). Off: failed accuracy parity with both
+    /// note wordings (models answered "unknown" for the owner and read the
+    /// neighbouring row's date; eval/RESULTS.md, Phase 2A).
     pub ls_columns: bool,
 }
 
 impl Default for TransformSwitches {
     fn default() -> Self {
-        Self { search_group: false, progress: true, repeats: true, blobs: true, search_elide: false, ls_columns: false }
+        Self { search_group: false, progress: true, repeats: true, blobs: true, search_elide: true, ls_columns: false }
     }
 }
 
