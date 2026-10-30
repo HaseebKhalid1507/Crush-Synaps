@@ -40,7 +40,15 @@ fn die(msg: &str) -> ! {
 }
 
 fn parse_args() -> Args {
-    let mut a = Args { sub: None, tool: "bash".into(), command: None, keep_raw: None, config: Config::default(), explain: false, files: vec![] };
+    let mut a = Args {
+        sub: None,
+        tool: "bash".into(),
+        command: None,
+        keep_raw: None,
+        config: Config::default(),
+        explain: false,
+        files: vec![],
+    };
     let mut it = std::env::args().skip(1);
     while let Some(x) = it.next() {
         let mut val = |name: &str| it.next().unwrap_or_else(|| die(&format!("{name} needs a value")));
@@ -113,12 +121,14 @@ fn run(a: &Args) {
         let mut e = std::io::stderr();
         let _ = writeln!(e, "class:      {} ({})", c.class, c.reason);
         let _ = writeln!(e, "result:     {}", o.why.as_str());
-        let _ = writeln!(e, "transforms: {}", if o.transforms.is_empty() { "-".into() } else { o.transforms.join(", ") });
+        let _ =
+            writeln!(e, "transforms: {}", if o.transforms.is_empty() { "-".into() } else { o.transforms.join(", ") });
         let _ = writeln!(e, "lossless:   {}", o.lossless);
         let _ = writeln!(e, "bytes:      {} -> {}", raw.len(), o.text.len());
         for tk in [Tokenizer::V5, Tokenizer::V4] {
             let (b, f) = (estimate_tokens(&raw, tk), estimate_tokens(&o.text, tk));
-            let _ = writeln!(e, "tokens {}: {} -> {} (estimated)", if tk == Tokenizer::V5 { "5.x" } else { "4.x" }, b, f);
+            let _ =
+                writeln!(e, "tokens {}: {} -> {} (estimated)", if tk == Tokenizer::V5 { "5.x" } else { "4.x" }, b, f);
         }
     }
     let _ = std::io::stdout().write_all(o.text.as_bytes());
@@ -142,7 +152,8 @@ fn measure(a: &Args) {
         let o = compress(&input, &a.config);
         ti += o.tokens_before as u64;
         to += o.tokens_after as u64;
-        let saved = if o.tokens_before > 0 { 100.0 * (1.0 - o.tokens_after as f64 / o.tokens_before as f64) } else { 0.0 };
+        let saved =
+            if o.tokens_before > 0 { 100.0 * (1.0 - o.tokens_after as f64 / o.tokens_before as f64) } else { 0.0 };
         println!(
             "{f}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{saved:.1}%",
             o.class,

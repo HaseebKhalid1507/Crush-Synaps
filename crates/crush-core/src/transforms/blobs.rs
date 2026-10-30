@@ -71,7 +71,8 @@ fn minified(line: &str) -> bool {
         return false;
     }
     let ws = b.iter().filter(|c| c.is_ascii_whitespace()).count();
-    let punct = b.iter().filter(|c| matches!(c, b'{' | b'}' | b'(' | b')' | b';' | b',' | b'=' | b'<' | b'>' | b':')).count();
+    let punct =
+        b.iter().filter(|c| matches!(c, b'{' | b'}' | b'(' | b')' | b';' | b',' | b'=' | b'<' | b'>' | b':')).count();
     ws * 50 < b.len() && punct * 7 > b.len()
 }
 
@@ -135,8 +136,10 @@ fn wrapped_b64(l: &str) -> Option<&str> {
 fn b64_body(l: &str, min: usize) -> Option<&str> {
     let body = l.trim_start();
     let core = body.trim_end_matches('=');
-    (body.len() >= min.max(1) && body.len() - core.len() <= 2 && core.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'+' || c == b'/'))
-        .then_some(body)
+    (body.len() >= min.max(1)
+        && body.len() - core.len() <= 2
+        && core.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'+' || c == b'/'))
+    .then_some(body)
 }
 
 /// Length of the wrapped-base64 block starting at `ls[i]` (0 if none).
@@ -212,7 +215,10 @@ mod tests {
         let b64: String = (0..400).map(|i| b"QmFzZTY0IGlzIGZ1bjEyMw9xYZ+/"[i % 28] as char).collect();
         let raw = format!("{{\"data\": \"{b64}==\"}}\n");
         let got = elide(&raw, "/r/x.txt").unwrap();
-        assert_eq!(got, "{\"data\": \"[crush: 402-char base64 blob elided, starts QmFzZTY0IGlzIGZ1; raw output: /r/x.txt]\"}\n");
+        assert_eq!(
+            got,
+            "{\"data\": \"[crush: 402-char base64 blob elided, starts QmFzZTY0IGlzIGZ1; raw output: /r/x.txt]\"}\n"
+        );
         let hex = "deadbeef0123456789".repeat(10);
         assert!(elide(&format!("x {hex} y"), "R").unwrap().contains("180-char hex blob elided"));
     }
@@ -220,7 +226,10 @@ mod tests {
     #[test]
     fn wrapped_base64_block() {
         let row: String = (0..64).map(|i| b"MIIDXTCCAkWgAwIBAgIJAKl7+/9z3Q0x"[i % 32] as char).collect();
-        let pem = format!("-----BEGIN CERTIFICATE-----\n{}\nAkWgAwIB==\n-----END CERTIFICATE-----\n", vec![row.as_str(); 6].join("\n"));
+        let pem = format!(
+            "-----BEGIN CERTIFICATE-----\n{}\nAkWgAwIB==\n-----END CERTIFICATE-----\n",
+            [row.as_str(); 6].join("\n")
+        );
         let got = elide(&pem, "R").unwrap();
         assert_eq!(
             got,

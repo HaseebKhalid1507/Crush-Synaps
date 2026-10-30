@@ -78,45 +78,188 @@ pub struct Classification {
 const SHELL_TOOLS: &[&str] = &["bash", "shell", "sh", "shell_start", "shell_send", "powershell", "exec", "terminal"];
 
 const NOISE: &[&str] = &[
-    "cd", "pushd", "popd", "source", ".", "export", "set", "unset", "true", "false", ":", "mkdir", "sleep",
-    "clear", "shopt", "trap", "ulimit", "alias", "local", "declare", "umask", "wait", "rm", "touch", "chmod",
-    "chown", "cp", "mv", "ln", "kill", "pkill", "killall", "test", "[", "[[", "read", "shift", "return",
-    "exit", "break", "continue", "eval", "hash", "rmdir", "install", "truncate", "disown", "tput",
+    "cd", "pushd", "popd", "source", ".", "export", "set", "unset", "true", "false", ":", "mkdir", "sleep", "clear",
+    "shopt", "trap", "ulimit", "alias", "local", "declare", "umask", "wait", "rm", "touch", "chmod", "chown", "cp",
+    "mv", "ln", "kill", "pkill", "killall", "test", "[", "[[", "read", "shift", "return", "exit", "break", "continue",
+    "eval", "hash", "rmdir", "install", "truncate", "disown", "tput",
 ];
 const PRINTERS: &[&str] = &["echo", "printf"];
 /// Interpreters: their output says nothing reliable about class, and in this
 /// workload they are mostly edit scripts that precede the real command.
-const INTERPRETERS: &[&str] = &["python", "python3", "node", "perl", "ruby", "bash", "sh", "zsh", "deno", "bun", "php", "lua"];
+const INTERPRETERS: &[&str] =
+    &["python", "python3", "node", "perl", "ruby", "bash", "sh", "zsh", "deno", "bun", "php", "lua"];
 
 const CONTENT_PROGS: &[&str] = &[
-    "cat", "head", "tail", "nl", "less", "more", "bat", "batcat", "tac", "view", "diff", "colordiff", "strings",
-    "od", "xxd", "hexdump", "base64", "zcat", "bzcat", "xzcat", "zstdcat", "delta", "difft",
+    "cat",
+    "head",
+    "tail",
+    "nl",
+    "less",
+    "more",
+    "bat",
+    "batcat",
+    "tac",
+    "view",
+    "diff",
+    "colordiff",
+    "strings",
+    "od",
+    "xxd",
+    "hexdump",
+    "base64",
+    "zcat",
+    "bzcat",
+    "xzcat",
+    "zstdcat",
+    "delta",
+    "difft",
 ];
-const SEARCH_PROGS: &[&str] = &["grep", "egrep", "fgrep", "rg", "ag", "ack", "zgrep", "pcregrep", "ugrep", "sg", "git-grep"];
+const SEARCH_PROGS: &[&str] =
+    &["grep", "egrep", "fgrep", "rg", "ag", "ack", "zgrep", "pcregrep", "ugrep", "sg", "git-grep"];
 const LISTING_PROGS: &[&str] = &[
-    "ls", "find", "fd", "fdfind", "tree", "ps", "pgrep", "du", "df", "lsof", "lsblk", "exa", "eza", "locate",
-    "pstree", "top", "htop", "free", "ss", "netstat", "ip", "mount", "lsmod", "pip-list", "stat", "file", "wc",
-    "realpath", "readlink", "which", "whereis", "type", "lscpu", "lsusb", "lspci",
-    "id", "groups", "w", "who", "last", "dust", "ncdu", "column",
+    "ls", "find", "fd", "fdfind", "tree", "ps", "pgrep", "du", "df", "lsof", "lsblk", "exa", "eza", "locate", "pstree",
+    "top", "htop", "free", "ss", "netstat", "ip", "mount", "lsmod", "pip-list", "stat", "file", "wc", "realpath",
+    "readlink", "which", "whereis", "type", "lscpu", "lsusb", "lspci", "id", "groups", "w", "who", "last", "dust",
+    "ncdu", "column",
 ];
 const LOG_PROGS: &[&str] = &[
-    "cargo", "npm", "pnpm", "yarn", "bun", "npx", "bunx", "pip", "pip3", "uv", "pytest", "py.test", "tox",
-    "nox", "go", "make", "cmake", "ninja", "meson", "gradle", "gradlew", "mvn", "tsc", "jest", "vitest",
-    "mocha", "rustc", "gcc", "g++", "clang", "clang++", "cc", "javac", "dotnet", "journalctl", "dmesg",
-    "rustup", "eslint", "prettier", "ruff", "mypy", "black", "clippy-driver", "cargo-nextest", "nextest",
-    "bazel", "swift", "flutter", "pacman", "apt", "apt-get", "dnf", "yum", "brew", "poetry", "pipenv",
-    "conda", "next", "vite", "webpack", "docker-compose", "nvcc", "ctest", "playwright", "cypress", "zig",
-    "terraform", "ansible-playbook", "helm", "mix", "rebar3", "stack", "cabal", "sbt", "bundle", "rake",
-    "rspec", "phpunit", "composer", "shellcheck", "hadolint", "golangci-lint", "build.sh", "test.sh",
+    "cargo",
+    "npm",
+    "pnpm",
+    "yarn",
+    "bun",
+    "npx",
+    "bunx",
+    "pip",
+    "pip3",
+    "uv",
+    "pytest",
+    "py.test",
+    "tox",
+    "nox",
+    "go",
+    "make",
+    "cmake",
+    "ninja",
+    "meson",
+    "gradle",
+    "gradlew",
+    "mvn",
+    "tsc",
+    "jest",
+    "vitest",
+    "mocha",
+    "rustc",
+    "gcc",
+    "g++",
+    "clang",
+    "clang++",
+    "cc",
+    "javac",
+    "dotnet",
+    "journalctl",
+    "dmesg",
+    "rustup",
+    "eslint",
+    "prettier",
+    "ruff",
+    "mypy",
+    "black",
+    "clippy-driver",
+    "cargo-nextest",
+    "nextest",
+    "bazel",
+    "swift",
+    "flutter",
+    "pacman",
+    "apt",
+    "apt-get",
+    "dnf",
+    "yum",
+    "brew",
+    "poetry",
+    "pipenv",
+    "conda",
+    "next",
+    "vite",
+    "webpack",
+    "docker-compose",
+    "nvcc",
+    "ctest",
+    "playwright",
+    "cypress",
+    "zig",
+    "terraform",
+    "ansible-playbook",
+    "helm",
+    "mix",
+    "rebar3",
+    "stack",
+    "cabal",
+    "sbt",
+    "bundle",
+    "rake",
+    "rspec",
+    "phpunit",
+    "composer",
+    "shellcheck",
+    "hadolint",
+    "golangci-lint",
+    "build.sh",
+    "test.sh",
 ];
-const STRUCTURED_PROGS: &[&str] = &["jq", "yq", "gron", "jo", "sqlite3", "psql", "mysql", "csvlook", "mlr", "xsv", "jless"];
+const STRUCTURED_PROGS: &[&str] =
+    &["jq", "yq", "gron", "jo", "sqlite3", "psql", "mysql", "csvlook", "mlr", "xsv", "jless"];
 
 const GIT_VCS: &[&str] = &[
-    "log", "status", "branch", "reflog", "shortlog", "stash", "remote", "tag", "fetch", "pull", "push",
-    "commit", "merge", "rebase", "cherry-pick", "checkout", "switch", "worktree", "describe", "rev-parse",
-    "rev-list", "blame", "config", "add", "reset", "restore", "clone", "am", "apply", "submodule", "bisect",
-    "notes", "for-each-ref", "show-ref", "ls-remote", "range-diff", "cherry", "gc", "fsck", "count-objects",
-    "init", "mv", "rm", "clean", "revert", "whatchanged", "show-branch", "merge-base",
+    "log",
+    "status",
+    "branch",
+    "reflog",
+    "shortlog",
+    "stash",
+    "remote",
+    "tag",
+    "fetch",
+    "pull",
+    "push",
+    "commit",
+    "merge",
+    "rebase",
+    "cherry-pick",
+    "checkout",
+    "switch",
+    "worktree",
+    "describe",
+    "rev-parse",
+    "rev-list",
+    "blame",
+    "config",
+    "add",
+    "reset",
+    "restore",
+    "clone",
+    "am",
+    "apply",
+    "submodule",
+    "bisect",
+    "notes",
+    "for-each-ref",
+    "show-ref",
+    "ls-remote",
+    "range-diff",
+    "cherry",
+    "gc",
+    "fsck",
+    "count-objects",
+    "init",
+    "mv",
+    "rm",
+    "clean",
+    "revert",
+    "whatchanged",
+    "show-branch",
+    "merge-base",
 ];
 const GIT_CONTENT: &[&str] = &["show", "diff", "cat-file", "format-patch", "difftool"];
 const GIT_LISTING: &[&str] = &["ls-files", "ls-tree"];
@@ -133,7 +276,8 @@ fn prose_tool(tool: &str) -> bool {
         || t.starts_with("subconscious")
         || t.starts_with("context_")
         || matches!(t, "respond" | "search_tools" | "activate_tools" | "load_skill" | "ask_user")
-        || ((t.contains("web") || t.contains("browser") || t.contains("docs")) && (t.contains("fetch") || t.contains("search") || t.contains("read")))
+        || ((t.contains("web") || t.contains("browser") || t.contains("docs"))
+            && (t.contains("fetch") || t.contains("search") || t.contains("read")))
 }
 
 fn native_tool(tool: &str) -> Option<Class> {
@@ -171,15 +315,25 @@ fn stage_class(st: &Stage, seg: &Segment) -> Option<(Class, String)> {
         "git" => {
             let sub = sub.to_string();
             if GIT_CONTENT.contains(&sub.as_str()) {
-                if st.args.iter().any(|a| a.strip_prefix("--").is_some_and(|f| DIFF_SUMMARY_FLAGS.contains(&f.split('=').next().unwrap_or(""))))
-                    || (sub == "show" && st.args.iter().any(|a| a == "-s" || a == "--no-patch" || a.starts_with("--format") || a.starts_with("--pretty") || a == "--oneline"))
+                if st.args.iter().any(|a| {
+                    a.strip_prefix("--")
+                        .is_some_and(|f| DIFF_SUMMARY_FLAGS.contains(&f.split('=').next().unwrap_or("")))
+                }) || (sub == "show"
+                    && st.args.iter().any(|a| {
+                        a == "-s"
+                            || a == "--no-patch"
+                            || a.starts_with("--format")
+                            || a.starts_with("--pretty")
+                            || a == "--oneline"
+                    }))
                 {
                     return r(Class::Vcs, format!("git {sub} summary"));
                 }
                 return r(Class::Content, format!("git {sub}"));
             }
             if sub == "grep" {
-                if st.has_flag('l', &["files-with-matches", "name-only"]) || st.has_flag('L', &["files-without-match"]) {
+                if st.has_flag('l', &["files-with-matches", "name-only"]) || st.has_flag('L', &["files-without-match"])
+                {
                     return r(Class::Listing, "git grep -l".into());
                 }
                 return r(Class::Search, "git grep".into());
@@ -212,14 +366,28 @@ fn stage_class(st: &Stage, seg: &Segment) -> Option<(Class, String)> {
         }
         "docker" | "podman" | "kubectl" | "k" | "nerdctl" => {
             let head: Vec<&str> = st.args.iter().take(3).map(String::as_str).collect();
-            let json = st.args.iter().any(|a| a == "json" || a == "yaml" || a == "-ojson" || a == "-oyaml" || a.starts_with("--output=") || a.starts_with("--format=json") || a.contains("{{json"));
-            if head.iter().any(|a| matches!(*a, "ps" | "images" | "get" | "ls" | "top" | "stats" | "volume" | "network")) {
+            let json = st.args.iter().any(|a| {
+                a == "json"
+                    || a == "yaml"
+                    || a == "-ojson"
+                    || a == "-oyaml"
+                    || a.starts_with("--output=")
+                    || a.starts_with("--format=json")
+                    || a.contains("{{json")
+            });
+            if head
+                .iter()
+                .any(|a| matches!(*a, "ps" | "images" | "get" | "ls" | "top" | "stats" | "volume" | "network"))
+            {
                 if json {
                     return r(Class::Structured, format!("{prog} -o json"));
                 }
                 return r(Class::Listing, format!("{prog} {sub}"));
             }
-            if matches!(sub, "logs" | "build" | "compose" | "describe" | "pull" | "run" | "push" | "exec" | "apply" | "rollout") {
+            if matches!(
+                sub,
+                "logs" | "build" | "compose" | "describe" | "pull" | "run" | "push" | "exec" | "apply" | "rollout"
+            ) {
                 return r(Class::Log, format!("{prog} {sub}"));
             }
             if sub == "inspect" {
@@ -228,10 +396,19 @@ fn stage_class(st: &Stage, seg: &Segment) -> Option<(Class, String)> {
             None
         }
         "sed" | "gsed" => {
-            if st.args.iter().any(|a| a == "-i" || a.starts_with("-i.") || a.starts_with("--in-place") || (a.starts_with('-') && !a.starts_with("--") && a.contains('i') && a.len() <= 4)) {
+            if st.args.iter().any(|a| {
+                a == "-i"
+                    || a.starts_with("-i.")
+                    || a.starts_with("--in-place")
+                    || (a.starts_with('-') && !a.starts_with("--") && a.contains('i') && a.len() <= 4)
+            }) {
                 return None; // in-place edit: prints nothing
             }
-            if st.args.iter().any(|a| a.starts_with("-n") || (a.ends_with('p') && a.bytes().next().is_some_and(|c| c.is_ascii_digit() || c == b'$' || c == b'/'))) {
+            if st.args.iter().any(|a| {
+                a.starts_with("-n")
+                    || (a.ends_with('p')
+                        && a.bytes().next().is_some_and(|c| c.is_ascii_digit() || c == b'$' || c == b'/'))
+            }) {
                 if st.operands().skip(1).any(log_path) {
                     return r(Class::Log, "sed -n *.log".into());
                 }
@@ -258,7 +435,8 @@ fn stage_class(st: &Stage, seg: &Segment) -> Option<(Class, String)> {
                 let ops: Vec<&str> = st.operands().collect();
                 let loop_log = seg.loop_items.iter().any(|x| log_path(x))
                     && ops.iter().any(|a| a.starts_with('$') || a.contains("${"));
-                if (matches!(prog, "cat" | "tail" | "head" | "tac" | "less" | "zcat") && (ops.iter().any(|a| log_path(a)) || loop_log))
+                if (matches!(prog, "cat" | "tail" | "head" | "tac" | "less" | "zcat")
+                    && (ops.iter().any(|a| log_path(a)) || loop_log))
                     || (prog == "tail" && st.has_flag('f', &["follow"]))
                 {
                     return r(Class::Log, format!("{prog} *.log"));
@@ -269,7 +447,10 @@ fn stage_class(st: &Stage, seg: &Segment) -> Option<(Class, String)> {
                 if st.has_flag('l', &["files-with-matches"]) || st.has_flag('L', &["files-without-match"]) {
                     return r(Class::Listing, format!("{prog} -l"));
                 }
-                if st.operands().skip(1).any(log_path) && !st.has_flag('r', &["recursive"]) && !st.has_flag('R', &["dereference-recursive"]) {
+                if st.operands().skip(1).any(log_path)
+                    && !st.has_flag('r', &["recursive"])
+                    && !st.has_flag('R', &["dereference-recursive"])
+                {
                     // grep over log files: the hits are log lines
                     return r(Class::Search, format!("{prog} *.log"));
                 }
@@ -288,17 +469,24 @@ fn stage_class(st: &Stage, seg: &Segment) -> Option<(Class, String)> {
                 // python3 -m pytest / node --test / python3 x_test.py
                 let m = st.args.iter().position(|a| a == "-m").and_then(|k| st.args.get(k + 1));
                 if let Some(m) = m {
-                    if LOG_PROGS.contains(&m.as_str()) || matches!(m.as_str(), "unittest" | "pip" | "build" | "venv" | "compileall" | "py_compile") {
+                    if LOG_PROGS.contains(&m.as_str())
+                        || matches!(m.as_str(), "unittest" | "pip" | "build" | "venv" | "compileall" | "py_compile")
+                    {
                         return r(Class::Log, format!("{prog} -m {m}"));
                     }
                     if m == "json.tool" {
                         return r(Class::Structured, "json.tool".into());
                     }
                 }
-                if st.args.iter().any(|a| a == "--test") || st.operands().next().is_some_and(|a| {
-                    let b = a.rsplit('/').next().unwrap_or(a);
-                    b.starts_with("test_") || b.ends_with("_test.py") || b.contains(".test.") || b.contains(".spec.")
-                }) {
+                if st.args.iter().any(|a| a == "--test")
+                    || st.operands().next().is_some_and(|a| {
+                        let b = a.rsplit('/').next().unwrap_or(a);
+                        b.starts_with("test_")
+                            || b.ends_with("_test.py")
+                            || b.contains(".test.")
+                            || b.contains(".spec.")
+                    })
+                {
                     return r(Class::Log, format!("{prog} test"));
                 }
             }
@@ -327,7 +515,26 @@ fn segment_class(seg: &Segment) -> Option<(Class, String)> {
                     why = format!("{why}|{p}");
                 }
             }
-            Class::Content if matches!(p, "awk" | "gawk" | "cut" | "tr" | "sort" | "uniq" | "column" | "jq" | "python" | "python3" | "perl" | "paste" | "rev" | "fold" | "fmt") => {
+            Class::Content
+                if matches!(
+                    p,
+                    "awk"
+                        | "gawk"
+                        | "cut"
+                        | "tr"
+                        | "sort"
+                        | "uniq"
+                        | "column"
+                        | "jq"
+                        | "python"
+                        | "python3"
+                        | "perl"
+                        | "paste"
+                        | "rev"
+                        | "fold"
+                        | "fmt"
+                ) =>
+            {
                 // transformed: no longer the file's bytes
                 return None;
             }
@@ -343,8 +550,9 @@ fn segment_class(seg: &Segment) -> Option<(Class, String)> {
 
 fn substantive(seg: &Segment) -> bool {
     let p = seg.first().prog.as_str();
-    !seg.stages.last().is_some_and(|s| s.silenced)
-        && !NOISE.contains(&p) && !p.starts_with('#') && !(p == "git" && matches!(seg.first().sub(), "add" | "stash" | "checkout" | "switch"))
+    let silenced = seg.stages.last().is_some_and(|s| s.silenced);
+    let quiet_git = p == "git" && matches!(seg.first().sub(), "add" | "stash" | "checkout" | "switch");
+    !(silenced || NOISE.contains(&p) || p.starts_with('#') || quiet_git)
 }
 
 /// Class from the command line alone: the first substantive segment decides
@@ -367,7 +575,8 @@ fn command_classes(command: &str) -> (Option<(Class, String)>, Vec<Class>) {
         if PRINTERS.contains(&p) && others_exist {
             continue;
         }
-        let interp = INTERPRETERS.contains(&p) || (p == "sed" && seg.first().args.iter().any(|a| a == "-i" || a.starts_with("-i")));
+        let interp = INTERPRETERS.contains(&p)
+            || (p == "sed" && seg.first().args.iter().any(|a| a == "-i" || a.starts_with("-i")));
         let c = segment_class(seg);
         if let Some((k, _)) = &c {
             if !interp || *k == Class::Log {
@@ -411,7 +620,10 @@ fn is_numbered(l: &str) -> bool {
         return false;
     }
     let rest = &t.as_bytes()[d..];
-    matches!(rest.first(), Some(b'\t' | b':' | b'|')) || rest.starts_with("→".as_bytes()) || rest.starts_with(b"  ") || (rest.first() == Some(&b'-') && d > 0 && l.len() > d + 1)
+    matches!(rest.first(), Some(b'\t' | b':' | b'|'))
+        || rest.starts_with("→".as_bytes())
+        || rest.starts_with(b"  ")
+        || (rest.first() == Some(&b'-') && d > 0 && l.len() > d + 1)
 }
 
 fn is_ls_row(l: &str) -> bool {
@@ -428,7 +640,11 @@ fn is_oneline(l: &str) -> bool {
 }
 
 fn is_diff_mark(l: &str) -> bool {
-    l.starts_with("diff --git ") || l.starts_with("@@ -") || l.starts_with("+++ ") || l.starts_with("--- a/") || (l.starts_with("index ") && l.contains(".."))
+    l.starts_with("diff --git ")
+        || l.starts_with("@@ -")
+        || l.starts_with("+++ ")
+        || l.starts_with("--- a/")
+        || (l.starts_with("index ") && l.contains(".."))
 }
 
 fn is_git_status(l: &str) -> bool {
@@ -440,17 +656,50 @@ fn is_git_status(l: &str) -> bool {
         || l.starts_with("Your branch is")
         || {
             let b = l.as_bytes();
-            b.len() > 3 && b"MADRCU? ".contains(&b[0]) && b"MADRCU? ".contains(&b[1]) && b[2] == b' ' && b[0] != b' ' || (b.len() > 3 && b[0] == b' ' && b"MD".contains(&b[1]) && b[2] == b' ')
+            b.len() > 3 && b"MADRCU? ".contains(&b[0]) && b"MADRCU? ".contains(&b[1]) && b[2] == b' ' && b[0] != b' '
+                || (b.len() > 3 && b[0] == b' ' && b"MD".contains(&b[1]) && b[2] == b' ')
         }
 }
 
 fn is_log_marker(l: &str) -> bool {
     let t = l.trim_start();
     const STARTS: &[&str] = &[
-        "Compiling ", "Checking ", "Finished ", "Running ", "Downloaded ", "Downloading ", "Fresh ", "Updating ",
-        "Installing ", "Building ", "test result:", "error[", "error:", "warning:", "warning[", "Traceback (most recent call last)",
-        "npm WARN", "npm ERR", "PASS ", "FAIL ", "ok ", "--- PASS", "--- FAIL", "✓ ", "✗ ", "✔ ", "✖ ", "Collecting ",
-        "Successfully ", "Requirement already", "thread '", "panicked at", "INFO", "WARN", "ERROR", "DEBUG",
+        "Compiling ",
+        "Checking ",
+        "Finished ",
+        "Running ",
+        "Downloaded ",
+        "Downloading ",
+        "Fresh ",
+        "Updating ",
+        "Installing ",
+        "Building ",
+        "test result:",
+        "error[",
+        "error:",
+        "warning:",
+        "warning[",
+        "Traceback (most recent call last)",
+        "npm WARN",
+        "npm ERR",
+        "PASS ",
+        "FAIL ",
+        "ok ",
+        "--- PASS",
+        "--- FAIL",
+        "✓ ",
+        "✗ ",
+        "✔ ",
+        "✖ ",
+        "Collecting ",
+        "Successfully ",
+        "Requirement already",
+        "thread '",
+        "panicked at",
+        "INFO",
+        "WARN",
+        "ERROR",
+        "DEBUG",
     ];
     if STARTS.iter().any(|s| t.starts_with(s)) {
         return true;
@@ -466,10 +715,22 @@ fn is_log_marker(l: &str) -> bool {
     }
     // [12:34:56] / 2026-10-30T... / [INFO] style timestamps and levels
     let b = t.as_bytes();
-    if b.len() > 10 && b[0] == b'[' && (b[1].is_ascii_digit() || t[1..].starts_with("INFO") || t[1..].starts_with("WARN") || t[1..].starts_with("ERROR") || t[1..].starts_with("DEBUG")) {
+    if b.len() > 10
+        && b[0] == b'['
+        && (b[1].is_ascii_digit()
+            || t[1..].starts_with("INFO")
+            || t[1..].starts_with("WARN")
+            || t[1..].starts_with("ERROR")
+            || t[1..].starts_with("DEBUG"))
+    {
         return true;
     }
-    b.len() > 19 && b[..4].iter().all(u8::is_ascii_digit) && b[4] == b'-' && b[7] == b'-' && (b[10] == b'T' || b[10] == b' ') && b[13] == b':'
+    b.len() > 19
+        && b[..4].iter().all(u8::is_ascii_digit)
+        && b[4] == b'-'
+        && b[7] == b'-'
+        && (b[10] == b'T' || b[10] == b' ')
+        && b[13] == b':'
 }
 
 fn is_pathlike(l: &str) -> bool {
@@ -478,7 +739,10 @@ fn is_pathlike(l: &str) -> bool {
         return false;
     }
     let ok = t.bytes().all(|c| c.is_ascii_alphanumeric() || b"/._-+@~".contains(&c));
-    ok && (t.contains('/') || t.rsplit_once('.').is_some_and(|(a, e)| !a.is_empty() && (1..=8).contains(&e.len()) && e.bytes().all(|c| c.is_ascii_alphanumeric())))
+    ok && (t.contains('/')
+        || t.rsplit_once('.').is_some_and(|(a, e)| {
+            !a.is_empty() && (1..=8).contains(&e.len()) && e.bytes().all(|c| c.is_ascii_alphanumeric())
+        }))
 }
 
 fn json_like(s: &str) -> bool {
@@ -491,7 +755,8 @@ fn json_like(s: &str) -> bool {
         }
         (b'[', b']') => {
             let k = s[1..].trim_start();
-            k.is_empty() || matches!(k.as_bytes()[0], b'{' | b'[' | b'"' | b']' | b'-' | b'0'..=b'9' | b't' | b'f' | b'n')
+            k.is_empty()
+                || matches!(k.as_bytes()[0], b'{' | b'[' | b'"' | b']' | b'-' | b'0'..=b'9' | b't' | b'f' | b'n')
         }
         _ => false,
     }
@@ -519,10 +784,12 @@ pub fn sniff(output: &str) -> Option<(Class, &'static str)> {
         return None;
     }
     let frac = |f: fn(&str) -> bool| lines.iter().filter(|l| f(l)).count() as f64 / n as f64;
-    if n >= 3 && lines.iter().take(20).all(|l| {
-        let t = l.trim();
-        t.starts_with('{') && t.ends_with('}')
-    }) {
+    if n >= 3
+        && lines.iter().take(20).all(|l| {
+            let t = l.trim();
+            t.starts_with('{') && t.ends_with('}')
+        })
+    {
         return Some((Class::Structured, "jsonl"));
     }
     if frac(is_diff_mark) > 0.02 && lines.iter().any(|l| l.starts_with("@@")) {
@@ -562,8 +829,11 @@ pub fn sniff(output: &str) -> Option<(Class, &'static str)> {
             .iter()
             .filter(|l| {
                 let t = l.trim_start_matches([' ', '-']);
-                t.split_once(": ").is_some_and(|(k, _)| !k.is_empty() && k.bytes().all(|c| c.is_ascii_alphanumeric() || b"_.-".contains(&c)))
-                    || (t.ends_with(':') && t.len() > 1 && t[..t.len() - 1].bytes().all(|c| c.is_ascii_alphanumeric() || b"_.-".contains(&c)))
+                t.split_once(": ").is_some_and(|(k, _)| {
+                    !k.is_empty() && k.bytes().all(|c| c.is_ascii_alphanumeric() || b"_.-".contains(&c))
+                }) || (t.ends_with(':')
+                    && t.len() > 1
+                    && t[..t.len() - 1].bytes().all(|c| c.is_ascii_alphanumeric() || b"_.-".contains(&c)))
             })
             .count();
         if yaml as f64 / n as f64 > 0.7 && !lines[0].starts_with('#') {
@@ -643,7 +913,10 @@ mod tests {
         assert_eq!(cls("git show --stat HEAD", "x"), Class::Vcs);
         assert_eq!(cls("git show HEAD:a.js > a.js && npx jest t.test.js 2>&1 | grep -E x", "x"), Class::Log);
         let paths = "./a/b.py\n./c/d.rs\n./e/f.md\n./g/h.txt\n";
-        assert_eq!(cls("for d in a b; do (cd $d; git log --oneline -3; find . -type f | head); done", paths), Class::Listing);
+        assert_eq!(
+            cls("for d in a b; do (cd $d; git log --oneline -3; find . -type f | head); done", paths),
+            Class::Listing
+        );
     }
 
     #[test]

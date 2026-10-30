@@ -31,9 +31,8 @@ pub fn read_message<R: BufRead>(reader: &mut R) -> std::io::Result<Option<serde_
             }
         }
     }
-    let len = content_length.ok_or_else(|| {
-        std::io::Error::new(std::io::ErrorKind::InvalidData, "missing Content-Length")
-    })?;
+    let len =
+        content_length.ok_or_else(|| std::io::Error::new(std::io::ErrorKind::InvalidData, "missing Content-Length"))?;
     if len > MAX_FRAME_BYTES {
         return Err(std::io::Error::new(
             std::io::ErrorKind::InvalidData,
@@ -42,8 +41,7 @@ pub fn read_message<R: BufRead>(reader: &mut R) -> std::io::Result<Option<serde_
     }
     let mut buf = vec![0u8; len];
     reader.read_exact(&mut buf)?;
-    let value = serde_json::from_slice(&buf)
-        .map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
+    let value = serde_json::from_slice(&buf).map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
     Ok(Some(value))
 }
 
@@ -65,11 +63,7 @@ pub fn write_response<W: Write>(
 /// Write a JSON-RPC notification (no `id`) as a Content-Length-framed message.
 /// Used to stream `command.output` events back to Synaps during a
 /// `command.invoke` call.
-pub fn write_notification<W: Write>(
-    writer: &mut W,
-    method: &str,
-    params: serde_json::Value,
-) -> std::io::Result<()> {
+pub fn write_notification<W: Write>(writer: &mut W, method: &str, params: serde_json::Value) -> std::io::Result<()> {
     let payload = serde_json::json!({
         "jsonrpc": "2.0",
         "method": method,
@@ -116,13 +110,7 @@ mod tests {
     fn round_trips_two_back_to_back_messages() {
         let a = r#"{"id":1,"method":"a"}"#;
         let b = r#"{"id":2,"method":"b"}"#;
-        let frame = format!(
-            "Content-Length: {}\r\n\r\n{}Content-Length: {}\r\n\r\n{}",
-            a.len(),
-            a,
-            b.len(),
-            b
-        );
+        let frame = format!("Content-Length: {}\r\n\r\n{}Content-Length: {}\r\n\r\n{}", a.len(), a, b.len(), b);
         let mut cursor = Cursor::new(frame.into_bytes());
         let first = read_message(&mut cursor).unwrap().unwrap();
         let second = read_message(&mut cursor).unwrap().unwrap();
@@ -133,12 +121,7 @@ mod tests {
     #[test]
     fn write_response_is_framed_and_readable() {
         let mut out = Vec::new();
-        write_response(
-            &mut out,
-            &serde_json::json!(7),
-            serde_json::json!({"action":"continue"}),
-        )
-        .unwrap();
+        write_response(&mut out, &serde_json::json!(7), serde_json::json!({"action":"continue"})).unwrap();
         let mut cursor = Cursor::new(out);
         let msg = read_message(&mut cursor).unwrap().unwrap();
         assert_eq!(msg["id"], 7);
