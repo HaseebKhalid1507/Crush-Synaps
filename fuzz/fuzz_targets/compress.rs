@@ -29,7 +29,14 @@ fuzz_target!(|data: &[u8]| {
     let cmd = CMDS[data[1] as usize % CMDS.len()];
     let text = String::from_utf8_lossy(&data[2..]);
     // defaults, and everything on (incl. the disabled SEARCH grouping) with no size/gain floor
-    let mut small = Config { min_bytes: 0, min_gain_tokens: 0, min_gain_ratio: 0.0, ..Config::default() };
+    let mut small = Config {
+        min_bytes: 0,
+        min_gain_tokens: 0,
+        min_gain_ratio: 0.0,
+        min_gain_tokens_lossy: 0,
+        min_gain_ratio_lossy: 0.0,
+        ..Config::default()
+    };
     small.transforms.search_group = true;
     small.classes.prose = true;
     for cfg in [Config::default(), small] {

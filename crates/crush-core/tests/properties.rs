@@ -33,7 +33,14 @@ const COMMANDS: &[&str] = &[
 const TOOLS: &[&str] = &["bash", "read", "grep", "ls", "forum_read", "web-tools_fetch", "unknown_tool"];
 
 fn cfgs() -> Vec<Config> {
-    let mut all_on = Config { min_bytes: 0, min_gain_tokens: 0, min_gain_ratio: 0.0, ..Config::default() };
+    let mut all_on = Config {
+        min_bytes: 0,
+        min_gain_tokens: 0,
+        min_gain_ratio: 0.0,
+        min_gain_tokens_lossy: 0,
+        min_gain_ratio_lossy: 0.0,
+        ..Config::default()
+    };
     all_on.transforms.search_group = true;
     all_on.classes.prose = true;
     vec![Config::default(), all_on]

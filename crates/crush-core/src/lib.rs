@@ -10,7 +10,7 @@
 //! - **CONTENT is byte-identical.** No transform is registered for it, and the
 //!   gate re-checks equality anyway.
 //! - **Never larger** in estimated tokens, under *both* tokenizer families, with
-//!   a margin: a marginal gain passes the output through.
+//!   a margin (wider for lossy results): a marginal gain passes the output through.
 //! - **Idempotent**: the result is compressed once more; if that would change it
 //!   again, the original passes through. So `compress(compress(x)) ==
 //!   compress(x)` holds by construction.
@@ -140,6 +140,11 @@ pub struct Config {
     pub min_gain_tokens: u32,
     /// ...and at least this fraction of the estimated input tokens.
     pub min_gain_ratio: f32,
+    /// A lossy result costs the host a kept raw and adds a pointer marker
+    /// (a token-dense path), so it must save at least this many tokens...
+    pub min_gain_tokens_lossy: u32,
+    /// ...and this fraction.
+    pub min_gain_ratio_lossy: f32,
 }
 
 impl Default for Config {
@@ -153,6 +158,8 @@ impl Default for Config {
             max_bytes: 512 * 1024,
             min_gain_tokens: 8,
             min_gain_ratio: 0.02,
+            min_gain_tokens_lossy: 64,
+            min_gain_ratio_lossy: 0.10,
         }
     }
 }
@@ -295,7 +302,10 @@ fn gate<'a>(input: &Input<'a>, cfg: &Config, class: Class) -> Result<Outcome<'a>
     for tk in [Tokenizer::V5, Tokenizer::V4] {
         let before = estimate::from_features(&f_in, tk);
         let after = estimate::from_features(&f_out, tk);
-        let need = (cfg.min_gain_tokens as f64).max(before as f64 * cfg.min_gain_ratio as f64).max(1.0);
+        let mut need = (cfg.min_gain_tokens as f64).max(before as f64 * cfg.min_gain_ratio as f64).max(1.0);
+        if !applied.lossless {
+            need = need.max(cfg.min_gain_tokens_lossy as f64).max(before as f64 * cfg.min_gain_ratio_lossy as f64);
+        }
         if (after as f64) + need > before as f64 {
             ok = false;
         }
