@@ -59,6 +59,7 @@ ALL_TOOLS = ("activate_tools,bash,edit,find,forum_forget,forum_post,forum_read,g
 REAL_AUTH = Path.home() / ".synaps-cli" / "auth.json"
 MAX_PROMPT = 400_000  # rpc frames are capped at 1 MiB
 DROPPED: dict[str, int] = {}
+QUOTA: dict[str, int] = {}
 
 
 def auth_digest() -> str:
@@ -191,6 +192,10 @@ def parse_answers(text: str, n: int) -> list[str | None]:
 def select(which: str, n_corpus: int, seed: int, max_q: int):
     samples = {s["id"]: s for s in load_samples(which)}
     res = {r["id"]: r for r in read_jsonl(results_path(which))}
+    for i, r in res.items():
+        # crush-core's class decides what ran; keep the label with the sample
+        samples[i]["class"] = r["class"]
+        samples[i]["label"] = r["label"]
     cands = []
     for i, r in res.items():
         if not r["fired"]:
@@ -204,20 +209,29 @@ def select(which: str, n_corpus: int, seed: int, max_q: int):
             cands.append((s, r["output"], qs))
     if which == "fixtures":
         return cands
-    # stratified round-robin over (class, label)
+    # stratified round-robin over (class, label); with QUOTA, per-label quotas
+    # first (round-robin over classes inside a label), then the rest
     rng = random.Random(seed)
     strata = defaultdict(list)
     for c in cands:
         strata[(c[0]["class"], res[c[0]["id"]]["label"])].append(c)
-    for v in strata.values():
-        rng.shuffle(v)
+    for k in sorted(strata):
+        rng.shuffle(strata[k])
     picked = []
+    for label, want in QUOTA.items():
+        keys = sorted(k for k in strata if k[1] == label)
+        got = 0
+        while got < want and any(strata[k] for k in keys):
+            for k in keys:
+                if strata[k] and got < want:
+                    picked.append(strata[k].pop())
+                    got += 1
     keys = sorted(strata)
     while len(picked) < n_corpus and any(strata.values()):
         for k in keys:
             if strata[k] and len(picked) < n_corpus:
                 picked.append(strata[k].pop())
-    return picked
+    return picked[:n_corpus]
 
 
 def main() -> int:
@@ -231,6 +245,7 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=3)
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--only-samples", default="", help="comma list of sample ids/names to ask, or @file with one id per line")
+    ap.add_argument("--quota", default="", help="per-transform corpus quotas, e.g. search_group:44,repeats:16")
     ap.add_argument("--merge", action="store_true", help="merge into the previous run's records/summary instead of replacing")
     ap.add_argument("--resummarize", action="store_true", help="rebuild the summary from stored records (no model calls)")
     args = ap.parse_args()
@@ -242,6 +257,9 @@ def main() -> int:
         print(json.dumps(prev["by_model_set"], indent=1))
         return 0
     models = [MODELS.get(m, m) for m in args.models.split(",")]
+    for kv in filter(None, args.quota.split(",")):
+        k, v = kv.split(":")
+        QUOTA[k] = int(v)
     sets = args.sets.split(",")
     rng = random.Random(args.seed)
 
@@ -290,7 +308,7 @@ def main() -> int:
                 r = h.ask(build_prompt(s, text, qs))
                 ans = parse_answers(r["text"], len(qs))
                 for x, a in zip(qs, ans):
-                    records.append({"set": w, "model": model, "sample": s["id"], "class": s["class"],
+                    records.append({"set": w, "model": model, "sample": s["id"], "class": s["class"], "label": s.get("label"),
                                     "variant": variant, "kind": x["kind"], "q": x["q"], "want": x["answer"],
                                     "got": a, "correct": score(x, a), "tool_calls": r["tool_calls"], "ok": r["ok"]})
                 if (j + 1) % 10 == 0:

@@ -1,22 +1,27 @@
-[package]
-name = "crush"
-version = "0.1.0"
+[workspace]
+resolver = "2"
+members = ["crates/crush-core", "crates/crush", "crates/crush-ext"]
+exclude = ["eval/driver", "fuzz"]
+
+[workspace.package]
+version = "0.2.0"
 edition = "2021"
-description = "Native tool-output compressor for Synaps — a process extension that rewrites large tool output before it enters conversation history. Replaces headroom-bridge."
+license = "MIT"
 authors = ["Jawz"]
+repository = "https://github.com/HaseebKhalid1507/Crush-Synaps"
+rust-version = "1.80"
 
-[[bin]]
-name = "crush"
-path = "src/main.rs"
-
-[dependencies]
+[workspace.dependencies]
+crush-core = { path = "crates/crush-core" }
 serde = { version = "1", features = ["derive"] }
-serde_json = { version = "1", features = ["preserve_order"] }
-
-[dev-dependencies]
+serde_json = "1"
+memchr = "2"
 
 [profile.release]
 opt-level = 3
 lto = true
 codegen-units = 1
 strip = true
+# The extension shim catches panics at the hook boundary (pass-through on any
+# bug), so release builds must unwind.
+panic = "unwind"

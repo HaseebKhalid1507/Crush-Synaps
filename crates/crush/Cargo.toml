@@ -1,0 +1,17 @@
+[package]
+name = "crush"
+description = "crush CLI: compress tool output on stdin, classify, measure, explain."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "crush"
+path = "src/main.rs"
+
+[dependencies]
+crush-core = { workspace = true }
+serde_json = { workspace = true }
