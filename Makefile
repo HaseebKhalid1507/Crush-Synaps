@@ -17,5 +17,5 @@ eval-free:       ## same as eval, without model calls (count_tokens is free)
 eval-fixtures:   ## fixtures only; no local Synaps corpus needed
 	eval/run.sh --fixtures-only --no-accuracy
 fuzz:            ## each libFuzzer target for FUZZ_SECONDS (needs nightly + cargo-fuzz)
-	cd fuzz && for t in compress search shell search_elide listing; do \
+	cd fuzz && for t in compress search shell search_elide listing log json; do \
 	  cargo +nightly fuzz run -O $$t -- -max_total_time=$(FUZZ_SECONDS) -max_len=65536 || exit 1; done
