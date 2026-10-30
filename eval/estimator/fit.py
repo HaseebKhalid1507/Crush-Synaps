@@ -36,7 +36,7 @@ from run_crush import DRIVER, load_samples  # noqa: E402
 MODELS = {"V5": "claude-opus-5-5", "V4": "claude-sonnet-4-6"}
 COEF = REPO / "crates" / "crush-core" / "src" / "estimate_coef.rs"
 NAMES = ["one", "bytes", "letter_runs", "letters_long", "camel", "upper", "digit_runs", "digits_long", "punct",
-         "punct_runs", "space_runs", "spaces_in_runs", "newlines", "nonascii", "mixed_runs", "mixed_chars"]
+         "punct_runs", "space_runs", "space_pairs", "newlines", "nonascii", "letter_digit", "digit_letter"]
 
 
 def nnls(A, b, iters=3000):

@@ -19,6 +19,9 @@ pub const NAME: &str = "blobs";
 const MIN_B64: usize = 256;
 const MIN_HEX: usize = 128;
 const MIN_MINIFIED: usize = 4096;
+/// Wrapped base64: lines at least this wide, at least this many of them.
+const MIN_WRAP: usize = 40;
+const MIN_WRAP_LINES: usize = 4;
 const SHOW: usize = 16;
 
 fn b64_char(c: u8) -> bool {
@@ -123,18 +126,73 @@ fn elide_line(line: &str, raw_ref: &str, out: &mut String) -> bool {
     changed
 }
 
+/// A line of wrapped base64 (PEM, `base64`, YAML block scalars): only the
+/// alphabet (and final padding), at least `MIN_WRAP` wide. Returns the body.
+fn wrapped_b64(l: &str) -> Option<&str> {
+    b64_body(l, MIN_WRAP)
+}
+
+fn b64_body(l: &str, min: usize) -> Option<&str> {
+    let body = l.trim_start();
+    let core = body.trim_end_matches('=');
+    (body.len() >= min.max(1) && body.len() - core.len() <= 2 && core.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'+' || c == b'/'))
+        .then_some(body)
+}
+
+/// Length of the wrapped-base64 block starting at `ls[i]` (0 if none).
+fn wrapped_block(ls: &[&str], i: usize) -> usize {
+    let Some(first) = wrapped_b64(ls[i]) else { return 0 };
+    let width = first.len();
+    let indent = ls[i].len() - first.len();
+    let mut j = i + 1;
+    while j < ls.len() {
+        match b64_body(ls[j], 1) {
+            Some(b) if ls[j].len() - b.len() == indent && b.len() == width => j += 1,
+            // a shorter last line (with padding) ends the block
+            Some(b) if ls[j].len() - b.len() == indent && b.len() < width => {
+                j += 1;
+                break;
+            }
+            _ => break,
+        }
+    }
+    let n = j - i;
+    if n < MIN_WRAP_LINES {
+        return 0;
+    }
+    let joined: Vec<u8> = ls[i..j].iter().flat_map(|l| l.trim_start().trim_end_matches('=').bytes()).collect();
+    if joined.len() >= MIN_B64 && blob_kind(&joined) == Some("base64 blob") {
+        n
+    } else {
+        0
+    }
+}
+
 pub fn elide(text: &str, raw_ref: &str) -> Option<String> {
     let (ls, trailing) = lines(text);
-    if !ls.iter().any(|l| l.len() >= MIN_HEX) {
+    if !ls.iter().any(|l| l.len() >= MIN_WRAP) {
         return None;
     }
     let mut out = String::with_capacity(text.len().min(1 << 16));
     let mut changed = false;
-    for (k, l) in ls.iter().enumerate() {
+    let mut k = 0;
+    while k < ls.len() {
         if k > 0 {
             out.push('\n');
         }
-        changed |= elide_line(l, raw_ref, &mut out);
+        let n = wrapped_block(&ls, k);
+        if n > 0 {
+            let l = ls[k];
+            let lead = l.len() - l.trim_start().len();
+            let chars: usize = ls[k..k + n].iter().map(|x| x.trim_start().len()).sum();
+            out.push_str(&l[..lead]);
+            out.push_str(&marker(&format!("{n}-line base64 blob"), chars, head(&l[lead..]), raw_ref));
+            changed = true;
+            k += n;
+            continue;
+        }
+        changed |= elide_line(ls[k], raw_ref, &mut out);
+        k += 1;
     }
     if !changed {
         return None;
@@ -157,6 +215,20 @@ mod tests {
         assert_eq!(got, "{\"data\": \"[crush: 402-char base64 blob elided, starts QmFzZTY0IGlzIGZ1; raw output: /r/x.txt]\"}\n");
         let hex = "deadbeef0123456789".repeat(10);
         assert!(elide(&format!("x {hex} y"), "R").unwrap().contains("180-char hex blob elided"));
+    }
+
+    #[test]
+    fn wrapped_base64_block() {
+        let row: String = (0..64).map(|i| b"MIIDXTCCAkWgAwIBAgIJAKl7+/9z3Q0x"[i % 32] as char).collect();
+        let pem = format!("-----BEGIN CERTIFICATE-----\n{}\nAkWgAwIB==\n-----END CERTIFICATE-----\n", vec![row.as_str(); 6].join("\n"));
+        let got = elide(&pem, "R").unwrap();
+        assert_eq!(
+            got,
+            "-----BEGIN CERTIFICATE-----\n[crush: 394-char 7-line base64 blob elided, starts MIIDXTCCAkWgAwIB; raw output: R]\n-----END CERTIFICATE-----\n"
+        );
+        // prose-width lines of words are not base64
+        let words = "TheQuickBrownFoxJumpsOverTheLazyDogAgainAndAgain\n".repeat(8);
+        assert_eq!(elide(&words, "R"), None);
     }
 
     #[test]

@@ -495,6 +495,61 @@
       "class": "CONTENT",
       "bytes": 14743,
       "note": "public source converted to CRLF line endings (a Windows-origin file)"
+    },
+    {
+      "name": "rsync_progress",
+      "file": "data/rsync_progress.txt",
+      "tool": "bash",
+      "input": {
+        "command": "rsync -a --progress --bwlimit=3M src/ dst/"
+      },
+      "class": "LISTING",
+      "bytes": 1390,
+      "note": "real rsync; --bwlimit makes it redraw progress with \\r"
+    },
+    {
+      "name": "curl_progress",
+      "file": "data/curl_progress.txt",
+      "tool": "bash",
+      "input": {
+        "command": "for f in src/dataset-1.bin src/dataset-5.bin; do curl --progress-bar --limit-rate 1500K -o /dev/null file:///work/$f; done"
+      },
+      "class": "UNKNOWN",
+      "bytes": 162,
+      "note": "real curl progress bar (\\r redraws)"
+    },
+    {
+      "name": "openssl_cert",
+      "file": "data/openssl_cert.txt",
+      "tool": "bash",
+      "input": {
+        "command": "openssl req -x509 -newkey rsa:2048 -nodes -keyout /dev/null -subj /CN=build.example.test -days 30"
+      },
+      "class": "UNKNOWN",
+      "bytes": 1139,
+      "note": "real openssl; throwaway key discarded; PEM wrapped at 64"
+    },
+    {
+      "name": "k8s_secret_yaml",
+      "file": "data/k8s_secret_yaml.txt",
+      "tool": "bash",
+      "input": {
+        "command": "kubectl get secret payments-api-tls -n staging -o yaml"
+      },
+      "class": "STRUCTURED",
+      "bytes": 5832,
+      "note": "kubectl secret shape; base64 values from a seeded RNG"
+    },
+    {
+      "name": "retry_loop",
+      "file": "data/retry_loop.txt",
+      "tool": "bash",
+      "input": {
+        "command": "for i in $(seq 1 40); do if [ -e /work/.ready ]; then break; fi; echo 'waiting for /work/.ready (build lock held by another process)'; done; echo 'gave up after 40 attempts'; ls /work/.ready 2>&1 | tail -1"
+      },
+      "class": "LOG",
+      "bytes": 2566,
+      "note": "real shell retry loop"
     }
   ],
   "skipped": []
