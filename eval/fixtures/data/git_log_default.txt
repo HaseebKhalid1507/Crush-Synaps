@@ -1,0 +1,512 @@
+commit 91f5d22ef48bde459d90a8c7dbeab416e97d0f2b
+Author: Dev01 <dev02@example.com>
+Date:   Tue Oct 27 14:31:24 2026 -0400
+
+    ignore-0.4.34
+
+commit 55f2f69ab9f07eeca80b483668e9d7d4beca8e10
+Author: Dev01 <dev02@example.com>
+Date:   Tue Oct 27 14:31:14 2026 -0400
+
+    globset-0.4.21
+
+commit 65e072fab262fdaaa19ef788bbb468ae6f8e4f8e
+Author: Dev03 <dev04@example.com>
+Date:   Tue Oct 27 14:30:54 2026 -0400
+
+    ignore: respect linked worktree excludes without requiring Git
+    
+    PR #3578
+
+commit d19650f4fca84c0f65f4ec024b16200bf3d41c33
+Author: Dev05 <dev06@example.com>
+Date:   Thu Oct 15 16:44:26 2026 +0000
+
+    globset: match filename-only regexes against basenames
+    
+    We now match filename-only globs such as **/.venv* and **/*.py[cod]
+    against the basename, avoiding a regex search over the full path. We
+    use this strategy only when the filename pattern cannot match a path
+    separator.
+    
+    On Linux x86-64 against 3fce3b5, building the Python ignore rules is
+    about 23% faster. Warm incremental replay over Ruff paths improves
+    4–9%; replay over uv paths is flat in the default build and improves
+    2–4% with fat LTO. The default-build Ruff parallel walk is 3.7%
+    slower.
+    
+    PR #3561
+
+commit 9d07a922605313dc47b78b802c7b0616fd76d409
+Author: Dev05 <dev06@example.com>
+Date:   Thu Oct 15 16:46:50 2026 +0000
+
+    ignore: reuse incremental matchers for directories without rules
+    
+    When a directory adds no ignore rules or repository boundary, we now
+    reuse the parent matcher. Incremental matching already tracks visited
+    directories separately, so adding an ignore file later preserves the
+    existing cached snapshot.
+    
+    On Linux x86-64 against 3fce3b5, warm incremental replay over Ruff and
+    uv path sets improves 4.6–6.6% and 3.2–6.2%, respectively, across
+    default and fat-LTO builds. Dense-rule controls stay within 0.6%; the
+    synthetic warm control is flat with fat LTO.
+    
+    PR #3560
+
+commit 6892bc2b7efe5909cbbeec8f757ed2c4c76b1d30
+Author: Dev05 <dev06@example.com>
+Date:   Fri Oct 23 16:00:21 2026 -0400
+
+    ignore: use byte keys for incremental parent lookups
+    
+    We now store incremental directory-cache keys as OsString values to
+    avoid path-component hashing. On Unix, we find a cached parent by
+    scanning path bytes before parsing components. Cache misses fall back
+    to the component walk, preserving alternate path spellings and cached
+    ignore-file snapshots.
+    
+    On Linux x86-64 against 3fce3b5, warm incremental replay over Ruff
+    and uv path sets improves 12–13% and 15–18%, respectively, across
+    default and fat-LTO builds; ignored-parent checks improve about 68%.
+    Paths with an internal ./ are 0.5–2.2% slower.
+    
+    PR #3559
+
+commit 1752fb78f1735e517f731944707a79eb064e8669
+Author: Dev05 <dev06@example.com>
+Date:   Fri Oct 23 15:50:08 2026 -0400
+
+    globset: reject impossible literal lengths before hashing
+    
+    We now skip literal hash lookups when the byte length of a path or
+    basename cannot match any literal. We track lengths modulo 64 in a bit
+    mask, so collisions still go through the exact lookup. The full-path
+    and basename strategies now share the same implementation.
+    
+    On Linux x86-64 against 3fce3b5, warm incremental replay of Ruff and uv
+    path sets improves 9–14% across default and fat-LTO builds, and Ruff
+    serial walks improve 3.6–5.1%. The default-build uv parallel walk is
+    3.5% slower, and fat-LTO single-rule construction increases from 379 ns
+    to 387 ns.
+    
+    PR #3558
+
+commit 2d4fa85141d91c411352bae3c516608684aeeacc
+Author: Dev05 <dev06@example.com>
+Date:   Fri Oct 23 15:43:37 2026 -0400
+
+    ignore: skip empty absolute parent matchers (#3557)
+    
+    When no ancestor above the walk root has ignore rules, we now skip
+    constructing an absolute path and checking parent matchers. Repository
+    boundaries still affect Git ignore rules, even when the repository has
+    no rules of its own.
+    
+    On Linux x86-64 against 3fce3b5, warm incremental matching improves
+    13.4% and replay allocates or reallocates about half as often.
+    Warm-cache walks of the Ruff and uv checkouts improve 1–4%; the
+    cached ignored-path control is 3.3% slower.
+    
+    PR #3557
+
+commit b5611fc9f5eda7073543e5c900ca515d1e69fc2e
+Author: Dev05 <dev06@example.com>
+Date:   Fri Oct 23 15:27:13 2026 -0400
+
+    ignore: reuse parent repository detection
+    
+    PR #3556
+
+commit c5e744cb436c4d0cc590676551cf1bc08cd1a560
+Author: Dev05 <dev06@example.com>
+Date:   Thu Oct 15 16:44:26 2026 +0000
+
+    ignore: avoid scratch pools for empty matchers
+    
+    ... by deferring to `Gitignore::empty()` when there aren't any globs.
+    
+    This plausibly skips some other work as well, in addition to avoiding
+    allocation for scratch pools.
+    
+    PR #3555
+
+commit fada8f9386df39e7fc9d0e407de764f005900ce0
+Author: Dev05 <dev07@example.com>
+Date:   Fri Oct 23 11:59:08 2026 -0400
+
+    ignore: benchmark Python workspace discovery and matching (#3554)
+    
+    We add benchmarks for the ignore operations used by Ruff, uv, and
+    ty: serial and parallel walks, early-exit workspace discovery, and
+    incremental path matching. The 39 cases cover different project
+    layouts, nested ignore rules, multiple roots, and cached directories.
+    
+    We create fixtures before timing and check their expected file counts
+    during walks. The README links the consumer call sites and describes
+    how to compare profiles. These measure library work with a warm
+    filesystem cache, not end-to-end application performance.
+    
+    We also test these benchmarks in CI.
+    
+    PR #3554
+
+commit 7155f6408d370e699795dc75e954635abfaf08a6
+Author: Dev08 <dev09@example.com>
+Date:   Fri Oct 23 21:02:51 2026 +0530
+
+    ignore: treat dotfiles ending in a dot as hidden (#3564)
+    
+    `file_name()` returned `None` for any path ending in `.` on Unix,
+    which was meant to cover the `.` and `..` components but also matched
+    real names like `.foo.`. The hidden check then found no file name and
+    treated those files as visible. Only a final component that is exactly
+    `.` or `..` has no file name now.
+    
+    PR #3564
+
+commit 4c2362d359d9913c7a5e391ccd79cb4da22bc89b
+Author: Dev10 <dev11@example.com>
+Date:   Fri Oct 23 18:34:37 2026 +0330
+
+    doc: document Windows path separators and UTF-8 locale
+    
+    Add FAQ guidance for Git Bash path separators via `--path-separator`
+    and the Windows UTF-8 system locale option.
+    
+    Closes #1667
+
+commit 756a945f65ac0c91e1f625209fafa57f1531bada
+Author: Dev01 <dev02@example.com>
+Date:   Fri Oct 23 10:23:39 2026 -0400
+
+    cargo: remove the `homepage` field
+    
+    This was redundant with the `repository` field in all cases. As such,
+    this generated new warnings.
+
+commit cff2849fd49557c2184a3b2858469a2bfbe20753
+Author: Dev01 <dev02@example.com>
+Date:   Fri Oct 23 09:52:33 2026 -0400
+
+    index: revert indexing additions
+    
+    I think that this was probably a failed experiment. I suspect that it is
+    too difficult to retro-fit indexing on top of ripgrep. Among other
+    issues, one of the main problems is knowing what to index. Surely most
+    cases want to use ripgrep's defaults (i.e., its "smart" filtering), but
+    some use cases might want to ignore part or all of ripgrep's filtering.
+    Reconciling this with ripgrep's existing command line structure in a
+    user friendly way seems fraught.
+    
+    Ref #1497
+
+commit 7cc9c2f33cff3f027d42509489bae9942f833dae
+Author: Dev12 <dev09@example.com>
+Date:   Tue Oct 20 09:56:35 2026 +0000
+
+    ci: install lz4 instead of liblz4-tool
+    
+    ubuntu-latest is now Ubuntu 26.04, where liblz4-tool has no
+    installation candidate, so every Ubuntu job fails at apt-get install.
+    The lz4 package provides the lz4 command that the tests need.
+    
+    We also fix the 32-bit job by upgrading Docker.
+    Ref https://github.com/actions/runner-images/issues/14790
+
+commit 3fce3b5bb0236da2df6d99672afb8a719642eca7
+Author: Dev01 <dev02@example.com>
+Date:   Tue Aug 4 10:00:08 2026 -0400
+
+    ignore-0.4.33
+
+commit 5055264ae021b5d0e01e55f723622d638ea877f0
+Author: Dev01 <dev02@example.com>
+Date:   Tue Aug 4 09:59:57 2026 -0400
+
+    globset-0.4.20
+
+commit 020687a77d13146923333f0beb274eeabd54a270
+Author: Dev01 <dev02@example.com>
+Date:   Tue Aug 4 07:46:42 2026 -0400
+
+    ignore,globset: increase pool capacity
+    
+    When do matching inside of `ignore` or `globset`, we sometimes need a
+    reusable mutable scratch space for matching. To do this, we use a `Pool`
+    abstraction from `regex-automata` to do this heavy lifting for us.
+    
+    It turns out that this can be a limiting factor in some scenarios when
+    gitignore matching dominates. For example, in my checkout of the
+    Chromium repository:
+    
+    ```
+    $ hyperfine 'rg-master -j32 --files' 'rg-bigger-pool -j32 --files' 'rg-master -j32 --files --no-ignore'
+    Benchmark 1: rg-master -j32 --files
+      Time (mean ± σ):     156.3 ms ±   5.5 ms    [User: 2356.4 ms, System: 380.8 ms]
+      Range (min … Dev55):   147.6 ms … 164.5 ms    19 runs
+    
+    Benchmark 2: rg-bigger-pool -j32 --files
+      Time (mean ± σ):     131.6 ms ±   2.1 ms    [User: 1628.2 ms, System: 310.1 ms]
+      Range (min … Dev55):   128.8 ms … 136.3 ms    22 runs
+    
+    Benchmark 3: rg-master -j32 --files --no-ignore
+      Time (mean ± σ):     107.4 ms ±   1.0 ms    [User: 664.7 ms, System: 304.7 ms]
+      Range (min … Dev55):   104.9 ms … 109.6 ms    28 runs
+    
+    Summary
+      rg-master -j32 --files --no-ignore ran
+        1.22 ± 0.02 times faster than rg-bigger-pool -j32 --files
+        1.45 ± 0.05 times faster than rg-master -j32 --files
+    ```
+    
+    The `--no-ignore` benchmark is our baseline. It doesn't process
+    gitignore files, so it's quite a bit faster. But with this change,
+    processing gitignore files gets faster than what is currently on master.
+    Specifically, re-running the above without the baseline:
+    
+    ```
+    $ hyperfine 'rg-master -j32 --files' 'rg-bigger-pool -j32 --files'
+    Benchmark 1: rg-master -j32 --files
+      Time (mean ± σ):     154.1 ms ±   5.1 ms    [User: 2287.4 ms, System: 378.2 ms]
+      Range (min … Dev55):   144.1 ms … 163.9 ms    19 runs
+    
+    Benchmark 2: rg-bigger-pool -j32 --files
+      Time (mean ± σ):     131.7 ms ±   2.1 ms    [User: 1618.6 ms, System: 314.1 ms]
+      Range (min … Dev55):   128.4 ms … 135.3 ms    22 runs
+    
+    Summary
+      rg-bigger-pool -j32 --files ran
+        1.17 ± 0.04 times faster than rg-master -j32 --files
+    ```
+    
+    I've used `-j32` here because this change is best observed as improving
+    the *scaling* properties. (And my system has 32 cores, so it's the best
+    case scenario.) If we just let ripgrep use its default thread heuristic
+    (which caps itself at a lower value), then the improvement here is a
+    bit more modest:
+    
+    ```
+    $ hyperfine 'rg-master --files' 'rg-bigger-pool --files'
+    Benchmark 1: rg-master --files
+      Time (mean ± σ):     150.0 ms ±   8.5 ms    [User: 1139.6 ms, System: 237.7 ms]
+      Range (min … Dev55):   131.1 ms … 162.4 ms    22 runs
+    
+    Benchmark 2: rg-bigger-pool --files
+      Time (mean ± σ):     136.0 ms ±  12.1 ms    [User: 1034.4 ms, System: 236.0 ms]
+      Range (min … Dev55):   117.7 ms … 157.6 ms    22 runs
+    
+    Summary
+      rg-bigger-pool --files ran
+        1.10 ± 0.12 times faster than rg-master --files
+    ```
+    
+    This improves scaling because the underlying change here now uses a
+    cache line for each available thread instead of limiting itself to a
+    fixed value of `8`. The cost is that ripgrep may use a bit more memory
+    storing cached values per thread.
+
+commit 7525479a9576f1ca4c2d04339d78e47ff5ae9b05
+Author: Dev01 <dev02@example.com>
+Date:   Mon Aug 3 07:28:10 2026 -0400
+
+    ci: fix binary discovery
+    
+    It looks like the location of executables is changing in Cargo's test
+    runner, so use the blessed way of discovering an executable. That is,
+    for ripgrep, consult the `CARGO_BIN_EXE_rg` environment variable.
+
+commit 5ed408e17eccfc59bcec48f584feece902873e54
+Author: Dev01 <dev02@example.com>
+Date:   Mon Aug 3 07:15:23 2026 -0400
+
+    ignore-0.4.32
+
+commit 435f59fc4b43af3ab32f34d53fa34978f393fe52
+Author: Dev13 <dev14@example.com>
+Date:   Wed Jul 29 16:00:03 2026 +0100
+
+    ignore: skip loading unreachable ignore files
+    
+    When parallelism isn't used (e.g., when sorting results), then
+    it's possible in some cases for the `ignore` crate to still try and
+    load gitignore files inside of directories that are never
+    descended into. This can occur when `--Dev55-depth` is used, or
+    even just when a directory is skipped for some other reason.
+    
+    Fixes #2565, PR #3496
+
+commit dffd776a737dc19a48b758dd6a621de113794121
+Author: Dev15 <dev16@example.com>
+Date:   Wed Jul 29 01:57:17 2026 +0300
+
+    ci: attest build provenance for release archives
+    
+    PR #3495
+
+commit f9c05a949d1a0dc8e16dee28ca9605d38611faeb
+Author: Dev01 <dev02@example.com>
+Date:   Fri Jul 24 07:38:17 2026 -0400
+
+    index: remove incorrect README
+
+commit 8372866810a1f2a647d11d7780984d4402a5c1e9
+Author: Dev01 <dev02@example.com>
+Date:   Wed Jul 22 10:45:02 2026 -0400
+
+    index: add some initial indexing scaffolding
+    
+    This gives us some room to actually start writing out some index
+    operations.
+
+commit d99ac34406f82c03c3938c222f1786495c845034
+Author: Dev01 <dev02@example.com>
+Date:   Mon Jul 20 13:52:04 2026 -0400
+
+    core: add `index` module
+
+commit d57de83a944c1b349be376b6762334009372d454
+Author: Dev01 <dev02@example.com>
+Date:   Mon Jul 20 13:45:01 2026 -0400
+
+    nvim: enable all Cargo features
+    
+    This makes it convenient to hack on the indexing work, which requires an
+    opt-in Cargo feature.
+
+commit 2ed0c006fee4c441add774a711d9122a88477619
+Author: Dev01 <dev02@example.com>
+Date:   Mon Jul 20 09:16:18 2026 -0400
+
+    flags: disable many flags when indexing is enabled
+    
+    The indexing feature will be born with a lot of restrictions on it in
+    order to bootstrap and end-to-end working system. For example, getting
+    the `--pre` flag (and similar) working correctly is somewhat of a
+    hazard, since you'd need to specify the same transformation during both
+    indexing and not.
+    
+    We disable pretty much any kind of filtering or transform related flags
+    other than what the default provides. Again, we'll relax at least most
+    of these in the future. But let's start here.
+
+commit 59e318f5ace48db54f37bb67c152535bc17fa153
+Author: Dev01 <dev02@example.com>
+Date:   Mon Jul 20 14:15:07 2026 -0400
+
+    ignore-0.4.31
+
+commit a9dc2228fbddd1d25146f38d0926830812c97419
+Author: Dev17 <dev18@example.com>
+Date:   Mon Jul 20 13:14:32 2026 -0500
+
+    cargo: set `rust-version` on all crates
+    
+    For the most part, we inherit from the main ripgrep `Cargo.toml`.
+    
+    But we're a little more conservative with `globset` and `ignore`.
+
+commit be739c7910288905d966f87607b28435d1576295
+Author: Dev01 <dev02@example.com>
+Date:   Mon Jul 20 08:58:22 2026 -0400
+
+    index: add grep-index crate
+    
+    This just contains some prototype code that I wrote years ago at
+    present. But it sets a base on which to build. It also establishes a
+    semver boundary between ripgrep's core indexing and a library-version of
+    that indexing.
+
+commit d958105d412b6a1ad014cb0e5832a9b029fa4977
+Author: Dev01 <dev02@example.com>
+Date:   Mon Jul 20 07:16:47 2026 -0400
+
+    cargo: add new build-time `unstable-index` feature
+    
+    ... and add some of the initial flags, spec'd out in #1497, for adding
+    indexing to ripgrep. These don't do anything yet.
+    
+    I chose to go this route because indexing will be a big feature, and it
+    would be better to develop it on master instead of maintaining a
+    long-lived branch for it.
+
+commit 227381db0ee83dfa4341f1e27ff9617c0f5ad992
+Author: Dev01 <dev02@example.com>
+Date:   Fri Jul 17 09:14:36 2026 -0400
+
+    ignore-0.4.30
+
+commit b621e65b4fc8a50b55576b07526f21c5d051ad71
+Author: Dev01 <dev02@example.com>
+Date:   Fri Jul 10 14:29:45 2026 -0400
+
+    ignore: add incremental checking
+    
+    This adds a new increment checker for ignore files, overrides and file
+    type selection. This effectively makes it possible to check individual
+    file paths as to whether they are ignored or not by any ignore file in
+    the directory tree (including parent gitignores). This is particularly
+    useful in the context of implementing a file watcher, where one wants to
+    make a decision about whether a newly added file should be included
+    *without* doing a full re-traversal of the directory tree.
+    
+    This implementation reuses pretty much all of the existing gitignore
+    logic without making any changes to it.
+
+commit c55818fd32d68cf742aea67bce86529f198bc985
+Author: Dev01 <dev02@example.com>
+Date:   Fri Jul 17 07:32:16 2026 -0400
+
+    ignore: more pathutil clean-up
+
+commit 6e527e9202f85a39ab2c4698636710204eb096e0
+Author: Dev01 <dev02@example.com>
+Date:   Thu Jul 16 09:21:49 2026 -0400
+
+    ignore: add routine for checking if a path is hidden or not
+    
+    This needs to do a bit more work on Windows unfortunately, but this will
+    only be used in incremental checking.
+
+commit 626b8951acbced7ff710f4e01624a05f219eec38
+Author: Dev01 <dev02@example.com>
+Date:   Thu Jul 16 09:11:41 2026 -0400
+
+    ignore: refactor `is_hidden`
+    
+    This does the more sensible thing of putting the implementation within
+    the routine instead of repeating the docs.
+    
+    We also rename this routine since we're going to want a path variant for
+    incremental checking.
+
+commit c035d23c26da7cf9d0eb96944b69a212240e17f1
+Author: Dev01 <dev02@example.com>
+Date:   Thu Jul 16 09:56:54 2026 -0400
+
+    msrv: bump to Rust 1.96
+
+commit fc3dd04b7ca18ec8be97704dc098bbd062bad244
+Author: Dev19 <dev20@example.com>
+Date:   Fri Jul 17 14:36:47 2026 +0300
+
+    doc: update OpenSubtitles benchmark corpus URL in README
+    
+    The old OPUS download.php link for the v2018 English monolingual
+    corpus now 404s. Point the README benchmark section at the live
+    object-storage URL for the same corpus.
+    
+    Fixes #3471
+
+commit 0d7054d8e466d6aa0a6bb6cf121e87225d26df44
+Author: Dev01 <dev02@example.com>
+Date:   Thu Jul 16 12:02:33 2026 -0400
+
+    ignore: fix deadlock when visitor panics
+    
+    When a visitor panics and the workers shutdown, we indicate as such and
+    quit everything. This effectively acts as a sort of poison that will
+    cause all other workers to stop even when in their idle loop.
+    
+    Fixes #3009

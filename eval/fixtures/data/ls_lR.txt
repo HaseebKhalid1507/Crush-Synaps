@@ -1,0 +1,27 @@
+crates/printer:
+total 16
+-rw-r--r-- 1 dev dev 1402 Oct 30 01:08 Cargo.toml
+-rw-r--r-- 1 dev dev 1081 Oct 30 01:08 LICENSE-MIT
+-rw-r--r-- 1 dev dev  742 Oct 30 01:08 README.md
+-rw-r--r-- 1 dev dev 1211 Oct 30 01:08 UNLICENSE
+drwxr-xr-x 3 dev dev  280 Oct 30 01:08 src
+
+crates/printer/src:
+total 296
+-rw-r--r-- 1 dev dev  13158 Oct 30 01:08 color.rs
+-rw-r--r-- 1 dev dev   2267 Oct 30 01:08 counter.rs
+drwxr-xr-x 2 dev dev     80 Oct 30 01:08 hyperlink
+-rw-r--r-- 1 dev dev  37688 Oct 30 01:08 json.rs
+-rw-r--r-- 1 dev dev   9946 Oct 30 01:08 jsont.rs
+-rw-r--r-- 1 dev dev   3552 Oct 30 01:08 lib.rs
+-rw-r--r-- 1 dev dev    670 Oct 30 01:08 macros.rs
+-rw-r--r-- 1 dev dev   6250 Oct 30 01:08 path.rs
+-rw-r--r-- 1 dev dev 136288 Oct 30 01:08 standard.rs
+-rw-r--r-- 1 dev dev   4837 Oct 30 01:08 stats.rs
+-rw-r--r-- 1 dev dev  40330 Oct 30 01:08 summary.rs
+-rw-r--r-- 1 dev dev  20591 Oct 30 01:08 util.rs
+
+crates/printer/src/hyperlink:
+total 48
+-rw-r--r-- 1 dev dev  2529 Oct 30 01:08 aliases.rs
+-rw-r--r-- 1 dev dev 41177 Oct 30 01:08 mod.rs

@@ -1,0 +1,35 @@
+commit 65e072fab262fdaaa19ef788bbb468ae6f8e4f8e
+Author: Dev03 <dev04@example.com>
+Date:   Tue Oct 27 14:30:54 2026 -0400
+
+    ignore: respect linked worktree excludes without requiring Git
+    
+    PR #3578
+
+diff --git a/crates/ignore/src/dir.rs b/crates/ignore/src/dir.rs
+index 61cd879..a4fb51a 100644
+--- a/crates/ignore/src/dir.rs
++++ b/crates/ignore/src/dir.rs
+@@ -373,7 +373,7 @@ impl Ignore {
+     ) -> (IgnoreInner, Option<Error>) {
+         let check_vcs_dir = self.inner.opts.require_git
+             && (self.inner.opts.git_ignore || self.inner.opts.git_exclude);
+-        let git_type = if check_vcs_dir
++        let git_type = if (check_vcs_dir || self.inner.opts.git_exclude)
+             && ignore_files_list.is_none_or(|i| i.has_git_dir)
+         {
+             dir.join(".git").metadata().ok().map(|md| md.file_type())
+@@ -1669,6 +1669,13 @@ mod tests {
+         assert!(err.is_none());
+         assert!(ignore.matched("ignore_me", false).is_ignore());
+ 
++        let without_required_git =
++            IgnoreBuilder::new().require_git(false).build();
++        let (ignore, err) =
++            without_required_git.add_child(td.path().join("linked-worktree"));
++        assert!(err.is_none());
++        assert!(ignore.matched("ignore_me", false).is_ignore());
++
+         // absolute commondir
+         wfile(commondir_path(), git_dir.to_str().unwrap());
+         let (ignore, err) = ib.add_child(td.path().join("linked-worktree"));

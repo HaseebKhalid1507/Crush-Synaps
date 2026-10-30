@@ -1,0 +1,32 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.2.0, pluggy-1.7.0
+rootdir: /work/py
+collected 126 items
+
+tests/test_auth.py ..........................................            [ 33%]
+tests/test_billing.py .......F...........F......................         [ 66%]
+tests/test_parser.py ..........................................          [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_billing_case_7 ______________________________
+
+    def test_billing_case_7():
+>       assert round(7 * 2.15, 2) == 15.06, 'invoice total drifted'
+E       AssertionError: invoice total drifted
+E       assert 15.05 == 15.06
+E        +  where 15.05 = round((7 * 2.15), 2)
+
+tests/test_billing.py:25: AssertionError
+_____________________________ test_billing_case_19 _____________________________
+
+    def test_billing_case_19():
+        data = {'a': 1}
+>       assert data['b'] == 1
+               ^^^^^^^^^
+E       KeyError: 'b'
+
+tests/test_billing.py:62: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_billing.py::test_billing_case_7 - AssertionError: invoice t...
+FAILED tests/test_billing.py::test_billing_case_19 - KeyError: 'b'
+======================== 2 failed, 124 passed in 0.04s =========================

@@ -1,0 +1,210 @@
+commit 91f5d22ef48bde459d90a8c7dbeab416e97d0f2b
+Author: Dev01 <dev02@example.com>
+Date:   Tue Oct 27 14:31:24 2026 -0400
+
+    ignore-0.4.34
+
+ Cargo.lock               | 2 +-
+ crates/ignore/Cargo.toml | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 55f2f69ab9f07eeca80b483668e9d7d4beca8e10
+Author: Dev01 <dev02@example.com>
+Date:   Tue Oct 27 14:31:14 2026 -0400
+
+    globset-0.4.21
+
+ Cargo.lock                | 2 +-
+ crates/globset/Cargo.toml | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 65e072fab262fdaaa19ef788bbb468ae6f8e4f8e
+Author: Dev03 <dev04@example.com>
+Date:   Tue Oct 27 14:30:54 2026 -0400
+
+    ignore: respect linked worktree excludes without requiring Git
+    
+    PR #3578
+
+ crates/ignore/src/dir.rs | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+commit d19650f4fca84c0f65f4ec024b16200bf3d41c33
+Author: Dev05 <dev06@example.com>
+Date:   Thu Oct 15 16:44:26 2026 +0000
+
+    globset: match filename-only regexes against basenames
+    
+    We now match filename-only globs such as **/.venv* and **/*.py[cod]
+    against the basename, avoiding a regex search over the full path. We
+    use this strategy only when the filename pattern cannot match a path
+    separator.
+    
+    On Linux x86-64 against 3fce3b5, building the Python ignore rules is
+    about 23% faster. Warm incremental replay over Ruff paths improves
+    4–9%; replay over uv paths is flat in the default build and improves
+    2–4% with fat LTO. The default-build Ruff parallel walk is 3.7%
+    slower.
+    
+    PR #3561
+
+ crates/globset/src/glob.rs | 66 ++++++++++++++++++++++++++++++----------
+ crates/globset/src/lib.rs  | 75 +++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 121 insertions(+), 20 deletions(-)
+
+commit 9d07a922605313dc47b78b802c7b0616fd76d409
+Author: Dev05 <dev06@example.com>
+Date:   Thu Oct 15 16:46:50 2026 +0000
+
+    ignore: reuse incremental matchers for directories without rules
+    
+    When a directory adds no ignore rules or repository boundary, we now
+    reuse the parent matcher. Incremental matching already tracks visited
+    directories separately, so adding an ignore file later preserves the
+    existing cached snapshot.
+    
+    On Linux x86-64 against 3fce3b5, warm incremental replay over Ruff and
+    uv path sets improves 4.6–6.6% and 3.2–6.2%, respectively, across
+    default and fat-LTO builds. Dense-rule controls stay within 0.6%; the
+    synthetic warm control is flat with fat LTO.
+    
+    PR #3560
+
+ crates/ignore/src/dir.rs         | 25 +++++++++++++++++++++++++
+ crates/ignore/src/incremental.rs | 22 +++++++++++++++++++++-
+ 2 files changed, 46 insertions(+), 1 deletion(-)
+
+commit 6892bc2b7efe5909cbbeec8f757ed2c4c76b1d30
+Author: Dev05 <dev06@example.com>
+Date:   Fri Oct 23 16:00:21 2026 -0400
+
+    ignore: use byte keys for incremental parent lookups
+    
+    We now store incremental directory-cache keys as OsString values to
+    avoid path-component hashing. On Unix, we find a cached parent by
+    scanning path bytes before parsing components. Cache misses fall back
+    to the component walk, preserving alternate path spellings and cached
+    ignore-file snapshots.
+    
+    On Linux x86-64 against 3fce3b5, warm incremental replay over Ruff
+    and uv path sets improves 12–13% and 15–18%, respectively, across
+    default and fat-LTO builds; ignored-parent checks improve about 68%.
+    Paths with an internal ./ are 0.5–2.2% slower.
+    
+    PR #3559
+
+ crates/ignore/src/incremental.rs | 105 ++++++++++++++++++++++++++++++---------
+ 1 file changed, 81 insertions(+), 24 deletions(-)
+
+commit 1752fb78f1735e517f731944707a79eb064e8669
+Author: Dev05 <dev06@example.com>
+Date:   Fri Oct 23 15:50:08 2026 -0400
+
+    globset: reject impossible literal lengths before hashing
+    
+    We now skip literal hash lookups when the byte length of a path or
+    basename cannot match any literal. We track lengths modulo 64 in a bit
+    mask, so collisions still go through the exact lookup. The full-path
+    and basename strategies now share the same implementation.
+    
+    On Linux x86-64 against 3fce3b5, warm incremental replay of Ruff and uv
+    path sets improves 9–14% across default and fat-LTO builds, and Ruff
+    serial walks improve 3.6–5.1%. The default-build uv parallel walk is
+    3.5% slower, and fat-LTO single-rule construction increases from 379 ns
+    to 387 ns.
+    
+    PR #3558
+
+ crates/globset/src/lib.rs | 172 ++++++++++++++++++++++++++++++----------------
+ 1 file changed, 111 insertions(+), 61 deletions(-)
+
+commit 2d4fa85141d91c411352bae3c516608684aeeacc
+Author: Dev05 <dev06@example.com>
+Date:   Fri Oct 23 15:43:37 2026 -0400
+
+    ignore: skip empty absolute parent matchers (#3557)
+    
+    When no ancestor above the walk root has ignore rules, we now skip
+    constructing an absolute path and checking parent matchers. Repository
+    boundaries still affect Git ignore rules, even when the repository has
+    no rules of its own.
+    
+    On Linux x86-64 against 3fce3b5, warm incremental matching improves
+    13.4% and replay allocates or reallocates about half as often.
+    Warm-cache walks of the Ruff and uv checkouts improve 1–4%; the
+    cached ignored-path control is 3.3% slower.
+    
+    PR #3557
+
+ crates/ignore/src/dir.rs | 61 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 60 insertions(+), 1 deletion(-)
+
+commit b5611fc9f5eda7073543e5c900ca515d1e69fc2e
+Author: Dev05 <dev06@example.com>
+Date:   Fri Oct 23 15:27:13 2026 -0400
+
+    ignore: reuse parent repository detection
+    
+    PR #3556
+
+ crates/ignore/src/dir.rs | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+commit c5e744cb436c4d0cc590676551cf1bc08cd1a560
+Author: Dev05 <dev06@example.com>
+Date:   Thu Oct 15 16:44:26 2026 +0000
+
+    ignore: avoid scratch pools for empty matchers
+    
+    ... by deferring to `Gitignore::empty()` when there aren't any globs.
+    
+    This plausibly skips some other work as well, in addition to avoiding
+    allocation for scratch pools.
+    
+    PR #3555
+
+ crates/ignore/src/gitignore.rs | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit fada8f9386df39e7fc9d0e407de764f005900ce0
+Author: Dev05 <dev07@example.com>
+Date:   Fri Oct 23 11:59:08 2026 -0400
+
+    ignore: benchmark Python workspace discovery and matching (#3554)
+    
+    We add benchmarks for the ignore operations used by Ruff, uv, and
+    ty: serial and parallel walks, early-exit workspace discovery, and
+    incremental path matching. The 39 cases cover different project
+    layouts, nested ignore rules, multiple roots, and cached directories.
+    
+    We create fixtures before timing and check their expected file counts
+    during walks. The README links the consumer call sites and describes
+    how to compare profiles. These measure library work with a warm
+    filesystem cache, not end-to-end application performance.
+    
+    We also test these benchmarks in CI.
+    
+    PR #3554
+
+ .github/workflows/ci.yml           |  13 +
+ crates/ignore/benches/README.md    |  88 ++++++
+ crates/ignore/benches/workloads.rs | 587 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 688 insertions(+)
+
+commit 7155f6408d370e699795dc75e954635abfaf08a6
+Author: Dev08 <dev09@example.com>
+Date:   Fri Oct 23 21:02:51 2026 +0530
+
+    ignore: treat dotfiles ending in a dot as hidden (#3564)
+    
+    `file_name()` returned `None` for any path ending in `.` on Unix,
+    which was meant to cover the `.` and `..` components but also matched
+    real names like `.foo.`. The hidden check then found no file name and
+    treated those files as visible. Only a final component that is exactly
+    `.` or `..` has no file name now.
+    
+    PR #3564
+
+ crates/ignore/src/pathutil.rs | 61 ++++++++++++++++++++++++++++++++++++++-----
+ crates/ignore/src/walk.rs     | 35 +++++++++++++++++++++++++
+ 2 files changed, 89 insertions(+), 7 deletions(-)
