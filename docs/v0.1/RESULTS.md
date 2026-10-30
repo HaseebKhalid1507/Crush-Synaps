@@ -4,7 +4,7 @@
 the real Synaps JSON-RPC protocol. Bytes are what the model actually receives
 (replace = compressed, continue = unchanged). Honest numbers.
 
-> Reproduce: `cd ~/Jawz/workspace/crush && cargo build --release && python3 measure.py`
+> Reproduce: `cargo build --release && python3 measure.py` (v0.1 tree)
 
 > **UPDATE (Phase 2, same night):** added tool-aware columnar transforms (`ls`, `ps`).
 > The picture below is the **post-Phase-2** result. The original Phase-1 numbers (compression
