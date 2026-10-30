@@ -61,3 +61,16 @@ path = "fuzz_targets/json.rs"
 test = false
 doc = false
 bench = false
+
+[dependencies.crush-ext]
+path = "../crates/crush-ext"
+
+[dependencies.serde_json]
+version = "1"
+
+[[bin]]
+name = "shim"
+path = "fuzz_targets/shim.rs"
+test = false
+doc = false
+bench = false

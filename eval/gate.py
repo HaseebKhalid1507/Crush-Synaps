@@ -17,6 +17,9 @@ Checked (each only if its input exists):
   keeps the token stream byte for byte; no fired result costs more after
   Synaps' spill step when the spill is decided on the raw's size (the
   crushed-size policy is reported); the 256 KiB LOG/JSON shapes < 1 ms p99
+- Phase 3 (shim.json): every crush-ext shim check (host-truncated input
+  passes through, runtime name preferred, raw kept before a lossy replace,
+  spill rule, live config, /crush, retention sweep, malformed frames)
 """
 from __future__ import annotations
 
@@ -114,6 +117,12 @@ for tag in ("", ".search_on"):
                     check(a.get("grew_after_spill_b", 0) == 0,
                           f"{s}{tag} {k}: fired results costlier after spill, spill-on-raw-size ({m}): {a.get('grew_after_spill_b', 0)} "
                           f"(spill-on-crushed-size: {a.get('grew_after_spill', 0)}, reported)")
+# Phase 3: the extension shim (eval/shim_checks.py, the real binary over JSON-RPC)
+shim = load("shim.json")
+if shim:
+    for c in shim["checks"]:
+        check(c["ok"], f"shim: {c['check']}" + ("" if c["ok"] else f" ({c.get('detail')})"))
+
 syn = load("synthetic.json")
 if syn:
     for x in syn:
