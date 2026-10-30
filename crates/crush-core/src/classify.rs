@@ -515,6 +515,8 @@ fn segment_class(seg: &Segment) -> Option<(Class, String)> {
                     why = format!("{why}|{p}");
                 }
             }
+            // `cat f | cut -c1-200`, `| sort`, `| awk …`: still the file's text
+            // (cut, filtered or reordered); CONTENT is the safe answer
             Class::Content
                 if matches!(
                     p,
@@ -525,20 +527,15 @@ fn segment_class(seg: &Segment) -> Option<(Class, String)> {
                         | "sort"
                         | "uniq"
                         | "column"
-                        | "jq"
-                        | "python"
-                        | "python3"
-                        | "perl"
                         | "paste"
                         | "rev"
                         | "fold"
                         | "fmt"
+                        | "sed"
                 ) =>
             {
-                // transformed: no longer the file's bytes
-                return None;
+                why = format!("{why}|{p}");
             }
-            Class::Content if p == "sed" && !st.args.iter().any(|a| a.starts_with("-n")) => return None,
             _ => {}
         }
         if matches!(p, "wc") {
@@ -578,6 +575,10 @@ fn command_classes(command: &str) -> (Option<(Class, String)>, Vec<Class>) {
         let interp = INTERPRETERS.contains(&p)
             || (p == "sed" && seg.first().args.iter().any(|a| a == "-i" || a.starts_with("-i")));
         let c = segment_class(seg);
+        // `x | wc -l`, `x | grep -c y`: prints a count, like an echo
+        if c.as_ref().is_some_and(|(_, why)| why.ends_with("|wc") || why.ends_with("|grep -c")) && others_exist {
+            continue;
+        }
         if let Some((k, _)) = &c {
             if !interp || *k == Class::Log {
                 all.push(*k);
@@ -909,8 +910,10 @@ mod tests {
         assert_eq!(cls("python3 /tmp/x.py && rm /tmp/x.py && bash -n f && sed -n 1,20p f", "x"), Class::Content);
         assert_eq!(cls("grep -rln foo src | head", "src/a\n"), Class::Listing);
         assert_eq!(cls("tail -f /tmp/build.out", "x"), Class::Log);
-        assert_eq!(cls("cat x.tsv | awk '{print $1}'", "a\tb\tc\nd\te\tf\ng\th\ti\n"), Class::Structured);
+        assert_eq!(cls("cat x.tsv | awk '{print $1}'", "a\tb\tc\nd\te\tf\ng\th\ti\n"), Class::Content);
         assert_eq!(cls("git show --stat HEAD", "x"), Class::Vcs);
+        assert_eq!(cls("cat abstracts.txt | cut -c1-160", "x"), Class::Content);
+        assert_eq!(cls("git show main:docs/h.md | wc -l; git show main:docs/h.md | head -30", "x"), Class::Content);
         assert_eq!(cls("git show HEAD:a.js > a.js && npx jest t.test.js 2>&1 | grep -E x", "x"), Class::Log);
         let paths = "./a/b.py\n./c/d.rs\n./e/f.md\n./g/h.txt\n";
         assert_eq!(
