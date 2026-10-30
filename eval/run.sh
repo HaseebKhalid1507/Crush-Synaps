@@ -6,6 +6,7 @@
 #   eval/run.sh --fixtures-only    no local Synaps corpus needed
 #   eval/run.sh --refresh-corpus   re-extract ~/.cache/crush-corpus/corpus.jsonl
 #
+# Phase 2A accuracy (search_elide, ls_columns) is its own capped run; see eval/README.md.
 # Env: CRUSH_EVAL_DAYS (30) corpus window · CRUSH_EVAL_MAX_CALLS (400) model-call cap
 #      CRUSH_EVAL_SAMPLES (80) real samples in the accuracy slice · CRUSH_EVAL_MODELS (haiku,sonnet)
 #      CRUSH_EVAL_QUOTA (search_group:46,repeats:16,progress:10,blobs:8) accuracy quotas per transform
@@ -21,7 +22,7 @@ for a in "$@"; do
     --no-accuracy) ACC=0 ;;
     --fixtures-only) CORPUS=0 ;;
     --refresh-corpus) REFRESH=1 ;;
-    -h|--help) sed -n 2,13p "$0"; exit 0 ;;
+    -h|--help) sed -n 2,14p "$0"; exit 0 ;;
     *) echo "unknown flag: $a" >&2; exit 2 ;;
   esac
 done
@@ -64,8 +65,8 @@ if [ "$CORPUS" = 1 ]; then
   fi
 fi
 
-# Candidates that ship disabled are still measured: the same passes with every
-# transform on (eval/configs/search_on.json), written under the `search_on` tag.
+# Candidates that ship disabled are still measured: Phase 1's SEARCH grouping
+# alone (eval/configs/search_on.json), written under the `search_on` tag.
 step "candidates (search_group on): run, count tokens"
 VARIANT=(env CRUSH_EVAL_TAG=search_on CRUSH_EVAL_CONFIG=eval/configs/search_on.json)
 "${VARIANT[@]}" python3 eval/run_crush.py --set fixtures --reps 5 >/dev/null
@@ -75,9 +76,24 @@ if [ "$CORPUS" = 1 ]; then
   "${VARIANT[@]}" python3 eval/count_tokens.py --set corpus --skip-composition
 fi
 
+# Phase 2A candidates (search_elide, ls_columns): the same free passes, plus
+# what they save on top of Synaps' spill (#334), under the `p2a_on` tag.
+step "Phase 2A candidates (search_elide + ls_columns on): run, count tokens, after-spill"
+P2A=(env CRUSH_EVAL_TAG=p2a_on CRUSH_EVAL_CONFIG=eval/configs/p2a_on.json)
+"${P2A[@]}" python3 eval/run_crush.py --set fixtures --reps 5 >/dev/null
+"${P2A[@]}" python3 eval/count_tokens.py --set fixtures
+"${P2A[@]}" python3 eval/after_spill.py --set fixtures >/dev/null
+if [ "$CORPUS" = 1 ]; then
+  "${P2A[@]}" python3 eval/run_crush.py --set corpus --reps 3 >/dev/null
+  "${P2A[@]}" python3 eval/count_tokens.py --set corpus --skip-composition
+  "${P2A[@]}" python3 eval/after_spill.py --set corpus >/dev/null
+  [ -s eval/out/anatomy.json ] || python3 eval/anatomy.py >/dev/null
+fi
+
 step "latency: 256 KiB worst cases"
 mkdir -p eval/out && "$CARGO_TARGET_DIR/release/crush-eval-driver" --synthetic > eval/out/synthetic.json
 "$CARGO_TARGET_DIR/release/crush-eval-driver" --synthetic --config eval/configs/search_on.json > eval/out/synthetic.search_on.json
+"$CARGO_TARGET_DIR/release/crush-eval-driver" --synthetic --config eval/configs/p2a_on.json > eval/out/synthetic.p2a_on.json
 
 if [ "$ACC" = 1 ]; then
   step "accuracy: raw vs crushed through synaps rpc (cap ${CRUSH_EVAL_MAX_CALLS:-400} model calls)"
@@ -89,6 +105,7 @@ fi
 step "edit-safety gate (CONTENT byte-identical, SEARCH lines rebuild)"
 python3 eval/edit_safety.py --sets "$SETS" --strict >/dev/null
 "${VARIANT[@]}" python3 eval/edit_safety.py --sets "$SETS" --strict >/dev/null
+"${P2A[@]}" python3 eval/edit_safety.py --sets "$SETS" --strict >/dev/null
 
 step "gate + report"
 python3 eval/gate.py
