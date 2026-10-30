@@ -202,6 +202,7 @@ class TokenCounter:
                 todo.append(i)
             else:
                 out[i] = n
+                self.cache_hits += bool(t)
         if todo:
             self._overhead(model)
             done = [0]
