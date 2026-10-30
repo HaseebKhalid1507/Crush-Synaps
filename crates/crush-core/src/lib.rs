@@ -131,6 +131,9 @@ pub struct TransformSwitches {
     /// LOG: runs of build-progress lines (`Compiling`, pip `Collecting`, ...)
     /// become a counted note (lossy).
     pub build_progress: bool,
+    /// LOG: runs of passing libtest lines from one module on one line, every
+    /// name kept (`test m::{a, b, c} ... ok`, lossless). test_pass v2.
+    pub test_group: bool,
     /// STRUCTURED: pretty-printed JSON re-laid out one top-level element per
     /// line, no other whitespace (lossless in meaning). Off: JSON-value
     /// questions were 124/124 both ways, but Sonnet's raw-only excess (two
@@ -150,6 +153,7 @@ impl Default for TransformSwitches {
             ls_columns: false,
             test_pass: false,
             build_progress: true,
+            test_group: false,
             json_minify: false,
         }
     }

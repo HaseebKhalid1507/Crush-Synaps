@@ -31,6 +31,7 @@ use super::{group_digits, lines};
 
 pub const TESTS: &str = "test_pass";
 pub const BUILD: &str = "build_progress";
+pub const GROUP: &str = "test_group";
 
 /// Shortest run of passing-test lines worth a note.
 const MIN_TEST_RUN: usize = 3;
@@ -272,6 +273,140 @@ pub fn collapse_tests(text: &str, raw_ref: &str) -> Option<String> {
     Some(finish(out, trailing, raw_ref))
 }
 
+// ── passing tests, names kept (test_pass v2) ────────────────────────────────
+
+/// Most test names on one grouped line: the status stays close to every name.
+const MAX_GROUP_NAMES: usize = 10;
+/// Shortest run of same-module passing libtest lines worth a grouped line.
+const MIN_GROUP_RUN: usize = 3;
+
+/// `test a::b::c ... ok` -> (`a::b`, `c`); a top-level `test c ... ok` ->
+/// (``, `c`). Names that could make a grouped line ambiguous (spaces, braces,
+/// commas: doc tests, odd harnesses) are left alone.
+fn libtest_split(l: &str) -> Option<(&str, &str)> {
+    let name = libtest_ok(l)?;
+    if name.bytes().any(|b| matches!(b, b' ' | b'{' | b'}' | b',' | b'\t' | b'\r')) || name.ends_with(':') {
+        return None;
+    }
+    let (m, leaf) = match name.rfind("::") {
+        Some(k) => (&name[..k], &name[k + 2..]),
+        None => ("", name),
+    };
+    (!leaf.is_empty()).then_some((m, leaf))
+}
+
+fn push_group(out: &mut String, module: &str, names: &[&str]) {
+    out.push_str("test ");
+    if !module.is_empty() {
+        out.push_str(module);
+        out.push_str("::");
+    }
+    out.push('{');
+    out.push_str(&names.join(", "));
+    out.push_str("} ... ok");
+}
+
+/// Runs of passing libtest lines from one module, every name kept, in order:
+///
+/// ```text
+/// test accounts::apply_tests::case_00 ... ok
+/// test accounts::apply_tests::case_02 ... ok     ->  test accounts::apply_tests::{case_00, case_02, case_04} ... ok
+/// test accounts::apply_tests::case_04 ... ok
+/// ```
+///
+/// Lossless: [`expand_test_groups`] rebuilds the input byte for byte. At most
+/// [`MAX_GROUP_NAMES`] names per line; failures, ignored tests, output and
+/// summaries are never touched and break a run. `None` when nothing changed.
+pub fn group_tests(text: &str) -> Option<String> {
+    memchr::memmem::find(text.as_bytes(), b" ... ok")?;
+    let (ls, trailing) = lines(text);
+    let parts: Vec<Option<(&str, &str)>> = ls.iter().map(|l| libtest_split(l)).collect();
+    let mut out = String::with_capacity(text.len());
+    let mut changed = false;
+    let mut i = 0;
+    while i < ls.len() {
+        if i > 0 {
+            out.push('\n');
+        }
+        let Some((m, _)) = parts[i] else {
+            out.push_str(ls[i]);
+            i += 1;
+            continue;
+        };
+        let mut j = i + 1;
+        while j < ls.len() && parts[j].is_some_and(|(m2, _)| m2 == m) {
+            j += 1;
+        }
+        if j - i < MIN_GROUP_RUN {
+            for (k, l) in ls[i..j].iter().enumerate() {
+                if k > 0 {
+                    out.push('\n');
+                }
+                out.push_str(l);
+            }
+            i = j;
+            continue;
+        }
+        let names: Vec<&str> = parts[i..j].iter().flatten().map(|(_, n)| *n).collect();
+        // even chunks: no one-name tail line
+        let chunks = names.len().div_ceil(MAX_GROUP_NAMES);
+        let per = names.len().div_ceil(chunks);
+        for (k, chunk) in names.chunks(per).enumerate() {
+            if k > 0 {
+                out.push('\n');
+            }
+            push_group(&mut out, m, chunk);
+        }
+        changed = true;
+        i = j;
+    }
+    if !changed {
+        return None;
+    }
+    if trailing {
+        out.push('\n');
+    }
+    Some(out)
+}
+
+/// Undo [`group_tests`]: every `test m::{a, b} ... ok` line back to one line
+/// per test. Lines that aren't grouped lines are kept as they are.
+pub fn expand_test_groups(text: &str) -> String {
+    let (ls, trailing) = lines(text);
+    let mut out = String::with_capacity(text.len() * 2);
+    for (i, l) in ls.iter().enumerate() {
+        if i > 0 {
+            out.push('\n');
+        }
+        let grouped = l.strip_prefix("test ").and_then(|r| r.strip_suffix("} ... ok")).and_then(|r| {
+            let (m, names) = r.split_once('{')?;
+            let m = if m.is_empty() { Some("") } else { m.strip_suffix("::") }?;
+            Some((m, names))
+        });
+        match grouped {
+            Some((m, names)) => {
+                for (k, n) in names.split(", ").enumerate() {
+                    if k > 0 {
+                        out.push('\n');
+                    }
+                    out.push_str("test ");
+                    if !m.is_empty() {
+                        out.push_str(m);
+                        out.push_str("::");
+                    }
+                    out.push_str(n);
+                    out.push_str(" ... ok");
+                }
+            }
+            None => out.push_str(l),
+        }
+    }
+    if trailing {
+        out.push('\n');
+    }
+    out
+}
+
 // ── build progress ──────────────────────────────────────────────────────────
 
 /// Cargo status verbs that only report progress (never `Finished`, `Running`,
@@ -429,6 +564,42 @@ mod tests {
     use super::*;
 
     const R: &str = "R";
+
+    #[test]
+    fn test_group_keeps_every_name_and_rebuilds() {
+        let raw = "running 7 tests\n\
+                   test a::t::x0 ... ok\ntest a::t::x2 ... ok\ntest a::t::x1 ... ok\n\
+                   test a::t::bad ... FAILED\n\
+                   test a::u::y ... ok\ntest a::u::z ... ok\n\
+                   test top ... ok\n\n\
+                   test result: FAILED. 6 passed; 1 failed; 0 ignored\n";
+        let g = group_tests(raw).unwrap();
+        assert_eq!(
+            g,
+            "running 7 tests\n\
+             test a::t::{x0, x2, x1} ... ok\n\
+             test a::t::bad ... FAILED\n\
+             test a::u::y ... ok\ntest a::u::z ... ok\n\
+             test top ... ok\n\n\
+             test result: FAILED. 6 passed; 1 failed; 0 ignored\n"
+        );
+        assert_eq!(expand_test_groups(&g), raw);
+        assert_eq!(group_tests(&g), None, "a fixed point");
+    }
+
+    #[test]
+    fn test_group_splits_long_runs_evenly_and_skips_odd_names() {
+        let raw: String = (0..23).map(|i| format!("test m::case_{i:02} ... ok\n")).collect();
+        let g = group_tests(&raw).unwrap();
+        assert_eq!(g.lines().count(), 3);
+        assert!(g.lines().all(|l| l.matches(", ").count() < MAX_GROUP_NAMES));
+        assert_eq!(expand_test_groups(&g), raw);
+        let doc = "test src/lib.rs - f (line 3) ... ok\n".repeat(4);
+        assert_eq!(group_tests(&doc), None);
+        let top: String = (0..4).map(|i| format!("test t{i} ... ok\n")).collect();
+        assert_eq!(group_tests(&top).unwrap(), "test {t0, t1, t2, t3} ... ok\n");
+        assert_eq!(expand_test_groups("test {t0, t1, t2, t3} ... ok\n"), top);
+    }
 
     fn cargo_block(n: usize, fail: Option<usize>) -> String {
         let mut s = format!("\nrunning {n} tests\n");
