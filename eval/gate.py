@@ -11,6 +11,11 @@ Checked (each only if its input exists):
 - latency: corpus in-process p99 < 1 ms; every 256 KiB worst case < 1 ms
   best-of-200 (p99 is reported, not gated: it measures machine load)
 - estimator: held-out median |error| < 10% (both families)
+- Phase 2B (p2b_checks.json, spill.*.json): every non-collapsible LOG line
+  kept verbatim and in order (failures, summaries, diagnostics and code
+  frames called out), notes count exactly what they replaced, JSON layout
+  keeps the token stream byte for byte; no fired result costs more after
+  Synaps' spill step; the 256 KiB LOG/JSON shapes < 1 ms p99
 """
 from __future__ import annotations
 
@@ -85,6 +90,27 @@ if est:
     for k, v in est["fit"].items():
         e = v["test"]["median_abs_rel_err"]
         check(e < 0.10, f"estimator {k} held-out median |err| {e:.1%} < 10%")
+
+# Phase 2B: LOG / STRUCTURED invariants, re-checked independently of crush-core
+for tag in ("", ".search_on"):
+    p2b = load(f"p2b_checks{tag}.json")
+    if p2b:
+        for s, r in p2b.items():
+            for k in ("log_lines_missing", "failure_lines_missing", "summary_lines_missing", "diagnostic_lines_missing",
+                      "note_count_mismatches", "json_token_mismatches"):
+                check(r.get(k, 0) == 0, f"{s}{tag}: p2b {k} {r.get(k, 0)}")
+    for s in ("fixtures", "corpus"):
+        sp = load(f"spill.{s}{tag}.json")
+        if sp:
+            for m, by in sp["fired_by"].items():
+                a = by.get("*|*", {})
+                check(a.get("grew_after_spill", 0) == 0,
+                      f"{s}{tag}: fired results costlier after spill ({m}): {a.get('grew_after_spill', 0)}")
+syn = load("synthetic.json")
+if syn:
+    for x in syn:
+        if x["shape"] in ("cargo_test_log", "cargo_build_log", "pretty_json", "pretty_json_128k"):
+            check(x["p99_us"] < 1000, f"256 KiB {x['shape']}: p99 {x['p99_us']:.0f} µs < 1 ms")
 
 for o in oks:
     print("  ok  ", o)

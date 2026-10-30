@@ -347,7 +347,8 @@ def gen_json(out, rng, sample):
     path, arr, idk = pick
     where = f"the `{path}` array" if path else "the top-level array"
     qs = []
-    scal = lambda o: [k for k, x in o.items() if k != idk and not isinstance(x, (dict, list)) and len(json.dumps(x)) < 80]
+    scal = lambda o: [k for k, x in o.items() if k != idk and not isinstance(x, (dict, list)) and len(json.dumps(x)) < 80
+                      and not (isinstance(x, str) and "\n" in x)]
 
     def fmt(x):
         return "null" if x is None else ("true" if x is True else "false" if x is False else (x if isinstance(x, str) else json.dumps(x)))
@@ -510,8 +511,205 @@ def gen_progress(out, rng, sample):
     return qs
 
 
-GENERATORS = [gen_cargo_test, gen_pytest, gen_node, gen_compile, gen_gitlog, gen_status, gen_json, gen_ls, gen_ps,
-              gen_pr_list, gen_grep, gen_grep_single, gen_pathlist]
+
+# ── Phase 2B: LOG (test runs, builds) and STRUCTURED (JSON layouts) ──────────
+
+CARGO_SUMMARY = re.compile(r"^test result: (?:ok|FAILED)\. (\d+) passed; (\d+) failed; (\d+) ignored; \d+ measured; (\d+) filtered out")
+JEST_TOTALS = re.compile(r"^Tests:\s+(.*\d+ total)\s*$")
+PANIC_AT = re.compile(r"^thread '([^']+)'(?: \(\d+\))? panicked at ([^:\s]+):(\d+):\d+:?\s*$")
+PYTEST_V2 = re.compile(r"^(\S+::\S+) (PASSED|FAILED|ERROR|SKIPPED)\b")
+GO_RES = re.compile(r"^\s*--- (PASS|FAIL|SKIP): (\S+) \(")
+MARK_RES = re.compile(r"^(\s*)(✓|✔|√|✕|✖|×) (.+?)(?: \(\d+(?:\.\d+)? ?m?s\))?\s*$")
+
+
+def _test_lines(lines):
+    """[(index, name, PASS|FAIL|SKIP)] over cargo / pytest -v / jest / node / go."""
+    got = []
+    for i, l in enumerate(lines):
+        m = CARGO_T.match(l)
+        if m:
+            got.append((i, m.group(1), {"ok": "PASS", "FAILED": "FAIL"}.get(m.group(2), "SKIP")))
+            continue
+        m = PYTEST_V2.match(l)
+        if m:
+            got.append((i, m.group(1), {"PASSED": "PASS", "SKIPPED": "SKIP"}.get(m.group(2), "FAIL")))
+            continue
+        m = GO_RES.match(l)
+        if m:
+            got.append((i, m.group(2), {"PASS": "PASS", "FAIL": "FAIL"}.get(m.group(1), "SKIP")))
+            continue
+        m = MARK_RES.match(l)
+        if m and len(m.group(3)) > 3:
+            # jest/mocha nest tests under describe blocks; name them the way
+            # jest's own failure headers do: `suite › group › test`
+            path, ind = [m.group(3)], len(m.group(1))
+            for k in range(i - 1, -1, -1):
+                pl = lines[k]
+                pi = len(pl) - len(pl.lstrip(" "))
+                if pl.strip() and pi < ind and not MARK_RES.match(pl):
+                    if re.match(r"^(PASS|FAIL|▶) ", pl.strip()) or pi == 0:
+                        break  # jest file header / node suite: tests carry their own name
+                    path.insert(0, pl.strip())
+                    ind = pi
+            name = " › ".join(path)
+            if " " in name and not name.endswith(":"):  # not a suite line or `✖ failing tests:`
+                got.append((i, name, "PASS" if m.group(2) in "✓✔√" else "FAIL"))
+    return got
+
+
+def gen_log_p2b(out, rng, sample):
+    """Test runs and builds (LOG class): pass/fail of tests that sit in long
+    runs of passing lines (what test collapse removes) and of failed ones
+    (kept), totals from the summary lines, panic locations, how many crates
+    or packages a build compiled/collected (what build collapse counts), the
+    Finished line, plus rustc/gcc diagnostic locations (code frames kept)."""
+    if sample.get("class") != "LOG":
+        return []
+    lines = out.split("\n")
+    qs = []
+    tests = _test_lines(lines)
+    # a name reported twice with the same status (node's `failing tests:`
+    # recap) is fine; one reported with two statuses is ambiguous
+    status = {}
+    for _, n, st in tests:
+        status.setdefault(n, set()).add(st)
+    first = {}
+    for t in tests:
+        first.setdefault(t[1], t)
+    tests = [t for t in tests if first[t[1]] is t and len(status[t[1]]) == 1 and "`" not in t[1] and len(t[1]) < 160]
+    idx = {i for i, _, st in tests if st == "PASS"}
+    # passing tests inside a run of >= 3 consecutive passing lines
+    in_run = [t for t in tests if t[2] == "PASS" and (
+        {t[0] - 2, t[0] - 1} <= idx or {t[0] - 1, t[0] + 1} <= idx or {t[0] + 1, t[0] + 2} <= idx)]
+    fails = [t for t in tests if t[2] == "FAIL"]
+    picks = rng.sample(in_run, min(2, len(in_run))) + rng.sample(fails, min(1, len(fails)))
+    rng.shuffle(picks)
+    for _, n, st in picks:
+        q(qs, f"Did the test `{n}` pass or fail? Answer PASS or FAIL.", st,
+          "test:status_run" if st == "PASS" else "test:status_fail", "enum")
+    sums = [m for m in (CARGO_SUMMARY.match(l) for l in lines) if m]
+    if sums:
+        q(qs, "Adding up every `test result:` line, how many tests passed in total?", sum(int(m.group(1)) for m in sums), "test:npass", "int")
+        q(qs, "Adding up every `test result:` line, how many tests failed in total?", sum(int(m.group(2)) for m in sums), "test:nfail", "int")
+        ign = sum(int(m.group(3)) for m in sums)
+        if ign:
+            q(qs, "Adding up every `test result:` line, how many tests were ignored in total?", ign, "test:nignored", "int")
+    jt = [m for m in (JEST_TOTALS.match(l) for l in lines) if m]
+    if jt:
+        t = jt[-1].group(1)
+        for word in ("failed", "passed"):
+            m = re.search(rf"(\d+) {word}", t)
+            q(qs, f"According to the `Tests:` summary line, how many tests {word}?", m.group(1) if m else 0, f"test:n{word}", "int")
+    ps = [m.group(1) for m in (PYTEST_S.search(l) for l in lines) if m]
+    if ps and not sums and not jt and re.search(r"\d+ (passed|failed)", ps[-1]):
+        for word in ("failed", "passed"):
+            m = re.search(rf"(\d+) {word}", ps[-1])
+            q(qs, f"According to pytest's final summary line, how many tests {word}?", m.group(1) if m else 0, f"test:n{word}", "int")
+    panics = [m for m in (PANIC_AT.match(l) for l in lines) if m]
+    pc = Counter(m.group(1) for m in panics)
+    panics = [m for m in panics if pc[m.group(1)] == 1 and "`" not in m.group(1)]
+    if panics:
+        m = rng.choice(panics)
+        q(qs, f"Test `{m.group(1)}` panicked. At which file and line? Answer as path:line.", f"{m.group(2)}:{m.group(3)}", "test:panicloc", "exact")
+    # builds
+    comp = [l for l in lines if re.match(r"^ {3}Compiling \S", l)]
+    if len(comp) >= 2:
+        q(qs, "How many crates does the output show being compiled (lines starting with `Compiling`)?", len(comp), "build:ncompiled", "int")
+    coll = [l for l in lines if l.startswith("Collecting ")]
+    if len(coll) >= 2:
+        q(qs, "How many packages did pip collect (lines starting with `Collecting`)?", len(coll), "build:ncollected", "int")
+    fin = [m for m in (re.match(r"^\s+Finished .* in ([\d.]+m?s)\s*$", l) for l in lines) if m]
+    if fin and comp:
+        q(qs, "According to the `Finished` line, how long did the build take? Answer exactly as printed (e.g. 3.21s).", fin[-1].group(1), "build:finished", "exact")
+    if comp or re.search(r"^(warning|error)(\[\w+\])?: ", out, re.M):
+        qs.extend(x for x in gen_compile(out, rng, sample) if x["kind"] in ("rustc:wline", "rustc:errloc", "rustc:code", "gcc:line"))
+    return qs
+
+
+def _json_docs(out):
+    s = out.strip()
+    try:
+        return [json.loads(s)], False
+    except Exception:
+        pass
+    dec, i, docs = json.JSONDecoder(), 0, []
+    while i < len(s):
+        while i < len(s) and s[i] in " \t\r\n":
+            i += 1
+        if i >= len(s):
+            break
+        try:
+            v, i = dec.raw_decode(s, i)
+        except Exception:
+            return None, False
+        docs.append(v)
+    return (docs, True) if len(docs) > 1 else (None, False)
+
+
+def _fmt(x):
+    if x is None:
+        return "null"
+    if x is True or x is False:
+        return "true" if x else "false"
+    return x if isinstance(x, str) else json.dumps(x)
+
+
+def gen_json_p2b(out, rng, sample):
+    """JSON that isn't a single top-level array of id'd objects (gen_json's
+    case): jq streams of objects, and nested objects (value at a key path)."""
+    if sample.get("class") != "STRUCTURED":
+        return []
+    docs, stream = _json_docs(out)
+    if docs is None:
+        return []
+    qs = []
+    if stream and len(docs) >= 3 and all(isinstance(d, dict) for d in docs):
+        keys = Counter(k for d in docs for k in d)
+        idk = next((k for k in ("id", "number", "name", "key", "sha") if keys.get(k) == len(docs)
+                    and len({json.dumps(d[k]) for d in docs}) == len(docs)), None)
+        if idk:
+            for d in rng.sample(docs, min(3, len(docs))):
+                ks = [k for k, x in d.items() if k != idk and not isinstance(x, (dict, list)) and len(json.dumps(x)) < 80
+                      and not (isinstance(x, str) and "\n" in x)]
+                if ks:
+                    k = rng.choice(ks)
+                    a = _fmt(d[k])
+                    q(qs, f"The output is a sequence of JSON objects. What is the value of `{k}` in the object whose `{idk}` is "
+                          f"{json.dumps(d[idk])}? Answer with the bare value (use null for null, \"\" for an empty string).",
+                      '""' if a == "" else a, "json:stream_field", "exact")
+            q(qs, "How many JSON objects does the output contain?", len(docs), "json:stream_len", "int")
+        return qs
+    if stream or not isinstance(docs[0], dict):
+        return []
+    leaves = []
+
+    def walk(x, path, depth):
+        if depth > 3 or not isinstance(x, dict):
+            return
+        for k, v in x.items():
+            if not re.fullmatch(r"[A-Za-z_][\w-]*", k):
+                continue
+            p = f"{path}.{k}" if path else k
+            if isinstance(v, dict):
+                walk(v, p, depth + 1)
+            elif not isinstance(v, list) and len(json.dumps(v)) < 80 and not (isinstance(v, str) and "\n" in v):
+                leaves.append((p, v))
+    walk(docs[0], "", 0)
+    if len(leaves) < 4:
+        return []
+    picks = rng.sample(leaves, min(4, len(leaves)))
+    nullish = [lf for lf in leaves if lf[1] is None or lf[1] == ""]
+    if nullish and not any(p[1] is None or p[1] == "" for p in picks):
+        picks[-1] = rng.choice(nullish)
+    for p, v in picks:
+        a = _fmt(v)
+        q(qs, f"In the JSON object, what is the value at the key path `{p}`? Answer with the bare value "
+              f"(use null for null, \"\" for an empty string).", '""' if a == "" else a,
+          "json:nullish" if v is None or v == "" else "json:path", "exact")
+    return qs
+
+GENERATORS = [gen_log_p2b, gen_cargo_test, gen_pytest, gen_node, gen_compile, gen_gitlog, gen_status, gen_json,
+              gen_json_p2b, gen_ls, gen_ps, gen_pr_list, gen_grep, gen_grep_single, gen_pathlist]
 # always asked when they apply: they probe crush 2's generic transforms
 ALWAYS = [gen_progress, gen_blob]
 # Phase 2A: over-long SEARCH lines, ls -l owner/group columns
