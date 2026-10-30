@@ -5,7 +5,9 @@ the private accuracy records. Aggregates only for real data. Called by
 report.py (`p3_*` markers)."""
 from __future__ import annotations
 
+import re
 from collections import Counter, defaultdict
+from pathlib import Path
 
 from report import CORPUS_DIR, M4, M5, OUT, fmt, load, parity, pct, read_jsonl, table
 
@@ -121,6 +123,12 @@ def sec_accuracy(acc):
     return "\n".join(lines)
 
 
+def _scrub(text: str) -> str:
+    """The smoke test's isolated base dir is under the user's home: show it
+    as `<isolated home>` (never commit a local path or user name)."""
+    return re.sub(r"/\S*/smoke\d+(?=/)", "<isolated home>", text).replace(str(Path.home()), "~")
+
+
 def sec_smoke(sm):
     if not sm:
         return "(not run)"
@@ -133,7 +141,7 @@ def sec_smoke(sm):
         f"`scripts/setup.sh` in {sm.get('setup_secs')} s. {ok} of {len(sm['checks'])} checks pass.", "",
         table(["", "check"], rows), "",
         table(["command", "output bytes", "bytes in session history"], sizes), "",
-        "`crush-ext --report` afterwards (the backing stats of `/crush`):", "", "```text", (sm.get("crush_report") or "").strip(), "```"])
+        "`crush-ext --report` afterwards (the backing stats of `/crush`):", "", "```text", _scrub((sm.get("crush_report") or "").strip()), "```"])
 
 
 def render(md: str, replace) -> str:
