@@ -33,3 +33,17 @@ path = "fuzz_targets/search.rs"
 test = false
 doc = false
 bench = false
+
+[[bin]]
+name = "search_elide"
+path = "fuzz_targets/search_elide.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "listing"
+path = "fuzz_targets/listing.rs"
+test = false
+doc = false
+bench = false

@@ -43,7 +43,7 @@ fn verify_step(name: &str, src: &str, next: &str) -> bool {
     match name {
         search::NAME => search::rebuilds(src, next),
         search_elide::NAME => search_elide::verify(src, next),
-        listing::NAME => listing::restore(next).as_deref() == Some(src),
+        listing::NAME => listing::verify(src, next),
         _ => true,
     }
 }

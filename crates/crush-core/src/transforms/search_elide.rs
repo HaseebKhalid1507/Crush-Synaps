@@ -462,7 +462,7 @@ fn elide_line(line: &str, pats: &Patterns) -> Option<String> {
 /// Cut over-long hit lines to the text around their match. `None` when no
 /// line qualifies.
 pub fn elide(text: &str, command: Option<&str>, raw_ref: &str) -> Option<String> {
-    if text.len() <= MIN_LINE {
+    if text.len() <= MIN_LINE || memchr::memmem::find(text.as_bytes(), b"[crush:").is_some() {
         return None;
     }
     let pats = patterns(command);
