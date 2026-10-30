@@ -1,24 +1,291 @@
 {
   "name": "crush",
-  "version": "0.2.0",
-  "description": "Tool-output compressor (crush 2). Classifies every tool result and applies only transforms that passed a token, accuracy and edit-safety gate: identical-line runs written once with a counted note (lossless); progress redraws and blobs too when the raw is kept (--keep-raw-dir). File views, diffs and grep hits are never changed. Pass-through on any doubt.",
+  "version": "2.0.0",
+  "description": "Tool-output compression for Synaps (crush 2). Classifies every tool result and applies only transforms that passed a real-token, model-accuracy and edit-safety gate. File views, diffs and grep hit text are never changed; lossy results keep the raw output in ~/.cache/crush/raw and point at it; a result is only replaced when that doesn't cost more after Synaps' spill step. Pass-through on any doubt. /crush shows what it saved.",
   "author": "Jawz",
   "commands": [
     {
       "name": "crush",
-      "description": "Report how many tokens crush has saved this session (estimated).",
+      "description": "Report crush's estimated token savings: this session and in total, by class and transform, pass-through reasons, raw-store size.",
       "interactive": true
     }
   ],
+  "settings": {
+    "categories": [
+      {
+        "id": "crush",
+        "label": "crush",
+        "fields": [
+          {
+            "key": "enabled",
+            "label": "Enabled",
+            "editor": "cycler",
+            "options": [
+              "true",
+              "false"
+            ],
+            "default": true,
+            "help": "Master switch (applies without a restart)."
+          },
+          {
+            "key": "class_search",
+            "label": "SEARCH (grep, rg)",
+            "editor": "cycler",
+            "options": [
+              "true",
+              "false"
+            ],
+            "default": true,
+            "help": "Cut over-long grep hit lines."
+          },
+          {
+            "key": "class_listing",
+            "label": "LISTING (ls, find, ps)",
+            "editor": "cycler",
+            "options": [
+              "true",
+              "false"
+            ],
+            "default": true,
+            "help": "Generic transforms."
+          },
+          {
+            "key": "class_log",
+            "label": "LOG (builds, tests)",
+            "editor": "cycler",
+            "options": [
+              "true",
+              "false"
+            ],
+            "default": true,
+            "help": "Collapse build progress."
+          },
+          {
+            "key": "class_structured",
+            "label": "STRUCTURED (JSON, YAML)",
+            "editor": "cycler",
+            "options": [
+              "true",
+              "false"
+            ],
+            "default": true,
+            "help": "Generic transforms."
+          },
+          {
+            "key": "class_vcs",
+            "label": "VCS (git)",
+            "editor": "cycler",
+            "options": [
+              "true",
+              "false"
+            ],
+            "default": true,
+            "help": "Generic transforms."
+          },
+          {
+            "key": "class_unknown",
+            "label": "UNKNOWN (other)",
+            "editor": "cycler",
+            "options": [
+              "true",
+              "false"
+            ],
+            "default": true,
+            "help": "Generic transforms."
+          },
+          {
+            "key": "class_prose",
+            "label": "PROSE (docs, messages)",
+            "editor": "cycler",
+            "options": [
+              "true",
+              "false"
+            ],
+            "default": false,
+            "help": "Off by default."
+          },
+          {
+            "key": "raw_retention_days",
+            "label": "Raw store: keep days",
+            "editor": "text",
+            "numeric": true,
+            "default": 7,
+            "help": "Kept raw outputs older than this are deleted."
+          },
+          {
+            "key": "raw_max_mb",
+            "label": "Raw store: cap (MiB)",
+            "editor": "text",
+            "numeric": true,
+            "default": 256,
+            "help": "Oldest raws are deleted above this size."
+          },
+          {
+            "key": "spill_threshold_bytes",
+            "label": "Synaps spill threshold (bytes)",
+            "editor": "text",
+            "numeric": true,
+            "default": 12288,
+            "help": "Match Synaps' tool_output_spill_bytes (0 = off)."
+          }
+        ]
+      }
+    ]
+  },
   "extension": {
     "protocol_version": 1,
     "runtime": "process",
     "command": "target/release/crush-ext",
     "setup": "scripts/setup.sh",
     "args": [],
-    "permissions": ["tools.intercept", "tools.transform_output"],
+    "permissions": [
+      "tools.intercept",
+      "tools.transform_output"
+    ],
     "hooks": [
-      { "hook": "after_tool_call" }
+      {
+        "hook": "after_tool_call"
+      }
+    ],
+    "config": [
+      {
+        "key": "enabled",
+        "type": "bool",
+        "default": true,
+        "description": "Master switch. Off: every tool result passes through untouched."
+      },
+      {
+        "key": "class_search",
+        "type": "bool",
+        "default": true,
+        "description": "SEARCH (grep, rg): over-long hit lines cut around the match (search_elide)."
+      },
+      {
+        "key": "class_listing",
+        "type": "bool",
+        "default": true,
+        "description": "LISTING (ls, find, ps): generic transforms only."
+      },
+      {
+        "key": "class_log",
+        "type": "bool",
+        "default": true,
+        "description": "LOG (builds, tests, logs): build-progress runs collapsed, generic transforms."
+      },
+      {
+        "key": "class_structured",
+        "type": "bool",
+        "default": true,
+        "description": "STRUCTURED (JSON, YAML, CSV): generic transforms."
+      },
+      {
+        "key": "class_vcs",
+        "type": "bool",
+        "default": true,
+        "description": "VCS (git log/status): generic transforms."
+      },
+      {
+        "key": "class_unknown",
+        "type": "bool",
+        "default": true,
+        "description": "UNKNOWN (everything else): generic transforms."
+      },
+      {
+        "key": "class_prose",
+        "type": "bool",
+        "default": false,
+        "description": "PROSE (forum, memory, worker reports, web pages): off by default."
+      },
+      {
+        "key": "transform_progress",
+        "type": "bool",
+        "default": true,
+        "description": "\\r progress redraws collapsed to their final state (lossy: the raw is kept)."
+      },
+      {
+        "key": "transform_repeats",
+        "type": "bool",
+        "default": true,
+        "description": "Runs of identical lines written once with a counted note (lossless)."
+      },
+      {
+        "key": "transform_blobs",
+        "type": "bool",
+        "default": true,
+        "description": "Long base64/hex/minified blobs elided (lossy: the raw is kept)."
+      },
+      {
+        "key": "transform_search_elide",
+        "type": "bool",
+        "default": true,
+        "description": "Grep hit lines over 1 KiB cut around the match (lossy: the raw is kept)."
+      },
+      {
+        "key": "transform_build_progress",
+        "type": "bool",
+        "default": true,
+        "description": "Runs of Compiling/Downloaded/pip Collecting lines become a counted note (lossy)."
+      },
+      {
+        "key": "transform_search_group",
+        "type": "bool",
+        "default": false,
+        "description": "Grep hits grouped by file. Off: failed accuracy parity (eval/RESULTS.md)."
+      },
+      {
+        "key": "transform_ls_columns",
+        "type": "bool",
+        "default": false,
+        "description": "ls -l owner/group said once. Off: failed accuracy parity."
+      },
+      {
+        "key": "transform_test_pass",
+        "type": "bool",
+        "default": false,
+        "description": "Passing-test runs collapsed. Off: failed accuracy parity (\"did test X pass?\")."
+      },
+      {
+        "key": "transform_json_minify",
+        "type": "bool",
+        "default": false,
+        "description": "Pretty JSON one top-level element per line. Off: failed accuracy parity."
+      },
+      {
+        "key": "raw_retention_days",
+        "type": "number",
+        "default": 7,
+        "description": "Raw outputs kept for lossy results are deleted after this many days."
+      },
+      {
+        "key": "raw_max_mb",
+        "type": "number",
+        "default": 256,
+        "description": "The raw store is cut back (oldest first) to this many MiB."
+      },
+      {
+        "key": "raw_dir",
+        "type": "string",
+        "default": "",
+        "description": "Raw store directory (absolute). Empty: $XDG_CACHE_HOME/crush/raw or ~/.cache/crush/raw."
+      },
+      {
+        "key": "spill_threshold_bytes",
+        "type": "number",
+        "default": 12288,
+        "description": "Synaps' tool_output_spill_bytes (0 = spill off). crush only replaces a result when that doesn't cost more after Synaps' spill step; keep this equal to Synaps' setting."
+      },
+      {
+        "key": "spill_head_bytes",
+        "type": "number",
+        "default": 4096,
+        "description": "Synaps' tool_output_spill_head_bytes."
+      },
+      {
+        "key": "spill_tail_bytes",
+        "type": "number",
+        "default": 3072,
+        "description": "Synaps' tool_output_spill_tail_bytes."
+      }
     ]
   }
 }
