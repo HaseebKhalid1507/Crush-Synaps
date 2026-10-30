@@ -296,7 +296,10 @@ def main() -> int:
     rc, rf = load("corpus.run.json"), load("fixtures.run.json")
     md = replace(md, "tokens", sec_tokens(tc, rc))
     md = replace(md, "fixtures", sec_fixtures(tf))
-    md = replace(md, "tokens_search_on", sec_tokens(load("tokens.corpus.search_on.json"), load("corpus.run.search_on.json")))
+    ts = load("tokens.corpus.search_on.json")
+    if ts and tc and "composition" not in ts:
+        ts["composition"] = tc.get("composition")  # same classifier, same corpus
+    md = replace(md, "tokens_search_on", sec_tokens(ts, load("corpus.run.search_on.json")))
     md = replace(md, "fixtures_search_on", sec_fixtures(load("tokens.fixtures.search_on.json")))
     md = replace(md, "edit", sec_edit(load("edit_safety.json")))
     md = replace(md, "edit_search_on", sec_edit(load("edit_safety.search_on.json")))
