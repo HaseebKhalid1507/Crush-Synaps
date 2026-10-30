@@ -10,6 +10,8 @@
 #      CRUSH_EVAL_SAMPLES (80) real samples in the accuracy slice · CRUSH_EVAL_MODELS (haiku,sonnet)
 #      CRUSH_EVAL_QUOTA (search_group:46,repeats:16,progress:10,blobs:8) accuracy quotas per transform
 #      CRUSH_CORPUS_DIR (~/.cache/crush-corpus) · CARGO_TARGET_DIR (./target)
+# Accuracy runs on the candidate variant (every transform on, incl. the ones that
+# ship disabled), so a disabled transform is re-tested by every `make eval`.
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
@@ -62,18 +64,30 @@ if [ "$CORPUS" = 1 ]; then
   fi
 fi
 
+# Candidates that ship disabled are still measured: the same passes with every
+# transform on (eval/configs/search_on.json), written under the `search_on` tag.
+step "candidates (search_group on): run, count tokens"
+VARIANT=(env CRUSH_EVAL_TAG=search_on CRUSH_EVAL_CONFIG=eval/configs/search_on.json)
+"${VARIANT[@]}" python3 eval/run_crush.py --set fixtures --reps 5 >/dev/null
+"${VARIANT[@]}" python3 eval/count_tokens.py --set fixtures
+if [ "$CORPUS" = 1 ]; then
+  "${VARIANT[@]}" python3 eval/run_crush.py --set corpus --reps 3 >/dev/null
+  "${VARIANT[@]}" python3 eval/count_tokens.py --set corpus --skip-composition
+fi
+
 step "latency: 256 KiB worst cases"
 mkdir -p eval/out && "$CARGO_TARGET_DIR/release/crush-eval-driver" --synthetic > eval/out/synthetic.json
 
 if [ "$ACC" = 1 ]; then
   step "accuracy: raw vs crushed through synaps rpc (cap ${CRUSH_EVAL_MAX_CALLS:-400} model calls)"
-  python3 eval/accuracy/run_accuracy.py --sets "$SETS" --models "${CRUSH_EVAL_MODELS:-haiku,sonnet}" \
+  "${VARIANT[@]}" python3 eval/accuracy/run_accuracy.py --sets "$SETS" --models "${CRUSH_EVAL_MODELS:-haiku,sonnet}" \
     --max-calls "${CRUSH_EVAL_MAX_CALLS:-400}" --corpus-samples "${CRUSH_EVAL_SAMPLES:-80}" \
     --quota "${CRUSH_EVAL_QUOTA:-search_group:46,repeats:16,progress:10,blobs:8}"
 fi
 
 step "edit-safety gate (CONTENT byte-identical, SEARCH lines rebuild)"
 python3 eval/edit_safety.py --sets "$SETS" --strict >/dev/null
+"${VARIANT[@]}" python3 eval/edit_safety.py --sets "$SETS" --strict >/dev/null
 
 step "gate + report"
 python3 eval/gate.py

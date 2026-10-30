@@ -25,6 +25,20 @@ SYNAPS_BASE = Path(os.environ.get("CRUSH_SYNAPS_SOURCE", Path.home() / ".synaps-
 
 CLASSES = ["CONTENT", "SEARCH", "LISTING", "LOG", "STRUCTURED", "VCS", "UNKNOWN"]
 
+# A variant run (e.g. a disabled transform switched on): CRUSH_EVAL_CONFIG is a
+# crush-core JSON config for the driver and crush-ext, CRUSH_EVAL_TAG names the
+# variant and suffixes every results/out file it writes.
+TAG = os.environ.get("CRUSH_EVAL_TAG", "")
+EVAL_CONFIG = os.environ.get("CRUSH_EVAL_CONFIG", "")
+
+
+def tagged(name: str) -> str:
+    """`tokens.corpus.json` -> `tokens.corpus.<tag>.json` for a variant run."""
+    if not TAG:
+        return name
+    stem, dot, ext = name.rpartition(".")
+    return f"{stem}.{TAG}.{ext}" if dot else f"{name}.{TAG}"
+
 
 def private_dir(p: Path) -> Path:
     """Create (or tighten) a 0700 directory."""

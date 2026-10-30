@@ -158,6 +158,13 @@ def parity(recs):
             a["raw_only"] += d["raw"] and not d["crushed"]
             a["crushed_only"] += d["crushed"] and not d["raw"]
             a["samples_" + st + ":" + smp] = 1
+    pooled = defaultdict(Counter)
+    for (lab, m), a in list(agg.items()):
+        pooled[(lab, "both models")].update({k: v for k, v in a.items()})
+    for k, v in pooled.items():
+        agg[k] = v
+    nb = [sum(n[0] for n in noise.values()), sum(n[1] for n in noise.values())]
+    noise["both models"] = nb
     for (lab, m), a in agg.items():
         nz = noise[m][1] / noise[m][0] if noise[m][0] else 0.0
         p = mcnemar_p(a["raw_only"], a["crushed_only"])
@@ -175,11 +182,16 @@ def sec_accuracy(acc):
     recs = accuracy_records(acc)
     par = parity(recs)
     rows = []
-    for (lab, m), v in sorted(par.items(), key=lambda kv: (str(kv[0][0]), kv[0][1])):
+    verdict = defaultdict(lambda: True)
+    for (lab, m), v in par.items():
+        if m != "both models":
+            verdict[lab] &= v["parity"]
+    for (lab, m), v in sorted(par.items(), key=lambda kv: (str(kv[0][0]), kv[0][1] == "both models", kv[0][1])):
         rows.append([lab, m.replace("claude-", ""), v["samples"], v["pairs"], f"{v['raw']}/{v['pairs']} ({pct(v['raw'], v['pairs'])})",
                      f"{v['crushed']}/{v['pairs']} ({pct(v['crushed'], v['pairs'])})", f"{v['raw_only']} / {v['crushed_only']}",
                      "–" if v["p"] is None else f"{v['p']:.3f}", f"{v['noise']:.1%} (n={v['noise_n']})",
-                     "**parity**" if v["parity"] else "**FAIL**"])
+                     ("**parity**" if v["parity"] else "**FAIL**") if m != "both models" else
+                     ("ships" if verdict[lab] else "**disabled**")])
     lines = [table(["transform", "model", "samples", "questions", "raw correct", "crushed correct", "discordant raw-only / crushed-only",
                     "McNemar p", "raw-vs-raw disagreement", "verdict"], rows)]
     kinds = defaultdict(lambda: Counter())
@@ -284,7 +296,11 @@ def main() -> int:
     rc, rf = load("corpus.run.json"), load("fixtures.run.json")
     md = replace(md, "tokens", sec_tokens(tc, rc))
     md = replace(md, "fixtures", sec_fixtures(tf))
+    md = replace(md, "tokens_search_on", sec_tokens(load("tokens.corpus.search_on.json"), load("corpus.run.search_on.json")))
+    md = replace(md, "fixtures_search_on", sec_fixtures(load("tokens.fixtures.search_on.json")))
     md = replace(md, "edit", sec_edit(load("edit_safety.json")))
+    md = replace(md, "edit_search_on", sec_edit(load("edit_safety.search_on.json")))
+    md = replace(md, "latency_search_on", sec_latency(load("fixtures.run.search_on.json"), load("corpus.run.search_on.json"), None))
     md = replace(md, "accuracy", sec_accuracy(load("accuracy.summary.json")))
     md = replace(md, "classifier", sec_classifier(load("classifier.json"), load("classifier.crush2.json"), tc))
     md = replace(md, "latency", sec_latency(rf, rc, load("synthetic.json")))

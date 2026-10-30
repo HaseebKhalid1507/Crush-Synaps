@@ -32,7 +32,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import OUT, read_jsonl  # noqa: E402
+from common import OUT, read_jsonl, tagged  # noqa: E402
 from run_crush import load_samples, results_path  # noqa: E402
 
 HIT = re.compile(r"^([^\s:]+?)([:-])(\d+)([:-])(.*)$")
@@ -126,7 +126,7 @@ def main() -> int:
         if results_path(w).exists():
             report[w] = check(w)
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "edit_safety.json").write_text(json.dumps(report, indent=1))
+    (OUT / tagged("edit_safety.json")).write_text(json.dumps(report, indent=1))
     print(json.dumps({w: {k: v for k, v in r.items() if k != "items"} for w, r in report.items()}, indent=1))
     bad = sum(r["content_changed"] + r["search_rebuild_failures"] for r in report.values())
     if bad:

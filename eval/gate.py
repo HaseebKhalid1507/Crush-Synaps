@@ -52,11 +52,17 @@ for s in ("fixtures", "corpus"):
         for m, a in t["fired"].items():
             check(a["grew_real_tokens"] == 0, f"{s}: fired results with more real tokens ({m}): {a['grew_real_tokens']}")
 
-es = load("edit_safety.json")
-if es:
-    for s, r in es.items():
-        check(r["content_changed"] == 0, f"{s}: CONTENT byte changes {r['content_changed']}")
-        check(r["search_rebuild_failures"] == 0, f"{s}: SEARCH rebuild failures {r['search_rebuild_failures']}")
+for tag in ("", ".search_on"):
+    es = load(f"edit_safety{tag}.json")
+    if es:
+        for s, r in es.items():
+            check(r["content_changed"] == 0, f"{s}{tag}: CONTENT byte changes {r['content_changed']}")
+            check(r["search_rebuild_failures"] == 0, f"{s}{tag}: SEARCH rebuild failures {r['search_rebuild_failures']}")
+    for s in ("fixtures", "corpus"):
+        t = load(f"tokens.{s}{tag}.json") if tag else None
+        if t:
+            for m, a in t["fired"].items():
+                check(a["grew_real_tokens"] == 0, f"{s}{tag}: fired results with more real tokens ({m}): {a['grew_real_tokens']}")
 
 syn = load("synthetic.json")
 if syn:
