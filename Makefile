@@ -3,7 +3,7 @@ CARGO_TARGET_DIR ?= $(CURDIR)/target
 export CARGO_TARGET_DIR
 FUZZ_SECONDS ?= 600
 
-.PHONY: build test gate eval eval-free eval-fixtures fuzz
+.PHONY: build test gate eval eval-free eval-fixtures smoke fuzz
 build:           ## release workspace: crush-core, crush CLI, crush-ext shim
 	cargo build --release --locked --workspace
 test:            ## unit + property tests (release: proptest runs thousands of cases)
@@ -16,6 +16,8 @@ eval-free:       ## same as eval, without model calls (count_tokens is free)
 	eval/run.sh --no-accuracy
 eval-fixtures:   ## fixtures only; no local Synaps corpus needed
 	eval/run.sh --fixtures-only --no-accuracy
+smoke:           ## crush-ext installed in an isolated synaps-dev rpc session; three commands (~4 model calls)
+	eval/smoke_synaps.py
 fuzz:            ## each libFuzzer target for FUZZ_SECONDS (needs nightly + cargo-fuzz)
-	cd fuzz && for t in compress search shell search_elide listing log json; do \
+	cd fuzz && for t in compress search shell search_elide listing log json shim; do \
 	  cargo +nightly fuzz run -O $$t -- -max_total_time=$(FUZZ_SECONDS) -max_len=65536 || exit 1; done
