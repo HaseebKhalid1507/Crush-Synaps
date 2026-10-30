@@ -109,7 +109,7 @@ fn run(a: &Args) {
     let o = compress(&input, &a.config);
     if !o.lossless {
         if let Some(p) = &a.keep_raw {
-            if let Err(e) = std::fs::write(p, raw.as_bytes()) {
+            if let Err(e) = write_private(p, &raw) {
                 // can't keep the raw: hand back the raw instead of a lossy result
                 let _ = writeln!(std::io::stderr(), "crush: --keep-raw {p}: {e}; passing through");
                 let _ = std::io::stdout().write_all(raw.as_bytes());
@@ -169,4 +169,16 @@ fn measure(a: &Args) {
         let saved = if ti > 0 { 100.0 * (1.0 - to as f64 / ti as f64) } else { 0.0 };
         println!("total\t\t\t\t\t\t{ti}\t{to}\t{saved:.1}%");
     }
+}
+
+/// The raw output may hold secrets: keep it owner-only.
+fn write_private(path: &str, data: &str) -> std::io::Result<()> {
+    let mut o = std::fs::OpenOptions::new();
+    o.write(true).create(true).truncate(true);
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::OpenOptionsExt;
+        o.mode(0o600);
+    }
+    o.open(path)?.write_all(data.as_bytes())
 }

@@ -300,7 +300,8 @@ def main() -> int:
     md = replace(md, "fixtures_search_on", sec_fixtures(load("tokens.fixtures.search_on.json")))
     md = replace(md, "edit", sec_edit(load("edit_safety.json")))
     md = replace(md, "edit_search_on", sec_edit(load("edit_safety.search_on.json")))
-    md = replace(md, "latency_search_on", sec_latency(load("fixtures.run.search_on.json"), load("corpus.run.search_on.json"), None))
+    md = replace(md, "latency_search_on", sec_latency(load("fixtures.run.search_on.json"), load("corpus.run.search_on.json"),
+                                                      load("synthetic.search_on.json")))
     md = replace(md, "accuracy", sec_accuracy(load("accuracy.summary.json")))
     md = replace(md, "classifier", sec_classifier(load("classifier.json"), load("classifier.crush2.json"), tc))
     md = replace(md, "latency", sec_latency(rf, rc, load("synthetic.json")))

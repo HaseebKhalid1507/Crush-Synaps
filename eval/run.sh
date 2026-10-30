@@ -77,6 +77,7 @@ fi
 
 step "latency: 256 KiB worst cases"
 mkdir -p eval/out && "$CARGO_TARGET_DIR/release/crush-eval-driver" --synthetic > eval/out/synthetic.json
+"$CARGO_TARGET_DIR/release/crush-eval-driver" --synthetic --config eval/configs/search_on.json > eval/out/synthetic.search_on.json
 
 if [ "$ACC" = 1 ]; then
   step "accuracy: raw vs crushed through synaps rpc (cap ${CRUSH_EVAL_MAX_CALLS:-400} model calls)"
