@@ -36,8 +36,15 @@ def main() -> int:
     ap.add_argument("--audit-sheet", type=int, default=0)
     ap.add_argument("--audit-score", action="store_true")
     ap.add_argument("--seed", type=int, default=5)
+    ap.add_argument("--classes-from", choices=["p0", "crush2"], default="p0",
+                    help="p0: the Phase 0 Python classifier stored in the corpus; crush2: crush-core's (from run_crush results)")
     args = ap.parse_args()
     rows = list(read_jsonl(CORPUS_DIR / "corpus.jsonl"))
+    if args.classes_from == "crush2":
+        res = {r["id"]: r for r in read_jsonl(CORPUS_DIR / "crush2.results.jsonl")}
+        for r in rows:
+            x = res[r["id"]]
+            r["class_p0"], r["class"], r["reason"] = r["class"], x["class"], x["reason"]
 
     if args.audit_sheet:
         rng = random.Random(args.seed)
@@ -64,18 +71,33 @@ def main() -> int:
                 lab[cur] = line[7:].strip()
         by = {r["id"]: r for r in rows}
         conf = defaultdict(Counter)
+        prose = 0
         for i, l in lab.items():
-            conf[l][by[i]["class"]] += 1
+            c = by[i]["class"]
+            if c == "PROSE":
+                # the audit's label set predates PROSE (documents/messages);
+                # it is a split of UNKNOWN, so it is scored as UNKNOWN
+                prose += 1
+                c = "UNKNOWN"
+            conf[l][c] += 1
         n = sum(sum(c.values()) for c in conf.values())
         ok = sum(conf[c][c] for c in conf)
-        res["audit"] = {"n": n, "accuracy": round(ok / n, 3) if n else None,
+        res["audit"] = {"n": n, "accuracy": round(ok / n, 3) if n else None, "classes_from": args.classes_from,
+                        "predicted_prose_scored_as_unknown": prose,
                         "confusion_true_by_predicted": {t: dict(c) for t, c in sorted(conf.items())},
                         "per_class_recall": {t: f"{c[t]}/{sum(c.values())}" for t, c in sorted(conf.items())},
                         "per_class_precision": {p: f"{conf[p][p]}/{sum(conf[t][p] for t in conf)}" for p in CLASSES
                                                 if sum(conf[t][p] for t in conf)}}
 
+    byc = defaultdict(lambda: [0, 0])
+    for r in rows:
+        byc[r["class"]][0] += 1
+        byc[r["class"]][1] += r["bytes"]
+    res["class_bytes"] = {c: {"samples": v[0], "bytes": v[1]} for c, v in sorted(byc.items())}
     agree = defaultdict(lambda: [0, 0])
     for r in rows:
+        if args.classes_from == "crush2":
+            break
         if r["cmd_class"] and r["sniff_class"]:
             agree[f"{r['cmd_class']} vs sniff {r['sniff_class']}"][0] += 1
             agree[f"{r['cmd_class']} vs sniff {r['sniff_class']}"][1] += r["bytes"]
@@ -86,7 +108,10 @@ def main() -> int:
                            "pairs": {k: {"n": v[0], "bytes": v[1]} for k, v in sorted(agree.items(), key=lambda kv: -kv[1][1])}}
     decided = Counter()
     for r in rows:
-        decided["command/tool" if r["cmd_class"] else ("sniff" if r["sniff_class"] else "unknown")] += r["bytes"]
+        if args.classes_from == "crush2":
+            decided["unknown" if r["class"] == "UNKNOWN" else "sniff" if r["reason"].startswith("sniff:") else "command/tool"] += r["bytes"]
+        else:
+            decided["command/tool" if r["cmd_class"] else ("sniff" if r["sniff_class"] else "unknown")] += r["bytes"]
     res["decided_by_bytes"] = dict(decided)
     unk = Counter()
     for r in rows:
@@ -100,7 +125,8 @@ def main() -> int:
             unk[t if not t.startswith(("mcp__", "ext__")) and "_" not in t.split("_", 1)[0] else t] += r["bytes"]
     res["unknown_bytes_by_family"] = dict(unk.most_common(25))
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "classifier.json").write_text(json.dumps(res, indent=1))
+    name = "classifier.json" if args.classes_from == "p0" else "classifier.crush2.json"
+    (OUT / name).write_text(json.dumps(res, indent=1))
     print(json.dumps({k: res[k] for k in res if k != "cmd_vs_sniff"}, indent=1))
     print(json.dumps({k: res["cmd_vs_sniff"][k] for k in ("samples_with_both", "agree", "agree_pct")}))
     for k, v in list(res["cmd_vs_sniff"]["pairs"].items())[:14]:
