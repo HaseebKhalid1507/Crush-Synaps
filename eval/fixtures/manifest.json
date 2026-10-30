@@ -462,12 +462,40 @@
       "class": "VCS",
       "bytes": 5016,
       "note": "tab-separated"
+    },
+    {
+      "name": "grep_rn_abs",
+      "file": "data/grep_rn_abs.txt",
+      "tool": "bash",
+      "input": {
+        "command": "grep -rn 'fn ' /work/rg/crates/searcher/src | head -n 400"
+      },
+      "class": "SEARCH",
+      "bytes": 27531,
+      "note": "absolute paths, as agents often grep; shared prefix"
+    },
+    {
+      "name": "poll_log",
+      "file": "data/poll_log.txt",
+      "tool": "bash",
+      "input": {
+        "command": "./scripts/wait-for-db.sh"
+      },
+      "class": "LOG",
+      "bytes": 3685,
+      "note": "scripted polling log (repeated lines, blank run)"
+    },
+    {
+      "name": "cat_crlf_source",
+      "file": "data/cat_crlf_source.txt",
+      "tool": "bash",
+      "input": {
+        "command": "cat crates/globset/src/glob.rs"
+      },
+      "class": "CONTENT",
+      "bytes": 14743,
+      "note": "public source converted to CRLF line endings (a Windows-origin file)"
     }
   ],
-  "skipped": [
-    {
-      "name": "gh_api_releases",
-      "why": "JSON over 98304 B (not cut: would be invalid)"
-    }
-  ]
+  "skipped": []
 }

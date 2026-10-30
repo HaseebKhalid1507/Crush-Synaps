@@ -230,12 +230,26 @@ def main() -> int:
     ap.add_argument("--max-calls", type=int, default=400, help="hard cap on model API requests for the whole run")
     ap.add_argument("--seed", type=int, default=3)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--only-samples", default="", help="comma list of sample ids/names to ask, or @file with one id per line")
+    ap.add_argument("--merge", action="store_true", help="merge into the previous run's records/summary instead of replacing")
+    ap.add_argument("--resummarize", action="store_true", help="rebuild the summary from stored records (no model calls)")
     args = ap.parse_args()
+    if args.resummarize:
+        prev = json.loads((OUT / "accuracy.summary.json").read_text())
+        recs = list(read_jsonl(OUT / "accuracy.fixtures.jsonl")) + list(read_jsonl(CORPUS_DIR / "accuracy" / f"{prev['run']}.jsonl"))
+        prev.update(summarize(recs))
+        (OUT / "accuracy.summary.json").write_text(json.dumps(prev, indent=1))
+        print(json.dumps(prev["by_model_set"], indent=1))
+        return 0
     models = [MODELS.get(m, m) for m in args.models.split(",")]
     sets = args.sets.split(",")
     rng = random.Random(args.seed)
 
     plan_sets = {w: select(w, args.corpus_samples, args.seed, args.max_q) for w in sets}
+    if args.only_samples:
+        spec = args.only_samples
+        only = set(Path(spec[1:]).read_text().split()) if spec.startswith("@") else set(spec.split(","))
+        plan_sets = {w: [c for c in v if c[0]["id"] in only] for w, v in plan_sets.items()}
 
     def n_calls(ps):
         return sum(len(v) * 2 + int(round(len(v) * args.replicate)) for v in ps.values()) * len(models)
@@ -300,19 +314,62 @@ def main() -> int:
         totals[model] = {"api_requests": len(log), "usage": dict(u), "cost_usd_list": cost,
                          "stop_reasons": dict(Counter(e.get("stop_reason") for e in log))}
     stamp = time.strftime("%Y%m%d-%H%M%S")
+    prev = json.loads((OUT / "accuracy.summary.json").read_text()) if args.merge and (OUT / "accuracy.summary.json").exists() else None
+    if prev:
+        redo = {(r["set"], r["sample"]) for r in records}
+        old_fx = list(read_jsonl(OUT / "accuracy.fixtures.jsonl")) if (OUT / "accuracy.fixtures.jsonl").exists() else []
+        old_cp = []
+        for rn in prev.get("runs", [prev.get("run")]):
+            f = CORPUS_DIR / "accuracy" / f"{rn}.jsonl"
+            if f.exists():
+                old_cp += list(read_jsonl(f))
+        records = [r for r in old_fx + old_cp if (r["set"], r["sample"]) not in redo] + records
+        for m, t in prev.get("per_model", {}).items():
+            if m in totals:
+                for k in ("api_requests",):
+                    totals[m][k] += t[k]
+                totals[m]["cost_usd_list"] = (totals[m]["cost_usd_list"] or 0) + (t["cost_usd_list"] or 0)
+                u = Counter(totals[m]["usage"])
+                u.update(t["usage"])
+                totals[m]["usage"] = dict(u)
+            else:
+                totals[m] = t
+        calls_used += prev.get("calls_used", 0)
+        planned += prev.get("planned_calls", 0)
+        for k, v in prev.get("questions_dropped_unfair", {}).items():
+            if not args.only_samples:
+                DROPPED[k] = DROPPED.get(k, 0) + v
+            else:
+                DROPPED.setdefault(k, v)
     # private per-answer records for real data; fixture records are committed-safe
     write_jsonl_private(CORPUS_DIR / "accuracy" / f"{stamp}.jsonl", [r for r in records if r["set"] == "corpus"])
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "accuracy.fixtures.jsonl").write_text("".join(json.dumps(r) + "\n" for r in records if r["set"] == "fixtures"))
     summary = summarize(records)
-    summary.update({"run": stamp, "questions_dropped_unfair": DROPPED, "models": models, "planned_calls": planned, "cap": args.max_calls,
+    # with --merge the new private records file holds old + new corpus records,
+    # so it alone is the source for the next merge
+    summary.update({"run": stamp, "runs": [stamp], "merged_runs": (prev or {}).get("merged_runs", [(prev or {}).get("run")] if prev else []) + [stamp], "questions_dropped_unfair": DROPPED, "models": models,
+                    "planned_calls": planned, "cap": args.max_calls,
                     "calls_used": calls_used, "per_model": totals,
                     "cost_usd_list_total": sum(t["cost_usd_list"] or 0 for t in totals.values()),
-                    "real_auth_unchanged": auth_digest() == before})
+                    "real_auth_unchanged": auth_digest() == before and (prev or {}).get("real_auth_unchanged", True)})
     (OUT / "accuracy.summary.json").write_text(json.dumps(summary, indent=1))
     print(json.dumps({k: summary[k] for k in ("calls_used", "cost_usd_list_total", "real_auth_unchanged")}, indent=1))
     print(json.dumps(summary["by_model_set"], indent=1))
     return 0
+
+
+def lenient(r) -> bool:
+    """Secondary score: strict match, or (for non-numeric answers) the expected
+    value appears inside the answer line, e.g. the model decoded out loud
+    instead of giving the bare value. Numeric answers stay strict."""
+    if r["correct"]:
+        return True
+    want, got = (r["want"] or "").strip(), (r.get("got") or "")
+    if not got or re.fullmatch(r"-?\d+", want) or len(want) < 2:
+        return False
+    norm = lambda x: re.sub(r"\s+", " ", x).strip().lower()
+    return norm(want) in norm(got)
 
 
 def summarize(records):
@@ -324,9 +381,11 @@ def summarize(records):
         groups[key(r)].append(r)
     for k, rs in groups.items():
         v = defaultdict(lambda: [0, 0])
+        lv = Counter()
         for r in rs:
             v[r["variant"]][0] += r["correct"]
             v[r["variant"]][1] += 1
+            lv[r["variant"]] += lenient(r)
         # paired discordance raw vs crushed, raw vs raw2 (same sample+question)
         idx = defaultdict(dict)
         for r in rs:
@@ -339,7 +398,8 @@ def summarize(records):
             if "raw" in d and "raw2" in d:
                 disc["rep_pairs"] += 1
                 disc["rep_disagree"] += d["raw"] != d["raw2"]
-        out["by_model_set"][k] = {"acc": {vv: {"correct": c, "n": n, "pct": round(100 * c / n, 1) if n else None}
+        out["by_model_set"][k] = {"acc": {vv: {"correct": c, "n": n, "pct": round(100 * c / n, 1) if n else None,
+                                               "lenient": lv[vv], "lenient_pct": round(100 * lv[vv] / n, 1) if n else None}
                                           for vv, (c, n) in v.items()},
                                   "paired": dict(disc),
                                   "samples": len({r["sample"] for r in rs}),

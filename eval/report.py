@@ -40,6 +40,17 @@ def pct(a, b, d=1):
     return "–" if not b else f"{100 * a / b:.{d}f}%"
 
 
+def mcnemar_p(b: int, c: int) -> float | None:
+    """Exact two-sided McNemar (binomial on the discordant pairs)."""
+    n = b + c
+    if n == 0:
+        return None
+    from math import comb
+    k = min(b, c)
+    p = sum(comb(n, i) for i in range(0, k + 1)) / 2 ** n
+    return min(1.0, 2 * p)
+
+
 def table(head, rows):
     out = ["| " + " | ".join(head) + " |", "|" + "|".join("---:" if i else "---" for i in range(len(head))) + "|"]
     out += ["| " + " | ".join(str(c) for c in r) + " |" for r in rows]
@@ -201,11 +212,15 @@ def sec_accuracy(acc, fx_records):
         model, st = k.split("|")
         a = v["acc"]
         p = v["paired"]
-        rows.append([model, st, fmt(v["samples"]), f"{a['raw']['correct']}/{a['raw']['n']} ({a['raw']['pct']}%)",
-                     f"{a['crushed']['correct']}/{a['crushed']['n']} ({a['crushed']['pct']}%)",
-                     f"{p.get('raw_only', 0)} / {p.get('crushed_only', 0)}",
+        b, c = p.get("raw_only", 0), p.get("crushed_only", 0)
+        mp = mcnemar_p(b, c)
+        len_ = lambda x: f"{x.get('lenient_pct', '–')}%" if "lenient_pct" in x else "–"
+        rows.append([model.replace("claude-", ""), st, fmt(v["samples"]), f"{a['raw']['correct']}/{a['raw']['n']} ({a['raw']['pct']}%)",
+                     f"{a['crushed']['correct']}/{a['crushed']['n']} ({a['crushed']['pct']}%)", f"{b} / {c}",
+                     "–" if mp is None else f"{mp:.3f}", f"{len_(a['raw'])} → {len_(a['crushed'])}",
                      f"{p.get('rep_disagree', 0)}/{p.get('rep_pairs', 0)}" if p.get("rep_pairs") else "–"])
-    lines = [table(["model", "set", "samples", "raw correct", "crushed correct", "discordant: raw-only / crushed-only",
+    lines = [table(["model", "set", "samples", "raw correct (strict)", "crushed correct (strict)",
+                    "discordant raw-only / crushed-only", "McNemar p", "lenient raw → crushed",
                     "raw vs raw re-ask disagree"], rows)]
     cls_rows = []
     for k, v in sorted(acc["by_model_set_class"].items()):
@@ -227,9 +242,11 @@ def sec_accuracy(acc, fx_records):
                                           f"(in {t['usage'].get('input', 0):,} / cache-write {t['usage'].get('cache_write', 0):,} / "
                                           f"cache-read {t['usage'].get('cache_read', 0):,} / out {t['usage'].get('output', 0):,} tokens)"
                                           for m, t in tot.items())
-                 + f". Total {acc['calls_used']} model calls (cap {acc['cap']}), ${acc['cost_usd_list_total']:.2f}. "
-                 f"Real auth.json unchanged: {acc['real_auth_unchanged']}. Questions dropped as unfair "
-                 f"(anchor line not verbatim in the crushed text): {acc.get('questions_dropped_unfair')}.")
+                 + f". Total {acc['calls_used']} model calls over {len(acc.get('merged_runs') or [acc['run']])} merged run(s) "
+                 f"(cap {acc['cap']} per run), ${acc['cost_usd_list_total']:.2f}. "
+                 f"Real auth.json unchanged: {acc['real_auth_unchanged']}. Generated questions dropped as unfair "
+                 f"(they quote a line that is not verbatim in the crushed text), counted over all fired candidates "
+                 f"before sampling: {acc.get('questions_dropped_unfair')}.")
     return "\n".join(lines)
 
 
@@ -271,6 +288,25 @@ def sec_classifier(cl):
     return "\n".join(lines)
 
 
+def sec_redundancy(rd, tok):
+    if not rd:
+        return "(not run)"
+    agg = defaultdict(Counter)
+    for r in rd["rows"]:
+        for k, v in r.items():
+            if isinstance(v, int):
+                agg[r["class"]][k] += v
+    rows = []
+    for cls, c in sorted(agg.items(), key=lambda kv: -kv[1]["bytes"]):
+        rows.append([cls, fmt(c["bytes"]), pct(c["exact_repeat_bytes"], c["bytes"], 2),
+                     pct(c["read_line_overlap_bytes"], c["bytes"], 2), pct(c["sed_view_bytes"], c["bytes"]),
+                     pct(c["sed_line_overlap_bytes"], c["sed_view_bytes"], 2) if c["sed_view_bytes"] else "–"])
+    return (f"Every tool result in each stored transcript (last {int(rd['window_days'])} days; a stored transcript is the "
+            "current context window, so this is what a live-context dedupe could hit), counted with repeats:\n\n"
+            + table(["class", "bytes (with repeats)", "exact repeat of an earlier result", "`read` lines already shown",
+                     "`sed -n A,Bp` views", "…of which lines already shown"], rows))
+
+
 def replace(md: str, name: str, content: str) -> str:
     a, b = f"<!-- BEGIN:{name} -->", f"<!-- END:{name} -->"
     if a not in md:
@@ -297,6 +333,7 @@ def main() -> int:
         "accuracy": sec_accuracy(load("accuracy.summary.json"), None),
         "latency": sec_latency(load("corpus.run.json"), load("fixtures.run.json")),
         "classifier": sec_classifier(load("classifier.json")),
+        "redundancy": sec_redundancy(load("redundancy.json"), tok_c),
     }
     md = BASELINE.read_text() if BASELINE.exists() else "# crush v0.1 baseline\n"
     for k, v in secs.items():

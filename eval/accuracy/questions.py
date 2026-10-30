@@ -78,14 +78,16 @@ def gen_grep(out, rng, sample):
         h = rng.choice(hits)
         s = _snip(h[2], texts, rng)
         if s:
-            q(qs, f"Which file contains the match whose text includes `{s}`? Give the path exactly as it appears.",
+            q(qs, f"Which file contains the match whose text includes `{s}`? Give the file's path as grep reported it, "
+                  "including every directory component.",
               h[0], "grep:path", "exact")
             q(qs, f"What line number is the match whose text includes `{s}`?", h[1], "grep:line", "int")
             break
     if len(per) > 1:
         (f1, n1), (f2, n2) = per.most_common(2)
         if n1 > n2:
-            q(qs, "Which file has the most matching lines? Give the path exactly as it appears.", f1, "grep:most", "exact")
+            q(qs, "Which file has the most matching lines? Give the file's path as grep reported it, including every "
+                  "directory component.", f1, "grep:most", "exact")
     return qs
 
 
@@ -165,7 +167,8 @@ def gen_pathlist(out, rng, sample):
     if uniq:
         p = rng.choice(uniq)
         b = p.rstrip("/").rsplit("/", 1)[-1]
-        q(qs, f"Give the full path, exactly as listed, of the entry named `{b}`.", p, "paths:full", "exact")
+        q(qs, f"Give the path of the entry named `{b}` as the tool reported it, including every directory component.",
+          p, "paths:full", "exact")
     p = rng.choice(paths)
     head, _, tail = p.rpartition("/")
     fake = f"{head}/zz_{tail}" if head else f"zz_{tail}"

@@ -1,0 +1,420 @@
+use std::fmt::Write;
+use std::path::{Path, is_separator};
+
+use regex_automata::meta::Regex;
+
+use crate::{Candidate, Error, ErrorKind, new_regex};
+
+/// Describes a matching strategy for a particular pattern.
+///
+/// This provides a way to more quickly determine whether a pattern matches
+/// a particular file path in a way that scales with a large number of
+/// patterns. For example, if many patterns are of the form `*.ext`, then it's
+/// possible to test whether any of those patterns matches by looking up a
+/// file path's extension in a hash table.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub(crate) enum MatchStrategy {
+    /// A pattern matches if and only if the entire file path matches this
+    /// literal string.
+    Literal(String),
+    /// A pattern matches if and only if the file path's basename matches this
+    /// literal string.
+    BasenameLiteral(String),
+    /// A pattern matches if and only if the file path's extension matches this
+    /// literal string.
+    Extension(String),
+    /// A pattern matches if and only if this prefix literal is a prefix of the
+    /// candidate file path.
+    Prefix(String),
+    /// A pattern matches if and only if this prefix literal is a prefix of the
+    /// candidate file path.
+    ///
+    /// An exception: if `component` is true, then `suffix` must appear at the
+    /// beginning of a file path or immediately following a `/`.
+    Suffix {
+        /// The actual suffix.
+        suffix: String,
+        /// Whether this must start at the beginning of a path component.
+        component: bool,
+    },
+    /// A pattern matches only if the given extension matches the file path's
+    /// extension. Note that this is a necessary but NOT sufficient criterion.
+    /// Namely, if the extension matches, then a full regex search is still
+    /// required.
+    RequiredExtension(String),
+    /// A regex that only needs to inspect the final path component.
+    BasenameRegex(String),
+    /// A regex needs to be used for matching.
+    Regex,
+}
+
+impl MatchStrategy {
+    /// Returns a matching strategy for the given pattern.
+    pub(crate) fn new(pat: &Glob) -> MatchStrategy {
+        if let Some(lit) = pat.basename_literal() {
+            MatchStrategy::BasenameLiteral(lit)
+        } else if let Some(lit) = pat.literal() {
+            MatchStrategy::Literal(lit)
+        } else if let Some(ext) = pat.ext() {
+            MatchStrategy::Extension(ext)
+        } else if let Some(prefix) = pat.prefix() {
+            MatchStrategy::Prefix(prefix)
+        } else if let Some((suffix, component)) = pat.suffix() {
+            MatchStrategy::Suffix { suffix, component }
+        } else if let Some(ext) = pat.required_ext() {
+            MatchStrategy::RequiredExtension(ext)
+        } else if let Some(re) = pat.basename_regex() {
+            MatchStrategy::BasenameRegex(re)
+        } else {
+            MatchStrategy::Regex
+        }
+    }
+}
+
+/// Glob represents a successfully parsed shell glob pattern.
+///
+/// It cannot be used directly to match file paths, but it can be converted
+/// to a regular expression string or a matcher.
+#[derive(Clone, Eq)]
+#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
+pub struct Glob {
+    glob: String,
+    re: String,
+    opts: GlobOptions,
+    tokens: Tokens,
+}
+
+impl AsRef<Glob> for Glob {
+    fn as_ref(&self) -> &Glob {
+        self
+    }
+}
+
+impl PartialEq for Glob {
+    fn eq(&self, other: &Glob) -> bool {
+        self.glob == other.glob && self.opts == other.opts
+    }
+}
+
+impl std::hash::Hash for Glob {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.glob.hash(state);
+        self.opts.hash(state);
+    }
+}
+
+impl std::fmt::Debug for Glob {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if f.alternate() {
+            f.debug_struct("Glob")
+                .field("glob", &self.glob)
+                .field("re", &self.re)
+                .field("opts", &self.opts)
+                .field("tokens", &self.tokens)
+                .finish()
+        } else {
+            f.debug_tuple("Glob").field(&self.glob).finish()
+        }
+    }
+}
+
+impl std::fmt::Display for Glob {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        self.glob.fmt(f)
+    }
+}
+
+impl std::str::FromStr for Glob {
+    type Err = Error;
+
+    fn from_str(glob: &str) -> Result<Self, Self::Err> {
+        Self::new(glob)
+    }
+}
+
+/// A matcher for a single pattern.
+#[derive(Clone, Debug)]
+pub struct GlobMatcher {
+    /// The underlying pattern.
+    pat: Glob,
+    /// The pattern, as a compiled regex.
+    re: Regex,
+}
+
+impl GlobMatcher {
+    /// Tests whether the given path matches this pattern or not.
+    pub fn is_match<P: AsRef<Path>>(&self, path: P) -> bool {
+        self.is_match_candidate(&Candidate::new(path.as_ref()))
+    }
+
+    /// Tests whether the given path matches this pattern or not.
+    pub fn is_match_candidate(&self, path: &Candidate<'_>) -> bool {
+        self.re.is_match(&path.path)
+    }
+
+    /// Returns the `Glob` used to compile this matcher.
+    pub fn glob(&self) -> &Glob {
+        &self.pat
+    }
+}
+
+/// A strategic matcher for a single pattern.
+#[cfg(test)]
+#[derive(Clone, Debug)]
+struct GlobStrategic {
+    /// The match strategy to use.
+    strategy: MatchStrategy,
+    /// The pattern, as a compiled regex.
+    re: Regex,
+}
+
+#[cfg(test)]
+impl GlobStrategic {
+    /// Tests whether the given path matches this pattern or not.
+    fn is_match<P: AsRef<Path>>(&self, path: P) -> bool {
+        self.is_match_candidate(&Candidate::new(path.as_ref()))
+    }
+
+    /// Tests whether the given path matches this pattern or not.
+    fn is_match_candidate(&self, candidate: &Candidate<'_>) -> bool {
+        let byte_path = &*candidate.path;
+
+        match self.strategy {
+            MatchStrategy::Literal(ref lit) => lit.as_bytes() == byte_path,
+            MatchStrategy::BasenameLiteral(ref lit) => {
+                lit.as_bytes() == &*candidate.basename
+            }
+            MatchStrategy::Extension(ref ext) => {
+                ext.as_bytes() == &*candidate.ext
+            }
+            MatchStrategy::Prefix(ref pre) => {
+                starts_with(pre.as_bytes(), byte_path)
+            }
+            MatchStrategy::Suffix { ref suffix, component } => {
+                if component && byte_path == &suffix.as_bytes()[1..] {
+                    return true;
+                }
+                ends_with(suffix.as_bytes(), byte_path)
+            }
+            MatchStrategy::RequiredExtension(ref ext) => {
+                let ext = ext.as_bytes();
+                &*candidate.ext == ext && self.re.is_match(byte_path)
+            }
+            MatchStrategy::BasenameRegex(_) => {
+                self.re.is_match(candidate.basename_for_regex())
+            }
+            MatchStrategy::Regex => self.re.is_match(byte_path),
+        }
+    }
+}
+
+/// A builder for a pattern.
+///
+/// This builder enables configuring the match semantics of a pattern. For
+/// example, one can make matching case insensitive.
+///
+/// The lifetime `'a` refers to the lifetime of the pattern string.
+#[derive(Clone, Debug)]
+pub struct GlobBuilder<'a> {
+    /// The glob pattern to compile.
+    glob: &'a str,
+    /// Options for the pattern.
+    opts: GlobOptions,
+}
+
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
+struct GlobOptions {
+    /// Whether to match case insensitively.
+    case_insensitive: bool,
+    /// Whether to require a literal separator to match a separator in a file
+    /// path. e.g., when enabled, `*` won't match `/`.
+    literal_separator: bool,
+    /// Whether or not to use `\` to escape special characters.
+    /// e.g., when enabled, `\*` will match a literal `*`.
+    backslash_escape: bool,
+    /// Whether or not an empty case in an alternate will be removed.
+    /// e.g., when enabled, `{,a}` will match "" and "a".
+    empty_alternates: bool,
+    /// Whether or not an unclosed character class is allowed. When an unclosed
+    /// character class is found, the opening `[` is treated as a literal `[`.
+    /// When this isn't enabled, an opening `[` without a corresponding `]` is
+    /// treated as an error.
+    allow_unclosed_class: bool,
+}
+
+impl GlobOptions {
+    fn default() -> GlobOptions {
+        GlobOptions {
+            case_insensitive: false,
+            literal_separator: false,
+            backslash_escape: !is_separator('\\'),
+            empty_alternates: false,
+            allow_unclosed_class: false,
+        }
+    }
+}
+
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
+struct Tokens(Vec<Token>);
+
+impl std::ops::Deref for Tokens {
+    type Target = Vec<Token>;
+    fn deref(&self) -> &Vec<Token> {
+        &self.0
+    }
+}
+
+impl std::ops::DerefMut for Tokens {
+    fn deref_mut(&mut self) -> &mut Vec<Token> {
+        &mut self.0
+    }
+}
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
+enum Token {
+    Literal(char),
+    Any,
+    ZeroOrMore,
+    RecursivePrefix,
+    RecursiveSuffix,
+    RecursiveZeroOrMore,
+    Class { negated: bool, ranges: Vec<(char, char)> },
+    Alternates(Vec<Tokens>),
+}
+
+impl Glob {
+    /// Builds a new pattern with default options.
+    pub fn new(glob: &str) -> Result<Glob, Error> {
+        GlobBuilder::new(glob).build()
+    }
+
+    /// Returns a matcher for this pattern.
+    pub fn compile_matcher(&self) -> GlobMatcher {
+        let re =
+            new_regex(&self.re).expect("regex compilation shouldn't fail");
+        GlobMatcher { pat: self.clone(), re }
+    }
+
+    /// Returns a strategic matcher.
+    ///
+    /// This isn't exposed because it's not clear whether it's actually
+    /// faster than just running a regex for a *single* pattern. If it
+    /// is faster, then GlobMatcher should do it automatically.
+    #[cfg(test)]
+    fn compile_strategic_matcher(&self) -> GlobStrategic {
+        let strategy = MatchStrategy::new(self);
+        let pattern = match &strategy {
+            MatchStrategy::BasenameRegex(re) => re,
+            _ => &self.re,
+        };
+        let re = new_regex(pattern).expect("regex compilation shouldn't fail");
+        GlobStrategic { strategy, re }
+    }
+
+    /// Returns the original glob pattern used to build this pattern.
+    pub fn glob(&self) -> &str {
+        &self.glob
+    }
+
+    /// Returns the regular expression string for this glob.
+    ///
+    /// Note that regular expressions for globs are intended to be matched on
+    /// arbitrary bytes (`&[u8]`) instead of Unicode strings (`&str`). In
+    /// particular, globs are frequently used on file paths, where there is no
+    /// general guarantee that file paths are themselves valid UTF-8. As a
+    /// result, callers will need to ensure that they are using a regex API
+    /// that can match on arbitrary bytes. For example, the
+    /// [`regex`](https://crates.io/regex)
+    /// crate's
+    /// [`Regex`](https://docs.rs/regex/*/regex/struct.Regex.html)
+    /// API is not suitable for this since it matches on `&str`, but its
+    /// [`bytes::Regex`](https://docs.rs/regex/*/regex/bytes/struct.Regex.html)
+    /// API is suitable for this.
+    pub fn regex(&self) -> &str {
+        &self.re
+    }
+
+    /// Returns the pattern as a literal if and only if the pattern must match
+    /// an entire path exactly.
+    ///
+    /// The basic format of these patterns is `{literal}`.
+    fn literal(&self) -> Option<String> {
+        if self.opts.case_insensitive {
+            return None;
+        }
+        let mut lit = String::new();
+        for t in &*self.tokens {
+            let Token::Literal(c) = *t else { return None };
+            lit.push(c);
+        }
+        if lit.is_empty() { None } else { Some(lit) }
+    }
+
+    /// Returns an extension if this pattern matches a file path if and only
+    /// if the file path has the extension returned.
+    ///
+    /// Note that this extension returned differs from the extension that
+    /// std::path::Path::extension returns. Namely, this extension includes
+    /// the '.'. Also, paths like `.rs` are considered to have an extension
+    /// of `.rs`.
+    fn ext(&self) -> Option<String> {
+        if self.opts.case_insensitive {
+            return None;
+        }
+        let start = match *self.tokens.get(0)? {
+            Token::RecursivePrefix => 1,
+            _ => 0,
+        };
+        match *self.tokens.get(start)? {
+            Token::ZeroOrMore => {
+                // If there was no recursive prefix, then we only permit
+                // `*` if `*` can match a `/`. For example, if `*` can't
+                // match `/`, then `*.c` doesn't match `foo/bar.c`.
+                if start == 0 && self.opts.literal_separator {
+                    return None;
+                }
+            }
+            _ => return None,
+        }
+        match *self.tokens.get(start + 1)? {
+            Token::Literal('.') => {}
+            _ => return None,
+        }
+        let mut lit = ".".to_string();
+        for t in self.tokens[start + 2..].iter() {
+            match *t {
+                Token::Literal('.') | Token::Literal('/') => return None,
+                Token::Literal(c) => lit.push(c),
+                _ => return None,
+            }
+        }
+        if lit.is_empty() { None } else { Some(lit) }
+    }
+
+    /// This is like `ext`, but returns an extension even if it isn't sufficient
+    /// to imply a match. Namely, if an extension is returned, then it is
+    /// necessary but not sufficient for a match.
+    fn required_ext(&self) -> Option<String> {
+        if self.opts.case_insensitive {
+            return None;
+        }
+        // We don't care at all about the beginning of this pattern. All we
+        // need to check for is if it ends with a literal of the form `.ext`.
+        let mut ext: Vec<char> = vec![]; // built in reverse
+        for t in self.tokens.iter().rev() {
+            match *t {
+                Token::Literal('/') => return None,
+                Token::Literal(c) => {
+                    ext.push(c);
+                    if c == '.' {
+                        break;
+                    }
+                }
+                _ => return None,
+            }
+        }
+        if ext.last() != Some(&'.') {
+            None

@@ -1,0 +1,320 @@
+/work/rg/crates/searcher/src/testutil.rs:32:    pub(crate) fn new(pattern: &str) -> RegexMatcher {
+/work/rg/crates/searcher/src/testutil.rs:43:    pub(crate) fn set_line_term(
+/work/rg/crates/searcher/src/testutil.rs:54:    pub(crate) fn every_line_is_candidate(
+/work/rg/crates/searcher/src/testutil.rs:67:    fn find_at(
+/work/rg/crates/searcher/src/testutil.rs:78:    fn new_captures(&self) -> Result<NoCaptures, NoError> {
+/work/rg/crates/searcher/src/testutil.rs:82:    fn line_terminator(&self) -> Option<LineTerminator> {
+/work/rg/crates/searcher/src/testutil.rs:86:    fn find_candidate_line(
+/work/rg/crates/searcher/src/testutil.rs:118:    pub(crate) fn new() -> KitchenSink {
+/work/rg/crates/searcher/src/testutil.rs:123:    pub(crate) fn as_bytes(&self) -> &[u8] {
+/work/rg/crates/searcher/src/testutil.rs:131:    fn matched(
+/work/rg/crates/searcher/src/testutil.rs:154:    fn context(
+/work/rg/crates/searcher/src/testutil.rs:170:    fn context_break(
+/work/rg/crates/searcher/src/testutil.rs:178:    fn finish(
+/work/rg/crates/searcher/src/testutil.rs:226:    pub(crate) fn new(haystack: &str, pattern: &str) -> SearcherTester {
+/work/rg/crates/searcher/src/testutil.rs:250:    pub(crate) fn test(&self) {
+/work/rg/crates/searcher/src/testutil.rs:305:    pub(crate) fn filter(&mut self, pattern: &str) -> &mut SearcherTester {
+/work/rg/crates/searcher/src/testutil.rs:316:    pub(crate) fn print_labels(&mut self, yes: bool) -> &mut SearcherTester {
+/work/rg/crates/searcher/src/testutil.rs:322:    pub(crate) fn expected_no_line_number(
+/work/rg/crates/searcher/src/testutil.rs:331:    pub(crate) fn expected_with_line_number(
+/work/rg/crates/searcher/src/testutil.rs:342:    pub(crate) fn expected_slice_no_line_number(
+/work/rg/crates/searcher/src/testutil.rs:354:    pub(crate) fn expected_slice_with_line_number(
+/work/rg/crates/searcher/src/testutil.rs:367:    pub(crate) fn line_number(&mut self, yes: bool) -> &mut SearcherTester {
+/work/rg/crates/searcher/src/testutil.rs:375:    pub(crate) fn by_line(&mut self, yes: bool) -> &mut SearcherTester {
+/work/rg/crates/searcher/src/testutil.rs:384:    pub(crate) fn multi_line(&mut self, yes: bool) -> &mut SearcherTester {
+/work/rg/crates/searcher/src/testutil.rs:392:    pub(crate) fn invert_match(&mut self, yes: bool) -> &mut SearcherTester {
+/work/rg/crates/searcher/src/testutil.rs:400:    pub(crate) fn binary_detection(
+/work/rg/crates/searcher/src/testutil.rs:417:    pub(crate) fn auto_heap_limit(
+/work/rg/crates/searcher/src/testutil.rs:428:    pub(crate) fn after_context(
+/work/rg/crates/searcher/src/testutil.rs:439:    pub(crate) fn before_context(
+/work/rg/crates/searcher/src/testutil.rs:454:    pub(crate) fn passthru(&mut self, yes: bool) -> &mut SearcherTester {
+/work/rg/crates/searcher/src/testutil.rs:468:    fn minimal_heap_limit(&self, multi_line: bool) -> usize {
+/work/rg/crates/searcher/src/testutil.rs:505:    fn include(&self, label: &str) -> bool {
+/work/rg/crates/searcher/src/testutil.rs:516:    fn configs(&self) -> Vec<TesterConfig> {
+/work/rg/crates/searcher/src/testutil.rs:693:    fn search_reader(&self, haystack: &str) -> String {
+/work/rg/crates/searcher/src/testutil.rs:710:    fn search_slice(&self, haystack: &str) -> String {
+/work/rg/crates/searcher/src/testutil.rs:730:    fn m(start: usize, end: usize) -> Match {
+/work/rg/crates/searcher/src/testutil.rs:735:    fn empty_line1() {
+/work/rg/crates/searcher/src/testutil.rs:743:    fn empty_line2() {
+/work/rg/crates/searcher/src/testutil.rs:752:    fn empty_line3() {
+/work/rg/crates/searcher/src/testutil.rs:762:    fn empty_line4() {
+/work/rg/crates/searcher/src/testutil.rs:775:    fn empty_line5() {
+/work/rg/crates/searcher/src/testutil.rs:789:    fn empty_line6() {
+/work/rg/crates/searcher/src/sink.rs:21:    fn error_message<T: std::fmt::Display>(message: T) -> Self;
+/work/rg/crates/searcher/src/sink.rs:27:    fn error_io(err: io::Error) -> Self {
+/work/rg/crates/searcher/src/sink.rs:35:    fn error_config(err: ConfigError) -> Self {
+/work/rg/crates/searcher/src/sink.rs:43:    fn error_message<T: std::fmt::Display>(message: T) -> io::Error {
+/work/rg/crates/searcher/src/sink.rs:47:    fn error_io(err: io::Error) -> io::Error {
+/work/rg/crates/searcher/src/sink.rs:55:    fn error_message<T: std::fmt::Display>(
+/work/rg/crates/searcher/src/sink.rs:124:    fn matched(
+/work/rg/crates/searcher/src/sink.rs:143:    fn context(
+/work/rg/crates/searcher/src/sink.rs:167:    fn context_break(
+/work/rg/crates/searcher/src/sink.rs:188:    fn binary_data(
+/work/rg/crates/searcher/src/sink.rs:206:    fn begin(&mut self, _searcher: &Searcher) -> Result<bool, Self::Error> {
+/work/rg/crates/searcher/src/sink.rs:216:    fn finish(
+/work/rg/crates/searcher/src/sink.rs:229:    fn matched(
+/work/rg/crates/searcher/src/sink.rs:238:    fn context(
+/work/rg/crates/searcher/src/sink.rs:247:    fn context_break(
+/work/rg/crates/searcher/src/sink.rs:255:    fn binary_data(
+/work/rg/crates/searcher/src/sink.rs:264:    fn begin(&mut self, searcher: &Searcher) -> Result<bool, S::Error> {
+/work/rg/crates/searcher/src/sink.rs:269:    fn finish(
+/work/rg/crates/searcher/src/sink.rs:282:    fn matched(
+/work/rg/crates/searcher/src/sink.rs:291:    fn context(
+/work/rg/crates/searcher/src/sink.rs:300:    fn context_break(
+/work/rg/crates/searcher/src/sink.rs:308:    fn binary_data(
+/work/rg/crates/searcher/src/sink.rs:317:    fn begin(&mut self, searcher: &Searcher) -> Result<bool, S::Error> {
+/work/rg/crates/searcher/src/sink.rs:322:    fn finish(
+/work/rg/crates/searcher/src/sink.rs:348:    pub fn byte_count(&self) -> u64 {
+/work/rg/crates/searcher/src/sink.rs:359:    pub fn binary_byte_offset(&self) -> Option<u64> {
+/work/rg/crates/searcher/src/sink.rs:379:    pub fn bytes(&self) -> &'b [u8] {
+/work/rg/crates/searcher/src/sink.rs:392:    pub fn lines(&self) -> LineIter<'b> {
+/work/rg/crates/searcher/src/sink.rs:401:    pub fn absolute_byte_offset(&self) -> u64 {
+/work/rg/crates/searcher/src/sink.rs:410:    pub fn line_number(&self) -> Option<u64> {
+/work/rg/crates/searcher/src/sink.rs:416:    pub fn buffer(&self) -> &'b [u8] {
+/work/rg/crates/searcher/src/sink.rs:423:    pub fn bytes_range_in_buffer(&self) -> std::ops::Range<usize> {
+/work/rg/crates/searcher/src/sink.rs:454:    pub fn bytes(&self) -> &'b [u8] {
+/work/rg/crates/searcher/src/sink.rs:460:    pub fn kind(&self) -> &SinkContextKind {
+/work/rg/crates/searcher/src/sink.rs:471:    pub(crate) fn lines(&self) -> LineIter<'b> {
+/work/rg/crates/searcher/src/sink.rs:480:    pub fn absolute_byte_offset(&self) -> u64 {
+/work/rg/crates/searcher/src/sink.rs:490:    pub fn line_number(&self) -> Option<u64> {
+/work/rg/crates/searcher/src/sink.rs:550:        fn matched(
+/work/rg/crates/searcher/src/sink.rs:598:        fn matched(
+/work/rg/crates/searcher/src/sink.rs:648:        fn matched(
+/work/rg/crates/searcher/src/searcher/mod.rs:62:    pub fn none() -> BinaryDetection {
+/work/rg/crates/searcher/src/searcher/mod.rs:79:    pub fn quit(binary_byte: u8) -> BinaryDetection {
+/work/rg/crates/searcher/src/searcher/mod.rs:95:    pub fn convert(binary_byte: u8) -> BinaryDetection {
+/work/rg/crates/searcher/src/searcher/mod.rs:102:    pub fn quit_byte(&self) -> Option<u8> {
+/work/rg/crates/searcher/src/searcher/mod.rs:112:    pub fn convert_byte(&self) -> Option<u8> {
+/work/rg/crates/searcher/src/searcher/mod.rs:137:    pub fn new(label: &str) -> Result<Encoding, ConfigError> {
+/work/rg/crates/searcher/src/searcher/mod.rs:188:    fn default() -> Config {
+/work/rg/crates/searcher/src/searcher/mod.rs:213:    fn max_context(&self) -> usize {
+/work/rg/crates/searcher/src/searcher/mod.rs:218:    fn line_buffer(&self) -> LineBuffer {
+/work/rg/crates/searcher/src/searcher/mod.rs:267:    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+/work/rg/crates/searcher/src/searcher/mod.rs:303:    fn default() -> SearcherBuilder {
+/work/rg/crates/searcher/src/searcher/mod.rs:310:    pub fn new() -> SearcherBuilder {
+/work/rg/crates/searcher/src/searcher/mod.rs:315:    pub fn build(&self) -> Searcher {
+/work/rg/crates/searcher/src/searcher/mod.rs:346:    pub fn line_terminator(
+/work/rg/crates/searcher/src/searcher/mod.rs:358:    pub fn invert_match(&mut self, yes: bool) -> &mut SearcherBuilder {
+/work/rg/crates/searcher/src/searcher/mod.rs:368:    pub fn line_number(&mut self, yes: bool) -> &mut SearcherBuilder {
+/work/rg/crates/searcher/src/searcher/mod.rs:388:    pub fn multi_line(&mut self, yes: bool) -> &mut SearcherBuilder {
+/work/rg/crates/searcher/src/searcher/mod.rs:399:    pub fn after_context(
+/work/rg/crates/searcher/src/searcher/mod.rs:413:    pub fn before_context(
+/work/rg/crates/searcher/src/searcher/mod.rs:431:    pub fn passthru(&mut self, yes: bool) -> &mut SearcherBuilder {
+/work/rg/crates/searcher/src/searcher/mod.rs:457:    pub fn heap_limit(
+/work/rg/crates/searcher/src/searcher/mod.rs:495:    pub fn memory_map(
+/work/rg/crates/searcher/src/searcher/mod.rs:510:    pub fn binary_detection(
+/work/rg/crates/searcher/src/searcher/mod.rs:533:    pub fn encoding(
+/work/rg/crates/searcher/src/searcher/mod.rs:553:    pub fn bom_sniffing(&mut self, yes: bool) -> &mut SearcherBuilder {
+/work/rg/crates/searcher/src/searcher/mod.rs:563:    pub fn stop_on_nonmatch(
+/work/rg/crates/searcher/src/searcher/mod.rs:583:    pub fn max_matches(&mut self, limit: Option<u64>) -> &mut SearcherBuilder {
+/work/rg/crates/searcher/src/searcher/mod.rs:632:    pub fn new() -> Searcher {
+/work/rg/crates/searcher/src/searcher/mod.rs:643:    pub fn search_path<P, M, S>(
+/work/rg/crates/searcher/src/searcher/mod.rs:665:    pub fn search_file<M, S>(
+/work/rg/crates/searcher/src/searcher/mod.rs:678:    fn search_file_maybe_path<M, S>(
+/work/rg/crates/searcher/src/searcher/mod.rs:727:    pub fn search_reader<M, R, S>(
+/work/rg/crates/searcher/src/searcher/mod.rs:769:    pub fn search_slice<M, S>(
+/work/rg/crates/searcher/src/searcher/mod.rs:798:    pub fn set_binary_detection(&mut self, detection: BinaryDetection) {
+/work/rg/crates/searcher/src/searcher/mod.rs:805:    fn check_config<M: Matcher>(&self, matcher: M) -> Result<(), ConfigError> {
+/work/rg/crates/searcher/src/searcher/mod.rs:824:    fn slice_needs_transcoding(&self, slice: &[u8]) -> bool {
+/work/rg/crates/searcher/src/searcher/mod.rs:836:    pub fn line_terminator(&self) -> LineTerminator {
+/work/rg/crates/searcher/src/searcher/mod.rs:842:    pub fn binary_detection(&self) -> &BinaryDetection {
+/work/rg/crates/searcher/src/searcher/mod.rs:850:    pub fn invert_match(&self) -> bool {
+/work/rg/crates/searcher/src/searcher/mod.rs:857:    pub fn line_number(&self) -> bool {
+/work/rg/crates/searcher/src/searcher/mod.rs:864:    pub fn multi_line(&self) -> bool {
+/work/rg/crates/searcher/src/searcher/mod.rs:871:    pub fn stop_on_nonmatch(&self) -> bool {
+/work/rg/crates/searcher/src/searcher/mod.rs:885:    pub fn max_matches(&self) -> Option<u64> {
+/work/rg/crates/searcher/src/searcher/mod.rs:896:    pub fn multi_line_with_matcher<M: Matcher>(&self, matcher: M) -> bool {
+/work/rg/crates/searcher/src/searcher/mod.rs:920:    pub fn after_context(&self) -> usize {
+/work/rg/crates/searcher/src/searcher/mod.rs:927:    pub fn before_context(&self) -> usize {
+/work/rg/crates/searcher/src/searcher/mod.rs:933:    pub fn passthru(&self) -> bool {
+/work/rg/crates/searcher/src/searcher/mod.rs:940:    fn fill_multi_line_buffer_from_file<S: Sink>(
+/work/rg/crates/searcher/src/searcher/mod.rs:975:    fn fill_multi_line_buffer_from_reader<R: io::Read, S: Sink>(
+/work/rg/crates/searcher/src/searcher/mod.rs:1036:fn slice_has_bom(slice: &[u8]) -> bool {
+/work/rg/crates/searcher/src/searcher/mod.rs:1053:    fn config_error_heap_limit() {
+/work/rg/crates/searcher/src/searcher/mod.rs:1062:    fn config_error_line_terminator() {
+/work/rg/crates/searcher/src/searcher/mod.rs:1073:    fn uft8_bom_sniffing() {
+/work/rg/crates/searcher/src/searcher/mmap.rs:22:    fn default() -> MmapChoice {
+/work/rg/crates/searcher/src/searcher/mmap.rs:49:    pub unsafe fn auto() -> MmapChoice {
+/work/rg/crates/searcher/src/searcher/mmap.rs:54:    pub fn never() -> MmapChoice {
+/work/rg/crates/searcher/src/searcher/mmap.rs:65:    pub(crate) fn open(
+/work/rg/crates/searcher/src/searcher/mmap.rs:118:    pub(crate) fn is_enabled(&self) -> bool {
+/work/rg/crates/searcher/src/searcher/glue.rs:23:    pub(crate) fn new(
+/work/rg/crates/searcher/src/searcher/glue.rs:38:    pub(crate) fn run(mut self) -> Result<(), S::Error> {
+/work/rg/crates/searcher/src/searcher/glue.rs:53:    fn consume_remaining(&mut self) {
+/work/rg/crates/searcher/src/searcher/glue.rs:58:    fn fill(&mut self) -> Result<bool, S::Error> {
+/work/rg/crates/searcher/src/searcher/glue.rs:90:    fn should_binary_quit(&self) -> bool {
+/work/rg/crates/searcher/src/searcher/glue.rs:103:    pub(crate) fn new(
+/work/rg/crates/searcher/src/searcher/glue.rs:117:    pub(crate) fn run(mut self) -> Result<(), S::Error> {
+/work/rg/crates/searcher/src/searcher/glue.rs:133:    fn byte_count(&mut self) -> u64 {
+/work/rg/crates/searcher/src/searcher/glue.rs:150:    pub(crate) fn new(
+/work/rg/crates/searcher/src/searcher/glue.rs:166:    pub(crate) fn run(mut self) -> Result<(), S::Error> {
+/work/rg/crates/searcher/src/searcher/glue.rs:208:    fn sink(&mut self) -> Result<bool, S::Error> {
+/work/rg/crates/searcher/src/searcher/glue.rs:260:    fn sink_matched_inverted(&mut self) -> Result<bool, S::Error> {
+/work/rg/crates/searcher/src/searcher/glue.rs:299:    fn sink_matched(&mut self, range: &Range) -> Result<bool, S::Error> {
+/work/rg/crates/searcher/src/searcher/glue.rs:311:    fn sink_context(&mut self, range: &Range) -> Result<bool, S::Error> {
+/work/rg/crates/searcher/src/searcher/glue.rs:327:    fn find(&mut self) -> Result<Option<Range>, S::Error> {
+/work/rg/crates/searcher/src/searcher/glue.rs:337:    fn advance(&mut self, range: &Range) {
+/work/rg/crates/searcher/src/searcher/glue.rs:345:    fn byte_count(&mut self) -> u64 {
+/work/rg/crates/searcher/src/searcher/glue.rs:376:fn main() {
+/work/rg/crates/searcher/src/searcher/glue.rs:388:    fn basic1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:402:    fn basic2() {
+/work/rg/crates/searcher/src/searcher/glue.rs:411:    fn basic3() {
+/work/rg/crates/searcher/src/searcher/glue.rs:428:    fn basic4() {
+/work/rg/crates/searcher/src/searcher/glue.rs:447:    fn invert1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:463:    fn line_number1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:483:    fn line_number_invert1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:506:    fn multi_line_overlap1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:522:    fn multi_line_overlap2() {
+/work/rg/crates/searcher/src/searcher/glue.rs:538:    fn empty_line1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:547:    fn empty_line2() {
+/work/rg/crates/searcher/src/searcher/glue.rs:558:    fn empty_line3() {
+/work/rg/crates/searcher/src/searcher/glue.rs:569:    fn empty_line4() {
+/work/rg/crates/searcher/src/searcher/glue.rs:592:    fn empty_line5() {
+/work/rg/crates/searcher/src/searcher/glue.rs:615:    fn empty_line6() {
+/work/rg/crates/searcher/src/searcher/glue.rs:640:    fn big1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:659:    fn big_error_one_line() {
+/work/rg/crates/searcher/src/searcher/glue.rs:679:    fn big_error_multi_line() {
+/work/rg/crates/searcher/src/searcher/glue.rs:700:    fn binary1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:712:    fn binary2() {
+/work/rg/crates/searcher/src/searcher/glue.rs:724:    fn binary3() {
+/work/rg/crates/searcher/src/searcher/glue.rs:759:    fn binary4() {
+/work/rg/crates/searcher/src/searcher/glue.rs:791:    fn passthru_sherlock1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:809:    fn passthru_sherlock_invert1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:828:    fn context_sherlock1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:877:    fn context_sherlock_invert1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:932:    fn context_sherlock2() {
+/work/rg/crates/searcher/src/searcher/glue.rs:981:    fn context_sherlock_invert2() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1046:    fn context_sherlock3() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1097:    fn context_sherlock4() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1149:    fn context_sherlock5() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1210:    fn context_sherlock6() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1270:    fn context_code1() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1274:34-fn main() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1287:5-34-fn main() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1328:34-fn main() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1345:    fn context_code2() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1347:34-fn main() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1360:5-34-fn main() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1401:34-fn main() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1419:    fn context_code3() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1423:34:fn main() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1437:5:34:fn main() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1449:        SearcherTester::new(CODE, "fn main|let mut rdr")
+/work/rg/crates/searcher/src/searcher/glue.rs:1459:34:fn main() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1469:        SearcherTester::new(CODE, "fn main|let mut rdr")
+/work/rg/crates/searcher/src/searcher/glue.rs:1479:34:fn main() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1487:        SearcherTester::new(CODE, "fn main|let mut rdr")
+/work/rg/crates/searcher/src/searcher/glue.rs:1495:    fn scratch() {
+/work/rg/crates/searcher/src/searcher/glue.rs:1525:    fn regression_2260() {
+/work/rg/crates/searcher/src/searcher/core.rs:40:    pub(crate) fn new(
+/work/rg/crates/searcher/src/searcher/core.rs:75:    pub(crate) fn pos(&self) -> usize {
+/work/rg/crates/searcher/src/searcher/core.rs:79:    pub(crate) fn set_pos(&mut self, pos: usize) {
+/work/rg/crates/searcher/src/searcher/core.rs:83:    fn count(&self) -> u64 {
+/work/rg/crates/searcher/src/searcher/core.rs:87:    fn increment_count(&mut self) {
+/work/rg/crates/searcher/src/searcher/core.rs:91:    pub(crate) fn binary_byte_offset(&self) -> Option<u64> {
+/work/rg/crates/searcher/src/searcher/core.rs:95:    pub(crate) fn matcher(&self) -> &M {
+/work/rg/crates/searcher/src/searcher/core.rs:99:    pub(crate) fn matched(
+/work/rg/crates/searcher/src/searcher/core.rs:107:    pub(crate) fn binary_data(
+/work/rg/crates/searcher/src/searcher/core.rs:114:    fn is_match(&self, line: &[u8]) -> Result<bool, S::Error> {
+/work/rg/crates/searcher/src/searcher/core.rs:124:    pub(crate) fn find(
+/work/rg/crates/searcher/src/searcher/core.rs:141:    fn shortest_match(
+/work/rg/crates/searcher/src/searcher/core.rs:155:    pub(crate) fn begin(&mut self) -> Result<bool, S::Error> {
+/work/rg/crates/searcher/src/searcher/core.rs:159:    pub(crate) fn finish(
+/work/rg/crates/searcher/src/searcher/core.rs:170:    pub(crate) fn match_by_line(
+/work/rg/crates/searcher/src/searcher/core.rs:185:    pub(crate) fn roll(&mut self, buf: &[u8]) -> usize {
+/work/rg/crates/searcher/src/searcher/core.rs:215:    pub(crate) fn detect_binary(
+/work/rg/crates/searcher/src/searcher/core.rs:240:    pub(crate) fn before_context_by_line(
+/work/rg/crates/searcher/src/searcher/core.rs:276:    pub(crate) fn after_context_by_line(
+/work/rg/crates/searcher/src/searcher/core.rs:311:    pub(crate) fn other_context_by_line(
+/work/rg/crates/searcher/src/searcher/core.rs:330:    fn match_by_line_slow(&mut self, buf: &[u8]) -> Result<bool, S::Error> {
+/work/rg/crates/searcher/src/searcher/core.rs:385:    fn match_by_line_fast(
+/work/rg/crates/searcher/src/searcher/core.rs:430:    fn match_by_line_fast_invert(
+/work/rg/crates/searcher/src/searcher/core.rs:476:    fn find_by_line_fast(
+/work/rg/crates/searcher/src/searcher/core.rs:522:    fn sink_matched(
+/work/rg/crates/searcher/src/searcher/core.rs:556:    fn sink_before_context(
+/work/rg/crates/searcher/src/searcher/core.rs:585:    fn sink_after_context(
+/work/rg/crates/searcher/src/searcher/core.rs:617:    fn sink_other_context(
+/work/rg/crates/searcher/src/searcher/core.rs:646:    fn sink_break_context(
+/work/rg/crates/searcher/src/searcher/core.rs:661:    fn count_lines(&mut self, buf: &[u8], upto: usize) {
+/work/rg/crates/searcher/src/searcher/core.rs:673:    fn is_line_by_line_fast(&self) -> bool {
+/work/rg/crates/searcher/src/searcher/core.rs:710:    fn has_exceeded_match_limit(&self) -> bool {
+/work/rg/crates/searcher/src/lines.rs:25:    pub fn new(line_term: u8, bytes: &'b [u8]) -> LineIter<'b> {
+/work/rg/crates/searcher/src/lines.rs:34:    fn next(&mut self) -> Option<&'b [u8]> {
+/work/rg/crates/searcher/src/lines.rs:63:    pub fn new(line_term: u8, start: usize, end: usize) -> LineStep {
+/work/rg/crates/searcher/src/lines.rs:74:    pub fn next(&mut self, bytes: &[u8]) -> Option<(usize, usize)> {
+/work/rg/crates/searcher/src/lines.rs:80:    pub(crate) fn next_match(&mut self, bytes: &[u8]) -> Option<Match> {
+/work/rg/crates/searcher/src/lines.rs:85:    fn next_impl(&mut self, mut bytes: &[u8]) -> Option<(usize, usize)> {
+/work/rg/crates/searcher/src/lines.rs:111:pub(crate) fn count(bytes: &[u8], line_term: u8) -> u64 {
+/work/rg/crates/searcher/src/lines.rs:118:pub(crate) fn without_terminator(
+/work/rg/crates/searcher/src/lines.rs:135:pub(crate) fn locate(bytes: &[u8], line_term: u8, range: Match) -> Match {
+/work/rg/crates/searcher/src/lines.rs:157:pub(crate) fn preceding(bytes: &[u8], line_term: u8, count: usize) -> usize {
+/work/rg/crates/searcher/src/lines.rs:170:fn preceding_by_pos(
+/work/rg/crates/searcher/src/lines.rs:212:    fn m(start: usize, end: usize) -> Match {
+/work/rg/crates/searcher/src/lines.rs:216:    fn lines(text: &str) -> Vec<&str> {
+/work/rg/crates/searcher/src/lines.rs:225:    fn line_ranges(text: &str) -> Vec<std::ops::Range<usize>> {
+/work/rg/crates/searcher/src/lines.rs:234:    fn prev(text: &str, pos: usize, count: usize) -> usize {
+/work/rg/crates/searcher/src/lines.rs:238:    fn loc(text: &str, start: usize, end: usize) -> Match {
+/work/rg/crates/searcher/src/lines.rs:243:    fn line_count() {
+/work/rg/crates/searcher/src/lines.rs:251:    fn line_locate() {
+/work/rg/crates/searcher/src/lines.rs:291:    fn line_locate_weird() {
+/work/rg/crates/searcher/src/lines.rs:312:    fn line_iter() {
+/work/rg/crates/searcher/src/lines.rs:330:    fn line_iter_empty() {
+/work/rg/crates/searcher/src/lines.rs:336:    fn preceding_lines_doc() {
+/work/rg/crates/searcher/src/lines.rs:346:    fn preceding_lines_sherlock() {
+/work/rg/crates/searcher/src/lines.rs:383:    fn preceding_lines_short() {
+/work/rg/crates/searcher/src/lines.rs:428:    fn preceding_lines_empty1() {
+/work/rg/crates/searcher/src/lines.rs:448:    fn preceding_lines_empty2() {
+/work/rg/crates/searcher/src/line_buffer.rs:30:    fn default() -> BufferAllocation {
+/work/rg/crates/searcher/src/line_buffer.rs:37:pub(crate) fn alloc_error(limit: usize) -> io::Error {
+/work/rg/crates/searcher/src/line_buffer.rs:67:    fn default() -> BinaryDetection {
+/work/rg/crates/searcher/src/line_buffer.rs:75:    fn is_quit(&self) -> bool {
+/work/rg/crates/searcher/src/line_buffer.rs:98:    fn default() -> Config {
+/work/rg/crates/searcher/src/line_buffer.rs:116:    pub(crate) fn new() -> LineBufferBuilder {
+/work/rg/crates/searcher/src/line_buffer.rs:121:    pub(crate) fn build(&self) -> LineBuffer {
+/work/rg/crates/searcher/src/line_buffer.rs:141:    pub(crate) fn capacity(
+/work/rg/crates/searcher/src/line_buffer.rs:160:    pub(crate) fn line_terminator(
+/work/rg/crates/searcher/src/line_buffer.rs:182:    pub(crate) fn buffer_alloc(
+/work/rg/crates/searcher/src/line_buffer.rs:196:    pub(crate) fn binary_detection(
+/work/rg/crates/searcher/src/line_buffer.rs:219:    pub(crate) fn new(
+/work/rg/crates/searcher/src/line_buffer.rs:233:    pub(crate) fn absolute_byte_offset(&self) -> u64 {
+/work/rg/crates/searcher/src/line_buffer.rs:239:    pub(crate) fn binary_byte_offset(&self) -> Option<u64> {
+/work/rg/crates/searcher/src/line_buffer.rs:256:    pub(crate) fn fill(&mut self) -> Result<bool, io::Error> {
+/work/rg/crates/searcher/src/line_buffer.rs:261:    pub(crate) fn buffer(&self) -> &[u8] {
+/work/rg/crates/searcher/src/line_buffer.rs:268:    fn bstr(&self) -> &bstr::BStr {
+/work/rg/crates/searcher/src/line_buffer.rs:274:    pub(crate) fn consume(&mut self, amt: usize) {
+/work/rg/crates/searcher/src/line_buffer.rs:283:    fn consume_all(&mut self) {
+/work/rg/crates/searcher/src/line_buffer.rs:330:    pub(crate) fn set_binary_detection(&mut self, binary: BinaryDetection) {
+/work/rg/crates/searcher/src/line_buffer.rs:335:    fn clear(&mut self) {
+/work/rg/crates/searcher/src/line_buffer.rs:350:    fn absolute_byte_offset(&self) -> u64 {
+/work/rg/crates/searcher/src/line_buffer.rs:356:    fn binary_byte_offset(&self) -> Option<u64> {
+/work/rg/crates/searcher/src/line_buffer.rs:361:    fn buffer(&self) -> &[u8] {
+/work/rg/crates/searcher/src/line_buffer.rs:367:    fn free_buffer(&mut self) -> &mut [u8] {
+/work/rg/crates/searcher/src/line_buffer.rs:373:    fn consume(&mut self, amt: usize) {
+/work/rg/crates/searcher/src/line_buffer.rs:384:    fn consume_all(&mut self) {
+/work/rg/crates/searcher/src/line_buffer.rs:406:    fn fill<R: io::Read>(&mut self, mut rdr: R) -> Result<bool, io::Error> {
+/work/rg/crates/searcher/src/line_buffer.rs:480:    fn roll(&mut self) {
+/work/rg/crates/searcher/src/line_buffer.rs:499:    fn ensure_capacity(&mut self) -> Result<(), io::Error> {
+/work/rg/crates/searcher/src/line_buffer.rs:527:fn replace_bytes(
+/work/rg/crates/searcher/src/line_buffer.rs:569:    fn s(slice: &str) -> String {
+/work/rg/crates/searcher/src/line_buffer.rs:573:    fn replace_str(
+/work/rg/crates/searcher/src/line_buffer.rs:584:    fn replace() {
+/work/rg/crates/searcher/src/line_buffer.rs:596:    fn buffer_basics1() {
+/work/rg/crates/searcher/src/line_buffer.rs:621:    fn buffer_basics2() {
+/work/rg/crates/searcher/src/line_buffer.rs:636:    fn buffer_basics3() {
+/work/rg/crates/searcher/src/line_buffer.rs:651:    fn buffer_basics4() {
+/work/rg/crates/searcher/src/line_buffer.rs:666:    fn buffer_empty() {
+/work/rg/crates/searcher/src/line_buffer.rs:677:    fn buffer_zero_capacity() {
+/work/rg/crates/searcher/src/line_buffer.rs:690:    fn buffer_small_capacity() {
+/work/rg/crates/searcher/src/line_buffer.rs:706:    fn buffer_limited_capacity1() {
+/work/rg/crates/searcher/src/line_buffer.rs:740:    fn buffer_limited_capacity2() {
+/work/rg/crates/searcher/src/line_buffer.rs:765:    fn buffer_limited_capacity3() {
+/work/rg/crates/searcher/src/line_buffer.rs:778:    fn buffer_binary_none() {
+/work/rg/crates/searcher/src/line_buffer.rs:795:    fn buffer_binary_quit1() {
+/work/rg/crates/searcher/src/line_buffer.rs:814:    fn buffer_binary_quit2() {
+/work/rg/crates/searcher/src/line_buffer.rs:828:    fn buffer_binary_quit3() {
+/work/rg/crates/searcher/src/line_buffer.rs:847:    fn buffer_binary_quit4() {
+/work/rg/crates/searcher/src/line_buffer.rs:866:    fn buffer_binary_quit5() {
+/work/rg/crates/searcher/src/line_buffer.rs:891:    fn buffer_binary_convert1() {
+/work/rg/crates/searcher/src/line_buffer.rs:910:    fn buffer_binary_convert2() {
+/work/rg/crates/searcher/src/line_buffer.rs:929:    fn buffer_binary_convert3() {
+/work/rg/crates/searcher/src/line_buffer.rs:948:    fn buffer_binary_convert4() {
