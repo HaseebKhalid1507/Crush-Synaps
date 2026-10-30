@@ -39,7 +39,7 @@ def load_samples(which: str):
     if which == "fixtures":
         man = json.loads((FIXTURES / "manifest.json").read_text())
         for f in man["fixtures"]:
-            out = (FIXTURES / f["file"]).read_text()
+            out = (FIXTURES / f["file"]).read_bytes().decode("utf-8")  # keep CR bytes
             yield {"id": f["name"], "tool": f["tool"], "input": f["input"], "output": out,
                    "class": f["class"], "source": "fixture", "bytes": len(out.encode())}
     else:

@@ -93,9 +93,10 @@ class Gen:
                   "NPM_CONFIG_UPDATE_NOTIFIER": "false"})
         if env:
             e.update(env)
-        p = subprocess.run(["bash", "-c", cmd], cwd=cwd, env=e, capture_output=True, text=True,
-                           timeout=timeout, errors="replace")
-        return p.returncode, p.stdout + p.stderr
+        # bytes, not text=True: universal-newline decoding would silently turn
+        # CRLF / lone CR (progress bars) into LF and hide what tools really print
+        p = subprocess.run(["bash", "-c", cmd], cwd=cwd, env=e, capture_output=True, timeout=timeout)
+        return p.returncode, (p.stdout + p.stderr).decode("utf-8", "replace")
 
     def add(self, name: str, cls: str, command: str | None, output: str, tool: str = "bash",
             tool_input: dict | None = None, note: str = "") -> None:
@@ -114,7 +115,7 @@ class Gen:
             return
         ext = ".json" if cls == "STRUCTURED" and output.lstrip()[:1] in "[{" else ".txt"
         fn = f"{name}{ext}"
-        (DATA / fn).write_text(output)
+        (DATA / fn).write_bytes(output.encode())
         ti = tool_input if tool_input is not None else {"command": command}
         self.fixtures.append({"name": name, "file": f"data/{fn}", "tool": tool, "input": ti,
                               "class": cls, "bytes": len(output.encode()), "note": note})
@@ -416,17 +417,56 @@ def gen_gh(g: Gen) -> None:
         g.add("gh_pr_list", "VCS", "gh pr list -R cli/cli --state all --limit 40", out, note="tab-separated")
 
 
+def gen_text_chain(g: Gen) -> None:
+    """Outputs that make crush v0.1's text chain fire, modelled on what fired in
+    the real corpus: absolute-path grep (prefix fold), a polling log (run
+    collapse) and a CRLF source file viewed with cat (rstrip -> CRLF->LF)."""
+    s = g.scratch
+    rg = s / "rg"
+    if not rg.exists():
+        rc, _ = g.sh(f"git clone -q --depth 1 {PUBLIC_REPO} rg 2>&1", s, timeout=300)
+        if rc != 0:
+            return g.skip("text_chain", "public clone failed (network?)")
+    rc, out = g.sh(f"grep -rn 'fn ' {rg}/crates/searcher/src 2>&1 | head -n 400", s)
+    g.add("grep_rn_abs", "SEARCH", "grep -rn 'fn ' /work/rg/crates/searcher/src | head -n 400", out,
+          note="absolute paths, as agents often grep; shared prefix")
+    log = ["$ ./scripts/wait-for-db.sh", "starting postgres container db-test"]
+    for i in range(1, 46):
+        log.append("waiting for postgres at 127.0.0.1:5432 ...")
+    log += ["postgres is up (45 polls)", "running migrations"]
+    for i in range(1, 31):
+        log.append(f"  applied 2026{(i % 12) + 1:02d}{(i % 27) + 1:02d}_{i:03d}_schema.sql")
+    log += ["", "", "", "seeding fixtures"] + ["warning: deprecated option --legacy-auth ignored"] * 12 + ["done in 61.2s"]
+    rc, out = g.sh("cat > poll.sh <<'EOF2'\n" + "\n".join(f"echo {json.dumps(l)}" for l in log) + "\nEOF2\nbash poll.sh", s)
+    g.add("poll_log", "LOG", "./scripts/wait-for-db.sh", out, note="scripted polling log (repeated lines, blank run)")
+    src = rg / "crates/globset/src/glob.rs"
+    if src.exists():
+        lines = src.read_text().split("\n")[:420]
+        (s / "glob_crlf.rs").write_bytes("\r\n".join(lines).encode())
+        rc, out = g.sh("cat glob_crlf.rs", s)
+        g.add("cat_crlf_source", "CONTENT", "cat crates/globset/src/glob.rs", out,
+              note="public source converted to CRLF line endings (a Windows-origin file)")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--keep-scratch", action="store_true")
+    ap.add_argument("--only", default="", help="comma list of generator steps to (re)run; merges into the manifest")
     args = ap.parse_args()
+    steps = [gen_cargo, gen_pytest, gen_node, gen_gcc, gen_git, gen_system, gen_gh, gen_text_chain]
+    keep: list[dict] = []
+    if args.only:
+        wanted = {f"gen_{x.removeprefix('gen_')}" for x in args.only.split(",")}
+        steps = [s for s in steps if s.__name__ in wanted]
+        keep = json.loads(MANIFEST.read_text())["fixtures"] if MANIFEST.exists() else []
     DATA.mkdir(parents=True, exist_ok=True)
-    for f in DATA.iterdir():
-        f.unlink()
+    if not args.only:
+        for f in DATA.iterdir():
+            f.unlink()
     scratch = Path(tempfile.mkdtemp(prefix="crush-fx-"))
     g = Gen(scratch)
     try:
-        for step in (gen_cargo, gen_pytest, gen_node, gen_gcc, gen_git, gen_system, gen_gh):
+        for step in steps:
             print(f"[{step.__name__}]")
             try:
                 step(g)
@@ -436,7 +476,9 @@ def main() -> int:
         if not args.keep_scratch:
             shutil.rmtree(scratch, ignore_errors=True)
     # Strip the person map: it maps real public names to aliases; never written.
-    MANIFEST.write_text(json.dumps({"fixtures": g.fixtures, "skipped": g.skipped}, indent=2) + "\n")
+    names = {f["name"] for f in g.fixtures}
+    merged = [f for f in keep if f["name"] not in names] + g.fixtures
+    MANIFEST.write_text(json.dumps({"fixtures": merged, "skipped": g.skipped}, indent=2) + "\n")
     print(f"{len(g.fixtures)} fixtures, {sum(f['bytes'] for f in g.fixtures)} bytes; skipped {len(g.skipped)}")
     return 0
 

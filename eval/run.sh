@@ -49,6 +49,7 @@ if [ "$CORPUS" = 1 ]; then
   python3 eval/count_tokens.py --set corpus
   step "edit sources + classifier report"
   python3 eval/corpus/edit_sources.py "$DAYS" >/dev/null
+  python3 eval/corpus/redundancy.py "$DAYS" >/dev/null
   if [ -s "$CORPUS_DIR/classifier-audit.txt" ]; then
     python3 eval/corpus/classifier_report.py --audit-score >/dev/null
   else
@@ -62,6 +63,9 @@ if [ "$ACC" = 1 ]; then
   python3 eval/accuracy/run_accuracy.py --sets "$SETS" --models "${CRUSH_EVAL_MODELS:-haiku,sonnet}" \
     --max-calls "${CRUSH_EVAL_MAX_CALLS:-400}" --corpus-samples "${CRUSH_EVAL_SAMPLES:-80}"
 fi
+
+step "edit-safety gate (CONTENT must be byte-identical)"
+python3 eval/edit_safety.py --sets "$( [ "$CORPUS" = 1 ] && echo fixtures,corpus || echo fixtures )" >/dev/null || true
 
 step "report"
 python3 eval/report.py
