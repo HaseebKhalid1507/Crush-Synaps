@@ -1,0 +1,70 @@
+   Compiling noisy v0.1.0 (/work/noisy)
+    Finished `test` profile [unoptimized] target(s) in 0.01s
+     Running unittests src/lib.rs (/work/target/debug/deps/noisy-5b1cea6f4b132573)
+
+running 40 tests
+seeding fixture 0: 0 rows
+seeding fixture 8: 136 rows
+seeding fixture 4: 68 rows
+seeding fixture 12: 204 rows
+seeding fixture 16: 272 rows
+seeding fixture 20: 340 rows
+test tests::adds_00 ... ok
+
+thread 'tests::adds_23' (4045704) panicked at src/lib.rs:105:9:
+assertion `left == right` failed
+  left: 24
+ right: 25
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test tests::adds_01 ... ok
+seeding fixture 24: 408 rows
+test tests::adds_02 ... ok
+test tests::adds_03 ... ok
+test tests::adds_05 ... ok
+test tests::adds_06 ... ok
+seeding fixture 28: 476 rows
+test tests::adds_07 ... ok
+test tests::adds_08 ... ok
+test tests::adds_09 ... ok
+test tests::adds_10 ... ok
+seeding fixture 32: 544 rows
+test tests::adds_11 ... ok
+test tests::adds_04 ... ok
+test tests::adds_12 ... ok
+test tests::adds_13 ... ok
+seeding fixture 36: 612 rows
+test tests::adds_14 ... ok
+test tests::adds_15 ... ok
+test tests::adds_16 ... ok
+test tests::adds_17 ... ok
+test tests::adds_18 ... ok
+test tests::adds_19 ... ok
+test tests::adds_20 ... ok
+test tests::adds_21 ... ok
+test tests::adds_22 ... ok
+test tests::adds_24 ... ok
+test tests::adds_25 ... ok
+test tests::adds_23 ... FAILED
+test tests::adds_26 ... ok
+test tests::adds_27 ... ok
+test tests::adds_28 ... ok
+test tests::adds_29 ... ok
+test tests::adds_30 ... ok
+test tests::adds_31 ... ok
+test tests::adds_32 ... ok
+test tests::adds_33 ... ok
+test tests::adds_34 ... ok
+test tests::adds_35 ... ok
+test tests::adds_36 ... ok
+test tests::adds_37 ... ok
+test tests::adds_38 ... ok
+test tests::adds_39 ... ok
+
+failures:
+
+failures:
+    tests::adds_23
+
+test result: FAILED. 39 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--lib`

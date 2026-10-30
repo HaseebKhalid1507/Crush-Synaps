@@ -42,6 +42,8 @@ fn cfgs() -> Vec<Config> {
         ..Config::default()
     };
     all_on.transforms.search_group = true;
+    all_on.transforms.test_pass = true;
+    all_on.transforms.json_minify = true;
     all_on.classes.prose = true;
     vec![Config::default(), all_on]
 }

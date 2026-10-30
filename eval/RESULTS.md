@@ -1,4 +1,4 @@
-# crush 2 — gate results (Phase 1, Phase 2A)
+# crush 2 — gate results (Phase 1, Phase 2A, Phase 2B)
 
 crush-core (classifier, transform framework, invariants, generic transforms, SEARCH
 grouping) measured on 30 days of real tool results (59,843 unique, private, never
@@ -9,6 +9,9 @@ aggregates only. Method and harness: [`README.md`](README.md); v0.1 for comparis
 
 ## Headline
 
+- **Phase 2B (LOG, VCS, STRUCTURED; [Phase 2B](#phase-2b--log-vcs-structured))**: `build_progress` ships;
+  passing-test collapse and the JSON layout are built and ship disabled (failed accuracy
+  parity); VCS has nothing worth shipping (measured). Numbers below.
 - **Phase 2A (SEARCH layout, LISTING; [section 8](#8-phase-2a-search-layout-and-listing-transforms))**:
   `search_elide` ships on. Over-long grep hit lines keep the text around the
   match, every line keeps its own `path:N:`, and the cuts carry exact counts.
@@ -43,15 +46,15 @@ aggregates only. Method and harness: [`README.md`](README.md); v0.1 for comparis
 <!-- BEGIN:tokens -->
 | class (crush-core) | samples | fired | fire rate | tokens 5.x | saved 5.x | saved 5.x % | saved 4.x % | saved on fired 5.x |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| CONTENT | 15,935 | 0 | 0.0% | 33,290,175 | 0 | 0.00% | 0.00% | – |
-| SEARCH | 15,727 | 105 | 0.7% | 11,827,999 | 123,705 | 1.05% | 0.94% | 39.8% |
-| UNKNOWN | 8,904 | 19 | 0.2% | 3,970,648 | 9,995 | 0.25% | 0.26% | 46.0% |
+| CONTENT | 15,936 | 0 | 0.0% | 33,290,468 | 0 | 0.00% | 0.00% | – |
+| SEARCH | 15,726 | 105 | 0.7% | 11,827,887 | 123,705 | 1.05% | 0.94% | 39.8% |
+| UNKNOWN | 8,900 | 19 | 0.2% | 3,970,059 | 9,995 | 0.25% | 0.26% | 46.0% |
 | PROSE | 1,962 | 0 | 0.0% | 3,365,558 | 0 | 0.00% | 0.00% | – |
 | LISTING | 4,783 | 12 | 0.3% | 3,996,187 | 5,567 | 0.14% | 0.16% | 44.6% |
-| VCS | 4,825 | 13 | 0.3% | 2,910,302 | 4,469 | 0.15% | 0.18% | 32.3% |
-| LOG | 6,703 | 28 | 0.4% | 3,061,892 | 4,367 | 0.14% | 0.13% | 19.4% |
+| VCS | 4,830 | 13 | 0.3% | 2,911,755 | 4,469 | 0.15% | 0.18% | 32.3% |
+| LOG | 6,702 | 42 | 0.6% | 3,060,847 | 13,148 | 0.43% | 0.44% | 30.8% |
 | STRUCTURED | 1,004 | 7 | 0.7% | 1,212,354 | 1,530 | 0.13% | 0.13% | 45.5% |
-| **total** | 59,843 | 184 | 0.3% | 63,635,115 | 149,633 | 0.24% | 0.22% | 38.9% |
+| **total** | 59,843 | 198 | 0.3% | 63,635,115 | 158,414 | 0.25% | 0.23% | 39.1% |
 
 By class and transform (savings on the fired results themselves):
 
@@ -60,7 +63,9 @@ By class and transform (savings on the fired results themselves):
 | LISTING | blobs | 3 | 4,237 | 45.6% | 48.1% | 30.4% |
 | LISTING | progress | 3 | 3,706 | 66.9% | 71.1% | 86.7% |
 | LISTING | repeats | 6 | 4,539 | 25.4% | 24.3% | 25.8% |
-| LOG | repeats | 28 | 22,502 | 19.4% | 19.1% | 18.8% |
+| LOG | build_progress | 14 | 20,180 | 43.3% | 45.8% | 39.2% |
+| LOG | build_progress+repeats | 1 | 2,249 | 16.0% | 16.3% | 17.1% |
+| LOG | repeats | 27 | 20,253 | 20.0% | 19.7% | 19.2% |
 | SEARCH | search_elide | 105 | 311,202 | 39.8% | 38.1% | 41.3% |
 | STRUCTURED | blobs | 2 | 1,991 | 32.6% | 35.2% | 17.7% |
 | STRUCTURED | repeats | 5 | 1,372 | 64.1% | 61.4% | 64.0% |
@@ -70,9 +75,9 @@ By class and transform (savings on the fired results themselves):
 | VCS | progress | 7 | 10,636 | 30.4% | 35.7% | 31.7% |
 | VCS | repeats | 6 | 3,187 | 38.6% | 40.3% | 34.4% |
 
-Real-token check on **every** fired result: more tokens than raw: 0 (5.x), 0 (4.x); equal: 0 / 0. Per-result saving p10/p50/p90 (5.x): [12.88, 35.0, 66.5]%. Estimated vs real saving (5.x): 148,467 vs 149,633 tokens; per-result median |error| 7.9%, p90 23.8%.
+Real-token check on **every** fired result: more tokens than raw: 0 (5.x), 0 (4.x); equal: 0 / 0. Per-result saving p10/p50/p90 (5.x): [12.94, 35.44, 65.09]%. Estimated vs real saving (5.x): 157,389 vs 158,414 tokens; per-result median |error| 7.8%, p90 22.9%.
 
-Pass-through reasons (all 59,843 results): nothing-to-do 27,057, byte-identical-class 15,935, too-small 14,465, class-disabled 1,962, compressed 184, no-gain 131, marker-like-input 109.
+Pass-through reasons (all 59,843 results): nothing-to-do 26,950, byte-identical-class 15,936, too-small 14,466, class-disabled 1,962, no-gain 222, compressed 198, marker-like-input 109.
 <!-- END:tokens -->
 
 Fixtures, default config:
@@ -86,22 +91,24 @@ Fixtures, default config:
 | retry_loop | LISTING | repeats | 2,566 | 832 | 91.3% | 90.5% | 90.7% |
 | grep_long_lines | SEARCH | search_elide | 71,650 | 28,634 | 70.8% | 65.8% | 62.6% |
 | grep_n_jsonl | SEARCH | search_elide | 49,839 | 19,646 | 83.1% | 83.4% | 83.5% |
-| **all 53 fixtures** |  |  | 1,117,013 | 539,655 | 9.2% | 8.0% | 7.0% |
+| cargo_build_deps | LOG | build_progress | 1,612 | 762 | 21.7% | 21.9% | 24.4% |
+| pip_install | LOG | build_progress | 2,574 | 1,427 | 76.4% | 77.7% | 79.2% |
+| **all 63 fixtures** |  |  | 1,168,786 | 564,162 | 9.0% | 7.9% | 6.9% |
 <!-- END:fixtures -->
 
 ## 2. Tokens with SEARCH grouping on (disabled candidate)
 <!-- BEGIN:tokens_search_on -->
 | class (crush-core) | samples | fired | fire rate | tokens 5.x | saved 5.x | saved 5.x % | saved 4.x % | saved on fired 5.x |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| CONTENT | 15,935 | 0 | 0.0% | 33,290,175 | 0 | 0.00% | 0.00% | – |
-| SEARCH | 15,727 | 3,413 | 21.7% | 11,827,999 | 709,643 | 6.00% | 5.75% | 20.6% |
-| UNKNOWN | 8,904 | 19 | 0.2% | 3,970,648 | 9,995 | 0.25% | 0.26% | 46.0% |
+| CONTENT | 15,936 | 0 | 0.0% | 33,290,468 | 0 | 0.00% | 0.00% | – |
+| SEARCH | 15,726 | 3,412 | 21.7% | 11,827,887 | 709,616 | 6.00% | 5.75% | 20.6% |
+| UNKNOWN | 8,900 | 19 | 0.2% | 3,970,059 | 9,995 | 0.25% | 0.26% | 46.0% |
 | PROSE | 1,962 | 0 | 0.0% | 3,365,558 | 0 | 0.00% | 0.00% | – |
 | LISTING | 4,783 | 12 | 0.3% | 3,996,187 | 5,567 | 0.14% | 0.16% | 44.6% |
-| VCS | 4,825 | 13 | 0.3% | 2,910,302 | 4,469 | 0.15% | 0.18% | 32.3% |
-| LOG | 6,703 | 28 | 0.4% | 3,061,892 | 4,367 | 0.14% | 0.13% | 19.4% |
-| STRUCTURED | 1,004 | 7 | 0.7% | 1,212,354 | 1,530 | 0.13% | 0.13% | 45.5% |
-| **total** | 59,843 | 3,492 | 5.8% | 63,635,115 | 735,571 | 1.16% | 1.11% | 20.9% |
+| VCS | 4,830 | 13 | 0.3% | 2,911,755 | 4,469 | 0.15% | 0.18% | 32.3% |
+| LOG | 6,702 | 219 | 3.3% | 3,060,847 | 90,419 | 2.95% | 2.66% | 45.7% |
+| STRUCTURED | 1,004 | 30 | 3.0% | 1,212,354 | 3,778 | 0.31% | 0.42% | 16.8% |
+| **total** | 59,843 | 3,705 | 6.2% | 63,635,115 | 823,844 | 1.29% | 1.24% | 22.1% |
 
 By class and transform (savings on the fired results themselves):
 
@@ -110,9 +117,15 @@ By class and transform (savings on the fired results themselves):
 | LISTING | blobs | 3 | 4,237 | 45.6% | 48.1% | 30.4% |
 | LISTING | progress | 3 | 3,706 | 66.9% | 71.1% | 86.7% |
 | LISTING | repeats | 6 | 4,539 | 25.4% | 24.3% | 25.8% |
-| LOG | repeats | 28 | 22,502 | 19.4% | 19.1% | 18.8% |
-| SEARCH | search_group | 3,413 | 3,451,832 | 20.6% | 20.2% | 17.5% |
+| LOG | build_progress | 12 | 17,839 | 45.2% | 47.9% | 41.1% |
+| LOG | build_progress+repeats | 1 | 2,249 | 16.0% | 16.3% | 17.1% |
+| LOG | build_progress+test_pass | 7 | 5,556 | 44.7% | 43.9% | 44.6% |
+| LOG | repeats | 26 | 18,001 | 22.2% | 21.7% | 21.4% |
+| LOG | test_pass | 172 | 152,067 | 48.8% | 46.2% | 51.3% |
+| LOG | test_pass+repeats | 1 | 2,252 | 57.0% | 53.6% | 59.3% |
+| SEARCH | search_group | 3,412 | 3,451,618 | 20.6% | 20.2% | 17.5% |
 | STRUCTURED | blobs | 2 | 1,991 | 32.6% | 35.2% | 17.7% |
+| STRUCTURED | json_minify | 23 | 19,145 | 11.7% | 18.2% | 11.1% |
 | STRUCTURED | repeats | 5 | 1,372 | 64.1% | 61.4% | 64.0% |
 | UNKNOWN | blobs | 5 | 11,048 | 44.7% | 48.4% | 28.3% |
 | UNKNOWN | progress | 1 | 1,529 | 20.1% | 23.2% | 23.1% |
@@ -120,14 +133,20 @@ By class and transform (savings on the fired results themselves):
 | VCS | progress | 7 | 10,636 | 30.4% | 35.7% | 31.7% |
 | VCS | repeats | 6 | 3,187 | 38.6% | 40.3% | 34.4% |
 
-Real-token check on **every** fired result: more tokens than raw: 0 (5.x), 0 (4.x); equal: 0 / 0. Per-result saving p10/p50/p90 (5.x): [5.55, 17.7, 36.5]%. Estimated vs real saving (5.x): 698,608 vs 735,571 tokens; per-result median |error| 7.9%, p90 16.2%.
+Real-token check on **every** fired result: more tokens than raw: 0 (5.x), 0 (4.x); equal: 0 / 0. Per-result saving p10/p50/p90 (5.x): [5.68, 18.37, 39.66]%. Estimated vs real saving (5.x): 783,609 vs 823,844 tokens; per-result median |error| 7.8%, p90 16.3%.
 
-Pass-through reasons (all 59,843 results): nothing-to-do 23,578, byte-identical-class 15,935, too-small 14,465, compressed 3,492, class-disabled 1,962, no-gain 302, marker-like-input 109.
+Pass-through reasons (all 59,843 results): nothing-to-do 22,998, byte-identical-class 15,936, too-small 14,466, compressed 3,705, class-disabled 1,962, no-gain 666, marker-like-input 109, not-idempotent 1.
 <!-- END:tokens_search_on -->
 
 <!-- BEGIN:fixtures_search_on -->
 | fixture (fired) | class | transform | bytes | tokens 5.x | saved bytes | saved 5.x | saved 4.x |
 |---|---:|---:|---:|---:|---:|---:|---:|
+| cargo_test_pass | LOG | test_pass | 8,249 | 3,895 | 91.2% | 91.0% | 89.0% |
+| cargo_test_fail | LOG | test_pass | 9,311 | 4,380 | 77.1% | 77.2% | 74.3% |
+| cargo_metadata_packages_pretty | STRUCTURED | json_minify | 60,838 | 23,842 | 33.8% | 23.9% | 32.6% |
+| pytest_verbose_pass | LOG | test_pass | 10,411 | 4,135 | 94.2% | 93.9% | 93.9% |
+| pytest_verbose_fail | LOG | test_pass | 11,318 | 4,476 | 84.1% | 83.9% | 84.1% |
+| node_test_fail | LOG | test_pass | 4,263 | 2,207 | 49.8% | 53.4% | 54.3% |
 | grep_rn | SEARCH | search_group | 35,464 | 18,484 | 32.0% | 32.5% | 34.6% |
 | grep_rn_pattern | SEARCH | search_group | 98,296 | 47,742 | 31.7% | 33.7% | 34.8% |
 | grep_rn_abs | SEARCH | search_group | 27,531 | 14,276 | 48.8% | 51.4% | 54.0% |
@@ -137,7 +156,16 @@ Pass-through reasons (all 59,843 results): nothing-to-do 23,578, byte-identical-
 | k8s_secret_yaml | STRUCTURED | blobs | 5,832 | 5,399 | 84.9% | 90.4% | 91.0% |
 | retry_loop | LISTING | repeats | 2,566 | 832 | 91.3% | 90.5% | 90.7% |
 | grep_long_lines | SEARCH | search_group | 71,650 | 28,634 | 2.0% | 2.8% | 3.1% |
-| **all 53 fixtures** |  |  | 1,117,013 | 539,655 | 6.1% | 7.1% | 7.4% |
+| cargo_workspace_test_fail | LOG | test_pass | 17,861 | 8,464 | 66.7% | 66.7% | 65.2% |
+| cargo_test_nocapture | LOG | test_pass | 1,952 | 984 | 31.0% | 32.9% | 29.3% |
+| cargo_build_deps | LOG | build_progress | 1,612 | 762 | 21.7% | 21.9% | 24.4% |
+| jest_verbose_fail | LOG | test_pass | 4,655 | 1,924 | 46.7% | 46.5% | 46.8% |
+| pip_install | LOG | build_progress | 2,574 | 1,427 | 76.4% | 77.7% | 79.2% |
+| gh_issues_jq | STRUCTURED | json_minify | 6,359 | 2,787 | 22.3% | 23.0% | 35.1% |
+| gh_issues_jq_stream | STRUCTURED | json_minify | 1,581 | 812 | 11.4% | 10.3% | 16.2% |
+| gh_repo_api | STRUCTURED | json_minify | 6,422 | 2,836 | 9.1% | 9.1% | 14.8% |
+| go_test_verbose | LOG | test_pass | 4,993 | 2,687 | 77.4% | 78.5% | 77.3% |
+| **all 63 fixtures** |  |  | 1,168,786 | 564,162 | 12.7% | 12.6% | 13.2% |
 <!-- END:fixtures_search_on -->
 
 ## 3. Accuracy: raw vs crushed
@@ -208,7 +236,7 @@ repetition, before trying grouping again.
 | set | CONTENT changed (crush-core class) | SEARCH grouped | SEARCH rebuild failures | grep hit lines whose `N:text` is still a whole line | Phase 0 classifier says CONTENT, crush changed |
 |---|---:|---:|---:|---:|---:|
 | fixtures | 0 | 0 | 0 | 0 / 0 | 0 (); 0 lines not rebuildable |
-| corpus | 0 | 0 | 0 | 0 / 0 | 14 (search_elide 6, repeats 7, progress 1); 7 lines not rebuildable |
+| corpus | 0 | 0 | 0 | 0 / 0 | 16 (search_elide 6, repeats 6, build_progress 2, progress 1, build_progress+repeats 1); 307 lines not rebuildable |
 <!-- END:edit -->
 
 With SEARCH grouping on:
@@ -216,7 +244,7 @@ With SEARCH grouping on:
 | set | CONTENT changed (crush-core class) | SEARCH grouped | SEARCH rebuild failures | grep hit lines whose `N:text` is still a whole line | Phase 0 classifier says CONTENT, crush changed |
 |---|---:|---:|---:|---:|---:|
 | fixtures | 0 | 4 | 0 | 1,967 / 1,967 | 0 (); 0 lines not rebuildable |
-| corpus | 0 | 3413 | 0 | 44,569 / 44,569 | 68 (search_group 60, repeats 7, progress 1); 1 lines not rebuildable |
+| corpus | 0 | 3412 | 0 | 44,565 / 44,565 | 98 (test_pass 24, search_group 60, test_pass+repeats 1, repeats 5, build_progress 1, json_minify 4, progress 1, build_progress+repeats 1, build_progress+test_pass 1); 1013 lines not rebuildable |
 <!-- END:edit_search_on -->
 
 The one Phase-0-CONTENT line that changed is in a `cat …/*.log` view that
@@ -251,23 +279,27 @@ fresh sheet is labelled.
 <!-- BEGIN:latency -->
 | set | results | in-process p50/p99 (all) | p50/p99 (≥ 2 KiB) | p50/p99 (fired) | max | crush-ext JSON-RPC round trip p50/p99 | panics | crush-ext ok | ext ≠ library |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| real corpus | 59,843 | 5.0 / 73 µs | 12 / 106 µs | 19 / 88 µs | 211 µs | 32 / 363 µs (3,184) | 0 | 3184/3184 | 0 |
-| fixtures | 53 | 13.2 / 169 µs | 23 / 170 µs | 23 / 133 µs | 174 µs | 59 / 441 µs (53) | 0 | 53/53 | 0 |
+| real corpus | 59,843 | 4.6 / 65 µs | 11 / 95 µs | 17 / 74 µs | 199 µs | 34 / 450 µs (3,198) | 0 | 3198/3198 | 0 |
+| fixtures | 63 | 12.6 / 191 µs | 18 / 193 µs | 14 / 120 µs | 199 µs | 126 / 824 µs (63) | 0 | 63/63 | 0 |
 
 256 KiB worst cases (200 runs each):
 
 | shape | bytes | result | transforms | best µs | p50 µs | p99 µs |
 |---|---:|---:|---:|---:|---:|---:|
-| grep_hits | 262,143 | nothing-to-do | – | 294 | 366 | 436 |
-| source_file | 262,044 | byte-identical-class | – | 158 | 166 | 181 |
-| ls_listing | 262,118 | nothing-to-do | – | 319 | 328 | 342 |
-| minified_json | 262,153 | nothing-to-do | – | 442 | 453 | 464 |
-| progress_cr | 262,131 | compressed | progress | 386 | 406 | 426 |
-| repeats_log | 262,140 | compressed | repeats | 253 | 265 | 289 |
-| base64_blobs | 261,976 | compressed | blobs | 713 | 734 | 760 |
-| grep_long_lines | 258,585 | compressed | search_elide | 560 | 595 | 638 |
-| ls_mixed_owner | 262,105 | nothing-to-do | – | 323 | 332 | 347 |
-| ls_64k_fires | 65,349 | nothing-to-do | – | 80 | 84 | 90 |
+| grep_hits | 262,143 | nothing-to-do | – | 350 | 391 | 461 |
+| source_file | 262,044 | byte-identical-class | – | 162 | 172 | 188 |
+| ls_listing | 262,118 | nothing-to-do | – | 327 | 346 | 370 |
+| minified_json | 262,153 | nothing-to-do | – | 444 | 467 | 494 |
+| progress_cr | 262,131 | compressed | progress | 401 | 427 | 453 |
+| repeats_log | 262,140 | compressed | repeats | 308 | 327 | 357 |
+| base64_blobs | 261,976 | compressed | blobs | 682 | 739 | 778 |
+| grep_long_lines | 258,585 | compressed | search_elide | 523 | 570 | 608 |
+| ls_mixed_owner | 262,105 | nothing-to-do | – | 326 | 344 | 370 |
+| cargo_test_log | 262,097 | nothing-to-do | – | 425 | 449 | 471 |
+| cargo_build_log | 262,132 | compressed | build_progress | 513 | 562 | 633 |
+| pretty_json | 262,031 | nothing-to-do | – | 616 | 667 | 711 |
+| pretty_json_128k | 130,991 | nothing-to-do | – | 266 | 283 | 300 |
+| ls_64k_fires | 65,349 | nothing-to-do | – | 79 | 85 | 98 |
 <!-- END:latency -->
 
 With SEARCH grouping on (its fired results are the slowest path: transform,
@@ -277,23 +309,27 @@ with three fuzzers on the box):
 <!-- BEGIN:latency_search_on -->
 | set | results | in-process p50/p99 (all) | p50/p99 (≥ 2 KiB) | p50/p99 (fired) | max | crush-ext JSON-RPC round trip p50/p99 | panics | crush-ext ok | ext ≠ library |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| real corpus | 59,843 | 5.3 / 81 µs | 13 / 116 µs | 13 / 117 µs | 332 µs | 40 / 404 µs (6,492) | 0 | 6492/6492 | 0 |
-| fixtures | 53 | 15.9 / 405 µs | 28 / 459 µs | 58 / 566 µs | 603 µs | 56 / 706 µs (53) | 0 | 53/53 | 0 |
+| real corpus | 59,843 | 4.7 / 69 µs | 11 / 101 µs | 12 / 95 µs | 266 µs | 46 / 559 µs (6,705) | 0 | 6705/6705 | 0 |
+| fixtures | 63 | 16.3 / 295 µs | 24 / 315 µs | 24 / 342 µs | 370 µs | 82 / 776 µs (63) | 0 | 63/63 | 0 |
 
 256 KiB worst cases (200 runs each):
 
 | shape | bytes | result | transforms | best µs | p50 µs | p99 µs |
 |---|---:|---:|---:|---:|---:|---:|
-| grep_hits | 262,143 | compressed | search_group | 723 | 891 | 975 |
-| source_file | 262,044 | byte-identical-class | – | 186 | 203 | 222 |
-| ls_listing | 262,118 | nothing-to-do | – | 374 | 402 | 438 |
-| minified_json | 262,153 | nothing-to-do | – | 488 | 521 | 558 |
-| progress_cr | 262,131 | compressed | progress | 443 | 482 | 521 |
-| repeats_log | 262,140 | compressed | repeats | 290 | 323 | 352 |
-| base64_blobs | 261,976 | compressed | blobs | 779 | 835 | 897 |
-| grep_long_lines | 258,585 | no-gain | – | 733 | 811 | 909 |
-| ls_mixed_owner | 262,105 | nothing-to-do | – | 374 | 401 | 427 |
-| ls_64k_fires | 65,349 | nothing-to-do | – | 90 | 101 | 108 |
+| grep_hits | 262,143 | compressed | search_group | 695 | 785 | 882 |
+| source_file | 262,044 | byte-identical-class | – | 168 | 181 | 198 |
+| ls_listing | 262,118 | nothing-to-do | – | 344 | 364 | 381 |
+| minified_json | 262,153 | nothing-to-do | – | 469 | 491 | 514 |
+| progress_cr | 262,131 | compressed | progress | 411 | 447 | 478 |
+| repeats_log | 262,140 | compressed | repeats | 356 | 389 | 421 |
+| base64_blobs | 261,976 | compressed | blobs | 742 | 795 | 852 |
+| grep_long_lines | 258,585 | no-gain | – | 657 | 716 | 778 |
+| ls_mixed_owner | 262,105 | nothing-to-do | – | 345 | 369 | 395 |
+| cargo_test_log | 262,097 | compressed | test_pass | 552 | 591 | 705 |
+| cargo_build_log | 262,132 | compressed | build_progress | 564 | 600 | 634 |
+| pretty_json | 262,031 | nothing-to-do | – | 579 | 608 | 652 |
+| pretty_json_128k | 130,991 | compressed | json_minify | 515 | 545 | 575 |
+| ls_64k_fires | 65,349 | nothing-to-do | – | 86 | 94 | 100 |
 <!-- END:latency_search_on -->
 
 Measured on a shared 24-core box under load (load average ≈ 12 from other
@@ -301,19 +337,12 @@ workers and three fuzzers), so p99s carry noise; `best` is the code's own cost.
 
 ## 7. Token estimator and the SEARCH layout choice
 <!-- BEGIN:estimator -->
-Fitted on 2060 real results (stratified class × size), scored on 514 held out:
+Fitted on 2068 real results (stratified class × size), scored on 516 held out:
 
 | family | model | held-out n | Σest/Σreal | median |err| | p90 | p95 | median (≥500 tok) | p95 (≥500 tok) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| V5 | claude-opus-5-5 | 514 | 0.986 | 3.8% | 13.4% | 18.6% | 3.5% | 13.9% |
-| V4 | claude-sonnet-4-6 | 514 | 0.987 | 3.6% | 13.9% | 18.4% | 3.0% | 14.0% |
-
-SEARCH layout, 250 seeded fired real results, real tokens:
-
-| model | raw tokens | rg --heading | + blank between groups | `path:` heading | singles inline |
-|---|---:|---:|---:|---:|---:|
-| claude-sonnet-4-6 | 183,289 | 22.07% (0 grew) | 22.07% (0 grew) | 21.58% (0 grew) | 22.07% (0 grew) |
-| claude-opus-5-5 | 237,145 | 22.72% (0 grew) | 22.72% (0 grew) | 22.34% (0 grew) | 22.72% (0 grew) |
+| V5 | claude-opus-5-5 | 516 | 0.986 | 3.8% | 13.3% | 18.6% | 3.5% | 13.9% |
+| V4 | claude-sonnet-4-6 | 516 | 0.987 | 3.6% | 13.9% | 18.4% | 3.0% | 14.0% |
 <!-- END:estimator -->
 
 The estimator is a non-negative linear model over 16 one-pass shape features
@@ -358,14 +387,14 @@ LISTING results are file views chained after the listing (`wc -l f && sed -n
 transforms only touch rows they parse.
 
 <!-- BEGIN:p2a_anatomy -->
-SEARCH: 15,727 real results, every one counted (shares by deletion, so they overlap: `context` and `long` lines are also hit/other text).
+SEARCH: 15,726 real results, every one counted (shares by deletion, so they overlap: `context` and `long` lines are also hit/other text).
 
 | tokenizer | tokens | paths | line numbers | hit text | context lines + `--` | other lines | lines > 500 chars | duplicate lines | > 12 KiB (raw → after spill) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| opus-5-5 | 11,827,999 | 8.51% | 4.61% | 52.58% | 15.49% | 32.29% | 4.41% | 1.24% | 126 results, 7.2% → 3.4% |
-| sonnet-4-6 | 9,378,747 | 8.19% | 5.78% | 50.73% | 15.89% | 32.72% | 4.21% | 1.24% | 126 results, 7.1% → 3.4% |
+| opus-5-5 | 11,827,887 | 8.51% | 4.61% | 52.58% | 15.49% | 32.29% | 4.41% | 1.24% | 126 results, 7.2% → 3.4% |
+| sonnet-4-6 | 9,378,657 | 8.19% | 5.78% | 50.73% | 15.89% | 32.72% | 4.21% | 1.24% | 126 results, 7.1% → 3.4% |
 
-By shape (5.x): mixed 38.59% (6,665), multi-file 21.66% (2,785), single-file 39.75% (6,277). By hit lines per result: <100 15.99% (946), <20 48.57% (11,681), <200 5.46% (178), <50 29.12% (2,904), >=200 0.86% (18).
+By shape (5.x): mixed 38.59% (6,664), multi-file 21.66% (2,785), single-file 39.75% (6,277). By hit lines per result: <100 15.99% (946), <20 48.57% (11,680), <200 5.46% (178), <50 29.12% (2,904), >=200 0.86% (18).
 
 LISTING: 4,783 real results, 3,996,188 tokens (5.x). By command (5.x): cmd:ls 50.38%, cmd:wc 20.7%, cmd:grep 4.95%, cmd:ps 3.92%, sniff:path list 3.35%, sniff:ls 3.41%, cmd:pgrep 2.73%, cmd:find 2.24%, tool:ls 2.46%, cmd:which 1.55%.
 `ls -l` rows: 12.67% of LISTING tokens (11,214 rows in 547 results); columns constant across a listing (links/owner/group) are 19.27% of those rows' tokens (5.x; 4.x 18.4%), i.e. at most 2.4% of LISTING. Over 12 KiB: 96 results, 20.0% of LISTING tokens raw, 8.8% after spill.
@@ -402,7 +431,7 @@ By spill regime (5.x; Synaps previews any result over 12 KiB, crush runs first):
 | search_elide | both under | 89 | 201,158 → 129,895 | 201,158 → 129,895 | 0 |
 | search_elide | crush brings it under | 13 | 89,759 → 40,360 | 39,071 → 40,360 | 8 |
 
-Every fired result counted with count_tokens, both families. All fired results of the candidate config (Phase 1's generic transforms included) with more real tokens than raw: 0 (5.x), 0 (4.x). Estimated vs real saving (5.x, all fired): 165,644 vs 194,213 tokens.
+Every fired result counted with count_tokens, both families. All fired results of the candidate config (Phase 1's generic transforms included) with more real tokens than raw: 0 (5.x), 0 (4.x). Estimated vs real saving (5.x, all fired): 174,566 vs 202,994 tokens.
 <!-- END:p2a_tokens -->
 
 ### 8.3 Accuracy
@@ -541,18 +570,22 @@ The table shows it firing at that bound.
 <!-- BEGIN:p2a_latency -->
 | shape (candidates on) | bytes | result | transforms | best µs | p50 µs | p99 µs |
 |---|---:|---:|---:|---:|---:|---:|
-| grep_hits | 262,143 | nothing-to-do | – | 353 | 430 | 631 |
-| source_file | 262,044 | byte-identical-class | – | 159 | 176 | 209 |
-| ls_listing | 262,118 | nothing-to-do | – | 315 | 346 | 426 |
-| minified_json | 262,153 | nothing-to-do | – | 447 | 457 | 495 |
-| progress_cr | 262,131 | compressed | progress | 391 | 425 | 458 |
-| repeats_log | 262,140 | compressed | repeats | 261 | 296 | 335 |
-| base64_blobs | 261,976 | compressed | blobs | 701 | 735 | 799 |
-| grep_long_lines | 258,585 | compressed | search_elide | 568 | 604 | 643 |
-| ls_mixed_owner | 262,105 | nothing-to-do | – | 323 | 349 | 381 |
-| ls_64k_fires | 65,349 | compressed | ls_columns | 216 | 236 | 256 |
+| grep_hits | 262,143 | nothing-to-do | – | 345 | 371 | 480 |
+| source_file | 262,044 | byte-identical-class | – | 139 | 160 | 230 |
+| ls_listing | 262,118 | nothing-to-do | – | 293 | 324 | 413 |
+| minified_json | 262,153 | nothing-to-do | – | 403 | 449 | 545 |
+| progress_cr | 262,131 | compressed | progress | 359 | 411 | 495 |
+| repeats_log | 262,140 | compressed | repeats | 284 | 318 | 394 |
+| base64_blobs | 261,976 | compressed | blobs | 642 | 718 | 813 |
+| grep_long_lines | 258,585 | compressed | search_elide | 496 | 561 | 658 |
+| ls_mixed_owner | 262,105 | nothing-to-do | – | 302 | 327 | 402 |
+| cargo_test_log | 262,097 | nothing-to-do | – | 368 | 429 | 511 |
+| cargo_build_log | 262,132 | compressed | build_progress | 499 | 561 | 633 |
+| pretty_json | 262,031 | nothing-to-do | – | 578 | 681 | 796 |
+| pretty_json_128k | 130,991 | nothing-to-do | – | 249 | 280 | 357 |
+| ls_64k_fires | 65,349 | compressed | ls_columns | 212 | 237 | 298 |
 
-Real corpus, candidates on: p50 / p99 5.2 / 74 µs (all), 22 / 114 µs (fired), max 212 µs; panics 0, not idempotent 0, crush-ext ≠ library 0 / 3253.
+Real corpus, candidates on: p50 / p99 4.8 / 67 µs (all), 20 / 107 µs (fired), max 196 µs; panics 0, not idempotent 0, crush-ext ≠ library 0 / 3267.
 <!-- END:p2a_latency -->
 
 Property tests (`crates/crush-core/tests/properties_p2a.rs`, release, 2,000
@@ -581,3 +614,308 @@ both transforms now refuse it on their own too.
 | fold `Permission denied` / `No such file` noise | 0.14% of SEARCH bytes, 0.4% of LISTING | tiny |
 | `find` / path-list cap | path lists ≈ 7% of LISTING tokens, mostly results over 12 KiB that spill already previews | little left after spill |
 | `ps` column drop | ps + pgrep 6.6% of LISTING tokens | budget went to the `ls_columns` re-gate; `ls_columns` showed that dropping columns hurts reading |
+
+---
+
+# Phase 2B — LOG, VCS, STRUCTURED
+
+Tables above are regenerated for the current tree, so they cover Phase 1 + 2A + 2B's
+shipped defaults. The sections below are Phase 2B's own (`p2b_*` markers,
+`eval/report_p2b.py`).
+
+## Headline (2B)
+
+- **What ships is small, on purpose.** `build_progress` (runs of `Compiling` /
+  `Downloaded` / pip `Collecting` lines → a counted note) fires on 15 real results
+  and saves 9,090 tokens (43% of those results; 0.014% of tool-result tokens, 5.x),
+  with accuracy at parity or better on both models. The default config (Phase 1 +
+  2A + 2B) saves 158,414 tokens over 198 results (0.25% of tool-result tokens; 2A's
+  `search_elide` is 123,705 of it). No fired result grew in real tokens (either
+  family); CONTENT untouched; every warning, error and code frame verbatim (0 of 202
+  diagnostic and code-frame lines missing on the corpus, 0 of 308 with the candidates on).
+- **Passing-test collapse is built, fuzzed and disabled.** `test_pass` would save
+  74,237 tokens on 172 real test runs (49% of them, 0.117% of tool-result tokens).
+  Failures, totals and panics stayed at parity, but asked "did test X pass?" about
+  a collapsed test, the models answered "unknown" (200/200 raw → 55/200 crushed;
+  McNemar p < 0.001 on both). That's the right answer once the name is gone: the
+  model can't tell X ran. Ships off.
+- **JSON layout is built and disabled.** `json_minify` (one top-level element
+  per line, lossless) cuts 20% / 28% of pretty-JSON tokens (5.x / 4.x) and answered
+  124/124 JSON-value questions both ways. But Sonnet's raw-only excess (two "quote
+  the next line" answers on the old layout, 3.0%) beat its raw-vs-raw noise (1.1%).
+  Per the gate: off. There's little to win on this workload anyway: pretty JSON is ~6%
+  of STRUCTURED, and `gh --json` output is mostly `--jq` text.
+- **VCS has nothing worth shipping.** Measured before building: compact `git log`
+  headers save 0.4% at best (0.9% with every label dropped). Newlines and labels
+  are nearly free in both tokenizers, and git's `Tue Oct 27` dates are *cheaper*
+  than ISO. Dropping `git status` hints saves a median 21 tokens but needs the
+  ~60-token raw pointer every lossy result carries: 16–17 of 17 grew. Long-form
+  dirty status is 0.4% of VCS, default `git log` 0.8% (+stat 4%).
+- **Spill changes the picture, in both directions.** (1) For a test log that spills,
+  collapsing first keeps the failures. On a real 17.9 KB `cargo test --workspace`
+  run, the 4 KiB + 3 KiB preview shows **1 of 14** failure lines; collapsed (5.9 KB,
+  no spill) it shows **all 14**, for fewer tokens. That's the strongest argument for
+  `test_pass`, and the reason to redesign it rather than drop it. (2) Compress-then-spill
+  can *raise* cost. crush stays an extension, so Synaps spills the post-hook text
+  (policy A below). A result crushed from 13–16 KiB to just under 12 KiB therefore
+  enters history whole and costs more than the preview would have. It happens today
+  with Phase 1's `progress` (1 VCS result, 3,402 → 5,043 tokens) and with 2A's
+  `search_elide` (11 results, counted in its own section). The shim can apply policy B
+  itself: when the raw is over 12 KiB, hand back the head + tail preview of the
+  *crushed* text, pointing at the raw it already keeps. Measured, that takes
+  `progress` and every Phase 2B transform to 0. (3) The hook passes `tool_output`
+  truncated at 256 KiB (`…[truncated, N total bytes]`), so for a log over 256 KiB
+  the tail (summaries, late failures) is gone before crush sees it. Everything here
+  about keeping failures applies to 12–256 KiB outputs.
+- 384 model calls (cap 400), $2.02. Real `auth.json` unchanged. Fuzzed on the final
+  code (11 min each): log 2.47M runs, json 2.25M, compress 1.19M + 0.76M, plus a
+  compress round on the merged 2A + 2B tree (801K runs), 0 crashes. 256 KiB worst
+  cases, p99 on a shared box: build log 0.63 ms (default), test log 0.71 ms and 128 KiB
+  JSON 0.58 ms (candidates), 256 KiB pretty JSON 0.71 ms (passes through above the
+  128 KiB JSON cap).
+
+## 2B.1 What these classes are made of (measured first)
+
+Estimated tokens (5.x) by command and by line shape, all 59,843 real results;
+class totals in real tokens.
+
+- **LOG (3.06M tokens, 4.8%)** is mostly application logs, not test runs:
+  `cat`/`tail`/`sed -n`/`head` on `*.log` files are 58% of it, build/test-marker
+  sniffs 19%, `cargo test` 7.2%, `npx jest` 3.3%, `python3` test runs 1.8%. By
+  bytes: passing cargo test lines 5.6%, `Running` binary headers 3.5%,
+  `test result:` lines 5.9%, compiler code frames 5.0%, build progress 1.0%,
+  jest ✓ 1.1%, go 0.5%; **pytest `PASSED`, node ✔ and go `--- PASS` lines: none.**
+  80% of passing-test lines sit in runs of 3 or more consecutive passing lines,
+  and 85% of build-progress lines in runs of 2 or more. That's why the collapse
+  works on runs, and interleaved `--nocapture` output keeps its own lines.
+- **VCS (2.91M, 4.6%)**: chains led by a git command 47% (`git fetch && … &&
+  sed -n …`: they can end in file views, which is why VCS transforms here had to
+  be block-local), `--stat` summaries 17%, short status 13%, `--oneline` logs
+  12%, default `git log` with `--stat` 4.0%, default `git log` 0.8%, long dirty
+  status 0.4%. `git log -p` / `-L` / `stash show -p` are now CONTENT (patches an
+  edit can quote).
+- **STRUCTURED (1.21M, 1.9%)**: `gh --json` 60% (mostly `--jq` projections to
+  text and PR bodies), `jq` 25%, YAML-ish 6%, CSV 4%. Pretty-printed JSON
+  (whole, jq streams, embedded blocks) is ~6% of the class.
+- **Spill**: 2,420 corpus results exceed 12 KiB (63.6M → 54.3M tool-result tokens
+  after spill). Only 57 are LOG. The corpus comes from history, where bash's
+  old cap kept just the first 16 KiB, so big logs are under-represented; the
+  committed fixtures carry the >12 KiB test-run case.
+
+## 2B.2 Layouts measured before building (real tokens)
+<!-- BEGIN:p2b_layouts -->
+| output | samples | candidate | saved 5.x | saved 4.x | results that grew 5.x / 4.x | median tokens saved per result 5.x |
+|---|---:|---:|---:|---:|---:|---:|
+| git_log | 77 | joined, ISO date | 0.36% | 0.08% | 0 / 0 | 4 |
+| git_log | 77 | joined, git date | 0.03% | 0.03% | 2 / 2 | 0 |
+| git_log | 77 | no blank line | 0.00% | 0.00% | 0 / 0 | 0 |
+| git_log | 77 | no labels | 0.91% | 0.80% | 0 / 0 | 11 |
+| git_status | 17 | hints dropped | 2.53% | 2.88% | 0 / 0 | 21 |
+| git_status | 17 | hints dropped + raw pointer | -3.20% | -3.31% | 17 / 16 | -68 |
+| json | 25 | minified | 20.65% | 29.32% | 0 / 0 | 61 |
+| json | 25 | `, ` / `: ` separators | 16.69% | 21.61% | 0 / 0 | 44 |
+| json | 25 | `: ` only | 19.83% | 26.59% | 0 / 0 | 58 |
+| json | 25 | one top-level element per line (shipped layout) | 20.07% | 28.35% | 0 / 0 | 53 |
+<!-- END:p2b_layouts -->
+
+## 2B.3 Tokens: what ships and the disabled candidates (real `count_tokens`)
+<!-- BEGIN:p2b_tokens -->
+| config | class | transforms | fired | raw tokens 5.x | saved 5.x | saved on fired 5.x | saved on fired 4.x | % of class 5.x | % of all tool-result tokens 5.x | % of all 4.x |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| default (ships) | LOG | build_progress | 14 | 20,180 | 8,730 | 43.3% | 45.8% | 0.29% | 0.014% | 0.015% |
+| default (ships) | LOG | build_progress+repeats | 1 | 2,249 | 360 | 16.0% | 16.3% | 0.01% | 0.001% | 0.001% |
+| candidates (all on) | LOG | build_progress | 12 | 17,839 | 8,068 | 45.2% | 47.9% | 0.26% | 0.013% | 0.014% |
+| candidates (all on) | LOG | build_progress+repeats | 1 | 2,249 | 360 | 16.0% | 16.3% | 0.01% | 0.001% | 0.001% |
+| candidates (all on) | LOG | build_progress+test_pass | 7 | 5,556 | 2,481 | 44.7% | 43.9% | 0.08% | 0.004% | 0.004% |
+| candidates (all on) | LOG | test_pass | 172 | 152,067 | 74,237 | 48.8% | 46.2% | 2.43% | 0.117% | 0.104% |
+| candidates (all on) | LOG | test_pass+repeats | 1 | 2,252 | 1,284 | 57.0% | 53.6% | 0.04% | 0.002% | 0.002% |
+| candidates (all on) | STRUCTURED | json_minify | 23 | 19,145 | 2,248 | 11.7% | 18.2% | 0.19% | 0.004% | 0.005% |
+
+Fired results with more real tokens than the raw (every fired result, both families): {'default': {'claude-opus-5-5': 0, 'claude-sonnet-4-6': 0}, 'candidates': {'claude-opus-5-5': 0, 'claude-sonnet-4-6': 0}}. Class totals 5.x: LOG 3,060,847, STRUCTURED 1,212,354, VCS 2,911,755, all tool results 63,635,115.
+<!-- END:p2b_tokens -->
+
+## 2B.4 After Synaps' spill step (SynapsCLI #334)
+
+A result over 12 KiB reaches history as a 4 KiB head + 3 KiB tail preview of
+whatever crush handed over (`eval/lib/spill.py` ports the Rust cut). Savings
+below compare after_spill(raw) with after_spill(crushed), in real tokens.
+<!-- BEGIN:p2b_spill -->
+| config | class | transforms | fired | spilled raw → crushed | saved raw 5.x | % of all (raw) 5.x | A: saved after spill 5.x | A: % of all after spill 5.x | A: 4.x | A: costlier | B: saved after spill 5.x | B: % of all after spill 5.x | B: 4.x | B: costlier |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| default (ships) | LOG | build_progress | 14 | 1 → 0 | 8,730 | 0.014% | 4,067 | 0.007% | 0.008% | 0 | 4,115 | 0.008% | 0.008% | 0 |
+| default (ships) | LOG | build_progress+repeats | 1 | 0 → 0 | 360 | 0.001% | 360 | 0.001% | 0.001% | 0 | 360 | 0.001% | 0.001% | 0 |
+| candidates (all on) | LOG | build_progress | 12 | 1 → 0 | 8,068 | 0.013% | 3,405 | 0.006% | 0.007% | 0 | 3,453 | 0.006% | 0.007% | 0 |
+| candidates (all on) | LOG | build_progress+repeats | 1 | 0 → 0 | 360 | 0.001% | 360 | 0.001% | 0.001% | 0 | 360 | 0.001% | 0.001% | 0 |
+| candidates (all on) | LOG | build_progress+test_pass | 7 | 0 → 0 | 2,481 | 0.004% | 2,481 | 0.005% | 0.004% | 0 | 2,481 | 0.005% | 0.004% | 0 |
+| candidates (all on) | LOG | test_pass | 172 | 3 → 0 | 74,237 | 0.117% | 64,071 | 0.118% | 0.104% | 1 | 65,621 | 0.121% | 0.107% | 0 |
+| candidates (all on) | LOG | test_pass+repeats | 1 | 0 → 0 | 1,284 | 0.002% | 1,284 | 0.002% | 0.002% | 0 | 1,284 | 0.002% | 0.002% | 0 |
+| candidates (all on) | STRUCTURED | json_minify | 23 | 0 → 0 | 2,248 | 0.004% | 2,248 | 0.004% | 0.006% | 0 | 2,248 | 0.004% | 0.006% | 0 |
+
+A = spill decided on the crushed text's size: what Synaps does with crush as an extension (it spills the post-hook text). B = spill decided on the raw's size, preview of the crushed text, raw kept: what the shim can do itself (cut the crushed text to head + tail when the raw is over 12 KiB). Only results a Phase 2B transform fired on are listed; other phases' after-spill effects are in their sections.
+
+Denominators after spill: every corpus result over 12,288 B (2,420 results) is counted as its head + tail preview; all tool-result tokens 5.x: 63,635,115 raw → 54,343,161 after spill (LOG 3,060,847 → 2,829,781, STRUCTURED 1,212,354 → 1,007,768).
+
+Failure lines the model can still see after spill (FAILED, panicked, ✕, --- FAIL, Traceback, `error:`, assertions):
+
+| set | results | n | failure lines | visible: raw after spill | visible: crushed, A | visible: crushed, B | results losing a failure line: raw | … crushed, A | crushed no longer spills |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| fixtures, candidates | every fired LOG result with a failure line | 7 | 56 | 43 | 56 | 56 | 1 | 0 | 1 |
+| fixtures, candidates | … of which the raw spills | 1 | 14 | 1 | 14 | 14 | 1 | 0 | 1 |
+| corpus, default | every fired LOG result with a failure line | 16 | 221 | 220 | 220 | 220 | 1 | 1 | 1 |
+| corpus, default | … of which the raw spills | 1 | 5 | 4 | 4 | 4 | 1 | 1 | 1 |
+| corpus, candidates | every fired LOG result with a failure line | 70 | 433 | 430 | 432 | 432 | 2 | 1 | 3 |
+| corpus, candidates | … of which the raw spills | 3 | 20 | 17 | 19 | 19 | 2 | 1 | 3 |
+
+Fixtures (candidates config):
+
+| fixture | raw bytes | crushed bytes | failure lines | visible raw after spill | visible crushed after spill | tokens after spill raw → crushed 5.x |
+|---|---:|---:|---:|---:|---:|---:|
+| cargo_test_fail | 9,311 | 2,128 | 14 | 14 | 14 | 4,380 → 998 |
+| pytest_verbose_fail | 11,318 | 1,798 | 6 | 6 | 6 | 4,476 → 719 |
+| node_test_fail | 4,263 | 2,142 | 8 | 8 | 8 | 2,207 → 1,028 |
+| cargo_workspace_test_fail | 17,861 | 5,949 | 14 | 1 | 14 | 3,520 → 2,817 |
+| cargo_test_nocapture | 1,952 | 1,346 | 5 | 5 | 5 | 984 → 660 |
+| jest_verbose_fail | 4,655 | 2,481 | 4 | 4 | 4 | 1,924 → 1,029 |
+| go_test_verbose | 4,993 | 1,126 | 5 | 5 | 5 | 2,687 → 578 |
+<!-- END:p2b_spill -->
+
+## 2B.5 Accuracy (Haiku 4.5 + Sonnet 4.6)
+
+Same harness and credential rules as Phase 1: fresh `synaps rpc` session per
+ask, isolated `SYNAPS_BASE_DIR` + `HOME`, access-token-only `auth.json` with an
+empty refresh token, the real `auth.json` hashed before and after, never
+refreshed. Only samples a Phase 2B transform fired on (`--labels`), default
+config. Parity rule as in Phase 1: McNemar p ≥ 0.05 and raw-only excess within
+the model's raw-vs-raw disagreement.
+<!-- BEGIN:p2b_accuracy -->
+| transforms fired | model | samples | questions | raw correct | crushed correct | discordant raw-only / crushed-only | McNemar p | raw-only excess | raw-vs-raw disagreement | rule |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| build_progress | haiku-4-5-20251001 | 10 | 35 | 27/35 (77.1%) | 30/35 (85.7%) | 1 / 4 | 0.375 | -8.6% | 0.0% (n=95) | **parity** |
+| build_progress | sonnet-4-6 | 10 | 35 | 25/35 (71.4%) | 33/35 (94.3%) | 0 / 8 | 0.008 | -22.9% | 1.1% (n=95) | crushed **better** (two-sided p < 0.05) |
+| build_progress | both models | 10 | 70 | 52/70 (74.3%) | 63/70 (90.0%) | 1 / 12 | 0.003 | -15.7% | 0.5% (n=190) |  |
+| build_progress+repeats | haiku-4-5-20251001 | 1 | 3 | 2/3 (66.7%) | 2/3 (66.7%) | 0 / 0 | – | +0.0% | 0.0% (n=95) | **parity** |
+| build_progress+repeats | sonnet-4-6 | 1 | 3 | 2/3 (66.7%) | 2/3 (66.7%) | 0 / 0 | – | +0.0% | 1.1% (n=95) | **parity** |
+| build_progress+repeats | both models | 1 | 6 | 4/6 (66.7%) | 4/6 (66.7%) | 0 / 0 | – | +0.0% | 0.5% (n=190) |  |
+| build_progress+test_pass | haiku-4-5-20251001 | 7 | 36 | 35/36 (97.2%) | 23/36 (63.9%) | 12 / 0 | 0.000 | +33.3% | 0.0% (n=95) | **FAIL** |
+| build_progress+test_pass | sonnet-4-6 | 7 | 36 | 35/36 (97.2%) | 30/36 (83.3%) | 6 / 1 | 0.125 | +13.9% | 1.1% (n=95) | **FAIL** |
+| build_progress+test_pass | both models | 7 | 72 | 70/72 (97.2%) | 53/72 (73.6%) | 18 / 1 | 0.000 | +23.6% | 0.5% (n=190) |  |
+| json_minify | haiku-4-5-20251001 | 21 | 67 | 59/67 (88.1%) | 62/67 (92.5%) | 0 / 3 | 0.250 | -4.5% | 0.0% (n=95) | **parity** |
+| json_minify | sonnet-4-6 | 21 | 67 | 67/67 (100.0%) | 65/67 (97.0%) | 2 / 0 | 0.500 | +3.0% | 1.1% (n=95) | **FAIL** |
+| json_minify | both models | 21 | 134 | 126/134 (94.0%) | 127/134 (94.8%) | 2 / 3 | 1.000 | -0.7% | 0.5% (n=190) |  |
+| test_pass | haiku-4-5-20251001 | 45 | 204 | 199/204 (97.5%) | 130/204 (63.7%) | 69 / 0 | 0.000 | +33.8% | 0.0% (n=95) | **FAIL** |
+| test_pass | sonnet-4-6 | 45 | 204 | 199/204 (97.5%) | 139/204 (68.1%) | 60 / 0 | 0.000 | +29.4% | 1.1% (n=95) | **FAIL** |
+| test_pass | both models | 45 | 408 | 398/408 (97.5%) | 269/408 (65.9%) | 129 / 0 | 0.000 | +31.6% | 0.5% (n=190) |  |
+| test_pass+repeats | haiku-4-5-20251001 | 1 | 5 | 5/5 (100.0%) | 2/5 (40.0%) | 3 / 0 | 0.250 | +60.0% | 0.0% (n=95) | **FAIL** |
+| test_pass+repeats | sonnet-4-6 | 1 | 5 | 4/5 (80.0%) | 1/5 (20.0%) | 3 / 0 | 0.250 | +60.0% | 1.1% (n=95) | **FAIL** |
+| test_pass+repeats | both models | 1 | 10 | 9/10 (90.0%) | 3/10 (30.0%) | 6 / 0 | 0.031 | +60.0% | 0.5% (n=190) |  |
+
+By question kind (both models pooled; a sample counts for every transform that fired on it):
+
+| transform | kind | raw | crushed |
+|---|---:|---:|---:|
+| build_progress | build:finished | 9/10 | 8/10 |
+| build_progress | build:ncollected | 0/2 | 2/2 |
+| build_progress | build:ncompiled | 10/26 | 17/26 |
+| build_progress | lines:next | 3/4 | 4/4 |
+| build_progress | rustc:code | 1/2 | 2/2 |
+| build_progress | rustc:errloc | 1/2 | 2/2 |
+| build_progress | rustc:wline | 6/6 | 6/6 |
+| build_progress | test:nfail | 24/24 | 24/24 |
+| build_progress | test:npass | 24/24 | 23/24 |
+| build_progress | test:panicloc | 12/12 | 12/12 |
+| build_progress | test:status_fail | 8/8 | 8/8 |
+| build_progress | test:status_run | 28/28 | 12/28 |
+| json_minify | json:field | 24/24 | 24/24 |
+| json_minify | json:len | 8/8 | 8/8 |
+| json_minify | json:nullish | 12/12 | 12/12 |
+| json_minify | json:path | 58/62 | 58/62 |
+| json_minify | json:stream_field | 6/6 | 6/6 |
+| json_minify | json:stream_len | 2/2 | 2/2 |
+| json_minify | lines:gap | 1/2 | 2/2 |
+| json_minify | lines:next | 15/18 | 15/18 |
+| test_pass | build:finished | 2/2 | 2/2 |
+| test_pass | build:ncompiled | 6/8 | 6/8 |
+| test_pass | lines:next | 7/8 | 7/8 |
+| test_pass | lines:run | 2/2 | 0/2 |
+| test_pass | test:nfail | 70/70 | 69/70 |
+| test_pass | test:nfailed | 27/28 | 26/28 |
+| test_pass | test:nignored | 12/14 | 12/14 |
+| test_pass | test:npass | 65/70 | 64/70 |
+| test_pass | test:npassed | 26/28 | 26/28 |
+| test_pass | test:panicloc | 20/20 | 19/20 |
+| test_pass | test:status_fail | 40/40 | 39/40 |
+| test_pass | test:status_run | 200/200 | 55/200 |
+
+Spend: claude-haiku-4-5-20251001: 192 requests, $0.46; claude-sonnet-4-6: 192 requests, $1.56. Total 384 model calls (cap 400), $2.02 at list price. Real auth.json unchanged: True. Questions dropped before asking: {'fixtures': 11, 'fixtures:collapsed': 0, 'corpus': 139, 'corpus:collapsed': 7} (`set`: the question quotes an anchor line not verbatim in the crushed text; `set:collapsed`: a `lines:next`/`lines:gap` question whose answer is a line the LOG collapse removed, rule fixed before the run).
+<!-- END:p2b_accuracy -->
+
+- **test_pass fails**, and only on one question kind. "Did test X pass?" for a test
+  inside a collapsed run: 200/200 raw → 55/200 crushed, the models answering
+  "unknown" (Sonnet sometimes reasoning out loud: "listed among the 14 passing
+  tests in …"). Everything test_pass keeps was at parity: failed-test status 40/40
+  → 39/40, totals 70/70 → 69/70 and 65/70 → 64/70, panic file:line 20/20 → 19/20.
+  The note says *how many* passed in a module, not *which*, so the information
+  really is gone. A layout that keeps every name (e.g. a module heading with the
+  names after it) is the next candidate. Measure it with `test:status_run` first,
+  since that is the question that failed.
+- **build_progress** is judged on the 10 samples where it fired alone (35
+  questions per model): Haiku 27 → 30, Sonnet 25 → 33, raw-only 1 and 0. On
+  samples where `test_pass` also fired, the drop is test_pass's `test:status_run`
+  (28 → 12). The build questions there (crates compiled, the `Finished` line,
+  rustc locations) were at parity or better. Sonnet's improvement is significant
+  (two-sided McNemar p = 0.008, 0 vs 8 discordant), so a literal two-sided reading
+  of "parity" would flag it. It ships on as non-inferior; the gain is the count
+  questions, which the note answers in words while the raw needs 15+ lines counted.
+  This is the reviewer's call: one switch.
+- **json_minify fails** on Sonnet by 2 discordant answers out of 67, both "quote
+  the next line" questions whose expected answer is a pretty-printed line that no
+  longer exists as a line. JSON values: field 24/24, null vs "" 12/12, length 8/8,
+  key paths 58/62 both, streams 8/8. Excluding layout questions was not decided
+  before the run, so the failure stands. A re-test with that rule fixed up front,
+  and a bigger n, is cheap.
+- Noise floor (raw asked twice, 95 pairs per model): Haiku 0.0%, Sonnet 1.1%.
+- One fixture (`gh_issues_jq`) had a third-party email in a public spam issue's
+  title scrubbed after the accuracy run (one value; the generator now scrubs it).
+
+## 2B.6 Invariants and edit safety (independent re-check)
+<!-- BEGIN:p2b_checks -->
+| config | set | LOG results | lines that must stay, missing | failure lines missing | summary lines missing | diagnostic / code-frame lines missing | note-count mismatches | lines collapsed | JSON results | JSON token-stream mismatches |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| default | fixtures | 2 | 0 / 29 | 0 / 0 | 0 / 2 | 0 / 20 | 0 | 56 | 0 | 0 |
+| default | corpus | 15 | 0 / 442 | 0 / 23 | 0 / 25 | 0 / 202 | 0 | 518 | 0 | 0 |
+| candidates | fixtures | 11 | 0 / 448 | 0 / 54 | 0 / 39 | 0 / 37 | 0 | 1,220 | 4 | 0 |
+| candidates | corpus | 193 | 0 / 2,626 | 0 / 213 | 0 / 270 | 0 / 308 | 0 | 3,536 | 23 | 0 |
+<!-- END:p2b_checks -->
+
+## 2B.7 Latency (256 KiB worst cases, 200 runs each)
+<!-- BEGIN:p2b_latency -->
+| config | shape | bytes | result | transforms | best µs | p50 µs | p99 µs |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| default | cargo_test_log | 262,097 | nothing-to-do | – | 425 | 449 | 471 |
+| default | cargo_build_log | 262,132 | compressed | build_progress | 513 | 562 | 633 |
+| default | pretty_json | 262,031 | nothing-to-do | – | 616 | 667 | 711 |
+| default | pretty_json_128k | 130,991 | nothing-to-do | – | 266 | 283 | 300 |
+| candidates | cargo_test_log | 262,097 | compressed | test_pass | 552 | 591 | 705 |
+| candidates | cargo_build_log | 262,132 | compressed | build_progress | 564 | 600 | 634 |
+| candidates | pretty_json | 262,031 | nothing-to-do | – | 579 | 608 | 652 |
+| candidates | pretty_json_128k | 130,991 | compressed | json_minify | 515 | 545 | 575 |
+<!-- END:p2b_latency -->
+
+## 2B.8 What to watch next
+
+- **Phase 3 shim (crush-ext stays an extension)**: Synaps spills whatever the
+  hook returns (policy A). To get policy B, the shim should cut the crushed text
+  to the same 4 KiB head + 3 KiB tail itself whenever the *raw* is over 12 KiB, with
+  a pointer to the raw it keeps (`--keep-raw-dir`). Then compress-then-spill never
+  costs more than the preview, and a test log's failures survive whenever the
+  collapse fits in head + tail. Mind the hook's 256 KiB cut: the raw the shim keeps
+  is the truncated one.
+- **test_pass, take two**: keep every passing test's *name*, drop only the
+  `test … ... ok` boilerplate, and gate on `test:status_run`. Or enable it only
+  when the raw would spill (the alternative is a preview that drops the middle
+  of the run, names and failures included). The fixture above shows that trade.
+- **json_minify**: re-test with layout-insensitive questions fixed before the run.
+  The upside is small on this workload (pretty JSON is ~6% of STRUCTURED).
+- **LOG's real mass is application logs** (58%): timestamps, levels and repeated
+  structured lines. That's where a LOG transform could matter, and neither phase
+  touched it.

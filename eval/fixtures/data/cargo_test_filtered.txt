@@ -1,0 +1,109 @@
+    Finished `test` profile [unoptimized] target(s) in 0.00s
+     Running unittests src/lib.rs (/work/target/debug/deps/ledger-fa1b2c6689e45c48)
+
+running 6 tests
+test accounts::apply_tests::case_03 ... ok
+test journal::apply_tests::case_03 ... ok
+test accounts::parse_tests::case_03 ... ok
+test reports::apply_tests::case_03 ... ok
+test journal::parse_tests::case_03 ... ok
+test reports::parse_tests::case_03 ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 78 filtered out; finished in 0.00s
+
+     Running tests/limits.rs (/work/target/debug/deps/limits-10997341202ea63b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/regressions.rs (/work/target/debug/deps/regressions-15598ebebfaba345)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/roundtrip.rs (/work/target/debug/deps/roundtrip-539d34e472c36f2e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/smoke.rs (/work/target/debug/deps/smoke-302fc1d6d9db5f1d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/work/target/debug/deps/scheduler-a61b1ae8251d10d7)
+
+running 6 tests
+test queue::apply_tests::case_03 ... ok
+test queue::parse_tests::case_03 ... ok
+test timers::apply_tests::case_03 ... ok
+test timers::parse_tests::case_03 ... ok
+test workers::apply_tests::case_03 ... ok
+test workers::parse_tests::case_03 ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 78 filtered out; finished in 0.00s
+
+     Running tests/limits.rs (/work/target/debug/deps/limits-086205012ca7e242)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/regressions.rs (/work/target/debug/deps/regressions-19ccbd9cdbf3652f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/roundtrip.rs (/work/target/debug/deps/roundtrip-197403f30a5dcde4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/smoke.rs (/work/target/debug/deps/smoke-16a41ec7f3d0b431)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/work/target/debug/deps/wire-21069c0ebe3c7457)
+
+running 6 tests
+test codec::apply_tests::case_03 ... ok
+test codec::parse_tests::case_03 ... ok
+test frames::apply_tests::case_03 ... ok
+test frames::parse_tests::case_03 ... ok
+test handshake::apply_tests::case_03 ... ok
+test handshake::parse_tests::case_03 ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 78 filtered out; finished in 0.00s
+
+     Running tests/limits.rs (/work/target/debug/deps/limits-b3e6ac3be99e0d24)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/regressions.rs (/work/target/debug/deps/regressions-2970bf4d3a9f997d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/roundtrip.rs (/work/target/debug/deps/roundtrip-f74aa9c4e3d0bf2c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/smoke.rs (/work/target/debug/deps/smoke-ad8e785e720f626f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+

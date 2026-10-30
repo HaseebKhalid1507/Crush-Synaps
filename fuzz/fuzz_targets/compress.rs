@@ -15,6 +15,8 @@ const CMDS: &[&str] = &[
     "sed -n 1,9p f",
     "git diff",
     "cargo test",
+    "cargo build",
+    "jq .",
     "ls -la",
     "git log",
     "curl x",
@@ -43,6 +45,8 @@ fuzz_target!(|data: &[u8]| {
     small.transforms.search_group = true;
     small.transforms.search_elide = true;
     small.transforms.ls_columns = true;
+    small.transforms.test_pass = true;
+    small.transforms.json_minify = true;
     small.classes.prose = true;
     for cfg in [Config::default(), small] {
         for raw_ref in [None, Some("/r/raw.txt")] {

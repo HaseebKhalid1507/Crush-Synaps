@@ -41,6 +41,11 @@ and an Anthropic credential (below). Build output goes to `$CARGO_TARGET_DIR`
 | `lib/tokens.py` | `count_tokens` client: sqlite cache by (model, sha256), shared token bucket (4 req/s), 429/5xx retry with backoff, framing overhead subtracted. |
 | `count_tokens.py` | per-sample raw+crushed counts for fixtures and every fired corpus sample; class composition of the whole corpus counted in packed batches (with a measured batching error). |
 | `accuracy/questions.py` | question generators with exact answers parsed from the RAW output (grep path/line/count, ls size/perms/mtime/owner/symlink, ps pid/%mem/stat/user/rss, cargo/pytest/node pass-fail and counts, rustc/gcc diagnostic locations, git author/email/subject/date, JSON field-by-id / null-vs-"" / length, git status state, repeated-run counts, adjacent lines) + the scorer. |
+| `fixtures/generate_p2b.py` | Phase 2B fixtures: a real cargo workspace test run over the spill threshold with failures in the middle, `--nocapture`, a name filter, a first build with crates.io deps; real jest, pip, gh api + jq JSON; go test -v from go's line formats. |
+| `p2b_checks.py` | independent re-check of every fired LOG / JSON result: lines that must stay are verbatim and in order (failures, summaries, diagnostics and code frames counted apart), note counts equal the lines removed, JSON token stream identical. |
+| `spill_report.py`, `lib/spill.py` | savings after SynapsCLI #334's spill step (results over 12 KiB become a 4 KiB head + 3 KiB tail preview; `lib/spill.py` ports the Rust): raw vs crushed in real tokens, class denominators after spill, and test-failure lines still visible after spill. |
+| `p2b_layouts.py` | the git log / git status / JSON layout measurements (real tokens) that decided what Phase 2B built. |
+| `report_p2b.py` | the Phase 2B sections of `RESULTS.md` (`p2b_*` markers). |
 | `accuracy/run_accuracy.py` | asks each question set about RAW and CRUSHED in separate fresh sessions via `synaps rpc`, Haiku and Sonnet, plus a raw re-ask on a subset (noise floor). Hard cap `--max-calls` (default 400). |
 | `report.py` | regenerates the marked sections of `RESULTS.md` (aggregates only for real data); `report_v01.py` did the same for `BASELINE.md`. |
 

@@ -117,6 +117,21 @@ fn main() {
     }
 }
 
+/// Pretty-printed issue objects (jq style), up to `max` bytes.
+fn pretty_elems(max: usize) -> String {
+    let mut s = String::new();
+    for i in 0.. {
+        let e = format!(
+            "  {{\n    \"number\": {i},\n    \"title\": \"Issue {i}\",\n    \"state\": \"open\",\n    \"labels\": [\n      \"bug\"\n    ],\n    \"milestone\": null\n  }},\n"
+        );
+        if s.len() + e.len() > max {
+            break;
+        }
+        s.push_str(&e);
+    }
+    s
+}
+
 /// 256 KiB worst cases: dense grep hits (fires), a source file (CONTENT),
 /// an `ls -l` style listing, one minified JSON line, a `\r` progress stream,
 /// a log full of repeats, and base64 blobs (all fire or bail).
@@ -198,6 +213,38 @@ fn synthetic(cfg: &Config) {
                     format!("-rw-r--r-- 1 worker worker {:>9} Oct 12 09:41 data-{i}.parquet\n", 1000 + i * 7)
                 }
             }),
+        ),
+        // Phase 2B: a test run (passing lines with a failure every 500), a
+        // build log, pretty JSON
+        (
+            "cargo_test_log",
+            "cargo test --workspace 2>&1",
+            fill(|i| {
+                let st = if i % 500 == 499 { "FAILED" } else { "ok" };
+                format!("test crate_{}::module_{}::tests::case_{i} ... {st}\n", i / 900, i / 60)
+            }),
+        ),
+        (
+            "cargo_build_log",
+            "cargo build 2>&1",
+            fill(|i| {
+                if i % 40 == 39 {
+                    format!("warning: unused variable: `x{i}`\n --> src/m{i}.rs:{i}:9\n  |\n")
+                } else {
+                    format!("   Compiling dependency-{i} v0.{}.{}\n", i % 40, i % 7)
+                }
+            }),
+        ),
+        (
+            "pretty_json",
+            "gh api repos/x/y/issues | jq .",
+            format!("[\n{}\n]\n", pretty_elems(N - 64).trim_end_matches(",\n")),
+        ),
+        // the largest JSON the layout takes (crush_core::transforms::json::MAX_JSON_BYTES)
+        (
+            "pretty_json_128k",
+            "gh api repos/x/y/issues | jq .",
+            format!("[\n{}\n]\n", pretty_elems(crush_core::transforms::json::MAX_JSON_BYTES - 64).trim_end_matches(",\n")),
         ),
     ];
     // ls_columns' input bound is 64 KiB: its worst case where it still fires
