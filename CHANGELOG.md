@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0 (unreleased)
+## 2.0.0 (2026-10-30)
 
 crush 2: a rewrite around what the model reads and copies back, gated on real
 tokens, model accuracy and edit safety. Shipped as a Synaps extension
