@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# crush eval harness: one entry point for the whole Phase 0 baseline.
+#
+#   eval/run.sh                    everything (corpus + fixtures + tokens + accuracy + report)
+#   eval/run.sh --no-accuracy      skip model calls (count_tokens is free; accuracy is not)
+#   eval/run.sh --fixtures-only    no local Synaps corpus needed
+#   eval/run.sh --refresh-corpus   re-extract ~/.cache/crush-corpus/corpus.jsonl
+#
+# Env: CRUSH_EVAL_DAYS (30) corpus window · CRUSH_EVAL_MAX_CALLS (400) model-call cap
+#      CRUSH_EVAL_SAMPLES (80) real samples in the accuracy slice · CRUSH_EVAL_MODELS (haiku,sonnet)
+#      CRUSH_CORPUS_DIR (~/.cache/crush-corpus) · CARGO_TARGET_DIR (./target)
+set -euo pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+ACC=1 CORPUS=1 REFRESH=0
+for a in "$@"; do
+  case "$a" in
+    --no-accuracy) ACC=0 ;;
+    --fixtures-only) CORPUS=0 ;;
+    --refresh-corpus) REFRESH=1 ;;
+    -h|--help) sed -n 2,12p "$0"; exit 0 ;;
+    *) echo "unknown flag: $a" >&2; exit 2 ;;
+  esac
+done
+DAYS="${CRUSH_EVAL_DAYS:-30}"
+CORPUS_DIR="${CRUSH_CORPUS_DIR:-$HOME/.cache/crush-corpus}"
+export CARGO_TARGET_DIR="${CARGO_TARGET_DIR:-$PWD/target}"
+export CARGO_PROFILE_RELEASE_DEBUG=0 CARGO_INCREMENTAL=0
+step() { printf '\n== %s\n' "$*"; }
+
+step "build crush v0.1 (release) + eval driver"
+cargo build --release --locked -q
+cargo build --release --locked -q --manifest-path eval/driver/Cargo.toml
+
+step "self-checks"
+python3 eval/corpus/classify.py
+
+step "fixtures: run crush, count tokens"
+python3 eval/run_crush.py --set fixtures >/dev/null
+python3 eval/count_tokens.py --set fixtures
+
+if [ "$CORPUS" = 1 ]; then
+  if [ "$REFRESH" = 1 ] || [ ! -s "$CORPUS_DIR/corpus.jsonl" ]; then
+    step "extract the real corpus (last $DAYS days) -> $CORPUS_DIR (private)"
+    python3 eval/corpus/extract.py --since-days "$DAYS"
+  fi
+  step "corpus: run crush, count tokens (batched composition + every fired sample)"
+  python3 eval/run_crush.py --set corpus >/dev/null
+  python3 eval/count_tokens.py --set corpus
+  step "edit sources + classifier report"
+  python3 eval/corpus/edit_sources.py "$DAYS" >/dev/null
+  if [ -s "$CORPUS_DIR/classifier-audit.txt" ]; then
+    python3 eval/corpus/classifier_report.py --audit-score >/dev/null
+  else
+    python3 eval/corpus/classifier_report.py >/dev/null
+  fi
+fi
+
+if [ "$ACC" = 1 ]; then
+  SETS=fixtures; [ "$CORPUS" = 1 ] && SETS=fixtures,corpus
+  step "accuracy: raw vs crushed through synaps rpc (cap ${CRUSH_EVAL_MAX_CALLS:-400} model calls)"
+  python3 eval/accuracy/run_accuracy.py --sets "$SETS" --models "${CRUSH_EVAL_MODELS:-haiku,sonnet}" \
+    --max-calls "${CRUSH_EVAL_MAX_CALLS:-400}" --corpus-samples "${CRUSH_EVAL_SAMPLES:-80}"
+fi
+
+step "report"
+python3 eval/report.py
