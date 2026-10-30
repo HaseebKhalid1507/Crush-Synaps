@@ -23,7 +23,8 @@ Results, gates and method: [`eval/RESULTS.md`](eval/RESULTS.md).
 | class | what | transform |
 |---|---|---|
 | CONTENT | `read`, `cat`, `sed -n`, `head`, `git show`/`diff` | none: byte-identical, enforced in code |
-| SEARCH | `grep`, `rg`, `git grep` | none by default. Grouping by file (below) is built and gated, and **ships disabled**: it cut ~20% of the tokens of the grep output it fired on, but both Haiku and Sonnet attributed hits to the wrong file, line or count more often |
+| SEARCH | `grep`, `rg`, `git grep` | a hit line over 1 KiB (a minified bundle, a JSONL record, a long paragraph) keeps its own `path:N:` and one verbatim slice around the match, e.g. `dist/app.js:1:[crush: 9,120 chars cut]` + ~400 verbatim bytes around the match + `[crush: 4,610 chars cut]`, with the exact cut counts and one note pointing at the raw; every other line is untouched (`search_elide`, lossy). Grouping by file (below) is built and gated, and **ships disabled**: it cut ~20% of the tokens of the grep output it fired on, but both Haiku and Sonnet attributed hits to the wrong file, line or count more often |
+| LISTING | `ls -l` | as below. `ls -l` owner/group said once (`ls_columns`) is built and **ships disabled**: models read the factored rows worse (owner "unknown", the neighbouring row's date) |
 | LOG, LISTING, VCS, STRUCTURED, UNKNOWN | builds, tests, listings, git, JSON, everything else | `\r` progress collapsed to its final state; identical-line runs written once plus `[crush: previous line repeated 44 more times; 45 identical lines in total]`; long base64/hex/minified blobs elided with a marker pointing at the raw |
 | PROSE | forum, memory, worker reports, web pages | none (documents and messages) |
 
@@ -45,7 +46,7 @@ factoring, no dictionary codes, no `(×N)`: those are what made v0.1 hard to rea
 Even so, a hit separated from its path reads worse than `path:N:text`; Phase 2
 has the numbers ([`eval/RESULTS.md`](eval/RESULTS.md)).
 
-The transforms that lose information (progress frames, blobs) only run when the
+The transforms that lose information (progress frames, blobs, cut grep lines) only run when the
 host promises to keep the raw output (`Input::raw_ref`); their markers say where
 it is.
 
