@@ -341,6 +341,16 @@ fn stage_class(st: &Stage, seg: &Segment) -> Option<(Class, String)> {
             if GIT_LISTING.contains(&sub.as_str()) {
                 return r(Class::Listing, format!("git {sub}"));
             }
+            // `git log -p`, `git stash show -p`, `git log -L`: patches, which an
+            // edit can quote, so CONTENT like `git show` / `git diff`
+            if matches!(sub.as_str(), "log" | "whatchanged" | "reflog" | "stash")
+                && st.args.iter().any(|a| {
+                    matches!(a.as_str(), "-p" | "-u" | "--patch" | "--cc" | "--patch-with-stat" | "--patch-with-raw")
+                        || a.starts_with("-L")
+                })
+            {
+                return r(Class::Content, format!("git {sub} -p"));
+            }
             if GIT_VCS.contains(&sub.as_str()) {
                 return r(Class::Vcs, format!("git {sub}"));
             }
@@ -548,7 +558,9 @@ fn segment_class(seg: &Segment) -> Option<(Class, String)> {
 fn substantive(seg: &Segment) -> bool {
     let p = seg.first().prog.as_str();
     let silenced = seg.stages.last().is_some_and(|s| s.silenced);
-    let quiet_git = p == "git" && matches!(seg.first().sub(), "add" | "stash" | "checkout" | "switch");
+    let quiet_git = p == "git"
+        && matches!(seg.first().sub(), "add" | "stash" | "checkout" | "switch")
+        && !seg.first().args.iter().any(|a| a == "show" || a == "list");
     !(silenced || NOISE.contains(&p) || p.starts_with('#') || quiet_git)
 }
 
@@ -912,6 +924,10 @@ mod tests {
         assert_eq!(cls("tail -f /tmp/build.out", "x"), Class::Log);
         assert_eq!(cls("cat x.tsv | awk '{print $1}'", "a\tb\tc\nd\te\tf\ng\th\ti\n"), Class::Content);
         assert_eq!(cls("git show --stat HEAD", "x"), Class::Vcs);
+        assert_eq!(cls("git log -p -3 src/a.rs", "x"), Class::Content);
+        assert_eq!(cls("git log -L 10,20:src/a.rs", "x"), Class::Content);
+        assert_eq!(cls("git stash show -p", "x"), Class::Content);
+        assert_eq!(cls("git log --stat -5", "x"), Class::Vcs);
         assert_eq!(cls("cat abstracts.txt | cut -c1-160", "x"), Class::Content);
         assert_eq!(cls("git show main:docs/h.md | wc -l; git show main:docs/h.md | head -30", "x"), Class::Content);
         assert_eq!(cls("git show HEAD:a.js > a.js && npx jest t.test.js 2>&1 | grep -E x", "x"), Class::Log);

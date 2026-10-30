@@ -123,11 +123,29 @@ pub struct TransformSwitches {
     /// note wordings (models answered "unknown" for the owner and read the
     /// neighbouring row's date; eval/RESULTS.md, Phase 2A).
     pub ls_columns: bool,
+    /// LOG: runs of passing-test lines become a counted note (lossy).
+    pub test_pass: bool,
+    /// LOG: runs of build-progress lines (`Compiling`, pip `Collecting`, ...)
+    /// become a counted note (lossy).
+    pub build_progress: bool,
+    /// STRUCTURED: pretty-printed JSON re-laid out one top-level element per
+    /// line, no other whitespace (lossless in meaning).
+    pub json_minify: bool,
 }
 
 impl Default for TransformSwitches {
     fn default() -> Self {
-        Self { search_group: false, progress: true, repeats: true, blobs: true, search_elide: true, ls_columns: false }
+        Self {
+            search_group: false,
+            progress: true,
+            repeats: true,
+            blobs: true,
+            search_elide: true,
+            ls_columns: false,
+            test_pass: true,
+            build_progress: true,
+            json_minify: true,
+        }
     }
 }
 
