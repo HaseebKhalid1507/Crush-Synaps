@@ -86,12 +86,15 @@ def sec_spill(tc, spc, spc_v, spf, spf_v):
             a4 = sp["fired_by"][M4][k]
             r5, r4 = a5["raw"] - a5["crushed"], a4["raw"] - a4["crushed"]
             s5, s4 = a5["raw_after_spill"] - a5["crushed_after_spill"], a4["raw_after_spill"] - a4["crushed_after_spill"]
+            b5, b4 = a5["raw_after_spill"] - a5["crushed_after_spill_b"], a4["raw_after_spill"] - a4["crushed_after_spill_b"]
             rows.append([name, cls, lab, a5["n"], f"{a5['raw_spilled']} → {a5['crushed_spilled']}", fmt(r5), pct(r5, tot['*'][M5], 3),
-                         fmt(s5), pct(s5, a5["raw_after_spill"]), pct(s5, den['*'][M5], 3), pct(s4, den['*'][M4], 3),
-                         a5["grew_after_spill"]])
+                         fmt(s5), pct(s5, den['*'][M5], 3), pct(s4, den['*'][M4], 3), a5["grew_after_spill"],
+                         fmt(b5), pct(b5, den['*'][M5], 3), pct(b4, den['*'][M4], 3), a5["grew_after_spill_b"]])
     lines = [table(["config", "class", "transforms", "fired", "spilled raw → crushed", "saved raw 5.x", "% of all (raw) 5.x",
-                    "saved after spill 5.x", "on fired, after spill", "% of all after spill 5.x", "% of all after spill 4.x",
-                    "costlier after spill"], rows)]
+                    "A: saved after spill 5.x", "A: % of all after spill 5.x", "A: 4.x", "A: costlier",
+                    "B: saved after spill 5.x", "B: % of all after spill 5.x", "B: 4.x", "B: costlier"], rows),
+             "", "A = spill decided on the crushed text's size (compress, then spill if still over 12 KiB: today's order). "
+                 "B = spill decided on the raw's size, preview of the crushed text, raw kept in the spill file."]
     big = spc.get("spilled_results", {}).get(M5, {})
     if big:
         n = sum(v["n"] for v in big.values())
@@ -106,12 +109,13 @@ def sec_spill(tc, spc, spc_v, spf, spf_v):
             if fs.get(f"{k}:results"):
                 srows.append([name, "every fired LOG result with a failure line" if k == "all" else "… of which the raw spills",
                               fs[f"{k}:results"], fs[f"{k}:failure_lines"], fs[f"{k}:visible_raw_after_spill"],
-                              fs[f"{k}:visible_crushed_after_spill"], fs[f"{k}:results_losing_failures_raw"],
+                              fs[f"{k}:visible_crushed_after_spill"], fs.get(f"{k}:visible_crushed_after_spill_b", "–"),
+                              fs[f"{k}:results_losing_failures_raw"],
                               fs[f"{k}:results_losing_failures_crushed"], fs[f"{k}:crushed_no_longer_spills"]])
     if srows:
         lines += ["", "Failure lines the model can still see after spill (FAILED, panicked, ✕, --- FAIL, Traceback, `error:`, assertions):", "",
-                  table(["set", "results", "n", "failure lines", "visible: raw after spill", "visible: crushed after spill",
-                         "results losing a failure line: raw", "… crushed", "crushed no longer spills"], srows)]
+                  table(["set", "results", "n", "failure lines", "visible: raw after spill", "visible: crushed, A", "visible: crushed, B",
+                         "results losing a failure line: raw", "… crushed, A", "crushed no longer spills"], srows)]
     rows = [r for r in (spf_v or {}).get("failure_rows", [])]
     if rows:
         lines += ["", "Fixtures (candidates config):", "",

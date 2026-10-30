@@ -1,4 +1,4 @@
-# crush 2 — gate results (Phase 1, Phase 2A)
+# crush 2 — gate results (Phase 1, Phase 2A, Phase 2B)
 
 crush-core (classifier, transform framework, invariants, generic transforms, SEARCH
 grouping) measured on 30 days of real tool results (59,843 unique, private, never
@@ -9,6 +9,9 @@ aggregates only. Method and harness: [`README.md`](README.md); v0.1 for comparis
 
 ## Headline
 
+- **Phase 2B (LOG, VCS, STRUCTURED; [Phase 2B](#phase-2b--log-vcs-structured))**: `build_progress` ships;
+  passing-test collapse and the JSON layout are built and ship disabled (failed accuracy
+  parity); VCS has nothing worth shipping (measured). Numbers below.
 - **Phase 2A (SEARCH layout, LISTING; [section 8](#8-phase-2a-search-layout-and-listing-transforms))**:
   `search_elide` ships on. Over-long grep hit lines keep the text around the
   match, every line keeps its own `path:N:`, and the cuts carry exact counts.
@@ -581,3 +584,297 @@ both transforms now refuse it on their own too.
 | fold `Permission denied` / `No such file` noise | 0.14% of SEARCH bytes, 0.4% of LISTING | tiny |
 | `find` / path-list cap | path lists ≈ 7% of LISTING tokens, mostly results over 12 KiB that spill already previews | little left after spill |
 | `ps` column drop | ps + pgrep 6.6% of LISTING tokens | budget went to the `ls_columns` re-gate; `ls_columns` showed that dropping columns hurts reading |
+
+---
+
+# Phase 2B — LOG, VCS, STRUCTURED
+
+Tables above are regenerated for the current tree, so they cover Phase 1 + 2A + 2B's
+shipped defaults. The sections below are Phase 2B's own (`p2b_*` markers,
+`eval/report_p2b.py`).
+
+## Headline (2B)
+
+- **What ships is small, on purpose.** `build_progress` (runs of `Compiling` /
+  `Downloaded` / pip `Collecting` lines → a counted note) fires on 15 real results
+  and saves 9,090 tokens (43% of those results; 0.014% of tool-result tokens, 5.x),
+  with accuracy at parity or better on both models. The default config now saves
+  34,709 tokens over 93 results (Phase 1: 25,928 over 79). No fired result grew in
+  real tokens (either family); CONTENT untouched; every warning, error and code
+  frame verbatim (0 of 308 diagnostic lines missing on the corpus).
+- **Passing-test collapse is built, fuzzed and disabled.** `test_pass` would save
+  74,237 tokens on 172 real test runs (49% of them, 0.117% of tool-result tokens).
+  Failures, totals and panics stayed at parity, but asked "did test X pass?" about
+  a collapsed test, the models answered "unknown" (200/200 raw → 55/200 crushed;
+  McNemar p < 0.001 on both). That's the right answer once the name is gone: the
+  model can't tell X ran. Ships off.
+- **JSON layout is built and disabled.** `json_minify` (one top-level element
+  per line, lossless) cuts 20% / 28% of pretty-JSON tokens (5.x / 4.x) and answered
+  124/124 JSON-value questions both ways. But Sonnet's raw-only excess (two "quote
+  the next line" answers on the old layout, 3.0%) beat its raw-vs-raw noise (1.1%).
+  Per the gate: off. There's little to win on this workload anyway: pretty JSON is ~6%
+  of STRUCTURED, and `gh --json` output is mostly `--jq` text.
+- **VCS has nothing worth shipping.** Measured before building: compact `git log`
+  headers save 0.4% at best (0.9% with every label dropped). Newlines and labels
+  are nearly free in both tokenizers, and git's `Tue Oct 27` dates are *cheaper*
+  than ISO. Dropping `git status` hints saves a median 21 tokens but needs the
+  ~60-token raw pointer every lossy result carries: 16–17 of 17 grew. Long-form
+  dirty status is 0.4% of VCS, default `git log` 0.8% (+stat 4%).
+- **Spill changes the picture, in both directions.** (1) For a test log that spills,
+  collapsing first keeps the failures. On a real 17.9 KB `cargo test --workspace`
+  run, the 4 KiB + 3 KiB preview shows **1 of 14** failure lines; collapsed (5.9 KB,
+  no spill) it shows **all 14**, for fewer tokens. That's the strongest argument for
+  `test_pass`, and the reason to redesign it rather than drop it. (2) Compress-then-spill
+  can *raise* cost. A result crushed from 13–16 KiB to just under 12 KiB enters
+  history whole and costs more than the preview would have. It happens today with
+  Phase 1's `progress` (1 VCS result, 3,402 → 5,043 tokens) and with `search_group`.
+  If Phase 3 decides the spill on the **raw** size and previews the crushed text,
+  that goes to 0 for everything shipped and every Phase 2B candidate.
+- 384 model calls (cap 400), $2.02. Real `auth.json` unchanged. Fuzzed on the final
+  code (11 min each): log 2.47M runs, json 2.25M, compress 1.19M + 0.76M, 0 crashes.
+  256 KiB worst cases, p99 on a box at load ~15: test log 0.54 ms, build log 0.71 ms,
+  pretty JSON 0.81 ms (passes through above the 128 KiB JSON cap), 128 KiB JSON
+  0.30 ms.
+
+## 2B.1 What these classes are made of (measured first)
+
+Estimated tokens (5.x) by command and by line shape, all 59,843 real results;
+class totals in real tokens.
+
+- **LOG (3.06M tokens, 4.8%)** is mostly application logs, not test runs:
+  `cat`/`tail`/`sed -n`/`head` on `*.log` files are 58% of it, build/test-marker
+  sniffs 19%, `cargo test` 7.2%, `npx jest` 3.3%, `python3` test runs 1.8%. By
+  bytes: passing cargo test lines 5.6%, `Running` binary headers 3.5%,
+  `test result:` lines 5.9%, compiler code frames 5.0%, build progress 1.0%,
+  jest ✓ 1.1%, go 0.5%; **pytest `PASSED`, node ✔ and go `--- PASS` lines: none.**
+  80% of passing-test lines sit in runs of 3 or more consecutive passing lines,
+  and 85% of build-progress lines in runs of 2 or more. That's why the collapse
+  works on runs, and interleaved `--nocapture` output keeps its own lines.
+- **VCS (2.91M, 4.6%)**: chains led by a git command 47% (`git fetch && … &&
+  sed -n …`: they can end in file views, which is why VCS transforms here had to
+  be block-local), `--stat` summaries 17%, short status 13%, `--oneline` logs
+  12%, default `git log` with `--stat` 4.0%, default `git log` 0.8%, long dirty
+  status 0.4%. `git log -p` / `-L` / `stash show -p` are now CONTENT (patches an
+  edit can quote).
+- **STRUCTURED (1.21M, 1.9%)**: `gh --json` 60% (mostly `--jq` projections to
+  text and PR bodies), `jq` 25%, YAML-ish 6%, CSV 4%. Pretty-printed JSON
+  (whole, jq streams, embedded blocks) is ~6% of the class.
+- **Spill**: 2,420 corpus results exceed 12 KiB (63.6M → 54.3M tool-result tokens
+  after spill). Only 57 are LOG. The corpus comes from history, where bash's
+  old cap kept just the first 16 KiB, so big logs are under-represented; the
+  committed fixtures carry the >12 KiB test-run case.
+
+## 2B.2 Layouts measured before building (real tokens)
+<!-- BEGIN:p2b_layouts -->
+| output | samples | candidate | saved 5.x | saved 4.x | results that grew 5.x / 4.x | median tokens saved per result 5.x |
+|---|---:|---:|---:|---:|---:|---:|
+| git_log | 77 | joined, ISO date | 0.36% | 0.08% | 0 / 0 | 4 |
+| git_log | 77 | joined, git date | 0.03% | 0.03% | 2 / 2 | 0 |
+| git_log | 77 | no blank line | 0.00% | 0.00% | 0 / 0 | 0 |
+| git_log | 77 | no labels | 0.91% | 0.80% | 0 / 0 | 11 |
+| git_status | 17 | hints dropped | 2.53% | 2.88% | 0 / 0 | 21 |
+| git_status | 17 | hints dropped + raw pointer | -3.20% | -3.31% | 17 / 16 | -68 |
+| json | 25 | minified | 20.65% | 29.32% | 0 / 0 | 61 |
+| json | 25 | `, ` / `: ` separators | 16.69% | 21.61% | 0 / 0 | 44 |
+| json | 25 | `: ` only | 19.83% | 26.59% | 0 / 0 | 58 |
+| json | 25 | one top-level element per line (shipped layout) | 20.07% | 28.35% | 0 / 0 | 53 |
+<!-- END:p2b_layouts -->
+
+## 2B.3 Tokens: what ships and the disabled candidates (real `count_tokens`)
+<!-- BEGIN:p2b_tokens -->
+| config | class | transforms | fired | raw tokens 5.x | saved 5.x | saved on fired 5.x | saved on fired 4.x | % of class 5.x | % of all tool-result tokens 5.x | % of all 4.x |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| default (ships) | LOG | build_progress | 14 | 20,180 | 8,730 | 43.3% | 45.8% | 0.29% | 0.014% | 0.015% |
+| default (ships) | LOG | build_progress+repeats | 1 | 2,249 | 360 | 16.0% | 16.3% | 0.01% | 0.001% | 0.001% |
+| candidates (all on) | LOG | build_progress | 12 | 17,839 | 8,068 | 45.2% | 47.9% | 0.26% | 0.013% | 0.014% |
+| candidates (all on) | LOG | build_progress+repeats | 1 | 2,249 | 360 | 16.0% | 16.3% | 0.01% | 0.001% | 0.001% |
+| candidates (all on) | LOG | build_progress+test_pass | 7 | 5,556 | 2,481 | 44.7% | 43.9% | 0.08% | 0.004% | 0.004% |
+| candidates (all on) | LOG | test_pass | 172 | 152,067 | 74,237 | 48.8% | 46.2% | 2.43% | 0.117% | 0.104% |
+| candidates (all on) | LOG | test_pass+repeats | 1 | 2,252 | 1,284 | 57.0% | 53.6% | 0.04% | 0.002% | 0.002% |
+| candidates (all on) | STRUCTURED | json_minify | 23 | 19,145 | 2,248 | 11.7% | 18.2% | 0.19% | 0.004% | 0.005% |
+
+Fired results with more real tokens than the raw (every fired result, both families): {'default': {'claude-opus-5-5': 0, 'claude-sonnet-4-6': 0}, 'candidates': {'claude-opus-5-5': 0, 'claude-sonnet-4-6': 0}}. Class totals 5.x: LOG 3,060,847, STRUCTURED 1,212,354, VCS 2,911,755, all tool results 63,635,115.
+<!-- END:p2b_tokens -->
+
+## 2B.4 After Synaps' spill step (SynapsCLI #334)
+
+A result over 12 KiB reaches history as a 4 KiB head + 3 KiB tail preview of
+whatever crush handed over (`eval/lib/spill.py` ports the Rust cut). Savings
+below compare after_spill(raw) with after_spill(crushed), in real tokens.
+<!-- BEGIN:p2b_spill -->
+| config | class | transforms | fired | spilled raw → crushed | saved raw 5.x | % of all (raw) 5.x | A: saved after spill 5.x | A: % of all after spill 5.x | A: 4.x | A: costlier | B: saved after spill 5.x | B: % of all after spill 5.x | B: 4.x | B: costlier |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| default (ships) | LOG | build_progress | 14 | 1 → 0 | 8,730 | 0.014% | 4,067 | 0.007% | 0.008% | 0 | 4,115 | 0.008% | 0.008% | 0 |
+| default (ships) | LOG | build_progress+repeats | 1 | 0 → 0 | 360 | 0.001% | 360 | 0.001% | 0.001% | 0 | 360 | 0.001% | 0.001% | 0 |
+| candidates (all on) | LOG | build_progress | 12 | 1 → 0 | 8,068 | 0.013% | 3,405 | 0.006% | 0.007% | 0 | 3,453 | 0.006% | 0.007% | 0 |
+| candidates (all on) | LOG | build_progress+repeats | 1 | 0 → 0 | 360 | 0.001% | 360 | 0.001% | 0.001% | 0 | 360 | 0.001% | 0.001% | 0 |
+| candidates (all on) | LOG | build_progress+test_pass | 7 | 0 → 0 | 2,481 | 0.004% | 2,481 | 0.005% | 0.004% | 0 | 2,481 | 0.005% | 0.004% | 0 |
+| candidates (all on) | LOG | test_pass | 172 | 3 → 0 | 74,237 | 0.117% | 64,071 | 0.118% | 0.104% | 1 | 65,621 | 0.121% | 0.107% | 0 |
+| candidates (all on) | LOG | test_pass+repeats | 1 | 0 → 0 | 1,284 | 0.002% | 1,284 | 0.002% | 0.002% | 0 | 1,284 | 0.002% | 0.002% | 0 |
+| candidates (all on) | STRUCTURED | json_minify | 23 | 0 → 0 | 2,248 | 0.004% | 2,248 | 0.004% | 0.006% | 0 | 2,248 | 0.004% | 0.006% | 0 |
+
+A = spill decided on the crushed text's size (compress, then spill if still over 12 KiB: today's order). B = spill decided on the raw's size, preview of the crushed text, raw kept in the spill file.
+
+Denominators after spill: every corpus result over 12,288 B (2,420 results) is counted as its head + tail preview; all tool-result tokens 5.x: 63,635,115 raw → 54,343,161 after spill (LOG 3,060,847 → 2,829,781, STRUCTURED 1,212,354 → 1,007,768).
+
+Failure lines the model can still see after spill (FAILED, panicked, ✕, --- FAIL, Traceback, `error:`, assertions):
+
+| set | results | n | failure lines | visible: raw after spill | visible: crushed, A | visible: crushed, B | results losing a failure line: raw | … crushed, A | crushed no longer spills |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| fixtures, candidates | every fired LOG result with a failure line | 7 | 56 | 43 | 56 | 56 | 1 | 0 | 1 |
+| fixtures, candidates | … of which the raw spills | 1 | 14 | 1 | 14 | 14 | 1 | 0 | 1 |
+| corpus, default | every fired LOG result with a failure line | 16 | 221 | 220 | 220 | 220 | 1 | 1 | 1 |
+| corpus, default | … of which the raw spills | 1 | 5 | 4 | 4 | 4 | 1 | 1 | 1 |
+| corpus, candidates | every fired LOG result with a failure line | 70 | 433 | 430 | 432 | 432 | 2 | 1 | 3 |
+| corpus, candidates | … of which the raw spills | 3 | 20 | 17 | 19 | 19 | 2 | 1 | 3 |
+
+Fixtures (candidates config):
+
+| fixture | raw bytes | crushed bytes | failure lines | visible raw after spill | visible crushed after spill | tokens after spill raw → crushed 5.x |
+|---|---:|---:|---:|---:|---:|---:|
+| cargo_test_fail | 9,311 | 2,128 | 14 | 14 | 14 | 4,380 → 998 |
+| pytest_verbose_fail | 11,318 | 1,798 | 6 | 6 | 6 | 4,476 → 719 |
+| node_test_fail | 4,263 | 2,142 | 8 | 8 | 8 | 2,207 → 1,028 |
+| cargo_workspace_test_fail | 17,861 | 5,949 | 14 | 1 | 14 | 3,520 → 2,817 |
+| cargo_test_nocapture | 1,952 | 1,346 | 5 | 5 | 5 | 984 → 660 |
+| jest_verbose_fail | 4,655 | 2,481 | 4 | 4 | 4 | 1,924 → 1,029 |
+| go_test_verbose | 4,993 | 1,126 | 5 | 5 | 5 | 2,687 → 578 |
+<!-- END:p2b_spill -->
+
+## 2B.5 Accuracy (Haiku 4.5 + Sonnet 4.6)
+
+Same harness and credential rules as Phase 1: fresh `synaps rpc` session per
+ask, isolated `SYNAPS_BASE_DIR` + `HOME`, access-token-only `auth.json` with an
+empty refresh token, the real `auth.json` hashed before and after, never
+refreshed. Only samples a Phase 2B transform fired on (`--labels`), default
+config. Parity rule as in Phase 1: McNemar p ≥ 0.05 and raw-only excess within
+the model's raw-vs-raw disagreement.
+<!-- BEGIN:p2b_accuracy -->
+| transforms fired | model | samples | questions | raw correct | crushed correct | discordant raw-only / crushed-only | McNemar p | raw-only excess | raw-vs-raw disagreement | rule |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| build_progress | haiku-4-5-20251001 | 10 | 35 | 27/35 (77.1%) | 30/35 (85.7%) | 1 / 4 | 0.375 | -8.6% | 0.0% (n=95) | **parity** |
+| build_progress | sonnet-4-6 | 10 | 35 | 25/35 (71.4%) | 33/35 (94.3%) | 0 / 8 | 0.008 | -22.9% | 1.1% (n=95) | crushed **better** (two-sided p < 0.05) |
+| build_progress | both models | 10 | 70 | 52/70 (74.3%) | 63/70 (90.0%) | 1 / 12 | 0.003 | -15.7% | 0.5% (n=190) |  |
+| build_progress+repeats | haiku-4-5-20251001 | 1 | 3 | 2/3 (66.7%) | 2/3 (66.7%) | 0 / 0 | – | +0.0% | 0.0% (n=95) | **parity** |
+| build_progress+repeats | sonnet-4-6 | 1 | 3 | 2/3 (66.7%) | 2/3 (66.7%) | 0 / 0 | – | +0.0% | 1.1% (n=95) | **parity** |
+| build_progress+repeats | both models | 1 | 6 | 4/6 (66.7%) | 4/6 (66.7%) | 0 / 0 | – | +0.0% | 0.5% (n=190) |  |
+| build_progress+test_pass | haiku-4-5-20251001 | 7 | 36 | 35/36 (97.2%) | 23/36 (63.9%) | 12 / 0 | 0.000 | +33.3% | 0.0% (n=95) | **FAIL** |
+| build_progress+test_pass | sonnet-4-6 | 7 | 36 | 35/36 (97.2%) | 30/36 (83.3%) | 6 / 1 | 0.125 | +13.9% | 1.1% (n=95) | **FAIL** |
+| build_progress+test_pass | both models | 7 | 72 | 70/72 (97.2%) | 53/72 (73.6%) | 18 / 1 | 0.000 | +23.6% | 0.5% (n=190) |  |
+| json_minify | haiku-4-5-20251001 | 21 | 67 | 59/67 (88.1%) | 62/67 (92.5%) | 0 / 3 | 0.250 | -4.5% | 0.0% (n=95) | **parity** |
+| json_minify | sonnet-4-6 | 21 | 67 | 67/67 (100.0%) | 65/67 (97.0%) | 2 / 0 | 0.500 | +3.0% | 1.1% (n=95) | **FAIL** |
+| json_minify | both models | 21 | 134 | 126/134 (94.0%) | 127/134 (94.8%) | 2 / 3 | 1.000 | -0.7% | 0.5% (n=190) |  |
+| test_pass | haiku-4-5-20251001 | 45 | 204 | 199/204 (97.5%) | 130/204 (63.7%) | 69 / 0 | 0.000 | +33.8% | 0.0% (n=95) | **FAIL** |
+| test_pass | sonnet-4-6 | 45 | 204 | 199/204 (97.5%) | 139/204 (68.1%) | 60 / 0 | 0.000 | +29.4% | 1.1% (n=95) | **FAIL** |
+| test_pass | both models | 45 | 408 | 398/408 (97.5%) | 269/408 (65.9%) | 129 / 0 | 0.000 | +31.6% | 0.5% (n=190) |  |
+| test_pass+repeats | haiku-4-5-20251001 | 1 | 5 | 5/5 (100.0%) | 2/5 (40.0%) | 3 / 0 | 0.250 | +60.0% | 0.0% (n=95) | **FAIL** |
+| test_pass+repeats | sonnet-4-6 | 1 | 5 | 4/5 (80.0%) | 1/5 (20.0%) | 3 / 0 | 0.250 | +60.0% | 1.1% (n=95) | **FAIL** |
+| test_pass+repeats | both models | 1 | 10 | 9/10 (90.0%) | 3/10 (30.0%) | 6 / 0 | 0.031 | +60.0% | 0.5% (n=190) |  |
+
+By question kind (both models pooled; a sample counts for every transform that fired on it):
+
+| transform | kind | raw | crushed |
+|---|---:|---:|---:|
+| build_progress | build:finished | 9/10 | 8/10 |
+| build_progress | build:ncollected | 0/2 | 2/2 |
+| build_progress | build:ncompiled | 10/26 | 17/26 |
+| build_progress | lines:next | 3/4 | 4/4 |
+| build_progress | rustc:code | 1/2 | 2/2 |
+| build_progress | rustc:errloc | 1/2 | 2/2 |
+| build_progress | rustc:wline | 6/6 | 6/6 |
+| build_progress | test:nfail | 24/24 | 24/24 |
+| build_progress | test:npass | 24/24 | 23/24 |
+| build_progress | test:panicloc | 12/12 | 12/12 |
+| build_progress | test:status_fail | 8/8 | 8/8 |
+| build_progress | test:status_run | 28/28 | 12/28 |
+| json_minify | json:field | 24/24 | 24/24 |
+| json_minify | json:len | 8/8 | 8/8 |
+| json_minify | json:nullish | 12/12 | 12/12 |
+| json_minify | json:path | 58/62 | 58/62 |
+| json_minify | json:stream_field | 6/6 | 6/6 |
+| json_minify | json:stream_len | 2/2 | 2/2 |
+| json_minify | lines:gap | 1/2 | 2/2 |
+| json_minify | lines:next | 15/18 | 15/18 |
+| test_pass | build:finished | 2/2 | 2/2 |
+| test_pass | build:ncompiled | 6/8 | 6/8 |
+| test_pass | lines:next | 7/8 | 7/8 |
+| test_pass | lines:run | 2/2 | 0/2 |
+| test_pass | test:nfail | 70/70 | 69/70 |
+| test_pass | test:nfailed | 27/28 | 26/28 |
+| test_pass | test:nignored | 12/14 | 12/14 |
+| test_pass | test:npass | 65/70 | 64/70 |
+| test_pass | test:npassed | 26/28 | 26/28 |
+| test_pass | test:panicloc | 20/20 | 19/20 |
+| test_pass | test:status_fail | 40/40 | 39/40 |
+| test_pass | test:status_run | 200/200 | 55/200 |
+
+Spend: claude-haiku-4-5-20251001: 192 requests, $0.46; claude-sonnet-4-6: 192 requests, $1.56. Total 384 model calls (cap 400), $2.02 at list price. Real auth.json unchanged: True. Questions dropped before asking: {'fixtures': 11, 'fixtures:collapsed': 0, 'corpus': 139, 'corpus:collapsed': 7} (`set`: the question quotes an anchor line not verbatim in the crushed text; `set:collapsed`: a `lines:next`/`lines:gap` question whose answer is a line the LOG collapse removed, rule fixed before the run).
+<!-- END:p2b_accuracy -->
+
+- **test_pass fails**, and only on one question kind. "Did test X pass?" for a test
+  inside a collapsed run: 200/200 raw → 55/200 crushed, the models answering
+  "unknown" (Sonnet sometimes reasoning out loud: "listed among the 14 passing
+  tests in …"). Everything test_pass keeps was at parity: failed-test status 40/40
+  → 39/40, totals 70/70 → 69/70 and 65/70 → 64/70, panic file:line 20/20 → 19/20.
+  The note says *how many* passed in a module, not *which*, so the information
+  really is gone. A layout that keeps every name (e.g. a module heading with the
+  names after it) is the next candidate. Measure it with `test:status_run` first,
+  since that is the question that failed.
+- **build_progress** is judged on the 10 samples where it fired alone (35
+  questions per model): Haiku 27 → 30, Sonnet 25 → 33, raw-only 1 and 0. On
+  samples where `test_pass` also fired, the drop is test_pass's `test:status_run`
+  (28 → 12). The build questions there (crates compiled, the `Finished` line,
+  rustc locations) were at parity or better. Sonnet's improvement is significant
+  (two-sided McNemar p = 0.008, 0 vs 8 discordant), so a literal two-sided reading
+  of "parity" would flag it. It ships on as non-inferior; the gain is the count
+  questions, which the note answers in words while the raw needs 15+ lines counted.
+  This is the reviewer's call: one switch.
+- **json_minify fails** on Sonnet by 2 discordant answers out of 67, both "quote
+  the next line" questions whose expected answer is a pretty-printed line that no
+  longer exists as a line. JSON values: field 24/24, null vs "" 12/12, length 8/8,
+  key paths 58/62 both, streams 8/8. Excluding layout questions was not decided
+  before the run, so the failure stands. A re-test with that rule fixed up front,
+  and a bigger n, is cheap.
+- Noise floor (raw asked twice, 95 pairs per model): Haiku 0.0%, Sonnet 1.1%.
+- One fixture (`gh_issues_jq`) had a third-party email in a public spam issue's
+  title scrubbed after the accuracy run (one value; the generator now scrubs it).
+
+## 2B.6 Invariants and edit safety (independent re-check)
+<!-- BEGIN:p2b_checks -->
+| config | set | LOG results | lines that must stay, missing | failure lines missing | summary lines missing | diagnostic / code-frame lines missing | note-count mismatches | lines collapsed | JSON results | JSON token-stream mismatches |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| default | fixtures | 2 | 0 / 29 | 0 / 0 | 0 / 2 | 0 / 20 | 0 | 56 | 0 | 0 |
+| default | corpus | 15 | 0 / 442 | 0 / 23 | 0 / 25 | 0 / 202 | 0 | 518 | 0 | 0 |
+| candidates | fixtures | 11 | 0 / 448 | 0 / 54 | 0 / 39 | 0 / 37 | 0 | 1,220 | 4 | 0 |
+| candidates | corpus | 193 | 0 / 2,626 | 0 / 213 | 0 / 270 | 0 / 308 | 0 | 3,536 | 23 | 0 |
+<!-- END:p2b_checks -->
+
+## 2B.7 Latency (256 KiB worst cases, 200 runs each)
+<!-- BEGIN:p2b_latency -->
+| config | shape | bytes | result | transforms | best µs | p50 µs | p99 µs |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| default | cargo_test_log | 262,097 | nothing-to-do | – | 449 | 491 | 535 |
+| default | cargo_build_log | 262,132 | compressed | build_progress | 572 | 645 | 706 |
+| default | pretty_json | 262,031 | nothing-to-do | – | 607 | 672 | 810 |
+| default | pretty_json_128k | 130,991 | nothing-to-do | – | 259 | 271 | 302 |
+| candidates | cargo_test_log | 262,097 | compressed | test_pass | 503 | 538 | 609 |
+| candidates | cargo_build_log | 262,132 | compressed | build_progress | 526 | 618 | 679 |
+| candidates | pretty_json | 262,031 | nothing-to-do | – | 679 | 743 | 809 |
+| candidates | pretty_json_128k | 130,991 | compressed | json_minify | 519 | 567 | 616 |
+<!-- END:p2b_latency -->
+
+## 2B.8 What to watch next
+
+- **Phase 3 spill wiring**: decide the spill on the raw's size and preview the
+  crushed text (policy B above). Then compress-then-spill never costs more than
+  the preview, and a test log's failures survive whenever the collapse fits in
+  head + tail.
+- **test_pass, take two**: keep every passing test's *name*, drop only the
+  `test … ... ok` boilerplate, and gate on `test:status_run`. Or enable it only
+  when the raw would spill (the alternative is a preview that drops the middle
+  of the run, names and failures included). The fixture above shows that trade.
+- **json_minify**: re-test with layout-insensitive questions fixed before the run.
+  The upside is small on this workload (pretty JSON is ~6% of STRUCTURED).
+- **LOG's real mass is application logs** (58%): timestamps, levels and repeated
+  structured lines. That's where a LOG transform could matter, and neither phase
+  touched it.
