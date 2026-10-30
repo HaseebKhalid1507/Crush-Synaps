@@ -9,10 +9,9 @@ cargo-fuzz = true
 
 [dependencies]
 libfuzzer-sys = "0.4"
-serde_json = "1"
 
-[dependencies.crush]
-path = ".."
+[dependencies.crush-core]
+path = "../crates/crush-core"
 
 [[bin]]
 name = "compress"
@@ -22,16 +21,15 @@ doc = false
 bench = false
 
 [[bin]]
-name = "run"
-path = "fuzz_targets/run.rs"
+name = "shell"
+path = "fuzz_targets/shell.rs"
 test = false
 doc = false
 bench = false
 
 [[bin]]
-name = "unfold"
-path = "fuzz_targets/unfold.rs"
+name = "search"
+path = "fuzz_targets/search.rs"
 test = false
 doc = false
 bench = false
-

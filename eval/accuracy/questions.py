@@ -449,8 +449,69 @@ def gen_pr_list(out, rng, sample):
     return qs
 
 
+B64_RUN = re.compile(r"[A-Za-z0-9+/_-]{256,}={0,2}")
+B64_LINE = re.compile(r"^\s*[A-Za-z0-9+/]{40,}={0,2}$")
+
+
+def gen_blob(out, rng, sample):
+    """Long base64 values: their first characters (crush's blob marker keeps
+    the first 16) and the text around them."""
+    qs = []
+    lines = out.split("\n")
+    for i, l in enumerate(lines):
+        m = B64_RUN.search(l)
+        if m and re.search(r"[A-Z]", m.group(0)) and re.search(r"[a-z]", m.group(0)) and re.search(r"\d", m.group(0)):
+            pre = l[:m.start()].strip()
+            if 3 <= len(pre) <= 80 and "`" not in pre and sum(1 for x in lines if x.strip().startswith(pre)) == 1:
+                q(qs, f"What are the first 12 characters of the long base64 value on the line that starts with `{pre}`?",
+                  m.group(0)[:12], "blob:head", "exact")
+                qs[-1]["anchor"] = pre
+        if len(qs) >= 2:
+            break
+    for i in range(1, len(lines) - 3):
+        if all(B64_LINE.match(lines[i + k]) for k in range(4)) and not B64_LINE.match(lines[i - 1]):
+            prev = lines[i - 1].strip()
+            if prev and "`" not in prev and lines.count(lines[i - 1]) == 1:
+                q(qs, f"What are the first 12 characters of the base64 block that follows the line `{prev}`?",
+                  lines[i].strip()[:12], "blob:head", "exact")
+                qs[-1]["anchor"] = prev
+                break
+    return qs
+
+
+def overlay(line: str) -> str:
+    buf: list[str] = []
+    for seg in line.split("\r"):
+        for k, ch in enumerate(seg):
+            if k < len(buf):
+                buf[k] = ch
+            else:
+                buf.append(ch)
+    return "".join(buf)
+
+
+def gen_progress(out, rng, sample):
+    """Lines redrawn with carriage returns: what do they finally show?"""
+    qs = []
+    lines = out.split("\n")
+    cands = [i for i, l in enumerate(lines) if "\r" in l.rstrip("\r") and "\x1b" not in l and i > 0]
+    rng.shuffle(cands)
+    for i in cands:
+        prev = lines[i - 1].strip()
+        final = overlay(lines[i].rstrip("\r")).strip()
+        if prev and "`" not in prev and lines.count(lines[i - 1]) == 1 and final and len(final) < 200:
+            q(qs, f"The line right after `{prev}` is a progress line redrawn several times with carriage returns. "
+                  "Quote what it finally shows (its last state).", final, "progress:final", "exact")
+            qs[-1]["anchor"] = prev
+        if len(qs) >= 2:
+            break
+    return qs
+
+
 GENERATORS = [gen_cargo_test, gen_pytest, gen_node, gen_compile, gen_gitlog, gen_status, gen_json, gen_ls, gen_ps,
               gen_pr_list, gen_grep, gen_grep_single, gen_pathlist]
+# always asked when they apply: they probe crush 2's generic transforms
+ALWAYS = [gen_progress, gen_blob]
 
 
 def gen_questions(sample: dict, max_q: int = 6) -> list[dict]:
@@ -465,6 +526,11 @@ def gen_questions(sample: dict, max_q: int = 6) -> list[dict]:
         if got:
             qs.extend(got)
             break
+    for g in ALWAYS:
+        try:
+            qs.extend(g(out, rng, sample))
+        except Exception:
+            pass
     try:
         extra = gen_lines(out, rng, sample)
     except Exception:
