@@ -21,10 +21,11 @@
 //!   what's around them, failures and warnings included), a later `read` of
 //!   the spill file costs fewer tokens, and the crush markers in it still
 //!   point at the raw the shim keeps, so nothing is lost.
-//! - **Exception, both cases**: replace anyway when the crushed history view
-//!   shows more failure lines (FAILED, panicked, ✕, --- FAIL, Traceback,
-//!   `error:`, assertions) than the raw's preview would. A test log whose
-//!   failures sit in the omitted middle is the case `test_pass` exists for.
+//! - **Exception, both cases, LOG only**: replace anyway when the crushed
+//!   history view shows more failure lines (FAILED, panicked, ✕, --- FAIL,
+//!   Traceback, `error:`, assertions) than the raw's preview would. A test log
+//!   whose failures sit in the omitted middle is the case test collapse exists
+//!   for. (In grep hits or listings those words are just text.)
 //!
 //! Token comparisons use crush-core's estimator under both tokenizer
 //! families, like its own never-larger gate.
@@ -246,7 +247,18 @@ pub struct Decision {
 }
 
 /// Replace `raw` with `crushed` for `tool`? See the module docs.
-pub fn decide(tool: &str, raw: &str, crushed: &str, p: &SpillPolicy, spill_path: &str, tk: Tokenizer) -> Decision {
+///
+/// `log`: the result is a build/test log (crush-core's LOG class). Only there
+/// does a failure line mean a failure; a grep hit for `FAILED` doesn't.
+pub fn decide(
+    tool: &str,
+    raw: &str,
+    crushed: &str,
+    p: &SpillPolicy,
+    spill_path: &str,
+    tk: Tokenizer,
+    log: bool,
+) -> Decision {
     let involved = p.threshold > 0 && tool_spills(tool) && (raw.len() > p.threshold || crushed.len() > p.threshold);
     if !involved {
         return Decision { replace: true, why: Why::NoSpill, history: None };
@@ -259,7 +271,7 @@ pub fn decide(tool: &str, raw: &str, crushed: &str, p: &SpillPolicy, spill_path:
     let history = Some((pick(r5, r4), pick(c5, c4)));
     let (replace, why) = if c5 <= r5 && c4 <= r4 {
         (true, Why::NoCostlier)
-    } else if failure_lines(&vc) > failure_lines(&vr) {
+    } else if log && failure_lines(&vc) > failure_lines(&vr) {
         (true, Why::KeepsFailures)
     } else {
         (false, Why::Costlier)
@@ -309,12 +321,12 @@ mod tests {
 
     #[test]
     fn no_spill_means_replace() {
-        let d = decide("bash", "a\n", "b\n", &P, PATH, Tokenizer::V5);
+        let d = decide("bash", "a\n", "b\n", &P, PATH, Tokenizer::V5, false);
         assert_eq!((d.replace, d.why), (true, Why::NoSpill));
         let big = lines(400, 80);
-        let d = decide("memory_fetch", &big, "small", &P, PATH, Tokenizer::V5);
+        let d = decide("memory_fetch", &big, "small", &P, PATH, Tokenizer::V5, false);
         assert_eq!(d.why, Why::NoSpill, "a builtin Synaps never spills");
-        let d = decide("bash", &big, "small", &SpillPolicy { threshold: 0, ..P }, PATH, Tokenizer::V5);
+        let d = decide("bash", &big, "small", &SpillPolicy { threshold: 0, ..P }, PATH, Tokenizer::V5, false);
         assert_eq!(d.why, Why::NoSpill, "spill off");
     }
 
@@ -323,12 +335,12 @@ mod tests {
         let raw = lines(170, 80); // 13.6 KB: spills, ~7 KB preview
         let crushed = lines(150, 80); // 12.0 KB: lands whole
         assert!(raw.len() > P.threshold && crushed.len() <= P.threshold);
-        let d = decide("bash", &raw, &crushed, &P, PATH, Tokenizer::V5);
+        let d = decide("bash", &raw, &crushed, &P, PATH, Tokenizer::V5, true);
         assert_eq!((d.replace, d.why), (false, Why::Costlier));
         let (r, c) = d.history.unwrap();
         assert!(c > r);
         let small = lines(60, 80);
-        let d = decide("bash", &raw, &small, &P, PATH, Tokenizer::V5);
+        let d = decide("bash", &raw, &small, &P, PATH, Tokenizer::V5, false);
         assert_eq!((d.replace, d.why), (true, Why::NoCostlier));
     }
 
@@ -346,8 +358,11 @@ mod tests {
         crushed.push_str(&lines(78, 80)[..]);
         assert!(crushed.len() <= P.threshold && raw.len() > P.threshold);
         assert_eq!(failure_lines(&history_view(&raw, &P, PATH)), 0);
-        let d = decide("bash", &raw, &crushed, &P, PATH, Tokenizer::V5);
+        let d = decide("bash", &raw, &crushed, &P, PATH, Tokenizer::V5, true);
         assert_eq!((d.replace, d.why), (true, Why::KeepsFailures));
+        // the same words in grep hits are just text: no exception
+        let d = decide("grep", &raw, &crushed, &P, PATH, Tokenizer::V5, false);
+        assert_eq!((d.replace, d.why), (false, Why::Costlier));
     }
 
     #[test]

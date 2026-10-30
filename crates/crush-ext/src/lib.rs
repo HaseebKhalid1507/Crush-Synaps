@@ -26,7 +26,7 @@ pub mod stats;
 pub mod store;
 
 use config::{ExtConfig, Live};
-use crush_core::{classify, compress_classified, Input};
+use crush_core::{classify, compress_classified, Class, Input};
 use serde_json::{json, Value};
 use std::io::Write;
 use std::path::{Path, PathBuf};
@@ -130,7 +130,7 @@ pub fn process(
     if !o.changed() {
         return Verdict::Continue(o.why.as_str());
     }
-    let d = spill::decide(call.tool, out, &o.text, &cfg.spill, spill_path, c.tokenizer);
+    let d = spill::decide(call.tool, out, &o.text, &cfg.spill, spill_path, c.tokenizer, class == Class::Log);
     if !d.replace {
         return Verdict::Continue(d.why.as_str());
     }
