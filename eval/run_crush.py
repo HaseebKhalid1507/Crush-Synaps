@@ -33,7 +33,8 @@ from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))
-from common import CORPUS_DIR, FIXTURES, OUT, REPO, quantile, read_jsonl, write_jsonl_private  # noqa: E402
+from common import (CORPUS_DIR, EVAL_CONFIG, FIXTURES, OUT, REPO, quantile, read_jsonl, tagged,  # noqa: E402
+                    write_jsonl_private)
 
 TARGET = Path(os.environ.get("CARGO_TARGET_DIR", REPO / "target"))
 DRIVER = TARGET / "release" / "crush-eval-driver"
@@ -53,7 +54,7 @@ def load_samples(which: str):
 
 
 def results_path(which: str) -> Path:
-    return (CORPUS_DIR / "crush2.results.jsonl") if which == "corpus" else (OUT / "fixtures.crush2.results.jsonl")
+    return (CORPUS_DIR / tagged("crush2.results.jsonl")) if which == "corpus" else (OUT / tagged("fixtures.crush2.results.jsonl"))
 
 
 def label(r) -> str | None:
@@ -61,7 +62,8 @@ def label(r) -> str | None:
 
 
 def run_driver(samples, reps: int, extra=()):
-    p = subprocess.Popen([str(DRIVER), "--reps", str(reps), *extra], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    cfg = ["--config", EVAL_CONFIG] if EVAL_CONFIG else []
+    p = subprocess.Popen([str(DRIVER), "--reps", str(reps), *cfg, *extra], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                          text=True, encoding="utf-8")
     res = []
 
@@ -105,7 +107,8 @@ def read_frame(f):
 
 def run_e2e(samples):
     raw_dir = tempfile.mkdtemp(prefix="crush-e2e-")
-    p = subprocess.Popen([str(EXT), "--keep-raw-dir", raw_dir], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    cfg = ["--config", EVAL_CONFIG] if EVAL_CONFIG else []
+    p = subprocess.Popen([str(EXT), "--keep-raw-dir", raw_dir, *cfg], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     err_lines = []
     threading.Thread(target=lambda: err_lines.extend(p.stderr.read().decode(errors="replace").splitlines()), daemon=True).start()
@@ -218,7 +221,7 @@ def main() -> int:
                            "p50_ge2k": quantile(e2e_big, .5), "p99_ge2k": quantile(e2e_big, .99), "n_ge2k": len(e2e_big)}},
     }
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / f"{args.set}.run.json").write_text(json.dumps(summary, indent=2))
+    (OUT / tagged(f"{args.set}.run.json")).write_text(json.dumps(summary, indent=2))
     print(json.dumps(summary, indent=2))
     return 0
 

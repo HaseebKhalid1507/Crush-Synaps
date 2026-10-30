@@ -1,7 +1,7 @@
 {
   "name": "crush",
   "version": "0.2.0",
-  "description": "Tool-output compressor (crush 2). Classifies every tool result and applies only transforms that passed a token, accuracy and edit-safety gate: grep/rg hits grouped by file (full-path headings, every line byte-exact), identical-line runs counted in words. File views and diffs are never changed. Pass-through on any doubt.",
+  "description": "Tool-output compressor (crush 2). Classifies every tool result and applies only transforms that passed a token, accuracy and edit-safety gate: identical-line runs written once with a counted note (lossless); progress redraws and blobs too when the raw is kept (--keep-raw-dir). File views, diffs and grep hits are never changed. Pass-through on any doubt.",
   "author": "Jawz",
   "commands": [
     {

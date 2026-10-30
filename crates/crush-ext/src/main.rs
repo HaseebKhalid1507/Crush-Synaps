@@ -211,8 +211,14 @@ mod tests {
     }
 
     #[test]
-    fn groups_grep_hits() {
+    fn grep_hits_pass_through_by_default_and_group_when_enabled() {
+        let out: String = (1..40)
+            .map(|i| format!("crates/agent-engine/src/runtime/stream.rs:{i}:    let value_{i} = compute();\n"))
+            .collect();
+        let p = json!({"kind": "after_tool_call", "tool_name": "bash", "tool_input": {"command": "grep -rn value crates"}, "tool_output": out});
+        assert_eq!(shim().hook(Some(&p))["action"], "continue");
         let mut s = shim();
+        s.cfg.transforms.search_group = true;
         let out: String = (1..40)
             .map(|i| format!("crates/agent-engine/src/runtime/stream.rs:{i}:    let value_{i} = compute();\n"))
             .collect();

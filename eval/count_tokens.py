@@ -22,7 +22,7 @@ from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))
-from common import OUT, quantile, read_jsonl  # noqa: E402
+from common import OUT, quantile, read_jsonl, tagged  # noqa: E402
 from tokens import TokenCounter  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -124,7 +124,7 @@ def main() -> int:
     out["token_api"] = tc.stats()
     out["elapsed_s"] = round(time.time() - t0, 1)
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / f"tokens.{args.set}.json").write_text(json.dumps(out, indent=1))
+    (OUT / tagged(f"tokens.{args.set}.json")).write_text(json.dumps(out, indent=1))
     print(json.dumps({"set": args.set, "fired": len(fired), "token_api": out["token_api"], "elapsed_s": out["elapsed_s"],
                       "grew": {m: agg[m]["grew_real_tokens"] for m in models}}, indent=1))
     return 0

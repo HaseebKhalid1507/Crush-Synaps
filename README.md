@@ -23,9 +23,11 @@ Results, gates and method: [`eval/RESULTS.md`](eval/RESULTS.md).
 | class | what | transform |
 |---|---|---|
 | CONTENT | `read`, `cat`, `sed -n`, `head`, `git show`/`diff` | none: byte-identical, enforced in code |
-| SEARCH | `grep`, `rg`, `git grep` | hits grouped under a full-path heading (rg `--heading` layout); every `N:text` line byte-exact |
+| SEARCH | `grep`, `rg`, `git grep` | none by default. Grouping by file (below) is built and gated, and **ships disabled**: it cut ~20% of the tokens of the grep output it fired on, but both Haiku and Sonnet attributed hits to the wrong file, line or count more often |
 | LOG, LISTING, VCS, STRUCTURED, UNKNOWN | builds, tests, listings, git, JSON, everything else | `\r` progress collapsed to its final state; identical-line runs written once plus `[crush: previous line repeated 44 more times; 45 identical lines in total]`; long base64/hex/minified blobs elided with a marker pointing at the raw |
 | PROSE | forum, memory, worker reports, web pages | none (documents and messages) |
+
+SEARCH grouping (`search_group`, off by default), rg `--heading` layout:
 
 ```text
 crates/agent-engine/src/runtime/stream.rs:1014:    let x = a();      crates/agent-engine/src/runtime/stream.rs
@@ -40,6 +42,8 @@ src/main.rs:7:fn main() {                                             1016:    l
 Nothing is reordered or abbreviated: heading + `:`/`-` + line rebuilds every
 original line, and the gate checks that on every result. No shared-prefix
 factoring, no dictionary codes, no `(×N)`: those are what made v0.1 hard to read.
+Even so, a hit separated from its path reads worse than `path:N:text`; Phase 2
+has the numbers ([`eval/RESULTS.md`](eval/RESULTS.md)).
 
 The transforms that lose information (progress frames, blobs) only run when the
 host promises to keep the raw output (`Input::raw_ref`); their markers say where
@@ -78,7 +82,7 @@ size limits and the gain margin.
 
 ```bash
 cargo build --release
-grep -rn foo src | target/release/crush --command 'grep -rn foo src' --explain
+cargo test 2>&1 | target/release/crush --command 'cargo test' --explain
 target/release/crush measure --command 'grep -rn foo .' out1.txt out2.txt
 ```
 

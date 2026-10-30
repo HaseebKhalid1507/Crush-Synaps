@@ -99,11 +99,13 @@ impl ClassSwitches {
 }
 
 /// Per-transform switches. Defaults reflect the accuracy gate: a transform
-/// that failed parity ships disabled.
+/// that failed parity ships disabled (`search_group`, see eval/RESULTS.md).
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(default, deny_unknown_fields)]
 pub struct TransformSwitches {
-    /// Grep/rg hits grouped under a full-path heading (SEARCH).
+    /// Grep/rg hits grouped under a full-path heading (SEARCH). Off: on real
+    /// grep output it cut ~20% of SEARCH tokens but Sonnet and Haiku attributed
+    /// hits to the wrong file / line / count more often (eval/RESULTS.md).
     pub search_group: bool,
     /// `\r` progress rewrites collapsed to the final visible line (lossy).
     pub progress: bool,
@@ -115,7 +117,7 @@ pub struct TransformSwitches {
 
 impl Default for TransformSwitches {
     fn default() -> Self {
-        Self { search_group: true, progress: true, repeats: true, blobs: true }
+        Self { search_group: false, progress: true, repeats: true, blobs: true }
     }
 }
 

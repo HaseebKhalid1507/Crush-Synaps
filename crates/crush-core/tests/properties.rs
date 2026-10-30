@@ -33,8 +33,10 @@ const COMMANDS: &[&str] = &[
 const TOOLS: &[&str] = &["bash", "read", "grep", "ls", "forum_read", "web-tools_fetch", "unknown_tool"];
 
 fn cfgs() -> Vec<Config> {
-    let small = Config { min_bytes: 0, min_gain_tokens: 0, min_gain_ratio: 0.0, ..Config::default() };
-    vec![Config::default(), small]
+    let mut all_on = Config { min_bytes: 0, min_gain_tokens: 0, min_gain_ratio: 0.0, ..Config::default() };
+    all_on.transforms.search_group = true;
+    all_on.classes.prose = true;
+    vec![Config::default(), all_on]
 }
 
 /// Text with the shapes crush cares about mixed in at random.
