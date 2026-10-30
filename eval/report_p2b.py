@@ -93,8 +93,10 @@ def sec_spill(tc, spc, spc_v, spf, spf_v):
     lines = [table(["config", "class", "transforms", "fired", "spilled raw → crushed", "saved raw 5.x", "% of all (raw) 5.x",
                     "A: saved after spill 5.x", "A: % of all after spill 5.x", "A: 4.x", "A: costlier",
                     "B: saved after spill 5.x", "B: % of all after spill 5.x", "B: 4.x", "B: costlier"], rows),
-             "", "A = spill decided on the crushed text's size (compress, then spill if still over 12 KiB: today's order). "
-                 "B = spill decided on the raw's size, preview of the crushed text, raw kept in the spill file."]
+             "", "A = spill decided on the crushed text's size: what Synaps does with crush as an extension (it spills the "
+                 "post-hook text). B = spill decided on the raw's size, preview of the crushed text, raw kept: what the "
+                 "shim can do itself (cut the crushed text to head + tail when the raw is over 12 KiB). Only results a "
+                 "Phase 2B transform fired on are listed; other phases' after-spill effects are in their sections."]
     big = spc.get("spilled_results", {}).get(M5, {})
     if big:
         n = sum(v["n"] for v in big.values())
@@ -128,9 +130,10 @@ def sec_spill(tc, spc, spc_v, spf, spf_v):
 
 
 def p2b_records(acc):
-    """The Phase 2B run keeps its outputs under accuracy_p2b.* (the general
-    accuracy.* files belong to whichever full `make eval` ran last)."""
-    recs = list(read_jsonl(OUT / "accuracy_p2b.fixtures.jsonl")) if (OUT / "accuracy_p2b.fixtures.jsonl").exists() else []
+    """The Phase 2B run was tagged (CRUSH_EVAL_ACC_TAG=p2b): accuracy.*.p2b.*
+    (the untagged files belong to whichever full `make eval` ran last)."""
+    fx = OUT / "accuracy.fixtures.p2b.jsonl"
+    recs = list(read_jsonl(fx)) if fx.exists() else []
     for rn in acc.get("runs", [acc.get("run")]):
         f = CORPUS_DIR / "accuracy" / f"{rn}.jsonl"
         if f.exists():
@@ -215,7 +218,7 @@ def render(md: str, replace) -> str:
     md = replace(md, "p2b_tokens", sec_tokens(tc, ts))
     md = replace(md, "p2b_spill", sec_spill(tc, load("spill.corpus.json"), load("spill.corpus.search_on.json"),
                                             load("spill.fixtures.json"), load("spill.fixtures.search_on.json")))
-    acc = load("accuracy_p2b.summary.json") or load("accuracy.summary.json")
+    acc = load("accuracy.summary.p2b.json")
     if acc:
         md = replace(md, "p2b_accuracy", sec_accuracy(acc))
     md = replace(md, "p2b_checks", sec_checks(load("p2b_checks.json"), load("p2b_checks.search_on.json")))

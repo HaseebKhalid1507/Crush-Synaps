@@ -16,7 +16,9 @@ the raw-token numbers from count_tokens.py. Two host policies:
   whole and can cost more than the raw's 7 KiB preview would have;
 - B, "spill on raw size" (spill if the raw > 12 KiB, preview the crushed
   text, keep the raw in the spill file): never more than the preview budget,
-  and the preview is denser. Recommended for Phase 3. For the class denominators it
+  and the preview is denser. crush stays an extension and Synaps spills the
+  post-hook text (A), so B is for the shim to do: cut the crushed text to the
+  same head + tail when the raw is over 12 KiB, pointing at the raw it keeps. For the class denominators it
 also counts the preview of every corpus result over the threshold (the rest
 cost what they cost raw), so "% of tool-result tokens after spill" uses the
 same yardstick on both sides.

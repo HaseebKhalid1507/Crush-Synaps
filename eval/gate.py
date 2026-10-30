@@ -106,10 +106,10 @@ for tag in ("", ".search_on"):
             for m, by in sp["fired_by"].items():
                 # host policy B (spill decided on the raw's size, preview of the
                 # crushed text): what Phase 3 should wire; policy A is reported.
-                # Default config: everything that ships. Candidates: the Phase 2B
-                # ones (other phases' candidates are reported in their sections).
-                rows = {"*": by.get("*|*", {})} if not tag else \
-                    {k: v for k, v in by.items() if any(t in k for t in ("test_pass", "build_progress", "json_minify"))}
+                # Phase 2B's transforms, shipped and candidates (other phases'
+                # after-spill effects are counted in their own sections, e.g.
+                # search_elide's in Phase 2A's after_spill.py)
+                rows = {k: v for k, v in by.items() if any(t in k for t in ("test_pass", "build_progress", "json_minify"))}
                 for k, a in rows.items():
                     check(a.get("grew_after_spill_b", 0) == 0,
                           f"{s}{tag} {k}: fired results costlier after spill, spill-on-raw-size ({m}): {a.get('grew_after_spill_b', 0)} "
