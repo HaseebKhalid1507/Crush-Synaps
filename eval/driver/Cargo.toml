@@ -3,10 +3,10 @@ name = "crush-eval-driver"
 version = "0.0.0"
 edition = "2021"
 publish = false
-description = "Runs the crush library in-process over a JSONL corpus (eval harness only)."
+description = "Runs crush-core in-process over a JSONL corpus (eval harness only)."
 
 [dependencies]
-crush = { path = "../.." }
+crush-core = { path = "../../crates/crush-core" }
 serde_json = "1"
 
 [profile.release]
