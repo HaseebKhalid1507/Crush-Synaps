@@ -1,0 +1,17 @@
+[package]
+name = "crush-core"
+description = "Pure tool-output compressor: classify, transform, and check invariants. No I/O."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+memchr = { workspace = true }
+
+[dev-dependencies]
+proptest = "1"
+serde_json = { workspace = true }
