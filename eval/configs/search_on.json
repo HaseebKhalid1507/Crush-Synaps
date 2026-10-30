@@ -1,1 +1,1 @@
-{ "transforms": { "search_group": true } }
+{ "transforms": { "search_group": true, "search_elide": false } }

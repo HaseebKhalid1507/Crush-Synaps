@@ -52,19 +52,29 @@ for s in ("fixtures", "corpus"):
         for m, a in t["fired"].items():
             check(a["grew_real_tokens"] == 0, f"{s}: fired results with more real tokens ({m}): {a['grew_real_tokens']}")
 
-for tag in ("", ".search_on"):
+for tag in ("", ".search_on", ".p2a_on"):
     es = load(f"edit_safety{tag}.json")
     if es:
         for s, r in es.items():
             check(r["content_changed"] == 0, f"{s}{tag}: CONTENT byte changes {r['content_changed']}")
             check(r["search_rebuild_failures"] == 0, f"{s}{tag}: SEARCH rebuild failures {r['search_rebuild_failures']}")
+            if "search_elide_failures" in r:
+                check(r["search_elide_failures"] == 0, f"{s}{tag}: SEARCH cut lines not verbatim slices / wrong counts "
+                      f"{r['search_elide_failures']} (of {r['search_elide_samples']})")
+                check(r["ls_columns_restore_failures"] == 0, f"{s}{tag}: ls -l factoring not restorable "
+                      f"{r['ls_columns_restore_failures']} (of {r['ls_columns_samples']})")
     for s in ("fixtures", "corpus"):
         t = load(f"tokens.{s}{tag}.json") if tag else None
+        sp = load(f"after_spill.{s}{tag}.json") if tag else None
+        if sp:
+            for m, a in sp["by_model"].items():
+                g = a.get("*|*", {})
+                check(g.get("grew_raw", 0) == 0, f"{s}{tag}: fired results with more real tokens before spill ({m}): {g.get('grew_raw', 0)}")
         if t:
             for m, a in t["fired"].items():
                 check(a["grew_real_tokens"] == 0, f"{s}{tag}: fired results with more real tokens ({m}): {a['grew_real_tokens']}")
 
-for tag in ("", ".search_on"):
+for tag in ("", ".search_on", ".p2a_on"):
     syn = load(f"synthetic{tag}.json")
     if syn:
         for x in syn:

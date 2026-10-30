@@ -283,6 +283,11 @@ def sec_estimator(est, lay):
 
 def replace(md: str, name: str, content: str) -> str:
     a, b = f"<!-- BEGIN:{name} -->", f"<!-- END:{name} -->"
+    # an input this checkout doesn't have (e.g. a phase's private accuracy
+    # records) keeps the section as it was
+    if content.startswith("(not run)") or content.startswith("(corpus token pass not run)"):
+        if a in md and b in md:
+            return md
     if a in md and b in md:
         pre, rest = md.split(a, 1)
         _, post = rest.split(b, 1)
@@ -309,6 +314,8 @@ def main() -> int:
     md = replace(md, "classifier", sec_classifier(load("classifier.json"), load("classifier.crush2.json"), tc))
     md = replace(md, "latency", sec_latency(rf, rc, load("synthetic.json")))
     md = replace(md, "estimator", sec_estimator(load("estimator.json"), load("search_layout.json")))
+    import report_p2a  # Phase 2A: SEARCH layout and LISTING transforms
+    md = report_p2a.apply(md, replace)
     RESULTS.write_text(md)
     print(f"wrote {RESULTS}")
     return 0

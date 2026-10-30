@@ -82,6 +82,7 @@ def gen_grep(out, rng, sample):
                   "including every directory component.",
               h[0], "grep:path", "exact")
             q(qs, f"What line number is the match whose text includes `{s}`?", h[1], "grep:line", "int")
+            qs[-1]["needle"] = qs[-2]["needle"] = s
             break
     if len(per) > 1:
         (f1, n1), (f2, n2) = per.most_common(2)
@@ -102,6 +103,7 @@ def gen_grep_single(out, rng, sample):
         s = _snip(h[1], texts, rng)
         if s:
             q(qs, f"On which line number is the line that includes `{s}`?", h[0], "numbered:line", "int")
+            qs[-1]["needle"] = s
     return qs[:2]
 
 
@@ -512,6 +514,9 @@ GENERATORS = [gen_cargo_test, gen_pytest, gen_node, gen_compile, gen_gitlog, gen
               gen_pr_list, gen_grep, gen_grep_single, gen_pathlist]
 # always asked when they apply: they probe crush 2's generic transforms
 ALWAYS = [gen_progress, gen_blob]
+# Phase 2A: over-long SEARCH lines, ls -l owner/group columns
+from questions_p2a import gen_grep_long, gen_ls_columns  # noqa: E402
+ALWAYS += [gen_grep_long, gen_ls_columns]
 
 
 def gen_questions(sample: dict, max_q: int = 6) -> list[dict]:
