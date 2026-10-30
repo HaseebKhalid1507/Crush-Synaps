@@ -91,6 +91,9 @@ if [ "$CORPUS" = 1 ]; then
   [ -s eval/out/anatomy.json ] || python3 eval/anatomy.py >/dev/null
 fi
 
+step "crush-ext shim: truncation, runtime name, raw store, spill rule, config, /crush, retention, timing"
+python3 eval/shim_checks.py 2>/dev/null || true   # gate.py fails on any broken check
+
 step "latency: 256 KiB worst cases"
 mkdir -p eval/out && "$CARGO_TARGET_DIR/release/crush-eval-driver" --synthetic > eval/out/synthetic.json
 "$CARGO_TARGET_DIR/release/crush-eval-driver" --synthetic --config eval/configs/search_on.json > eval/out/synthetic.search_on.json

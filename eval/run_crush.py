@@ -24,6 +24,7 @@ import json
 import os
 import random
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -107,8 +108,12 @@ def read_frame(f):
 
 def run_e2e(samples):
     raw_dir = tempfile.mkdtemp(prefix="crush-e2e-")
+    state_dir = tempfile.mkdtemp(prefix="crush-e2e-state-")
     cfg = ["--config", EVAL_CONFIG] if EVAL_CONFIG else []
-    p = subprocess.Popen([str(EXT), "--keep-raw-dir", raw_dir, *cfg], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    # library parity: the shim's own spill rule is off here (eval/shim_checks.py
+    # tests it), raws go flat into raw_dir, stats into a throwaway state dir
+    p = subprocess.Popen([str(EXT), "--keep-raw-dir", raw_dir, "--state-dir", state_dir,
+                          "--set", "spill_threshold_bytes=0", *cfg], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     err_lines = []
     threading.Thread(target=lambda: err_lines.extend(p.stderr.read().decode(errors="replace").splitlines()), daemon=True).start()
@@ -143,6 +148,7 @@ def run_e2e(samples):
     for f in os.listdir(raw_dir):
         os.unlink(os.path.join(raw_dir, f))
     os.rmdir(raw_dir)
+    shutil.rmtree(state_dir, ignore_errors=True)
     return init, out, rc, err_lines, kept
 
 
