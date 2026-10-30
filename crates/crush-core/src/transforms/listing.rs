@@ -3,10 +3,10 @@
 //!
 //! ```text
 //! total 24                                   total 24
-//! drwxr-xr-x  3 haseeb haseeb   80 Oct 14 .  [crush: 3 of the 4 entries below are owned by user haseeb, group haseeb; their rows omit those two columns (ls -go layout); the other entry shows its own owner and group]
+//! drwxr-xr-x  3 worker worker   80 Oct 14 .  [crush: 3 of the 4 entries below are owned by user worker, group worker; their rows omit those two columns (ls -go layout); the other entry shows its own owner and group]
 //! drwxrwxrwt 61 root   root   141K Oct 14 .. drwxr-xr-x  3   80 Oct 14 .
-//! -rw-r--r--  1 haseeb haseeb  152 Oct 14 a  drwxrwxrwt 61 root   root   141K Oct 14 ..
-//! -rw-r--r--  1 haseeb haseeb   56 Oct 14 b  -rw-r--r--  1  152 Oct 14 a
+//! -rw-r--r--  1 worker worker  152 Oct 14 a  drwxrwxrwt 61 root   root   141K Oct 14 ..
+//! -rw-r--r--  1 worker worker   56 Oct 14 b  -rw-r--r--  1  152 Oct 14 a
 //!                                            -rw-r--r--  1   56 Oct 14 b
 //! ```
 //!
@@ -280,9 +280,10 @@ pub fn factor(text: &str, command: Option<&str>) -> Option<String> {
         let ok = count * 100 >= total * MIN_SHARE_PCT
             && count >= MIN_ROWS
             // worth it: the bytes left out pay for the note. (Per-block
-            // bytes, not the estimator: it prices rare names like `haseeb`
-            // at ~1 token where count_tokens says 3-4. The gate still judges
-            // the whole result in estimated tokens, so this only picks blocks.)
+            // bytes, not the estimator: it prices a rare login name at about
+            // one token where count_tokens measured 3-4, e.g. 9 tokens per
+            // row for one user's owner + group on 5.x. The gate still judges
+            // the whole result in estimated tokens; this only picks blocks.)
             && count * span_len > note(count, total, owner, group).len() + 1
             && block.iter().all(|r| {
                 let l = r.line(body).as_bytes();
@@ -483,23 +484,23 @@ mod tests {
     use super::*;
 
     const LA: &str = "total 24\n\
-drwxr-xr-x    3 haseeb haseeb   80 Oct 14 00:39 .\n\
+drwxr-xr-x    3 worker worker   80 Oct 14 00:39 .\n\
 drwxrwxrwt 6210 root   root   141K Oct 14 00:39 ..\n\
-drwxr-xr-x    2 haseeb haseeb   60 Oct 14 00:39 nested\n\
--rw-r--r--    1 haseeb haseeb  152 Oct 14 00:39 stand.md\n\
--rw-r--r--    1 haseeb haseeb   56 Oct 14 02:53 stand.txt\n\
-lrwxrwxrwx    1 haseeb haseeb   11 Oct 14 02:53 link -> stand.txt\n\
--rwxr-xr-x    1 haseeb haseeb 4096 Oct  1  2025 old.sh\n\
--rw-r--r--    1 haseeb haseeb  733 Oct  2 11:20 notes.md\n\
--rw-r--r--    1 haseeb haseeb   19 Oct  3 08:01 .env\n\
--rw-r--r--    1 haseeb haseeb  100 Oct  4 00:10 part-00.log\n\
--rw-r--r--    1 haseeb haseeb  101 Oct  4 01:11 part-01.log\n\
--rw-r--r--    1 haseeb haseeb  102 Oct  4 02:12 part-02.log\n\
--rw-r--r--    1 haseeb haseeb  103 Oct  4 03:13 part-03.log\n\
--rw-r--r--    1 haseeb haseeb  104 Oct  4 04:14 part-04.log\n\
--rw-r--r--    1 haseeb haseeb  105 Oct  4 05:15 part-05.log\n\
--rw-r--r--    1 haseeb haseeb  106 Oct  4 06:10 part-06.log\n\
--rw-r--r--    1 haseeb haseeb  107 Oct  4 07:11 part-07.log\n";
+drwxr-xr-x    2 worker worker   60 Oct 14 00:39 nested\n\
+-rw-r--r--    1 worker worker  152 Oct 14 00:39 stand.md\n\
+-rw-r--r--    1 worker worker   56 Oct 14 02:53 stand.txt\n\
+lrwxrwxrwx    1 worker worker   11 Oct 14 02:53 link -> stand.txt\n\
+-rwxr-xr-x    1 worker worker 4096 Oct  1  2025 old.sh\n\
+-rw-r--r--    1 worker worker  733 Oct  2 11:20 notes.md\n\
+-rw-r--r--    1 worker worker   19 Oct  3 08:01 .env\n\
+-rw-r--r--    1 worker worker  100 Oct  4 00:10 part-00.log\n\
+-rw-r--r--    1 worker worker  101 Oct  4 01:11 part-01.log\n\
+-rw-r--r--    1 worker worker  102 Oct  4 02:12 part-02.log\n\
+-rw-r--r--    1 worker worker  103 Oct  4 03:13 part-03.log\n\
+-rw-r--r--    1 worker worker  104 Oct  4 04:14 part-04.log\n\
+-rw-r--r--    1 worker worker  105 Oct  4 05:15 part-05.log\n\
+-rw-r--r--    1 worker worker  106 Oct  4 06:10 part-06.log\n\
+-rw-r--r--    1 worker worker  107 Oct  4 07:11 part-07.log\n";
 
     #[test]
     fn factors_the_common_pair_and_keeps_exceptions() {
@@ -507,7 +508,7 @@ lrwxrwxrwx    1 haseeb haseeb   11 Oct 14 02:53 link -> stand.txt\n\
         assert_eq!(
             f,
             "total 24\n\
-[crush: 16 of the 17 entries below are owned by user haseeb, group haseeb; their rows omit those two columns (ls -go layout); the other entry shows its own owner and group]\n\
+[crush: 16 of the 17 entries below are owned by user worker, group worker; their rows omit those two columns (ls -go layout); the other entry shows its own owner and group]\n\
 drwxr-xr-x    3   80 Oct 14 00:39 .\n\
 drwxrwxrwt 6210 root   root   141K Oct 14 00:39 ..\n\
 drwxr-xr-x    2   60 Oct 14 00:39 nested\n\
@@ -546,13 +547,13 @@ lrwxrwxrwx    1   11 Oct 14 02:53 link -> stand.txt\n\
     fn leaves_alone() {
         // too few rows; ls -o (no group); mixed owners
         assert_eq!(factor("-rw-r--r-- 1 a a 1 Oct 1 00:00 x\n-rw-r--r-- 1 a a 1 Oct 1 00:00 y\n", None), None);
-        let o: String = (0..8).map(|i| format!("-rw-r--r-- 1 haseeb 4096 Oct 12 09:41 f{i}\n")).collect();
+        let o: String = (0..8).map(|i| format!("-rw-r--r-- 1 worker 4096 Oct 12 09:41 f{i}\n")).collect();
         assert_eq!(factor(&o, Some("ls -lo")), None);
         assert_eq!(factor(&o, None), None);
         let mixed: String = (0..8).map(|i| format!("-rw-r--r-- 1 u{i} g {i:>3} Oct 12 09:41 f{i}\n")).collect();
         assert_eq!(factor(&mixed, None), None);
         // `ls -o` with a numeric size the same everywhere: the command says so
-        let num: String = (0..8).map(|i| format!("drwxr-xr-x 2 haseeb 4096 1730000000 d{i}\n")).collect();
+        let num: String = (0..8).map(|i| format!("drwxr-xr-x 2 worker 4096 1730000000 d{i}\n")).collect();
         assert_eq!(factor(&num, Some("ls -o --time-style=+%s")), None);
         assert_eq!(factor(&num, None), None, "numeric group with a named owner");
     }

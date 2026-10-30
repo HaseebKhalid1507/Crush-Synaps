@@ -195,7 +195,7 @@ fn synthetic(cfg: &Config) {
                 if i % 40 == 1 {
                     format!("drwxr-xr-x 1 root   root   {:>9} Oct 12 09:41 ..\n", 4096)
                 } else {
-                    format!("-rw-r--r-- 1 haseeb haseeb {:>9} Oct 12 09:41 data-{i}.parquet\n", 1000 + i * 7)
+                    format!("-rw-r--r-- 1 worker worker {:>9} Oct 12 09:41 data-{i}.parquet\n", 1000 + i * 7)
                 }
             }),
         ),
@@ -204,7 +204,7 @@ fn synthetic(cfg: &Config) {
     let mut ls64 = String::new();
     let mut i = 0;
     while ls64.len() < 64 * 1024 - 200 {
-        ls64.push_str(&format!("-rw-r--r-- 1 haseeb haseeb {:>9} Oct 12 09:41 data-{i}.parquet\n", 1000 + i * 7));
+        ls64.push_str(&format!("-rw-r--r-- 1 worker worker {:>9} Oct 12 09:41 data-{i}.parquet\n", 1000 + i * 7));
         i += 1;
     }
     let mut shapes = shapes;
