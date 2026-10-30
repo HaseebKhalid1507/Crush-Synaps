@@ -1,0 +1,33 @@
+total 260
+drwxr-xr-x 13 dev dev   640 Oct 30 01:08 .
+drwx------  8 dev dev   160 Oct 30 01:08 ..
+drwxr-xr-x  2 dev dev    60 Oct 30 01:08 .cargo
+drwxr-xr-x  7 dev dev   260 Oct 30 01:08 .git
+drwxr-xr-x  4 dev dev   100 Oct 30 01:08 .github
+-rw-r--r--  1 dev dev   266 Oct 30 01:08 .gitignore
+-rw-r--r--  1 dev dev    11 Oct 30 01:08 .ignore
+-rw-r--r--  1 dev dev   192 Oct 30 01:08 .nvim.lua
+-rw-r--r--  1 dev dev  1878 Oct 30 01:08 AI_POLICY.md
+-rw-r--r--  1 dev dev 90034 Oct 30 01:08 CHANGELOG.md
+-rw-r--r--  1 dev dev   213 Oct 30 01:08 CONTRIBUTING.md
+-rw-r--r--  1 dev dev   126 Oct 30 01:08 COPYING
+-rw-r--r--  1 dev dev 13008 Oct 30 01:08 Cargo.lock
+-rw-r--r--  1 dev dev  3223 Oct 30 01:08 Cargo.toml
+-rw-r--r--  1 dev dev 43307 Oct 30 01:08 FAQ.md
+-rw-r--r--  1 dev dev 40895 Oct 30 01:08 GUIDE.md
+lrwxrwxrwx  1 dev dev     8 Oct 30 01:08 HomebrewFormula -> pkg/brew
+-rw-r--r--  1 dev dev  1081 Oct 30 01:08 LICENSE-MIT
+-rw-r--r--  1 dev dev 21599 Oct 30 01:08 README.md
+-rw-r--r--  1 dev dev  2878 Oct 30 01:08 RELEASE-CHECKLIST.md
+-rw-r--r--  1 dev dev  1211 Oct 30 01:08 UNLICENSE
+drwxr-xr-x  3 dev dev    80 Oct 30 01:08 benchsuite
+-rw-r--r--  1 dev dev  2246 Oct 30 01:08 build.rs
+drwxr-xr-x  2 dev dev   120 Oct 30 01:08 ci
+drwxr-xr-x 12 dev dev   240 Oct 30 01:08 crates
+drwxr-xr-x  3 dev dev   140 Oct 30 01:08 fuzz
+-rw-r--r--  1 dev dev     0 Oct 30 01:08 notes.md
+drwxr-xr-x  4 dev dev    80 Oct 30 01:08 pkg
+-rw-r--r--  1 dev dev    61 Oct 30 01:08 rustfmt.toml
+drwxr-xr-x  2 dev dev    80 Oct 30 01:08 scratch
+drwxr-xr-x  2 dev dev    60 Oct 30 01:08 scripts
+drwxr-xr-x  3 dev dev   260 Oct 30 01:08 tests

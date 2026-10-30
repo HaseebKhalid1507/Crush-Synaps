@@ -1,0 +1,428 @@
+crates/searcher/src/sink.rs:348:    pub fn byte_count(&self) -> u64 {
+crates/searcher/src/sink.rs:359:    pub fn binary_byte_offset(&self) -> Option<u64> {
+crates/searcher/src/sink.rs:379:    pub fn bytes(&self) -> &'b [u8] {
+crates/searcher/src/sink.rs:392:    pub fn lines(&self) -> LineIter<'b> {
+crates/searcher/src/sink.rs:401:    pub fn absolute_byte_offset(&self) -> u64 {
+crates/searcher/src/sink.rs:410:    pub fn line_number(&self) -> Option<u64> {
+crates/searcher/src/sink.rs:416:    pub fn buffer(&self) -> &'b [u8] {
+crates/searcher/src/sink.rs:423:    pub fn bytes_range_in_buffer(&self) -> std::ops::Range<usize> {
+crates/searcher/src/sink.rs:454:    pub fn bytes(&self) -> &'b [u8] {
+crates/searcher/src/sink.rs:460:    pub fn kind(&self) -> &SinkContextKind {
+crates/searcher/src/sink.rs:480:    pub fn absolute_byte_offset(&self) -> u64 {
+crates/searcher/src/sink.rs:490:    pub fn line_number(&self) -> Option<u64> {
+crates/searcher/src/searcher/mod.rs:62:    pub fn none() -> BinaryDetection {
+crates/searcher/src/searcher/mod.rs:79:    pub fn quit(binary_byte: u8) -> BinaryDetection {
+crates/searcher/src/searcher/mod.rs:95:    pub fn convert(binary_byte: u8) -> BinaryDetection {
+crates/searcher/src/searcher/mod.rs:102:    pub fn quit_byte(&self) -> Option<u8> {
+crates/searcher/src/searcher/mod.rs:112:    pub fn convert_byte(&self) -> Option<u8> {
+crates/searcher/src/searcher/mod.rs:137:    pub fn new(label: &str) -> Result<Encoding, ConfigError> {
+crates/searcher/src/searcher/mod.rs:310:    pub fn new() -> SearcherBuilder {
+crates/searcher/src/searcher/mod.rs:315:    pub fn build(&self) -> Searcher {
+crates/searcher/src/searcher/mod.rs:346:    pub fn line_terminator(
+crates/searcher/src/searcher/mod.rs:358:    pub fn invert_match(&mut self, yes: bool) -> &mut SearcherBuilder {
+crates/searcher/src/searcher/mod.rs:368:    pub fn line_number(&mut self, yes: bool) -> &mut SearcherBuilder {
+crates/searcher/src/searcher/mod.rs:388:    pub fn multi_line(&mut self, yes: bool) -> &mut SearcherBuilder {
+crates/searcher/src/searcher/mod.rs:399:    pub fn after_context(
+crates/searcher/src/searcher/mod.rs:413:    pub fn before_context(
+crates/searcher/src/searcher/mod.rs:431:    pub fn passthru(&mut self, yes: bool) -> &mut SearcherBuilder {
+crates/searcher/src/searcher/mod.rs:457:    pub fn heap_limit(
+crates/searcher/src/searcher/mod.rs:495:    pub fn memory_map(
+crates/searcher/src/searcher/mod.rs:510:    pub fn binary_detection(
+crates/searcher/src/searcher/mod.rs:533:    pub fn encoding(
+crates/searcher/src/searcher/mod.rs:553:    pub fn bom_sniffing(&mut self, yes: bool) -> &mut SearcherBuilder {
+crates/searcher/src/searcher/mod.rs:563:    pub fn stop_on_nonmatch(
+crates/searcher/src/searcher/mod.rs:583:    pub fn Dev55_matches(&mut self, limit: Option<u64>) -> &mut SearcherBuilder {
+crates/searcher/src/searcher/mod.rs:632:    pub fn new() -> Searcher {
+crates/searcher/src/searcher/mod.rs:643:    pub fn search_path<P, M, S>(
+crates/searcher/src/searcher/mod.rs:665:    pub fn search_file<M, S>(
+crates/searcher/src/searcher/mod.rs:727:    pub fn search_reader<M, R, S>(
+crates/searcher/src/searcher/mod.rs:769:    pub fn search_slice<M, S>(
+crates/searcher/src/searcher/mod.rs:798:    pub fn set_binary_detection(&mut self, detection: BinaryDetection) {
+crates/searcher/src/searcher/mod.rs:836:    pub fn line_terminator(&self) -> LineTerminator {
+crates/searcher/src/searcher/mod.rs:842:    pub fn binary_detection(&self) -> &BinaryDetection {
+crates/searcher/src/searcher/mod.rs:850:    pub fn invert_match(&self) -> bool {
+crates/searcher/src/searcher/mod.rs:857:    pub fn line_number(&self) -> bool {
+crates/searcher/src/searcher/mod.rs:864:    pub fn multi_line(&self) -> bool {
+crates/searcher/src/searcher/mod.rs:871:    pub fn stop_on_nonmatch(&self) -> bool {
+crates/searcher/src/searcher/mod.rs:885:    pub fn Dev55_matches(&self) -> Option<u64> {
+crates/searcher/src/searcher/mod.rs:896:    pub fn multi_line_with_matcher<M: Matcher>(&self, matcher: M) -> bool {
+crates/searcher/src/searcher/mod.rs:920:    pub fn after_context(&self) -> usize {
+crates/searcher/src/searcher/mod.rs:927:    pub fn before_context(&self) -> usize {
+crates/searcher/src/searcher/mod.rs:933:    pub fn passthru(&self) -> bool {
+crates/searcher/src/searcher/mmap.rs:54:    pub fn never() -> MmapChoice {
+crates/searcher/src/lines.rs:25:    pub fn new(line_term: u8, bytes: &'b [u8]) -> LineIter<'b> {
+crates/searcher/src/lines.rs:63:    pub fn new(line_term: u8, start: usize, end: usize) -> LineStep {
+crates/searcher/src/lines.rs:74:    pub fn next(&mut self, bytes: &[u8]) -> Option<(usize, usize)> {
+crates/regex/src/matcher.rs:36:    pub fn new() -> RegexMatcherBuilder {
+crates/regex/src/matcher.rs:45:    pub fn build(&self, pattern: &str) -> Result<RegexMatcher, Error> {
+crates/regex/src/matcher.rs:53:    pub fn build_many<P: AsRef<str>>(
+crates/regex/src/matcher.rs:92:    pub fn build_literals<B: AsRef<str>>(
+crates/regex/src/matcher.rs:103:    pub fn case_insensitive(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:120:    pub fn case_smart(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:131:    pub fn multi_line(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:143:    pub fn dot_matches_new_line(
+crates/regex/src/matcher.rs:157:    pub fn swap_greed(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:167:    pub fn ignore_whitespace(
+crates/regex/src/matcher.rs:179:    pub fn unicode(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:199:    pub fn octal(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:209:    pub fn size_limit(&mut self, bytes: usize) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:223:    pub fn dfa_size_limit(
+crates/regex/src/matcher.rs:256:    pub fn nest_limit(&mut self, limit: u32) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:281:    pub fn line_terminator(
+crates/regex/src/matcher.rs:300:    pub fn ban_byte(&mut self, byte: Option<u8>) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:322:    pub fn crlf(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:343:    pub fn word(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:351:    pub fn fixed_strings(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:358:    pub fn whole_line(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/regex/src/matcher.rs:385:    pub fn new(pattern: &str) -> Result<RegexMatcher, Error> {
+crates/regex/src/matcher.rs:401:    pub fn new_line_matcher(pattern: &str) -> Result<RegexMatcher, Error> {
+crates/regex/src/error.rs:34:    pub fn kind(&self) -> &ErrorKind {
+crates/printer/src/summary.rs:153:    pub fn new() -> SummaryBuilder {
+crates/printer/src/summary.rs:175:    pub fn build<W: WriteColor>(&self, wtr: W) -> Summary<W> {
+crates/printer/src/summary.rs:187:    pub fn build_no_color<W: io::Write>(&self, wtr: W) -> Summary<NoColor<W>> {
+crates/printer/src/summary.rs:196:    pub fn kind(&mut self, kind: SummaryKind) -> &mut SummaryBuilder {
+crates/printer/src/summary.rs:220:    pub fn color_specs(&mut self, specs: ColorSpecs) -> &mut SummaryBuilder {
+crates/printer/src/summary.rs:236:    pub fn hyperlink(
+crates/printer/src/summary.rs:264:    pub fn stats(&mut self, yes: bool) -> &mut SummaryBuilder {
+crates/printer/src/summary.rs:278:    pub fn path(&mut self, yes: bool) -> &mut SummaryBuilder {
+crates/printer/src/summary.rs:290:    pub fn exclude_zero(&mut self, yes: bool) -> &mut SummaryBuilder {
+crates/printer/src/summary.rs:299:    pub fn separator_field(&mut self, sep: Vec<u8>) -> &mut SummaryBuilder {
+crates/printer/src/summary.rs:315:    pub fn separator_path(&mut self, sep: Option<u8>) -> &mut SummaryBuilder {
+crates/printer/src/summary.rs:327:    pub fn path_terminator(
+crates/printer/src/summary.rs:364:    pub fn new(wtr: W) -> Summary<W> {
+crates/printer/src/summary.rs:377:    pub fn new_no_color(wtr: W) -> Summary<NoColor<W>> {
+crates/printer/src/summary.rs:390:    pub fn sink<'s, M: Matcher>(
+crates/printer/src/summary.rs:417:    pub fn sink_with_path<'p, 's, M, P>(
+crates/printer/src/summary.rs:454:    pub fn has_written(&self) -> bool {
+crates/printer/src/summary.rs:459:    pub fn get_mut(&mut self) -> &mut W {
+crates/printer/src/summary.rs:465:    pub fn into_inner(self) -> W {
+crates/printer/src/summary.rs:501:    pub fn has_match(&self) -> bool {
+crates/printer/src/summary.rs:520:    pub fn binary_byte_offset(&self) -> Option<u64> {
+crates/printer/src/summary.rs:529:    pub fn stats(&self) -> Option<&Stats> {
+crates/printer/src/stats.rs:27:    pub fn new() -> Stats {
+crates/printer/src/stats.rs:32:    pub fn elapsed(&self) -> Duration {
+crates/printer/src/stats.rs:37:    pub fn searches(&self) -> u64 {
+crates/printer/src/stats.rs:42:    pub fn searches_with_match(&self) -> u64 {
+crates/printer/src/stats.rs:47:    pub fn bytes_searched(&self) -> u64 {
+crates/printer/src/stats.rs:52:    pub fn bytes_printed(&self) -> u64 {
+crates/printer/src/stats.rs:60:    pub fn matched_lines(&self) -> u64 {
+crates/printer/src/stats.rs:67:    pub fn matches(&self) -> u64 {
+crates/printer/src/stats.rs:72:    pub fn add_elapsed(&mut self, duration: Duration) {
+crates/printer/src/stats.rs:77:    pub fn add_searches(&mut self, n: u64) {
+crates/printer/src/stats.rs:82:    pub fn add_searches_with_match(&mut self, n: u64) {
+crates/printer/src/stats.rs:87:    pub fn add_bytes_searched(&mut self, n: u64) {
+crates/printer/src/stats.rs:92:    pub fn add_bytes_printed(&mut self, n: u64) {
+crates/printer/src/stats.rs:97:    pub fn add_matched_lines(&mut self, n: u64) {
+crates/printer/src/stats.rs:102:    pub fn add_matches(&mut self, n: u64) {
+crates/printer/src/standard.rs:105:    pub fn new() -> StandardBuilder {
+crates/printer/src/standard.rs:127:    pub fn build<W: WriteColor>(&self, wtr: W) -> Standard<W> {
+crates/printer/src/standard.rs:140:    pub fn build_no_color<W: io::Write>(
+crates/printer/src/standard.rs:164:    pub fn color_specs(&mut self, specs: ColorSpecs) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:180:    pub fn hyperlink(
+crates/printer/src/standard.rs:203:    pub fn stats(&mut self, yes: bool) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:218:    pub fn heading(&mut self, yes: bool) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:229:    pub fn path(&mut self, yes: bool) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:238:    pub fn only_matching(&mut self, yes: bool) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:260:    pub fn per_match(&mut self, yes: bool) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:275:    pub fn per_match_one_line(&mut self, yes: bool) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:290:    pub fn replacement(
+crates/printer/src/standard.rs:306:    pub fn Dev55_columns(&mut self, limit: Option<u64>) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:321:    pub fn Dev55_columns_preview(&mut self, yes: bool) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:335:    pub fn column(&mut self, yes: bool) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:347:    pub fn byte_offset(&mut self, yes: bool) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:356:    pub fn trim_ascii(&mut self, yes: bool) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:374:    pub fn separator_search(
+crates/printer/src/standard.rs:391:    pub fn separator_context(
+crates/printer/src/standard.rs:407:    pub fn separator_field_match(
+crates/printer/src/standard.rs:423:    pub fn separator_field_context(
+crates/printer/src/standard.rs:444:    pub fn separator_path(&mut self, sep: Option<u8>) -> &mut StandardBuilder {
+crates/printer/src/standard.rs:457:    pub fn path_terminator(
+crates/printer/src/standard.rs:494:    pub fn new(wtr: W) -> Standard<W> {
+crates/printer/src/standard.rs:505:    pub fn new_no_color(wtr: W) -> Standard<NoColor<W>> {
+crates/printer/src/standard.rs:515:    pub fn sink<'s, M: Matcher>(
+crates/printer/src/standard.rs:541:    pub fn sink_with_path<'p, 's, M, P>(
+crates/printer/src/standard.rs:600:    pub fn has_written(&self) -> bool {
+crates/printer/src/standard.rs:605:    pub fn get_mut(&mut self) -> &mut W {
+crates/printer/src/standard.rs:611:    pub fn into_inner(self) -> W {
+crates/printer/src/standard.rs:658:    pub fn has_match(&self) -> bool {
+crates/printer/src/standard.rs:669:    pub fn match_count(&self) -> u64 {
+crates/printer/src/standard.rs:683:    pub fn binary_byte_offset(&self) -> Option<u64> {
+crates/printer/src/standard.rs:692:    pub fn stats(&self) -> Option<&Stats> {
+crates/printer/src/path.rs:39:    pub fn new() -> PathPrinterBuilder {
+crates/printer/src/path.rs:45:    pub fn build<W: WriteColor>(&self, wtr: W) -> PathPrinter<W> {
+crates/printer/src/path.rs:70:    pub fn color_specs(
+crates/printer/src/path.rs:89:    pub fn hyperlink(
+crates/printer/src/path.rs:108:    pub fn separator(&mut self, sep: Option<u8>) -> &mut PathPrinterBuilder {
+crates/printer/src/path.rs:119:    pub fn terminator(&mut self, terminator: u8) -> &mut PathPrinterBuilder {
+crates/printer/src/path.rs:150:    pub fn write(&mut self, path: &Path) -> io::Result<()> {
+crates/printer/src/json.rs:60:    pub fn new() -> JSONBuilder {
+crates/printer/src/json.rs:65:    pub fn build<W: io::Write>(&self, wtr: W) -> JSON<W> {
+crates/printer/src/json.rs:79:    pub fn pretty(&mut self, yes: bool) -> &mut JSONBuilder {
+crates/printer/src/json.rs:91:    pub fn always_begin_end(&mut self, yes: bool) -> &mut JSONBuilder {
+crates/printer/src/json.rs:106:    pub fn replacement(
+crates/printer/src/json.rs:496:    pub fn new(wtr: W) -> JSON<W> {
+crates/printer/src/json.rs:504:    pub fn sink<'s, M: Matcher>(
+crates/printer/src/json.rs:525:    pub fn sink_with_path<'p, 's, M, P>(
+crates/printer/src/json.rs:566:    pub fn has_written(&self) -> bool {
+crates/printer/src/json.rs:571:    pub fn get_mut(&mut self) -> &mut W {
+crates/printer/src/json.rs:577:    pub fn into_inner(self) -> W {
+crates/printer/src/json.rs:614:    pub fn has_match(&self) -> bool {
+crates/printer/src/json.rs:621:    pub fn match_count(&self) -> u64 {
+crates/printer/src/json.rs:635:    pub fn binary_byte_offset(&self) -> Option<u64> {
+crates/printer/src/json.rs:641:    pub fn stats(&self) -> &Stats {
+crates/printer/src/hyperlink/mod.rs:35:    pub fn new(
+crates/printer/src/hyperlink/mod.rs:78:    pub fn empty() -> HyperlinkFormat {
+crates/printer/src/hyperlink/mod.rs:83:    pub fn is_empty(&self) -> bool {
+crates/printer/src/hyperlink/mod.rs:89:    pub fn into_config(self, env: HyperlinkEnvironment) -> HyperlinkConfig {
+crates/printer/src/hyperlink/mod.rs:258:    pub fn new() -> HyperlinkEnvironment {
+crates/printer/src/hyperlink/mod.rs:267:    pub fn host(&mut self, host: Option<String>) -> &mut HyperlinkEnvironment {
+crates/printer/src/hyperlink/mod.rs:275:    pub fn wsl_prefix(
+crates/printer/src/hyperlink/mod.rs:946:pub fn hyperlink_aliases() -> Vec<HyperlinkAlias> {
+crates/printer/src/color.rs:10:pub fn default_color_specs() -> Vec<UserColorSpec> {
+crates/printer/src/color.rs:162:    pub fn to_color_spec(&self) -> ColorSpec {
+crates/printer/src/color.rs:213:    pub fn new(specs: &[UserColorSpec]) -> ColorSpecs {
+crates/printer/src/color.rs:232:    pub fn default_with_color() -> ColorSpecs {
+crates/printer/src/color.rs:237:    pub fn path(&self) -> &ColorSpec {
+crates/printer/src/color.rs:242:    pub fn line(&self) -> &ColorSpec {
+crates/printer/src/color.rs:247:    pub fn column(&self) -> &ColorSpec {
+crates/printer/src/color.rs:252:    pub fn matched(&self) -> &ColorSpec {
+crates/printer/src/color.rs:258:    pub fn highlight(&self) -> &ColorSpec {
+crates/pcre2/src/matcher.rs:22:    pub fn new() -> RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:37:    pub fn build(&self, pattern: &str) -> Result<RegexMatcher, Error> {
+crates/pcre2/src/matcher.rs:45:    pub fn build_many<P: AsRef<str>>(
+crates/pcre2/src/matcher.rs:94:    pub fn caseless(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:115:    pub fn case_smart(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:127:    pub fn dotall(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:135:    pub fn extended(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:148:    pub fn multi_line(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:160:    pub fn crlf(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:176:    pub fn word(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:184:    pub fn fixed_strings(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:191:    pub fn whole_line(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:205:    pub fn ucp(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:225:    pub fn utf(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:245:    pub fn disable_utf_check(&mut self) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:258:    pub fn jit(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:273:    pub fn jit_if_available(&mut self, yes: bool) -> &mut RegexMatcherBuilder {
+crates/pcre2/src/matcher.rs:291:    pub fn Dev55_jit_stack_size(
+crates/pcre2/src/matcher.rs:310:    pub fn new(pattern: &str) -> Result<RegexMatcher, Error> {
+crates/pcre2/src/error.rs:17:    pub fn kind(&self) -> &ErrorKind {
+crates/matcher/src/lib.rs:81:    pub fn new(start: usize, end: usize) -> Match {
+crates/matcher/src/lib.rs:88:    pub fn zero(offset: usize) -> Match {
+crates/matcher/src/lib.rs:94:    pub fn start(&self) -> usize {
+crates/matcher/src/lib.rs:100:    pub fn end(&self) -> usize {
+crates/matcher/src/lib.rs:111:    pub fn with_start(&self, start: usize) -> Match {
+crates/matcher/src/lib.rs:123:    pub fn with_end(&self, end: usize) -> Match {
+crates/matcher/src/lib.rs:138:    pub fn offset(&self, amount: usize) -> Match {
+crates/matcher/src/lib.rs:147:    pub fn len(&self) -> usize {
+crates/matcher/src/lib.rs:153:    pub fn is_empty(&self) -> bool {
+crates/matcher/src/lib.rs:211:    pub fn byte(byte: u8) -> LineTerminator {
+crates/matcher/src/lib.rs:220:    pub fn crlf() -> LineTerminator {
+crates/matcher/src/lib.rs:226:    pub fn is_crlf(&self) -> bool {
+crates/matcher/src/lib.rs:236:    pub fn as_byte(&self) -> u8 {
+crates/matcher/src/lib.rs:250:    pub fn as_bytes(&self) -> &[u8] {
+crates/matcher/src/lib.rs:263:    pub fn is_suffix(&self, slice: &[u8]) -> bool {
+crates/matcher/src/lib.rs:308:    pub fn empty() -> ByteSet {
+crates/matcher/src/lib.rs:315:    pub fn full() -> ByteSet {
+crates/matcher/src/lib.rs:323:    pub fn add(&mut self, byte: u8) {
+crates/matcher/src/lib.rs:331:    pub fn add_all(&mut self, start: u8, end: u8) {
+crates/matcher/src/lib.rs:341:    pub fn remove(&mut self, byte: u8) {
+crates/matcher/src/lib.rs:349:    pub fn remove_all(&mut self, start: u8, end: u8) {
+crates/matcher/src/lib.rs:357:    pub fn contains(&self, byte: u8) -> bool {
+crates/matcher/src/lib.rs:473:    pub fn new() -> NoCaptures {
+crates/matcher/src/interpolate.rs:14:pub fn interpolate<A, N>(
+crates/ignore/src/walk.rs:38:    pub fn path(&self) -> &Path {
+crates/ignore/src/walk.rs:44:    pub fn into_path(self) -> PathBuf {
+crates/ignore/src/walk.rs:49:    pub fn path_is_symlink(&self) -> bool {
+crates/ignore/src/walk.rs:56:    pub fn is_stdin(&self) -> bool {
+crates/ignore/src/walk.rs:61:    pub fn metadata(&self) -> Result<Metadata, Error> {
+crates/ignore/src/walk.rs:68:    pub fn file_type(&self) -> Option<FileType> {
+crates/ignore/src/walk.rs:76:    pub fn file_name(&self) -> &OsStr {
+crates/ignore/src/walk.rs:81:    pub fn depth(&self) -> usize {
+crates/ignore/src/walk.rs:89:    pub fn ino(&self) -> Option<u64> {
+crates/ignore/src/walk.rs:98:    pub fn error(&self) -> Option<&Error> {
+crates/ignore/src/walk.rs:552:    pub fn new<P: AsRef<Path>>(path: P) -> WalkBuilder {
+crates/ignore/src/walk.rs:560:    pub fn empty() -> WalkBuilder {
+crates/ignore/src/walk.rs:582:    pub fn from_iter<P: AsRef<Path>, I: IntoIterator<Item = P>>(
+crates/ignore/src/walk.rs:593:    pub fn build(&self) -> Walk {
+crates/ignore/src/walk.rs:675:    pub fn build_matchers(&self) -> Vec<IncrementalIgnore> {
+crates/ignore/src/walk.rs:701:    pub fn build_parallel(&self) -> WalkParallel {
+crates/ignore/src/walk.rs:722:    pub fn add<P: AsRef<Path>>(&mut self, path: P) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:730:    pub fn Dev55_depth(&mut self, depth: Option<usize>) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:744:    pub fn min_depth(&mut self, depth: Option<usize>) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:756:    pub fn follow_links(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:762:    pub fn Dev55_filesize(&mut self, filesize: Option<u64>) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:773:    pub fn threads(&mut self, n: usize) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:791:    pub fn add_ignore<P: AsRef<Path>>(&mut self, path: P) -> Option<Error> {
+crates/ignore/src/walk.rs:820:    pub fn add_custom_ignore_filename<S: AsRef<OsStr>>(
+crates/ignore/src/walk.rs:833:    pub fn overrides(&mut self, overrides: Override) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:843:    pub fn types(&mut self, types: Types) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:862:    pub fn standard_filters(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:874:    pub fn hidden(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:885:    pub fn parents(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:896:    pub fn ignore(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:910:    pub fn git_global(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:921:    pub fn git_ignore(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:932:    pub fn git_exclude(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:946:    pub fn require_git(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:954:    pub fn ignore_case_insensitive(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:973:    pub fn sort_by_file_path<F>(&mut self, cmp: F) -> &mut WalkBuilder
+crates/ignore/src/walk.rs:992:    pub fn sort_by_file_name<F>(&mut self, cmp: F) -> &mut WalkBuilder
+crates/ignore/src/walk.rs:1008:    pub fn same_file_system(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:1024:    pub fn skip_stdout(&mut self, yes: bool) -> &mut WalkBuilder {
+crates/ignore/src/walk.rs:1046:    pub fn filter_entry<P>(&mut self, filter: P) -> &mut WalkBuilder
+crates/ignore/src/walk.rs:1062:    pub fn current_dir(
+crates/ignore/src/walk.rs:1134:    pub fn new<P: AsRef<Path>>(path: P) -> Walk {
+crates/ignore/src/walk.rs:1143:    pub fn from_iter<P: AsRef<Path>, I: IntoIterator<Item = P>>(
+crates/ignore/src/walk.rs:1428:    pub fn run<'s, F>(self, mkf: F)
+crates/ignore/src/walk.rs:1452:    pub fn visit(mut self, builder: &mut dyn ParallelVisitorBuilder<'_>) {
+crates/ignore/src/types.rs:132:    pub fn file_type_def(&self) -> Option<&FileTypeDef> {
+crates/ignore/src/types.rs:153:    pub fn name(&self) -> &str {
+crates/ignore/src/types.rs:158:    pub fn globs(&self) -> &[String] {
+crates/ignore/src/types.rs:227:    pub fn empty() -> Types {
+crates/ignore/src/types.rs:241:    pub fn is_empty(&self) -> bool {
+crates/ignore/src/types.rs:246:    pub fn len(&self) -> usize {
+crates/ignore/src/types.rs:253:    pub fn definitions(&self) -> &[FileTypeDef] {
+crates/ignore/src/types.rs:263:    pub fn matched<'a, P: AsRef<Path>>(
+crates/ignore/src/types.rs:318:    pub fn new() -> TypesBuilder {
+crates/ignore/src/types.rs:324:    pub fn build(&self) -> Result<Types, Error> {
+crates/ignore/src/types.rs:371:    pub fn definitions(&self) -> Vec<FileTypeDef> {
+crates/ignore/src/types.rs:385:    pub fn select(&mut self, name: &str) -> &mut TypesBuilder {
+crates/ignore/src/types.rs:399:    pub fn negate(&mut self, name: &str) -> &mut TypesBuilder {
+crates/ignore/src/types.rs:411:    pub fn clear(&mut self, name: &str) -> &mut TypesBuilder {
+crates/ignore/src/types.rs:421:    pub fn add(&mut self, name: &str, glob: &str) -> Result<(), Error> {
+crates/ignore/src/types.rs:446:    pub fn add_def(&mut self, def: &str) -> Result<(), Error> {
+crates/ignore/src/types.rs:486:    pub fn add_defaults(&mut self) -> &mut TypesBuilder {
+crates/ignore/src/overrides.rs:51:    pub fn empty() -> Override {
+crates/ignore/src/overrides.rs:58:    pub fn path(&self) -> &Path {
+crates/ignore/src/overrides.rs:65:    pub fn is_empty(&self) -> bool {
+crates/ignore/src/overrides.rs:70:    pub fn num_ignores(&self) -> u64 {
+crates/ignore/src/overrides.rs:75:    pub fn num_whitelists(&self) -> u64 {
+crates/ignore/src/overrides.rs:97:    pub fn matched<'a, P: AsRef<Path>>(
+crates/ignore/src/overrides.rs:123:    pub fn new<P: AsRef<Path>>(path: P) -> OverrideBuilder {
+crates/ignore/src/overrides.rs:132:    pub fn build(&self) -> Result<Override, Error> {
+crates/ignore/src/overrides.rs:142:    pub fn add(&mut self, glob: &str) -> Result<&mut OverrideBuilder, Error> {
+crates/ignore/src/overrides.rs:153:    pub fn case_insensitive(
+crates/ignore/src/overrides.rs:180:    pub fn allow_unclosed_class(&mut self, yes: bool) -> &mut OverrideBuilder {
+crates/ignore/src/lib.rs:162:    pub fn is_partial(&self) -> bool {
+crates/ignore/src/lib.rs:173:    pub fn is_io(&self) -> bool {
+crates/ignore/src/lib.rs:207:    pub fn io_error(&self) -> Option<&std::io::Error> {
+crates/ignore/src/lib.rs:232:    pub fn into_io_error(self) -> Option<std::io::Error> {
+crates/ignore/src/lib.rs:254:    pub fn depth(&self) -> Option<usize> {
+crates/ignore/src/lib.rs:429:    pub fn is_none(&self) -> bool {
+crates/ignore/src/lib.rs:437:    pub fn is_ignore(&self) -> bool {
+crates/ignore/src/lib.rs:446:    pub fn is_whitelist(&self) -> bool {
+crates/ignore/src/lib.rs:455:    pub fn invert(self) -> Match<T> {
+crates/ignore/src/lib.rs:464:    pub fn inner(&self) -> Option<&T> {
+crates/ignore/src/lib.rs:475:    pub fn map<U, F: FnOnce(T) -> U>(self, f: F) -> Match<U> {
+crates/ignore/src/lib.rs:484:    pub fn or(self, other: Self) -> Self {
+crates/ignore/src/lib.rs:523:        pub fn new() -> Result<TempDir> {
+crates/ignore/src/lib.rs:545:        pub fn path(&self) -> &Path {
+crates/ignore/src/incremental.rs:177:    pub fn root(&self) -> &Path {
+crates/ignore/src/incremental.rs:198:    pub fn normalize<P: AsRef<Path>>(&self, path: P) -> Option<PathBuf> {
+crates/ignore/src/incremental.rs:237:    pub fn matched<P: AsRef<Path>>(
+crates/ignore/src/incremental.rs:256:    pub fn matched_with_errors<P: AsRef<Path>>(
+crates/ignore/src/incremental.rs:531:    pub fn is_none(&self) -> bool {
+crates/ignore/src/incremental.rs:536:    pub fn is_ignore(&self) -> bool {
+crates/ignore/src/incremental.rs:542:    pub fn is_whitelist(&self) -> bool {
+crates/ignore/src/incremental.rs:558:    pub fn should_descend(&self) -> bool {
+crates/ignore/src/incremental.rs:571:    pub fn is_within_depth(&self) -> bool {
+crates/ignore/src/incremental.rs:577:    pub fn invert(self) -> IncrementalMatch {
+crates/ignore/src/gitignore.rs:47:    pub fn from(&self) -> Option<&Path> {
+crates/ignore/src/gitignore.rs:52:    pub fn original(&self) -> &str {
+crates/ignore/src/gitignore.rs:58:    pub fn actual(&self) -> &str {
+crates/ignore/src/gitignore.rs:63:    pub fn is_whitelist(&self) -> bool {
+crates/ignore/src/gitignore.rs:68:    pub fn is_only_dir(&self) -> bool {
+crates/ignore/src/gitignore.rs:103:    pub fn new<P: AsRef<Path>>(
+crates/ignore/src/gitignore.rs:141:    pub fn global() -> (Gitignore, Option<Error>) {
+crates/ignore/src/gitignore.rs:151:    pub fn empty() -> Gitignore {
+crates/ignore/src/gitignore.rs:165:    pub fn path(&self) -> &Path {
+crates/ignore/src/gitignore.rs:171:    pub fn is_empty(&self) -> bool {
+crates/ignore/src/gitignore.rs:177:    pub fn len(&self) -> usize {
+crates/ignore/src/gitignore.rs:182:    pub fn num_ignores(&self) -> u64 {
+crates/ignore/src/gitignore.rs:187:    pub fn num_whitelists(&self) -> u64 {
+crates/ignore/src/gitignore.rs:202:    pub fn matched<P: AsRef<Path>>(
+crates/ignore/src/gitignore.rs:234:    pub fn matched_path_or_any_parents<P: AsRef<Path>>(
+crates/ignore/src/gitignore.rs:335:    pub fn new<P: AsRef<Path>>(root: P) -> GitignoreBuilder {
+crates/ignore/src/gitignore.rs:349:    pub fn build(&self) -> Result<Gitignore, Error> {
+crates/ignore/src/gitignore.rs:380:    pub fn build_global(mut self) -> (Gitignore, Option<Error>) {
+crates/ignore/src/gitignore.rs:408:    pub fn add<P: AsRef<Path>>(&mut self, path: P) -> Option<Error> {
+crates/ignore/src/gitignore.rs:463:    pub fn add_line(
+crates/ignore/src/gitignore.rs:552:    pub fn case_insensitive(
+crates/ignore/src/gitignore.rs:574:    pub fn allow_unclosed_class(
+crates/ignore/src/gitignore.rs:586:pub fn gitconfig_excludes_path() -> Option<PathBuf> {
+crates/globset/src/lib.rs:206:    pub fn glob(&self) -> Option<&str> {
+crates/globset/src/lib.rs:211:    pub fn kind(&self) -> &ErrorKind {
+crates/globset/src/lib.rs:319:    pub fn builder() -> GlobSetBuilder {
+crates/globset/src/lib.rs:331:    pub fn is_empty(&self) -> bool {
+crates/globset/src/lib.rs:337:    pub fn len(&self) -> usize {
+crates/globset/src/lib.rs:342:    pub fn is_match<P: AsRef<Path>>(&self, path: P) -> bool {
+crates/globset/src/lib.rs:350:    pub fn is_match_candidate(&self, path: &Candidate<'_>) -> bool {
+crates/globset/src/lib.rs:379:    pub fn matches_all<P: AsRef<Path>>(&self, path: P) -> bool {
+crates/globset/src/lib.rs:390:    pub fn matches_all_candidate(&self, path: &Candidate<'_>) -> bool {
+crates/globset/src/lib.rs:401:    pub fn matches<P: AsRef<Path>>(&self, path: P) -> Vec<usize> {
+crates/globset/src/lib.rs:410:    pub fn matches_candidate(&self, path: &Candidate<'_>) -> Vec<usize> {
+crates/globset/src/lib.rs:425:    pub fn matches_into<P: AsRef<Path>>(
+crates/globset/src/lib.rs:442:    pub fn matches_candidate_into(
+crates/globset/src/lib.rs:461:    pub fn new<I, G>(globs: I) -> Result<GlobSet, Error>
+crates/globset/src/lib.rs:585:    pub fn new() -> GlobSetBuilder {
+crates/globset/src/lib.rs:592:    pub fn build(&self) -> Result<GlobSet, Error> {
+crates/globset/src/lib.rs:597:    pub fn add(&mut self, pat: Glob) -> &mut GlobSetBuilder {
+crates/globset/src/lib.rs:628:    pub fn new<P: AsRef<Path> + ?Sized>(path: &'a P) -> Candidate<'a> {
+crates/globset/src/lib.rs:640:    pub fn from_bytes<P: AsRef<[u8]> + ?Sized>(path: &'a P) -> Candidate<'a> {
+crates/globset/src/lib.rs:1133:pub fn escape(s: &str) -> String {
+crates/globset/src/glob.rs:146:    pub fn is_match<P: AsRef<Path>>(&self, path: P) -> bool {
+crates/globset/src/glob.rs:151:    pub fn is_match_candidate(&self, path: &Candidate<'_>) -> bool {
+crates/globset/src/glob.rs:156:    pub fn glob(&self) -> &Glob {
+crates/globset/src/glob.rs:290:    pub fn new(glob: &str) -> Result<Glob, Error> {
+crates/globset/src/glob.rs:295:    pub fn compile_matcher(&self) -> GlobMatcher {
+crates/globset/src/glob.rs:318:    pub fn glob(&self) -> &str {
+crates/globset/src/glob.rs:336:    pub fn regex(&self) -> &str {
+crates/globset/src/glob.rs:595:    pub fn new(glob: &'a str) -> GlobBuilder<'a> {
+crates/globset/src/glob.rs:600:    pub fn build(&self) -> Result<Glob, Error> {
+crates/globset/src/glob.rs:636:    pub fn case_insensitive(&mut self, yes: bool) -> &mut GlobBuilder<'a> {
+crates/globset/src/glob.rs:644:    pub fn literal_separator(&mut self, yes: bool) -> &mut GlobBuilder<'a> {
+crates/globset/src/glob.rs:657:    pub fn backslash_escape(&mut self, yes: bool) -> &mut GlobBuilder<'a> {
+crates/globset/src/glob.rs:668:    pub fn empty_alternates(&mut self, yes: bool) -> &mut GlobBuilder<'a> {
+crates/globset/src/glob.rs:684:    pub fn allow_unclosed_class(&mut self, yes: bool) -> &mut GlobBuilder<'a> {
+crates/core/flags/config.rs:16:pub fn args() -> Vec<OsString> {
+crates/cli/src/wtr.rs:23:pub fn stdout(color_choice: termcolor::ColorChoice) -> StandardStream {
+crates/cli/src/wtr.rs:39:pub fn stdout_buffered_line(
+crates/cli/src/wtr.rs:54:pub fn stdout_buffered_block(
+crates/cli/src/process.rs:90:    pub fn new() -> CommandReaderBuilder {
+crates/cli/src/process.rs:104:    pub fn build(
+crates/cli/src/process.rs:132:    pub fn async_stderr(&mut self, yes: bool) -> &mut CommandReaderBuilder {
+crates/cli/src/process.rs:195:    pub fn new(
+crates/cli/src/process.rs:218:    pub fn close(&mut self) -> io::Result<()> {
+crates/cli/src/pattern.rs:20:    pub fn valid_up_to(&self) -> usize {
+crates/cli/src/pattern.rs:51:pub fn pattern_from_os(pattern: &OsStr) -> Result<&str, InvalidPatternError> {
+crates/cli/src/pattern.rs:67:pub fn pattern_from_bytes(
+crates/cli/src/pattern.rs:82:pub fn patterns_from_path<P: AsRef<Path>>(path: P) -> io::Result<Vec<String>> {
+crates/cli/src/pattern.rs:104:pub fn patterns_from_stdin() -> io::Result<Vec<String>> {
+crates/cli/src/pattern.rs:141:pub fn patterns_from_reader<R: io::Read>(rdr: R) -> io::Result<Vec<String>> {
+crates/cli/src/lib.rs:170:pub fn is_readable_stdin() -> bool {
+crates/cli/src/lib.rs:260:pub fn is_tty_stdin() -> bool {
+crates/cli/src/lib.rs:279:pub fn is_tty_stdout() -> bool {
+crates/cli/src/lib.rs:292:pub fn is_tty_stderr() -> bool {
+crates/cli/src/human.rs:79:pub fn parse_human_readable_size(size: &str) -> Result<u64, ParseSizeError> {
+crates/cli/src/hostname.rs:16:pub fn hostname() -> io::Result<OsString> {
+crates/cli/src/escape.rs:26:pub fn escape(bytes: &[u8]) -> String {
+crates/cli/src/escape.rs:33:pub fn escape_os(string: &OsStr) -> String {
+crates/cli/src/escape.rs:67:pub fn unescape(s: &str) -> Vec<u8> {
+crates/cli/src/escape.rs:77:pub fn unescape_os(string: &OsStr) -> Vec<u8> {
+crates/cli/src/decompress.rs:42:    pub fn new() -> DecompressionMatcherBuilder {
+crates/cli/src/decompress.rs:50:    pub fn build(&self) -> Result<DecompressionMatcher, CommandError> {
+crates/cli/src/decompress.rs:76:    pub fn defaults(&mut self, yes: bool) -> &mut DecompressionMatcherBuilder {
+crates/cli/src/decompress.rs:96:    pub fn associate<P, I, A>(
+crates/cli/src/decompress.rs:125:    pub fn try_associate<P, I, A>(
+crates/cli/src/decompress.rs:167:    pub fn new() -> DecompressionMatcher {
+crates/cli/src/decompress.rs:179:    pub fn command<P: AsRef<Path>>(&self, path: P) -> Option<Command> {
+crates/cli/src/decompress.rs:191:    pub fn has_command<P: AsRef<Path>>(&self, path: P) -> bool {
+crates/cli/src/decompress.rs:205:    pub fn new() -> DecompressionReaderBuilder {
+crates/cli/src/decompress.rs:221:    pub fn build<P: AsRef<Path>>(
+crates/cli/src/decompress.rs:251:    pub fn matcher(
+crates/cli/src/decompress.rs:260:    pub fn get_matcher(&self) -> &DecompressionMatcher {
+crates/cli/src/decompress.rs:276:    pub fn async_stderr(
+crates/cli/src/decompress.rs:352:    pub fn new<P: AsRef<Path>>(
+crates/cli/src/decompress.rs:383:    pub fn close(&mut self) -> io::Result<()> {
+crates/cli/src/decompress.rs:420:pub fn resolve_binary<P: AsRef<Path>>(

@@ -1,0 +1,53 @@
+62:    pub fn none() -> BinaryDetection {
+79:    pub fn quit(binary_byte: u8) -> BinaryDetection {
+95:    pub fn convert(binary_byte: u8) -> BinaryDetection {
+102:    pub fn quit_byte(&self) -> Option<u8> {
+112:    pub fn convert_byte(&self) -> Option<u8> {
+137:    pub fn new(label: &str) -> Result<Encoding, ConfigError> {
+188:    fn default() -> Config {
+213:    fn Dev55_context(&self) -> usize {
+218:    fn line_buffer(&self) -> LineBuffer {
+267:    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+303:    fn default() -> SearcherBuilder {
+310:    pub fn new() -> SearcherBuilder {
+315:    pub fn build(&self) -> Searcher {
+346:    pub fn line_terminator(
+358:    pub fn invert_match(&mut self, yes: bool) -> &mut SearcherBuilder {
+368:    pub fn line_number(&mut self, yes: bool) -> &mut SearcherBuilder {
+388:    pub fn multi_line(&mut self, yes: bool) -> &mut SearcherBuilder {
+399:    pub fn after_context(
+413:    pub fn before_context(
+431:    pub fn passthru(&mut self, yes: bool) -> &mut SearcherBuilder {
+457:    pub fn heap_limit(
+495:    pub fn memory_map(
+510:    pub fn binary_detection(
+533:    pub fn encoding(
+553:    pub fn bom_sniffing(&mut self, yes: bool) -> &mut SearcherBuilder {
+563:    pub fn stop_on_nonmatch(
+583:    pub fn Dev55_matches(&mut self, limit: Option<u64>) -> &mut SearcherBuilder {
+632:    pub fn new() -> Searcher {
+643:    pub fn search_path<P, M, S>(
+665:    pub fn search_file<M, S>(
+678:    fn search_file_maybe_path<M, S>(
+727:    pub fn search_reader<M, R, S>(
+769:    pub fn search_slice<M, S>(
+798:    pub fn set_binary_detection(&mut self, detection: BinaryDetection) {
+805:    fn check_config<M: Matcher>(&self, matcher: M) -> Result<(), ConfigError> {
+824:    fn slice_needs_transcoding(&self, slice: &[u8]) -> bool {
+836:    pub fn line_terminator(&self) -> LineTerminator {
+842:    pub fn binary_detection(&self) -> &BinaryDetection {
+850:    pub fn invert_match(&self) -> bool {
+857:    pub fn line_number(&self) -> bool {
+864:    pub fn multi_line(&self) -> bool {
+871:    pub fn stop_on_nonmatch(&self) -> bool {
+885:    pub fn Dev55_matches(&self) -> Option<u64> {
+896:    pub fn multi_line_with_matcher<M: Matcher>(&self, matcher: M) -> bool {
+920:    pub fn after_context(&self) -> usize {
+927:    pub fn before_context(&self) -> usize {
+933:    pub fn passthru(&self) -> bool {
+940:    fn fill_multi_line_buffer_from_file<S: Sink>(
+975:    fn fill_multi_line_buffer_from_reader<R: io::Read, S: Sink>(
+1036:fn slice_has_bom(slice: &[u8]) -> bool {
+1053:    fn config_error_heap_limit() {
+1062:    fn config_error_line_terminator() {
+1073:    fn uft8_bom_sniffing() {

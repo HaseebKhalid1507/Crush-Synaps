@@ -1,0 +1,190 @@
+   Compiling inventory v0.3.1 (/work/inventory)
+error[E0308]: mismatched types
+  --> src/orders.rs:81:21
+   |
+81 |     let s: String = items.len();
+   |            ------   ^^^^^^^^^^^ expected `String`, found `usize`
+   |            |
+   |            expected due to this
+   |
+help: try using a conversion method
+   |
+81 |     let s: String = items.len().to_string();
+   |                                ++++++++++++
+
+error[E0609]: no field `price` on type `&orders::Item`
+  --> src/orders.rs:82:36
+   |
+82 |     items.iter().map(|i| i.qty * i.price).sum()
+   |                                    ^^^^^ unknown field
+   |
+   = note: available fields are: `sku`, `qty`, `price_cents`
+
+warning: variable does not need to be mutable
+  --> src/pricing.rs:72:9
+   |
+72 |     let mut counter = 0;
+   |         ----^^^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `unused_0`
+  --> src/pricing.rs:71:9
+   |
+71 |     let unused_0 = input * 2;
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_unused_0`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `counter`
+  --> src/pricing.rs:72:9
+   |
+72 |     let mut counter = 0;
+   |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+  --> src/pricing.rs:77:9
+   |
+77 |     let mut counter = 0;
+   |         ----^^^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: unused variable: `unused_1`
+  --> src/pricing.rs:76:9
+   |
+76 |     let unused_1 = input * 2;
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_unused_1`
+
+warning: unused variable: `counter`
+  --> src/pricing.rs:77:9
+   |
+77 |     let mut counter = 0;
+   |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+  --> src/stock.rs:72:9
+   |
+72 |     let mut counter = 0;
+   |         ----^^^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: unused variable: `unused_0`
+  --> src/stock.rs:71:9
+   |
+71 |     let unused_0 = input * 2;
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_unused_0`
+
+warning: unused variable: `counter`
+  --> src/stock.rs:72:9
+   |
+72 |     let mut counter = 0;
+   |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+  --> src/stock.rs:77:9
+   |
+77 |     let mut counter = 0;
+   |         ----^^^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: unused variable: `unused_1`
+  --> src/stock.rs:76:9
+   |
+76 |     let unused_1 = input * 2;
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_unused_1`
+
+warning: unused variable: `counter`
+  --> src/stock.rs:77:9
+   |
+77 |     let mut counter = 0;
+   |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+  --> src/orders.rs:72:9
+   |
+72 |     let mut counter = 0;
+   |         ----^^^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: unused variable: `unused_0`
+  --> src/orders.rs:71:9
+   |
+71 |     let unused_0 = input * 2;
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_unused_0`
+
+warning: unused variable: `counter`
+  --> src/orders.rs:72:9
+   |
+72 |     let mut counter = 0;
+   |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+  --> src/orders.rs:77:9
+   |
+77 |     let mut counter = 0;
+   |         ----^^^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: unused variable: `unused_1`
+  --> src/orders.rs:76:9
+   |
+76 |     let unused_1 = input * 2;
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_unused_1`
+
+warning: unused variable: `counter`
+  --> src/orders.rs:77:9
+   |
+77 |     let mut counter = 0;
+   |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+  --> src/shipping.rs:72:9
+   |
+72 |     let mut counter = 0;
+   |         ----^^^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: unused variable: `unused_0`
+  --> src/shipping.rs:71:9
+   |
+71 |     let unused_0 = input * 2;
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_unused_0`
+
+warning: unused variable: `counter`
+  --> src/shipping.rs:72:9
+   |
+72 |     let mut counter = 0;
+   |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+  --> src/shipping.rs:77:9
+   |
+77 |     let mut counter = 0;
+   |         ----^^^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: unused variable: `unused_1`
+  --> src/shipping.rs:76:9
+   |
+76 |     let unused_1 = input * 2;
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_unused_1`
+
+warning: unused variable: `counter`
+  --> src/shipping.rs:77:9
+   |
+77 |     let mut counter = 0;
+   |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+Some errors have detailed explanations: E0308, E0609.
+For more information about an error, try `rustc --explain E0308`.
+warning: `inventory` (lib) generated 24 warnings
+error: could not compile `inventory` (lib) due to 2 previous errors; 24 warnings emitted

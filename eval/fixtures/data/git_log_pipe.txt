@@ -1,0 +1,400 @@
+91f5d22ef48bde459d90a8c7dbeab416e97d0f2b|Dev01|dev02@example.com|Tue Oct 27 14:31:24 2026 -0400|ignore-0.4.34
+55f2f69ab9f07eeca80b483668e9d7d4beca8e10|Dev01|dev02@example.com|Tue Oct 27 14:31:14 2026 -0400|globset-0.4.21
+65e072fab262fdaaa19ef788bbb468ae6f8e4f8e|Dev03|dev04@example.com|Tue Oct 27 14:30:54 2026 -0400|ignore: respect linked worktree excludes without requiring Git
+d19650f4fca84c0f65f4ec024b16200bf3d41c33|Dev05|dev06@example.com|Thu Oct 15 16:44:26 2026 +0000|globset: match filename-only regexes against basenames
+9d07a922605313dc47b78b802c7b0616fd76d409|Dev05|dev06@example.com|Thu Oct 15 16:46:50 2026 +0000|ignore: reuse incremental matchers for directories without rules
+6892bc2b7efe5909cbbeec8f757ed2c4c76b1d30|Dev05|dev06@example.com|Fri Oct 23 16:00:21 2026 -0400|ignore: use byte keys for incremental parent lookups
+1752fb78f1735e517f731944707a79eb064e8669|Dev05|dev06@example.com|Fri Oct 23 15:50:08 2026 -0400|globset: reject impossible literal lengths before hashing
+2d4fa85141d91c411352bae3c516608684aeeacc|Dev05|dev06@example.com|Fri Oct 23 15:43:37 2026 -0400|ignore: skip empty absolute parent matchers (#3557)
+b5611fc9f5eda7073543e5c900ca515d1e69fc2e|Dev05|dev06@example.com|Fri Oct 23 15:27:13 2026 -0400|ignore: reuse parent repository detection
+c5e744cb436c4d0cc590676551cf1bc08cd1a560|Dev05|dev06@example.com|Thu Oct 15 16:44:26 2026 +0000|ignore: avoid scratch pools for empty matchers
+fada8f9386df39e7fc9d0e407de764f005900ce0|Dev05|dev07@example.com|Fri Oct 23 11:59:08 2026 -0400|ignore: benchmark Python workspace discovery and matching (#3554)
+7155f6408d370e699795dc75e954635abfaf08a6|Dev08|dev09@example.com|Fri Oct 23 21:02:51 2026 +0530|ignore: treat dotfiles ending in a dot as hidden (#3564)
+4c2362d359d9913c7a5e391ccd79cb4da22bc89b|Dev10|dev11@example.com|Fri Oct 23 18:34:37 2026 +0330|doc: document Windows path separators and UTF-8 locale
+756a945f65ac0c91e1f625209fafa57f1531bada|Dev01|dev02@example.com|Fri Oct 23 10:23:39 2026 -0400|cargo: remove the `homepage` field
+cff2849fd49557c2184a3b2858469a2bfbe20753|Dev01|dev02@example.com|Fri Oct 23 09:52:33 2026 -0400|index: revert indexing additions
+7cc9c2f33cff3f027d42509489bae9942f833dae|Dev12|dev09@example.com|Tue Oct 20 09:56:35 2026 +0000|ci: install lz4 instead of liblz4-tool
+3fce3b5bb0236da2df6d99672afb8a719642eca7|Dev01|dev02@example.com|Tue Aug 4 10:00:08 2026 -0400|ignore-0.4.33
+5055264ae021b5d0e01e55f723622d638ea877f0|Dev01|dev02@example.com|Tue Aug 4 09:59:57 2026 -0400|globset-0.4.20
+020687a77d13146923333f0beb274eeabd54a270|Dev01|dev02@example.com|Tue Aug 4 07:46:42 2026 -0400|ignore,globset: increase pool capacity
+7525479a9576f1ca4c2d04339d78e47ff5ae9b05|Dev01|dev02@example.com|Mon Aug 3 07:28:10 2026 -0400|ci: fix binary discovery
+5ed408e17eccfc59bcec48f584feece902873e54|Dev01|dev02@example.com|Mon Aug 3 07:15:23 2026 -0400|ignore-0.4.32
+435f59fc4b43af3ab32f34d53fa34978f393fe52|Dev13|dev14@example.com|Wed Jul 29 16:00:03 2026 +0100|ignore: skip loading unreachable ignore files
+dffd776a737dc19a48b758dd6a621de113794121|Dev15|dev16@example.com|Wed Jul 29 01:57:17 2026 +0300|ci: attest build provenance for release archives
+f9c05a949d1a0dc8e16dee28ca9605d38611faeb|Dev01|dev02@example.com|Fri Jul 24 07:38:17 2026 -0400|index: remove incorrect README
+8372866810a1f2a647d11d7780984d4402a5c1e9|Dev01|dev02@example.com|Wed Jul 22 10:45:02 2026 -0400|index: add some initial indexing scaffolding
+d99ac34406f82c03c3938c222f1786495c845034|Dev01|dev02@example.com|Mon Jul 20 13:52:04 2026 -0400|core: add `index` module
+d57de83a944c1b349be376b6762334009372d454|Dev01|dev02@example.com|Mon Jul 20 13:45:01 2026 -0400|nvim: enable all Cargo features
+2ed0c006fee4c441add774a711d9122a88477619|Dev01|dev02@example.com|Mon Jul 20 09:16:18 2026 -0400|flags: disable many flags when indexing is enabled
+59e318f5ace48db54f37bb67c152535bc17fa153|Dev01|dev02@example.com|Mon Jul 20 14:15:07 2026 -0400|ignore-0.4.31
+a9dc2228fbddd1d25146f38d0926830812c97419|Dev17|dev18@example.com|Mon Jul 20 13:14:32 2026 -0500|cargo: set `rust-version` on all crates
+be739c7910288905d966f87607b28435d1576295|Dev01|dev02@example.com|Mon Jul 20 08:58:22 2026 -0400|index: add grep-index crate
+d958105d412b6a1ad014cb0e5832a9b029fa4977|Dev01|dev02@example.com|Mon Jul 20 07:16:47 2026 -0400|cargo: add new build-time `unstable-index` feature
+227381db0ee83dfa4341f1e27ff9617c0f5ad992|Dev01|dev02@example.com|Fri Jul 17 09:14:36 2026 -0400|ignore-0.4.30
+b621e65b4fc8a50b55576b07526f21c5d051ad71|Dev01|dev02@example.com|Fri Jul 10 14:29:45 2026 -0400|ignore: add incremental checking
+c55818fd32d68cf742aea67bce86529f198bc985|Dev01|dev02@example.com|Fri Jul 17 07:32:16 2026 -0400|ignore: more pathutil clean-up
+6e527e9202f85a39ab2c4698636710204eb096e0|Dev01|dev02@example.com|Thu Jul 16 09:21:49 2026 -0400|ignore: add routine for checking if a path is hidden or not
+626b8951acbced7ff710f4e01624a05f219eec38|Dev01|dev02@example.com|Thu Jul 16 09:11:41 2026 -0400|ignore: refactor `is_hidden`
+c035d23c26da7cf9d0eb96944b69a212240e17f1|Dev01|dev02@example.com|Thu Jul 16 09:56:54 2026 -0400|msrv: bump to Rust 1.96
+fc3dd04b7ca18ec8be97704dc098bbd062bad244|Dev19|dev20@example.com|Fri Jul 17 14:36:47 2026 +0300|doc: update OpenSubtitles benchmark corpus URL in README
+0d7054d8e466d6aa0a6bb6cf121e87225d26df44|Dev01|dev02@example.com|Thu Jul 16 12:02:33 2026 -0400|ignore: fix deadlock when visitor panics
+5e16a5c9e57e81f6031a23faa2ace52205fa8242|Dev01|dev02@example.com|Wed Jul 15 12:31:04 2026 -0400|changelog: start next section
+f91cde058204232f15ccad4346ed46839acc715c|Dev01|dev02@example.com|Wed Jul 15 12:30:25 2026 -0400|pkg/brew: update tap
+e89fff89ac9af12e8d4ce9d5fd07beb408ca730f|Dev01|dev02@example.com|Wed Jul 15 12:00:11 2026 -0400|15.2.0
+d798261924bbf0327d5477884032779dfd7c2f22|Dev01|dev02@example.com|Wed Jul 15 11:59:38 2026 -0400|deps: bump ignore version
+576005b322c41174bb21d76122b1411e5d983402|Dev01|dev02@example.com|Wed Jul 15 11:58:20 2026 -0400|grep-searcher-0.1.17
+432976d69cdff36d5a0d6845b093cf3f67262b43|Dev01|dev02@example.com|Wed Jul 15 11:58:00 2026 -0400|grep-pcre2-0.1.10
+41e0ae702bcbd47b093a33ee73f1497aa4ed20d6|Dev01|dev02@example.com|Wed Jul 15 11:57:23 2026 -0400|grep-matcher-0.1.9
+40ffc6e0bd990ba6e56702ed1ec519b7ad96a1e7|Dev01|dev02@example.com|Wed Jul 15 11:56:30 2026 -0400|ignore-0.4.29
+28c687d630f1491ccdea078a9be56b4cdc124519|Dev01|dev02@example.com|Wed Jul 15 11:56:16 2026 -0400|globset-0.4.19
+f03c67e94f311aff0a24858f71bbc53dcd567422|Dev01|dev02@example.com|Wed Jul 15 11:55:17 2026 -0400|changelog: 15.2.0
+e988d4b6182dbd62d9cba636a37140d6885360dc|Dev01|dev02@example.com|Wed Jul 15 11:18:35 2026 -0400|deps: update everything
+d5b85d44057ff729a89be9c6549958c45d95aa99|Dev01|dev02@example.com|Thu Jul 9 19:47:35 2026 -0400|deps: bump to tikv-jemallocator 0.7.0
+324f7efe5ce92da0c938291fb69a8027cc2b12a8|Dev01|dev02@example.com|Thu Jul 9 13:50:09 2026 -0400|ignore-0.4.28
+241b87b3377136659ef0f57948b8e0739e9a691b|Dev21|dev22@example.com|Thu Jul 9 10:14:47 2026 -0400|ignore: support `GIT_CONFIG_GLOBAL` and `GIT_CONFIG_SYSTEM` for `core.excludesFile`
+b6849daee84a67b42b0844b2f6a91e47c24705b1|Dev23|dev24@example.com|Thu Jan 8 21:56:12 2026 -0500|ignore/walk: add `WalkBuilder::empty` and `WalkBuilder::from_iter`
+8bca2ebfed844bcbbb649a836783c08da110f2e9|Dev25|dev26@example.com|Sun Nov 2 12:41:22 2025 -0500|doc: fix typo in man page
+61a9fd82294c155ca00febc948d8d23c9b678367|Dev27|dev28@example.com|Tue Nov 25 15:29:23 2025 +0100|doc: fix typo
+e7b0f89e81811b295446404f02ca133fe8434054|Dev29|dev30@example.com|Sat Nov 29 19:23:23 2025 +0000|lint: use `cloned()` or `copied()` when we can
+767086db4ccb6abc3e4ce5125da614ea62f7346b|Dev31|dev32@example.com|Sun Dec 14 17:52:48 2025 -0700|searcher: hint at sequential memory map reading
+9548e86b14f1aa853911239f439e27a20c10fb69|Dev33|dev34@example.com|Fri Mar 13 00:47:47 2026 +0100|ignore/types: add PKGBUILD type
+3b62573e9523f347d6b36f97d5068db5dd60d973|Dev35|dev36@example.com|Thu Mar 19 19:01:09 2026 +0100|deps: upgrade the lower bound for termcolor from 1.1.0 to 1.4.0
+bc3ad92b345eeddc48afff3194a5e2385e3d6a3b|Dev37|dev38@example.com|Tue Apr 7 11:48:21 2026 -0500|ignore/types: add Rocq `.v` files
+93acfe2d47d46bc2f92a78f1e64098ad0a7b34b5|Dev39|dev40@example.com|Sun Jun 21 17:17:34 2026 -0700|ignore/types: add `proto` for filtering to protobuf files
+77d27e82fabfd80de83960a73c2357ac1a03827a|Dev41|dev42@example.com|Wed Jun 10 10:36:28 2026 +0100|ignore/types: add Mojo type
+f55548ba9f24dda192880d4a3da2b52e90f6e194|Dev43|dev44@example.com|Wed May 27 23:26:10 2026 -0600|globset: fix `matches_all` false positives
+2c23e39e0215397884834c0d3cd5a1620f468d30|Dev01|dev02@example.com|Wed Jul 8 14:11:10 2026 -0400|changelog: bring unreleased changes up to date
+68b3c9e0d95950cfc835fb07924457919a4ec07d|Dev45|dev46@example.com|Tue Mar 10 21:36:38 2026 +0800|ignore: fetch directory entry metadata in batches
+653d7f5bd13762b97cf0bd6b7c5890cf3f54db4d|Dev47|dev48@example.com|Sat Jun 27 22:43:14 2026 +0530|ignore: add multi-root parent matcher regression tests
+068a63ea251871b07d29434e8a6a9ba59dd0df06|Dev49|dev50@example.com|Mon Jun 29 19:40:35 2026 +0900|globset: reduce owned path copying in globset
+3a570990c4cf04404c4c320391e92749d434643b|Dev51|dev52@example.com|Thu Jul 9 21:21:01 2026 +0900|doc: fix typo
+f2f3d00df7b51c9581a07b7373353cf7eef08dd8|Dev53|dev54@example.com|Mon Jun 29 10:19:27 2026 -0500|_rg: change some compadd -q to -r
+2394f72bad8a995d0b38039c37f46639c799e94d|Dev53|dev54@example.com|Sun Jun 28 02:59:42 2026 -0500|test-complete: misc. improvements
+b357caa63885b25a8452f7c71bab0104861cff5a|Dev53|dev54@example.com|Sun Jun 28 03:33:39 2026 -0500|_rg: use _numbers where applicable
+a709a3be13ac1f926d47c5fd310826fe4834d556|Dev53|dev54@example.com|Sun Jun 28 02:57:55 2026 -0500|_rg: improve existing type functions
+42e6e8537844ab23c8754a9e64b5e82368489dd4|Dev53|dev54@example.com|Sun Jun 28 01:42:59 2026 -0500|_rg: improve colour- and type-spec completion
+c4f34e06401abb0af7124f015c54afcdcb3e6d8e|Dev53|dev54@example.com|Sun Jun 28 01:10:57 2026 -0500|_rg: update $no pattern to account for --require-git and --unicode
+f168a87f9782fe45feddf5a17fdb908938f56723|Dev53|dev54@example.com|Sun Jun 28 01:06:34 2026 -0500|_rg: eliminate superfluous group comments
+365edbfdd09bd558d0f555e8ffc8032de01c0bf4|Dev53|dev54@example.com|Sun Jun 28 00:45:14 2026 -0500|_rg: misc. spec fixes
+640ad85edaee2ca0eda7f6f375decc78c3461427|Dev53|dev54@example.com|Sun Jun 28 00:42:09 2026 -0500|_rg: add missing groups
+cdeff3e6f01c3322d812b0e32502053753969cc0|Dev53|dev54@example.com|Sun Jun 28 00:27:32 2026 -0500|_rg: remove group-stripping functionality
+e0156728197b61b5edc8faca862690c1dca69fd0|Dev55|dev56@example.com|Wed Jul 8 05:27:03 2026 -0700|doc: fix typos in code comments
+b009b5b84b5bc92f18462f5c9fe1bad94551ceb0|Dev57|dev58@example.com|Wed Jul 8 14:26:01 2026 +0200|doc: fix typos in comments
+e5f627fc16766194ced7bf498b03b78823f97716|Dev59|dev60@example.com|Wed Jul 8 08:24:38 2026 -0400|doc: update AI policy link to point to ripgrep's document
+f127579b006d9fb388050281d7d7146799a9cd4c|Dev43|dev44@example.com|Tue Jul 7 13:51:45 2026 -0600|ignore: add depth to more errors
+48b0c795f4feb37343b2832d991c5c6a3900c08a|Dev01|dev02@example.com|Wed Jul 1 08:07:37 2026 -0400|ignore-0.4.27
+c10f151e4436da7c37d34359cdfe10d6f5aa0bb4|Dev43|dev44@example.com|Wed Jul 1 06:07:21 2026 -0600|ignore: always include depth in errors
+dfe4a81d2591daca76d25ae4e052c34b26578155|Dev61|dev62@example.com|Sun Jun 21 08:48:16 2026 -0400|ignore/types: add Hurl
+82313cf95849bfe425109ad9506a52154879b1b1|Dev01|dev02@example.com|Fri Jun 5 07:03:03 2026 -0400|ignore-0.4.26
+43e2f08edef8c00e5d7719212c3e6a869bca1151|Dev63|dev64@example.com|Thu Jun 4 14:19:52 2026 +0200|ignore: fix parent gitignore matching across multiple roots
+79a23e0841ae84ef9b99c446052c8e6063a198bd|Dev63|dev64@example.com|Thu Jun 4 18:22:38 2026 +0200|ignore: use named fields in `Ignore`
+48a6ad93f152dc848f1883ceb3bf2c7baab6738c|Dev01|dev02@example.com|Mon Jun 1 07:16:59 2026 -0400|ci: add support for `aarch64-unknown-linux-musl`
+c28ce760dfbb16e284c1aa09d848cc016ae3fe88|Dev01|dev02@example.com|Wed Jun 3 11:52:56 2026 -0400|docs: update GUIDE to use `lexopt`
+4857d6fa67db69a95cd4b6f2adda5d807d4d0119|Dev01|dev02@example.com|Tue May 26 08:32:43 2026 -0400|docs: s/our projects/this project in AI policy
+f0cec341ab95c25c691ad3d5754d4bd9eedde21f|Dev01|dev02@example.com|Mon May 25 23:56:53 2026 -0400|docs: add AI policy for contributors
+4519153e5e461527f4bca45b042fff45c4ec6fb9|Dev65|dev66@example.com|Fri Feb 27 16:25:19 2026 +0000|doc: clarify half-boundary syntax for the `-w/--word-regexp` flag
+cb66736f146f093497f4dc537b33d0826f9af33c|Dev01|dev02@example.com|Fri Feb 20 16:06:29 2026 -0500|core: bleat a DEBUG message when RIPGREP_CONFIG_PATH is not set
+9b84e154c8e404f4c40f6f4e4c674ea02e77324a|Dev67|dev68@example.com|Fri Feb 13 11:39:46 2026 +1000|ignore/types: add `container` type that covers both `Dockerfile` and `Containerfile`
+0a88cccd5188074de96f54a4b6b44a63971ac157|Dev69|dev70@example.com|Thu Dec 18 00:38:12 2025 +0800|Fix compression tests in QEMU cross-compilation environments (#3248)
+cd1f981beafaeb9b61537e47e91314cea125400b|Dev29|dev30@example.com|Sat Nov 29 19:11:38 2025 +0000|fix: derive `Default` when possible
+57c190d56eedac90c061a238b63dbfed434fee50|Dev01|dev02@example.com|Thu Oct 30 13:30:14 2025 -0400|ignore-0.4.25
+85edf4c79671b00002123a2a43ff5238b6a27891|Dev71|dev72@example.com|Thu Oct 30 09:49:05 2025 -0700|ignore: only stat `.jj` if we actually care
+36b7597693c994ffaf023b95d2e18aeeda7d9286|Dev01|dev02@example.com|Wed Oct 22 09:02:40 2025 -0400|changelog: start next section
+a132e56b8cf8dcb922c2a0e2165cece2895acec9|Dev01|dev02@example.com|Wed Oct 22 09:01:12 2025 -0400|pkg/brew: update tap
+af60c2de9d85e7f3d81c78601669468cf02dabab|Dev01|dev02@example.com|Wed Oct 22 08:30:04 2025 -0400|15.1.0
+a63671efb069bbef88a4426b08d45508af716514|Dev01|dev02@example.com|Wed Oct 22 08:29:19 2025 -0400|deps: bump to grep 0.4.1
+2ea06d69aaff19d53a0260f271a30cc28a39f1de|Dev01|dev02@example.com|Wed Oct 22 08:28:53 2025 -0400|grep-0.4.1
+85006b08d63efd7c7f2cc43a3b8e90d95b80a9aa|Dev01|dev02@example.com|Wed Oct 22 08:28:32 2025 -0400|deps: bump to grep-printer 0.3.1
+423afb851372ce62a9edab70356ebe6461e82a50|Dev01|dev02@example.com|Wed Oct 22 08:28:06 2025 -0400|grep-printer-0.3.1
+4694800be58daa9e2ca9534f674b63254eb02b3b|Dev01|dev02@example.com|Wed Oct 22 08:26:22 2025 -0400|deps: bump to grep-searcher 0.1.16
+86e0ab12eff635bd924e3f92bd01be3545eac7b5|Dev01|dev02@example.com|Wed Oct 22 08:25:01 2025 -0400|grep-searcher-0.1.16
+7189950799adf91a22bc29fdfcd99c287a091cb4|Dev01|dev02@example.com|Wed Oct 22 08:24:51 2025 -0400|deps: bump to globset 0.4.18
+0b0e013f5ac6ae1dbfdf97f6f6aaa27d7c9bc317|Dev01|dev02@example.com|Wed Oct 22 08:23:57 2025 -0400|globset-0.4.18
+cac9870a0264014ab7015bf07e154c06a668a72c|Dev01|dev02@example.com|Wed Oct 22 08:23:05 2025 -0400|doc: update date in man page template
+bee13375ed7c4360714175c2ec1e50ed8a8a8fc9|Dev01|dev02@example.com|Wed Oct 22 08:21:56 2025 -0400|deps: update everything
+f5be160839edb2d8dd68f54904a8927f8ab13178|Dev01|dev02@example.com|Wed Oct 22 08:21:34 2025 -0400|changelog: 15.1.0
+24e88dc15b58b6fcc16d217158994871e756a6ca|Dev61|dev62@example.com|Wed Oct 22 07:18:30 2025 -0500|ignore/types: add `ssa` type
+5748f81bb107ce65f32cff330fe90dc639af262c|Dev01|dev02@example.com|Wed Oct 22 07:47:07 2025 -0400|printer: use `doc_cfg` instead of `doc_auto_cfg`
+d47663b1b4548e4fa02d6e4b575718d0f5f5e7d6|Dev01|dev02@example.com|Sun Oct 19 10:38:23 2025 -0400|searcher: fix regression with `--line-buffered` flag
+38d630261aded3a8e535fe85761e68af35bc462d|Dev73|dev74@example.com|Fri Oct 17 11:59:17 2025 -0700|printer: add Cursor hyperlink alias
+b3dc4b09988b4fe7d8ff69ad576623d57f7c3b75|Dev01|dev02@example.com|Fri Oct 17 10:27:19 2025 -0400|globset: improve debug log
+f09b55b8e760de8192d17b7f89512c71035e1abd|Dev01|dev02@example.com|Wed Oct 15 23:32:00 2025 -0400|changelog: start next section
+0551c6b931be9df3b982362f144f36140d8cea2d|Dev01|dev02@example.com|Wed Oct 15 23:31:35 2025 -0400|pkg/brew: update tap
+3a612f88b805e14aef45bfa43e25a54abc6297fc|Dev01|dev02@example.com|Wed Oct 15 23:07:50 2025 -0400|15.0.0
+ca2e34f37c5fa3021d0c14a67a7f0590166ade4f|Dev01|dev02@example.com|Wed Oct 15 23:06:34 2025 -0400|grep-0.4.0
+a6092beee4a16055e32f42d4024a9bb68402f781|Dev01|dev02@example.com|Wed Oct 15 23:05:10 2025 -0400|deps: bump to grep-printer 0.3.0
+a0d61a063f5ff7c1d1b131882d92999c923c3420|Dev01|dev02@example.com|Wed Oct 15 23:04:24 2025 -0400|grep-printer-0.3.0
+c22fc0f13ce1cbe3bd40b659628aea21874938a2|Dev01|dev02@example.com|Wed Oct 15 23:02:59 2025 -0400|deps: bump to grep-searcher 0.1.15
+087f82273db91830245ba246306899f9fbbd86ec|Dev01|dev02@example.com|Wed Oct 15 23:02:33 2025 -0400|grep-searcher-0.1.15
+a3a30896be61285e713901ffbf0aa30f356f8304|Dev01|dev02@example.com|Wed Oct 15 23:01:31 2025 -0400|deps: bump to grep-pcre2 0.1.9
+7397ab7d97a9e07be60b3dde7c6f5ba58cc61ea8|Dev01|dev02@example.com|Wed Oct 15 23:01:07 2025 -0400|grep-pcre2-0.1.9
+cf1dab0d5aa15b4bf5b85660bbdcb3d257595ada|Dev01|dev02@example.com|Wed Oct 15 23:00:58 2025 -0400|deps: bump to grep-regex 0.1.14
+e523c6bf32079f5e51798dd797162a3cb2cf9beb|Dev01|dev02@example.com|Wed Oct 15 23:00:22 2025 -0400|grep-regex-0.1.14
+720376ead65b8a98469b5e3030bd009eee90f23f|Dev01|dev02@example.com|Wed Oct 15 23:00:12 2025 -0400|deps: bump to grep-matcher 0.1.8
+a5ba50ceaf01908fed077eb914a84bd02e016a70|Dev01|dev02@example.com|Wed Oct 15 22:59:35 2025 -0400|grep-matcher-0.1.8
+a766f79710f9182f78bd80e47d152cdc0f9b8c99|Dev01|dev02@example.com|Wed Oct 15 22:59:17 2025 -0400|deps: bump to grep-cli 0.1.12
+4aafe45760adfe6505a9852e14cad4a15f79b7c9|Dev01|dev02@example.com|Wed Oct 15 22:58:42 2025 -0400|grep-cli-0.1.12
+c03e49b8c55f5184824580d7c26c2d37c6b648d6|Dev01|dev02@example.com|Wed Oct 15 22:58:35 2025 -0400|deps: bump to ignore 0.4.24
+70ae7354e1b6328ed7eb2e6ff93fd28ecd5441c9|Dev01|dev02@example.com|Wed Oct 15 22:57:50 2025 -0400|ignore-0.4.24
+19c2a6e0d9bc685a767f6ab049e0a6aa6cdbfbe8|Dev01|dev02@example.com|Wed Oct 15 22:57:28 2025 -0400|deps: bump to globset 0.4.17
+064b36b115228bbe2ca72fc7932777096bcb2602|Dev01|dev02@example.com|Wed Oct 15 22:55:55 2025 -0400|globset-0.4.17
+365384a5c11760675768622b8c6e03e1e34ec81f|Dev01|dev02@example.com|Wed Oct 15 22:54:51 2025 -0400|doc: move CHANGELOG update before dependency updates
+72a5291b4e46371dd482b5577e77eb9cc5202967|Dev01|dev02@example.com|Wed Oct 15 22:54:11 2025 -0400|doc: update date in man page template
+62e676843af3ba046b027e5407f06e35343c808c|Dev01|dev02@example.com|Wed Oct 15 22:46:18 2025 -0400|deps: update everything
+3780168c132be6707cb2a5a4acbdbd7da5f576ce|Dev01|dev02@example.com|Wed Oct 15 22:45:35 2025 -0400|changelog: 15.0.0
+4c953731c4ea06ecce1a6f1e0229f1dc18a967ff|Dev01|dev02@example.com|Wed Oct 15 22:45:20 2025 -0400|release: finally switch to LTO for release binaries
+79d393a302f1b6c0de6bf4ed893c0481d551f45a|Dev01|dev02@example.com|Wed Oct 15 22:42:51 2025 -0400|release: remove riscv64 and powerpc64 artifacts
+85eaf9583353dd429dfe1faf76ad397ccf3ab5f4|Dev01|dev02@example.com|Wed Oct 15 21:51:39 2025 -0400|ci: testing release
+63209ae0b95d31f28d14be5125fba3f61f5835e6|Dev01|dev02@example.com|Wed Oct 15 21:05:29 2025 -0400|printer: fix `--stats` for `--json`
+b610d1cb1506feab33459c5853e4c0d0cb16a6e2|Dev01|dev02@example.com|Wed Oct 15 18:08:30 2025 -0400|ignore: fix global gitignore bug that arises with absolute paths
+9ec08522bee566c8fbf03c340acd7a1ff1789a9f|Dev75|dev76@example.com|Tue Oct 14 21:15:07 2025 +0200|ignore/types: add lowercase R extensions
+d4b77a8d8967ce1bf701ec65ceb9a75e85e5f2e0|Dev01|dev02@example.com|Tue Oct 14 13:46:02 2025 -0400|searcher: fix a performance bug with `-A/--after-context`
+8c6595c215d1e24bed5b7b86e2b18f3c871439ef|Dev01|dev02@example.com|Tue Oct 14 13:04:39 2025 -0400|searcher: fix performance bug with `-A/--after-context` when searching `stdin`
+de2567a4c76fa671005538d6cd841abc44932b9a|Dev01|dev02@example.com|Sun Oct 12 16:29:10 2025 -0400|printer: fix panic in replacements in look-around corner case
+916415857f084e63efda03cf25a67fe7f6d24244|Dev01|dev02@example.com|Sun Oct 12 14:18:14 2025 -0400|core: don't build decompression reader unless we intend to use it
+5c42c8c48f4163ba7c0662cb70dbf61f9d670d9a|Dev01|dev02@example.com|Sun Oct 12 12:45:34 2025 -0400|test: add regression test for fixed bug
+f0faa91c68c0d2f8c4b93a5e8546b4d3554f637e|Dev01|dev02@example.com|Fri Oct 10 21:44:50 2025 -0400|doc: clarify `--ignore-file` precedence
+a5d9e03c687c14618d9224e0cbea3061860ba8de|Dev01|dev02@example.com|Fri Oct 10 21:36:59 2025 -0400|test: attempt to fix flaky time-reliant test
+924ba101eed70e4e096ba639382c73dec90c2c86|Dev01|dev02@example.com|Fri Oct 10 21:10:49 2025 -0400|test: fix `Command::current_dir` API
+293ef80eaf0641bcfa0206e1fc142017296bac8c|Dev01|dev02@example.com|Fri Oct 10 21:06:01 2025 -0400|test: add another regression test for gitignore matching bug
+fa80aab6b0f854f7a88e7d982d27aec0a9402002|Dev01|dev02@example.com|Fri Oct 10 20:58:54 2025 -0400|test: add regression test for fixed gitignore bug
+7c2161d68755e2c47db26717f6757f5099d500e4|Dev77|dev78@example.com|Sat Oct 4 07:31:11 2025 +0200|release: add binaries for `riscv64gc-unknown-linux-gnu` target
+096f79ab9824753cedd989da92076be12f0904ea|Dev01|dev02@example.com|Fri Oct 10 20:11:07 2025 -0400|deps: update everything
+0407e104f611d623547897ca99d172673b31779f|Dev01|dev02@example.com|Wed Oct 8 21:09:21 2025 -0400|ignore: fix problem with searching whitelisted hidden files
+bb88a1ac45c70bef97e0d6ccd6e91595610de860|Dev01|dev02@example.com|Sun Oct 5 10:52:46 2025 -0400|deps: semver compatible updated to dependencies
+2924d0c4c0c87a147623d9254fbdbe7b28e7f872|Dev79|dev80@example.com|Sun Sep 28 19:15:18 2025 -0300|ignore: add `min_depth` option
+9d8016d10c94a5af2768eb6dd0440386a7d317a0|Dev01|dev02@example.com|Sat Oct 4 08:55:37 2025 -0400|printer: finish removal of `Dev55_matches`
+9802945e6342ec284633924cb7d8d3ce67204995|Dev01|dev02@example.com|Wed Sep 24 08:10:23 2025 -0400|doc: update the CentOS, RHEL and Rocky Linux installation instructions
+fdea9723cac34b6e93e259c2366c94e8319de0ca|Dev01|dev02@example.com|Mon Sep 22 22:12:15 2025 -0400|doc: clarify a case where -m/--Dev55-count is not strictly respected
+c45ec16360870bba60505489fb745ad245075a86|Dev01|dev02@example.com|Mon Sep 22 22:00:15 2025 -0400|doc: clarify `--multiline --count`
+e42432cc5dc32820d025e28287bba70a3751f8ca|Dev01|dev02@example.com|Mon Sep 22 21:49:29 2025 -0400|ignore: clarify `WalkBuilder::filter_entry`
+6e77339f30bd4eeaa3980a3256f57e81ec579302|Dev01|dev02@example.com|Mon Sep 22 21:38:08 2025 -0400|cli: tweak docs for `resolve_binary`
+1b07c6616a5b06bd6c00f2a7d3418b9096f601f9|Dev01|dev02@example.com|Mon Sep 22 17:02:01 2025 -0400|cli: document that `-c/--count` can be inconsistent with `-l/--files-with-matches`
+c1fc6a5eb8c971fc43041d3df34cf8bd49f31032|Dev01|dev02@example.com|Mon Sep 22 09:13:44 2025 -0400|release: build aarch64 artifacts for macos on GitHub Actions
+8b5d3d1c1e3b0e32f22aa634d000b314f6d4d465|Dev01|dev02@example.com|Sun Sep 21 13:56:40 2025 -0400|printer: hack in a fix for `-l/--files-with-matches` when using `--pcre2 --multiline` with look-around
+491bf3f6d5bc1a621754440e291960f460a9c003|Dev01|dev02@example.com|Sun Sep 21 11:31:16 2025 -0400|deps: update everything else
+81bed78654f57f344e6ef79b81751c09ea60c74e|Dev01|dev02@example.com|Sun Sep 21 11:30:42 2025 -0400|deps: update to PCRE2 10.46
+1b6177bc5c53c3007c61bba4100a98d5d2a856ae|Dev01|dev02@example.com|Sun Sep 21 09:17:17 2025 -0400|cargo: set MSRV to 1.85
+a7b7d81d66b6e2e4311d5dd0683022c2978650f1|Dev81|dev82@example.com|Sun Sep 21 15:15:48 2025 +0200|lint: fix a few Clippy errors
+bb8172fe9baa450ede7ff84677ab45048675fd02|Dev01|dev02@example.com|Fri Sep 19 17:17:20 2025 -0400|style: apply rustfmt
+64174b8e68b59e560ad459f3c11cc9c4f00964bd|Dev83|dev84@example.com|Wed Jul 9 22:46:40 2025 +1000|printer: preserve line terminator when using `--crlf` and `--replace`
+f596a5d8750a6a6db1b87ad95a78667322c06cbd|Dev85|dev86@example.com|Fri Sep 12 22:53:35 2025 +0300|globset: add `allow_unclosed_class` toggle
+556623684e99fade287f265c5f513321487dd35a|Dev87|dev88@example.com|Mon Sep 8 10:46:21 2025 +0200|ignore/types: add GDScript files (*.gd) for the Godot Engine
+a6e0be3c909c5c09e5fb402c907f3beb88cfb4c4|Dev89|dev90@example.com|Sun Jul 6 17:37:07 2025 +0000|searcher: move "Dev55 matches" from printer to searcher
+a60e62d9ac559b1468d4dd27b80a7b662a600e0c|Dev01|dev02@example.com|Sun Sep 7 15:07:45 2025 -0400|rust: move to Rust 2024
+3f565b58cc85a655b552ddcfad1e31b60bdc374f|Dev91|dev92@example.com|Sun Sep 7 13:25:20 2025 +0200|ignore/types: add Qt types for resource files and ui declaration
+74959a14cbcce19e2471b0d281ea5cdbd248527d|Dev01|dev02@example.com|Sat Sep 6 14:50:22 2025 -0400|man: escape all hyphens in flag names
+78383de9b29a67c64bc21047caf57559f7061e26|Dev53|dev54@example.com|Sun Jul 13 01:50:38 2025 -0500|complete/zsh: improve --hyperlink-format completion
+519c1bd5cfd569bed29f1b3114a872329883983a|Dev93|dev94@example.com|Sun Jul 6 16:05:15 2025 -0700|complete: improvements for the `--hyperlink-format` flag
+66aa4a63bb52468aa789cfa00c0643111ff03239|Dev81|dev82@example.com|Wed Jul 16 21:53:43 2025 +0200|printer: deduplicate hyperlink alias names
+fdfda9ae73bded4e1c2fc0103439a5a357c1f271|Dev01|dev02@example.com|Wed Aug 20 07:04:36 2025 -0400|doc: actually fix deb download link
+c03731005020a4fef8016e46c1ba9fdab8d7df4c|Dev95|dev96@example.com|Thu Jan 30 17:00:18 2025 +0000|doc: update installation instructions for RHEL/CentOS/Rocky Linux 9
+99fe884536e18bcd9f3c57ce598791d5baa975b1|Dev97|dev98@example.com|Wed Jul 23 21:45:17 2025 -0400|colors: add `highlight` type support for matching lines
+126bbeab8c1cbbc1d6cb36b4c2d560574233856d|Dev01|dev02@example.com|Tue Aug 19 20:51:43 2025 -0400|printer: fix handling of `has_match` for summary printer
+859d54270ec19f8ffc98343d9af886c10728d680|Dev99|dev100@example.com|Thu Jun 12 16:10:23 2025 +0100|globset: make `GlobSet::new` public
+33b44812c0a01f4f2a316bac04d4a7477cf41444|Dev101|dev102@example.com|Mon Jul 7 22:31:11 2025 -0700|globset: make `GlobSet::empty` const
+c007d8914510e799c72a72b99980554cb673414a|Dev103|dev104@example.com|Thu Aug 7 18:39:34 2025 -0700|doc: clarify that `.git` is covered by `--hidden` and not `--ignore-vcs`
+60aa9f17276409257ad612fccefba13c26ed0d74|Dev105|dev106@example.com|Sun Jun 22 01:36:07 2025 +0530|tests: increase sleep duration for sort file metadata tests on Windows AArch64
+56d03a1e2f8f12a2a5fe8fcc3b1a4c5039291c9a|Dev107|dev108@example.com|Thu Jul 31 14:34:23 2025 +0200|ignore/types: include missing files for the tf type
+e166f271dff589ec39d21235ef38f792545be37d|Dev109|dev110@example.com|Sun Jul 20 23:38:31 2025 +0200|ignore/types: add gleam
+83d94672ae09a5deb6d4d795b105b3b18d34508a|Dev111|dev112@example.com|Mon Jun 30 14:13:12 2025 +0200|ignore/types: add LLVM to default types
+6887122e5bcef8d4b7a2c70ea04ef9d87d80faff|Dev113|dev114@example.com|Fri Jul 4 17:37:38 2025 -0700|ignore/types: add ColdFusion and BoxLang
+06210b382a4628258680cfdda07d5ed73a88b046|Dev115|dev116@example.com|Fri Jun 6 12:58:07 2025 +0300|ignore/types: add `.env` to `sh` file type
+00e501b529fc709806a413a88c2f32487e7958cb|Dev117|dev118@example.com|Thu May 29 20:33:35 2025 +0800|build: emit warning if git is missing during build
+2ebd768d404952b5412997555b84b6ca2e20f8b8|Dev01|dev02@example.com|Tue Aug 19 16:07:07 2025 -0400|doc: remove CentOS/RHEL installation instructions
+4df1298127695ed1e76937f16de1a0135677ccf5|Dev01|dev02@example.com|Sun Aug 17 17:18:27 2025 -0400|globset: fix bug where trailing `.` in file name was incorrectly handled
+ba23ced8178496263af013117b70c09ce39c18e5|Dev119|dev120@example.com|Wed Mar 5 23:35:44 2025 +0200|ignore/types: add scdoc
+28cce895ffb8b34f3378b96b5a6b7aafe01694da|Dev121|dev122@example.com|Wed Mar 5 20:57:02 2025 +0100|doc: fix nixpkgs link
+7339bdf4b5f18ec9555e1a5bb69ef388b681ef79|Dev01|dev02@example.com|Sun Aug 17 16:14:51 2025 -0400|test: check binary file detection when using memory maps
+79f5a5a66e68aa50ef9f63ded777e640d345df5e|Dev123|dev124@example.com|Tue Dec 24 21:04:55 2024 +0100|globset: add `Candidate::from_bytes` constructor
+4ab1862dc04783b6615807d4b4511388c6b30364|Dev01|dev02@example.com|Sun Aug 17 10:44:02 2025 -0400|stats: fix case where "bytes searched" could be wrong
+6244e635a1a5aa4d401826b1e970d59a3f6cbf7c|Dev125|dev126@example.com|Sun Dec 1 10:28:01 2024 +0100|ignore/types: add Kconfig
+5e2d32fe7f3b7dcf768ffc1264dabe83e00ccaec|Dev127|dev128@example.com|Fri Nov 29 16:44:28 2024 +0800|printer: slightly simplify code
+75e17fcabe14dd9a773e4e8dc5b2fc837f238a90|Dev129|dev130@example.com|Mon Nov 25 21:28:24 2024 +0100|ignore/types: add `*.dtso` to `devicetree` type
+99b7957122454185dc5ea9e99bb1b56c8966f1a2|Dev131|dev132@example.com|Sat Nov 23 11:15:32 2024 -0800|ignore/doc: explain that `require_git(false)` will ascend above git roots
+ab4665a164476bc42454b60a79aad7497ecb2592|Dev01|dev02@example.com|Sun Aug 17 09:25:25 2025 -0400|globset: remove `__Nonexhaustive` work-around
+5f5da483079c61966ea34565387867609d4e22f2|Dev133|dev134@example.com|Mon May 12 14:51:25 2025 -0700|globset: support nested alternates
+b0c6d4c34afed68cfdc9dde98046716b1e773651|Dev135|dev136@example.com|Thu Oct 3 16:41:41 2024 -0400|ignore/types: add `*.svelte.ts` to Svelte file type glob
+d199058e77cbea419f072015373ab1beb0e508ee|Dev01|dev02@example.com|Sun Jul 27 15:08:09 2025 -0400|cli: make `rg -vf file` behave sensibly
+bb0cbae3121f19e5319b28519b4c287dd49cb941|Dev137|dev138@example.com|Tue Apr 29 13:33:21 2025 -0700|ci: add aarch64 Windows
+8fca3cdca63c9e1305e88a27cee206d73fd9a71e|Dev139|dev140@example.com|Wed Apr 9 22:02:33 2025 -0700|doc: fix typo in FAQ
+6f39f830cb9bc7b31c330d2c019c216477374371|Dev141|dev142@example.com|Wed Apr 9 21:24:17 2025 +0200|globset: compact Debug impl for `GlobSetBuilder` and `Glob`
+e83828fc8c30d5d5e0672641d8ffc64bb58081d8|Dev143|dev144@example.com|Fri Oct 25 12:10:16 2024 -0400|ignore/types: add `*.rake` extension to list of Ruby file types
+72a130323813d0486861403a8aaf9b778276e6e5|Dev145|dev146@example.com|Mon Oct 21 17:15:25 2024 +1000|ignore/types: add typst
+861f6d374fa3d599dca86111e9b513772ca3de1a|Dev147|dev148@example.com|Wed Oct 16 09:03:15 2024 -0700|style: simplify string formatting
+624bbf7dcee8d69949a447b4e4393e23d3e25b38|Dev43|dev44@example.com|Thu Sep 19 01:09:57 2024 -0600|globset: add matches_all method
+53279db4143f4307c2b1b27f2cd32a43b0496205|Dev149|dev150@example.com|Thu Sep 12 17:27:46 2024 +0300|deps: switch to tikv-jemallocator
+292bc54e64e55b69fec806bf3ee6481958e2946f|Dev151|dev152@example.com|Sun Sep 8 01:59:46 2024 -0700|printer: support `-r/--replace` with `--json`
+5be67c1244f494414629f71be859e0e1552dd6fd|Dev153|dev154@example.com|Mon Aug 12 18:37:46 2024 -0700|ignore/types: include msbuild solution filters
+119407d0a918ca54da1e0a5e8806dbb8cd7e2be0|Dev81|dev82@example.com|Sat Aug 3 18:21:07 2024 +0200|printer: use std::path::absolute on Windows
+d869038cf610f10a8b7aca24284719e65a477e1a|Dev155|dev156@example.com|Wed Jul 17 09:47:25 2024 +0200|ignore: improve multithreading heuristic
+75970fd16b4d5f8ff9fb1d9c157467eb166acf23|Dev157|dev158@example.com|Wed Jul 3 22:05:09 2024 +0200|ignore: don't process command line arguments in reverse order
+380809f1e250035808170db2e9a2cbd09395f450|Dev159|dev160@example.com|Sat Jun 29 00:21:08 2024 +0200|ignore/types: add Makefile.*
+94ea38da3029347006ad0dcae4886c76b04d8d88|Dev161|dev162@example.com|Sat Jun 22 05:22:18 2024 -0400|ignore: support `.jj` as well as `.git`
+da672f87e853d239b2f562d70c0b34d3afea6dfc|Dev163|dev164@example.com|Fri Jun 21 15:11:25 2024 -0400|color: add italic to style attributes
+edafb612d2b93b0dc28531abf155bdd7e3bcfe63|Dev165|dev166@example.com|Thu May 2 11:08:57 2024 -0700|core: add "total" to --stats output
+483628469a2580e4eab0edfbe7a7f3f8b1951848|Dev167|dev168@example.com|Wed Apr 17 16:58:23 2024 -0400|ignore/gitignore: skip BOM at start of ignore file
+c93fc793a08f3a97e02457d5132b4cc346768014|Dev169|dev170@example.com|Sun Feb 4 09:53:39 2024 -0800|searcher: add more tests for `replace_bytes`
+7c004f224eb2c7b7a04ac246b456f0e4d6d36c9d|Dev171|dev172@example.com|Wed Jan 31 13:11:13 2024 -0800|ignore/types: detect `WORKSPACE.bzlmod` for bazel file type
+52115ab633cf04a60a43f2d3727cec729cda5c13|Dev173|dev174@example.com|Wed Jan 24 11:15:22 2024 -0500|globset: add opt-in `Arbitrary` trait implementations
+bfe2def12183f66689f23f52d85100fbc4b42d1a|Dev01|dev02@example.com|Fri Jul 11 12:59:47 2025 -0400|tests: add test for filtering hidden files
+14f4957b3d605f14ad58bc67e54197a3084fef5a|Dev127|dev128@example.com|Fri Nov 15 18:40:27 2024 +0800|ignore: fix filtering searching subdir or .ignore in parent dir
+f722268814e878b133d926143f3019c164ef4bc1|Dev175|dev176@example.com|Tue Jan 9 22:16:02 2024 +0100|complete/fish: Take RIPGREP_CONFIG_PATH into account
+90a680ab45a7eaaffcccb22c4946771d6b424f02|Dev177|dev178@example.com|Mon Jan 8 16:10:57 2024 +0800|impl: switch most atomic ops to `Relaxed` ordering
+119a58a400ea948c2d2b0cd4ec58361e74478641|Dev01|dev02@example.com|Sat Jul 26 10:27:30 2025 -0400|msrv: bump to Rust 1.88
+3b7fd442a6f3aa73f650e763d7cbb902c03d700e|Dev01|dev02@example.com|Fri Jul 4 10:12:38 2025 -0400|deps: update everything
+cbc598f245f3c157a872b69102653e2e349b6d92|Dev179|dev180@example.com|Fri May 30 20:30:52 2025 +0800|doc: update version number in dpkg installation
+6dfaec03e830892e787686917509c17860456db1|Dev181|dev182@example.com|Thu Apr 10 10:55:32 2025 -0400|deps: bump crossbeam-channel from 0.5.13 to 0.5.15
+5fbc4fee64131b5cd14675be71e43768a9763553|Dev183|dev184@example.com|Mon Apr 7 10:53:32 2025 -0400|ignore/types: fix Seed7 file extension
+004370bd1619183b54dbaa41719728edfe892ac6|Dev183|dev184@example.com|Mon Apr 7 08:51:22 2025 -0400|ignore/types: add support for Seed7 files
+de4baa10024f2cb62d438596274b9b710e01c59b|Dev01|dev02@example.com|Thu Feb 27 12:46:58 2025 -0500|globset-0.4.16
+163ac157d371e97a8ceb2c88f884e50698cefe5b|Dev01|dev02@example.com|Thu Feb 27 12:37:06 2025 -0500|globset: escape `{` and `}` in `escape`
+e2362d4d5185d02fa857bf381e7bd52e66fafc73|Dev01|dev02@example.com|Sat Jan 25 14:25:22 2025 -0500|searcher: add log message noting detected encoding
+d6b59feff890f038acde7d5e151995d8aec1e107|Dev185|dev186@example.com|Mon Jan 13 16:16:09 2025 +0100|github: update WASI compilation job
+94305125ef33b86151b6cd2ce2b33d641f6b6ac3|Dev187|dev188@example.com|Tue Dec 31 05:23:13 2024 -0800|zsh: support sourcing zsh completion dynamically
+79cbe89deb1151e703f4d91b19af9cdcc128b765|Dev01|dev02@example.com|Mon Sep 30 07:38:05 2024 -0400|doc: tweak wording for stdin detection
+bf63fe8f258afc09bae6caa48f0ae35eaf115005|Dev43|dev44@example.com|Thu Sep 19 07:30:31 2024 -0600|regex: add as_match method to Captures trait
+8bd595029656370927f846406ca4ce4ffe0b3e91|Dev01|dev02@example.com|Sun Sep 8 22:32:09 2024 -0400|changelog: add next section
+6e0539ab91a467153fa403c3d93204e4594af0b3|Dev01|dev02@example.com|Sun Sep 8 22:32:02 2024 -0400|pkg/brew: update tap
+4649aa9700619f94cf9c66876e9549d83420e16c|Dev01|dev02@example.com|Sun Sep 8 22:15:00 2024 -0400|14.1.1
+c009652e775be6b0f8682f72e059b79592fbc9c8|Dev01|dev02@example.com|Sun Sep 8 22:13:53 2024 -0400|changelog: 14.1.1
+b9f7a9ba2bede566a6a981c6a7a004836a8c4138|Dev01|dev02@example.com|Sun Sep 8 22:11:17 2024 -0400|deps: bump grep to 0.3.2
+a1960877cf699c77419b1965bcfa4de98767946f|Dev01|dev02@example.com|Sun Sep 8 22:11:00 2024 -0400|grep-0.3.2
+bb0925af9159d552af0bdbdafeea7d4271d575b9|Dev01|dev02@example.com|Sun Sep 8 22:10:49 2024 -0400|deps: bump grep-printer to 0.2.2
+be117dbafa6f7a550a4e5f1ba71bcc96b0a8c4e1|Dev01|dev02@example.com|Sun Sep 8 22:10:29 2024 -0400|grep-printer-0.2.2
+06dc13ad2d7543fb241743c44036db464ee3ff38|Dev01|dev02@example.com|Sun Sep 8 22:09:55 2024 -0400|deps: bump grep-searcher to 0.1.14
+c6c2e69b8f7b7289789c483da8b04dbd529f3c91|Dev01|dev02@example.com|Sun Sep 8 22:09:27 2024 -0400|grep-searcher-0.1.14
+e67c868dddb75cad2a961d364bdf8a74514a2731|Dev01|dev02@example.com|Sun Sep 8 22:09:23 2024 -0400|deps: bump grep-pcre2 to 0.1.8
+d33f2e2f70c4c7c4e262badb45d4c88ebbdcdbc5|Dev01|dev02@example.com|Sun Sep 8 22:08:41 2024 -0400|grep-pcre2-0.1.8
+082edafffaa4961ab5e6a17dcc58878549eb6b7a|Dev01|dev02@example.com|Sun Sep 8 22:08:22 2024 -0400|deps: bump grep-regex to 0.1.13
+7c8dc332b3a59b4902d3eec76fd98b676071eb0b|Dev01|dev02@example.com|Sun Sep 8 22:07:52 2024 -0400|grep-regex-0.1.13
+ea961915b5e4c709886168b033ba43c0fad664ce|Dev01|dev02@example.com|Sun Sep 8 22:07:30 2024 -0400|deps: bump grep-cli to 0.1.11
+7943bdfe82182de1bf6d05cbd9cd87d2c32a3130|Dev01|dev02@example.com|Sun Sep 8 22:06:59 2024 -0400|grep-cli-0.1.11
+312a7884fc6ad9e4dd07542a77bf8e94503440ad|Dev01|dev02@example.com|Sun Sep 8 22:06:39 2024 -0400|deps: bump ignore to 0.4.23
+ac02f54c892cc22cf32344600360a911537b2a27|Dev01|dev02@example.com|Sun Sep 8 22:06:03 2024 -0400|ignore-0.4.23
+24b337b9405b59724beb927de9e41d4ec329713f|Dev01|dev02@example.com|Sun Sep 8 22:05:45 2024 -0400|deps: bump globset to 0.4.15
+a5083f99ce1d777d0ce223c30f5789fb7d47783a|Dev01|dev02@example.com|Sun Sep 8 22:04:48 2024 -0400|globset-0.4.15
+f89cdba5dfdce734a9300a487f9c595013838cb7|Dev01|dev02@example.com|Sun Sep 8 22:04:11 2024 -0400|doc: update date in man page template
+f7b677d13620f11327669f768b3c6cabb4c8f2d7|Dev01|dev02@example.com|Sun Sep 8 22:03:29 2024 -0400|deps: update everything
+3f68a8f3d70d402643cae09fd6b9858385e30743|Dev01|dev02@example.com|Sun Sep 8 22:03:22 2024 -0400|changelog: 14.1.1
+9d738ad0c009e6632d75fa3d36051e5ae7f7cce6|Dev01|dev02@example.com|Sun Sep 8 21:44:26 2024 -0400|regex: fix inner literal extraction that resulted in false negatives
+6c5108ed17987531644518fac8c1659b0b202611|Dev01|dev02@example.com|Tue Sep 3 11:46:01 2024 -0400|github: add FUNDING
+e0f1000df67f82ab0e735bad40e9b45b2d774ef0|Dev01|dev02@example.com|Wed Aug 28 11:38:43 2024 -0400|deps: update everything
+ea99421ec896fcc9a9cd5367d42a80f89316822f|Dev189|dev190@example.com|Wed Aug 21 17:58:36 2024 +0000|doc: fix transcription bug in ugrep benchmark command
+af8c386d5e10eaa4b8cb687c4f5b05893a7ae0ce|Dev191|dev192@example.com|Fri Aug 2 16:32:42 2024 -0500|doc: fix typo in --heading flag help
+71d71d2d98964653cdfcfa315802f518664759d7|Dev193|dev194@example.com|Thu Jul 4 14:25:13 2024 +0300|doc: refer to correct flag name for --engine=auto
+c9ebcbd8abe48c8336fb4826df7e9b6fb179de03|Dev195|dev196@example.com|Wed Jun 5 15:56:00 2024 +0200|globset: optimize character escaping
+dec0dc319653364d7a2c23dd78e65c8b0532f270|Dev197|dev198@example.com|Mon Jun 3 03:18:50 2024 +0530|doc: update link for debian installation
+2f0a269f0751bf58a061d23febe340a9f5ffbb67|Dev01|dev02@example.com|Mon May 27 18:22:11 2024 -0400|github: use an obviously old version of ripgrep in issue template
+0a0893a76506518e766033d03f5b6d7c7a7a8525|Dev01|dev02@example.com|Mon May 27 14:53:19 2024 -0400|ignore: add debug log message when opening gitignore file
+35160a1cdb4c7e2c370e8a7fad6508ff922a33c2|Dev199|dev200@example.com|Fri May 24 17:59:19 2024 +0200|doc: add Flox as an installation method
+f1d23c06e30606b2428a4e32da8f0b5069e81280|Dev01|dev02@example.com|Mon May 13 09:34:15 2024 -0400|cli: add more logging for stdin heuristic detection
+22b677900f7ee74dcc0ec6791805120976d86168|Dev201|dev202@example.com|Mon May 13 19:44:51 2024 +0800|doc: fix some typos
+bb6f0f551972720792bd5bbd15035991a63dc472|Dev203|dev204@example.com|Sat May 11 13:02:24 2024 +0200|doc: fix typo in --vimgrep help message
+b6ef99ee554346a0870245c92112aad3838c8edd|Dev01|dev02@example.com|Thu May 9 13:45:31 2024 -0400|doc: remove unused man page template
+bb8601b2bafb5e68181cbbb84e6ffa4f7a72bf16|Dev205|dev206@example.com|Tue Apr 23 19:12:19 2024 +0200|printer: make compilation on non-unix, non-windows platforms work
+02b47b7469ac8fc9e7dcb390415644f33e500b72|Dev01|dev02@example.com|Tue Apr 23 10:43:25 2024 -0400|deps: update everything
+d922b7ac114c24d6800ae5f79d2967481f380c83|Dev207|dev208@example.com|Tue Apr 2 21:10:25 2024 +0800|doc: fix typo
+2acf25c6897f45c9e7332712cca63d4eb576533c|Dev209|dev210@example.com|Tue Apr 2 12:05:15 2024 +0900|ignore/types: add WGSL to the default file types
+80007698d3ae6c1def8ee784c6287ce1376de5c4|Dev211|dev212@example.com|Mon Apr 1 19:49:29 2024 +0800|ignore/types: add Vue
+3ad0e83471588d8802d5747d0cc9accec76f7ccf|Dev213|dev214@example.com|Wed Mar 27 19:50:05 2024 +0100|ignore/walk: correct build_parallel() documentation
+eca13f08a2a0ece89a423565891e48a90a8aedef|Dev01|dev02@example.com|Sun Mar 24 18:58:28 2024 -0400|deps: bump everything else
+4f99f82b1958f75d64cdb7c931190e39d67a3b17|Dev01|dev02@example.com|Sun Mar 24 18:58:06 2024 -0400|deps: bump pcre2 and pcre2-sys
+327d74f1616e135a6eb09a0c3016f8f45cfc0cfc|Dev215|dev216@example.com|Wed Mar 20 17:11:09 2024 +0500|doc: add link to unofficial playground
+9da0995df4cde892b899687c20b717c69b4ea0d1|Dev217|dev218@example.com|Tue Mar 19 13:36:08 2024 -0400|ignore/types: add 'svelte' to the default file types
+e9abbc1a02de29dbe60e1b625d540c58759b23a6|Dev01|dev02@example.com|Thu Mar 7 09:31:22 2024 -0500|cargo: nuke 'simd-accel' from orbit
+9bd30e8e48b139c3f5ebe8587abff6fff7add45b|Dev01|dev02@example.com|Thu Mar 7 09:38:22 2024 -0500|deps: update everything
+59212d08d3ef122adc781dfa09343df7848febf8|Dev01|dev02@example.com|Thu Mar 7 09:37:48 2024 -0500|style: fix new lints
+6ebebb2aaa9991694aed10b944cf2e8196811e1c|Dev219|dev220@example.com|Thu Feb 22 19:57:58 2024 +0800|doc: fix typo in comments
+e92e2ef8137a4333fee141f842e9a59b5da7b645|Dev01|dev02@example.com|Thu Feb 15 12:02:15 2024 -0500|cli: remove stray `dbg!`
+4a30819302810a8772bd205970d41fe9b4e97333|Dev01|dev02@example.com|Thu Feb 15 11:59:59 2024 -0500|cli: tweak how "is one file" predicate works
+9b42af96f0143a395b9379b6c761b5625367a3b9|Dev139|dev140@example.com|Mon Jan 22 10:31:11 2024 -0800|doc: fix typo in --hidden docs
+648a65f1976cc3b7eb66425024649d71d5befe1e|Dev221|dev222@example.com|Sat Jan 6 11:59:56 2024 -0800|doc: add missing date in changelog
+bdf01f46a620cb15ef817809320cba124d42b99e|Dev01|dev02@example.com|Sat Jan 6 14:41:45 2024 -0500|changelog: start next section
+1c775f3a82a374851c7a3366ab1c690164fe9c88|Dev01|dev02@example.com|Sat Jan 6 14:41:09 2024 -0500|pkg/brew: update tap
+e50df40a1967708b9781486b1c017e48040bceb0|Dev01|dev02@example.com|Sat Jan 6 14:32:27 2024 -0500|14.1.0
+1fa76d2a42f05509a01c3e50a9424d16cfa8726d|Dev01|dev02@example.com|Sat Jan 6 14:31:16 2024 -0500|changelog: add 14.1.0 blurb
+44aa5a417d396ec75613c876e0eb5e4ba2f03b1d|Dev01|dev02@example.com|Sat Jan 6 14:28:28 2024 -0500|deps: bump ignore to 0.4.22
+2c3897585d3a6d0709954bc389bed3d957878048|Dev01|dev02@example.com|Sat Jan 6 14:27:44 2024 -0500|ignore-0.4.22
+6e9141a9ca39a7ffbb25bf0817d21895e486aacc|Dev01|dev02@example.com|Sat Jan 6 14:26:52 2024 -0500|deps: update everything
+c8e4a84519ede79b330f9a9e2b072110d5bd0c8c|Dev01|dev02@example.com|Sat Jan 6 14:15:52 2024 -0500|cli: prefix all non-fatal error messages with 'rg: '
+f02a50a69da131269fe0d8460e08b1fceea04ca9|Dev01|dev02@example.com|Sat Jan 6 13:59:52 2024 -0500|changelog: various updates
+b9c774937fc285e6668be9823c4bf231a61fc4a8|Dev223|dev224@example.com|Wed Dec 20 18:34:42 2023 +0100|ignore: fix reference cycle for compiled matchers
+67dd809a8097923a721305ce0632a9fb9f19cb57|Dev01|dev02@example.com|Sat Jan 6 12:25:06 2024 -0500|ignore: add some 'allow(dead_code)' annotations
+e0a85678e112759f56f9e07d04a29f2eed6eb348|Dev175|dev176@example.com|Mon Dec 11 07:03:49 2023 +0100|complete/fish: improve shell completions for fish
+23af5fb043f8e625294e210446090f17dbd7e3bf|Dev225|dev226@example.com|Sat Jan 6 10:22:26 2024 -0500|doc: update MSRV in README
+5dec4b8e3755bcc0be27fb43bd20880d6da1c42b|Dev01|dev02@example.com|Sat Jan 6 09:56:47 2024 -0500|ci: drop custom Cross images
+827082a33ae7d86846a103ef14fb9ff297587049|Dev227|dev228@example.com|Fri Jan 5 01:06:42 2024 -0500|ci: add more ARM build configurations to CI and release workflows
+6c2a550e1ed190351707dbcb28d5085a89ac0710|Dev01|dev02@example.com|Thu Jan 4 19:46:29 2024 -0500|deps: update everything
+8e8fc9c5039663bf0145d7ae292c4214da957d4f|Dev01|dev02@example.com|Thu Jan 4 19:44:28 2024 -0500|deps: bump pcre2-sys to 0.2.8
+2057023dc5eb2b2ab28d03d2b902f3b57ce93165|Dev01|dev02@example.com|Wed Jan 3 16:04:04 2024 -0500|readme: update benchmarks
+3f2fe0afee0d1a1eeb3235904cfef4f35c4644dc|Dev01|dev02@example.com|Sun Dec 17 09:37:33 2023 -0500|deps: update everything
+56c7ad175ac1326e8d36a880061ca3b0e67ad5ea|Dev229|dev230@example.com|Thu Dec 7 17:46:00 2023 +0100|ignore/types: add Lean
+5b7a30846faba930616b2dce3d2344090330420d|Dev231|dev232@example.com|Thu Nov 30 15:54:54 2023 +0000|doc: fix Guix install instructions
+2a4dba3fbfef944c562bcdfa7485fa0f70d4f86f|Dev233|dev234@example.com|Wed Nov 29 18:03:12 2023 -0600|ignore/types: add meson.options
+84d65865e6febc784b8b0296dd4681d761fa5a67|Dev235|dev236@example.com|Wed Nov 29 13:49:20 2023 +0100|doc: add Void Linux installation instructions
+d9aaa118737d498e4be63c6ea7e80e654e2e80da|Dev01|dev02@example.com|Tue Nov 28 16:23:16 2023 -0500|pkg/brew: update tap
+67ad9917ad40d23df054b87a38532b06f85205dd|Dev01|dev02@example.com|Tue Nov 28 16:18:14 2023 -0500|14.0.3
+daa157b5f99c064eac7cd4593e4ec07bb8fd9bef|Dev01|dev02@example.com|Tue Nov 28 16:14:22 2023 -0500|core: actually implement --sortr=path
+ca5e294ad6b64b03c1d2fb4d9ed8c32b73e656ae|Dev01|dev02@example.com|Mon Nov 27 21:44:06 2023 -0500|pkg/brew: update tap
+6c7947b819733820c9a01e5a5452731c2f0c69fc|Dev01|dev02@example.com|Mon Nov 27 21:38:21 2023 -0500|14.0.2
+9acb4a540508ca06b1bbb1bfbd6ef01f5bd3228d|Dev01|dev02@example.com|Mon Nov 27 21:37:41 2023 -0500|deps: bump grep to 0.3.1
+0096c74c1195956e893535f1f2919068daef1c2c|Dev01|dev02@example.com|Mon Nov 27 21:36:54 2023 -0500|grep-0.3.1
+8c48355b03ee514f4962d2c038a1be9704125c75|Dev01|dev02@example.com|Mon Nov 27 21:36:44 2023 -0500|deps: bump grep-printer to 0.2.1
+f9b86de96322baea54711894ff917c0c4ec440fd|Dev01|dev02@example.com|Mon Nov 27 21:36:02 2023 -0500|grep-printer-0.2.1
+d23b74975ab02dde74f0e9799fccc53013fe61c7|Dev01|dev02@example.com|Mon Nov 27 21:35:53 2023 -0500|deps: bump grep-searcher to 0.1.13
+a5cbdb3dfe938a0fbe6f8e46f85f73eed0b2cd5e|Dev01|dev02@example.com|Mon Nov 27 21:34:58 2023 -0500|grep-searcher-0.1.13
+b6bac8484e5466d332640c4022951061bb865329|Dev01|dev02@example.com|Mon Nov 27 21:31:03 2023 -0500|cargo: add release-lto profile
+805fa32d184f9b163e7355dd335abc96440f0d2b|Dev01|dev02@example.com|Mon Nov 27 21:07:23 2023 -0500|searcher: work around NUL line terminator bug
+2d518dd1f96147690c1eadf58023cec3eb0e108a|Dev01|dev02@example.com|Mon Nov 27 20:05:58 2023 -0500|release: tweak how sha256sum is invoked
+8575d261790fe393d1768d12b3336cbb4cf0a9fc|Dev175|dev176@example.com|Mon Nov 27 10:54:35 2023 +0100|complete/fish: Fix syntax for negated options
+2e81a7adfeeb9a213786b8331b244f97e7b66657|Dev237|dev238@example.com|Mon Nov 27 17:05:38 2023 -0700|doc: fix typo that was preventing interpolation
+cd5440fb6230f72ab598916c1c5ab96686541d47|Dev01|dev02@example.com|Sun Nov 26 17:58:30 2023 -0500|changelog: fix wording
+2ee690e87a59968eb67f3a5ede56bf99a895db02|Dev01|dev02@example.com|Sun Nov 26 17:37:52 2023 -0500|pkg/brew: update tap
+59f86a45d3ca5b5d4dc7eae7cdfd8d1472d7b55d|Dev01|dev02@example.com|Sun Nov 26 16:33:35 2023 -0500|14.0.1
+2d31af38a2b764c446b2f949cb308a7310b251c0|Dev01|dev02@example.com|Sun Nov 26 16:31:42 2023 -0500|cargo: include pkg/windows in crate package
+0da1176e7d053d76105ef2d71551178292b16b49|Dev01|dev02@example.com|Sun Nov 26 15:27:09 2023 -0500|pkg/brew: update tap
+eeffcd50b71e84a6345c83d8a4c574d3543462ab|Dev01|dev02@example.com|Sun Nov 26 15:25:23 2023 -0500|doc: add step to run 'cargo package'
+625743d7c833023c7a196b26650cba4dba6cdb48|Dev01|dev02@example.com|Sun Nov 26 15:24:09 2023 -0500|grep-0.3.0
+3d0171040a684533b8ba41cdfc030870d753eb4f|Dev01|dev02@example.com|Sun Nov 26 15:21:40 2023 -0500|grep-printer-0.2.0
+93429d0f85bf86ad5947b10f57e3ad864c60867a|Dev01|dev02@example.com|Sun Nov 26 14:19:31 2023 -0500|14.0.0
+9c4b0baf1019ba3b21bc2ba03f7ef7af2c925470|Dev01|dev02@example.com|Sun Nov 26 14:18:53 2023 -0500|deps: bump grep to 0.2.13
+179487aaed881a2f6a808a73ed7c11996da81d60|Dev01|dev02@example.com|Sun Nov 26 14:18:17 2023 -0500|grep-0.2.13
+b407d62b6370af1e9265d93e81d3972e411a29d4|Dev01|dev02@example.com|Sun Nov 26 14:18:03 2023 -0500|deps: bump grep-searcher to 0.1.12
+9bd1e737bcd19471d8837bec9c34143fdfa61fb2|Dev01|dev02@example.com|Sun Nov 26 14:17:26 2023 -0500|grep-searcher-0.1.12
+c12231c6219cf86724c885c8d204b77996d76fe3|Dev01|dev02@example.com|Sun Nov 26 14:17:11 2023 -0500|deps: bump grep-pcre2 to 0.1.7
+b0df573834ce5e421b9c362ff4437342e02d61e5|Dev01|dev02@example.com|Sun Nov 26 14:16:46 2023 -0500|grep-pcre2-0.1.7
+85b2ceecd1830ad35472e5e3fcdab1d29dd56a0a|Dev01|dev02@example.com|Sun Nov 26 14:16:31 2023 -0500|deps: bump grep-regex to 0.1.12
+fee7ac79f11e05640c5609a825ed6d1359cae472|Dev01|dev02@example.com|Sun Nov 26 14:15:44 2023 -0500|grep-regex-0.1.12
+54d5540c10e485346150ad63e6a1fe8ad705e2f4|Dev01|dev02@example.com|Sun Nov 26 14:15:34 2023 -0500|deps: bump grep-matcher to 0.1.7
+d0251c77fe96412310110aeb9383f20436a9f97e|Dev01|dev02@example.com|Sun Nov 26 14:13:54 2023 -0500|grep-matcher-0.1.7
+6aa5993d4b0a0a84c45d2de885407b588f84faa5|Dev01|dev02@example.com|Sun Nov 26 14:13:40 2023 -0500|deps: bump grep-cli to 0.1.10
+6f78d211bf2f2622fb7fbb4fb5af044e36a167da|Dev01|dev02@example.com|Sun Nov 26 14:13:03 2023 -0500|grep-cli-0.1.10
+51aa33983032e40c45c9077a375c698dac375aaf|Dev01|dev02@example.com|Sun Nov 26 14:12:55 2023 -0500|deps: bump ignore to 0.4.21
+381c521d02e26f86d69fbbec6e697a4609bea056|Dev01|dev02@example.com|Sun Nov 26 14:12:16 2023 -0500|ignore-0.4.21
+57495db10eb36f7c4d012eb27cf8674de384d57c|Dev01|dev02@example.com|Sun Nov 26 14:11:43 2023 -0500|deps: bump globset to 0.4.14
+47e37175ca96e33a0ca62ef77050e3f78a8e0f04|Dev01|dev02@example.com|Sun Nov 26 14:11:05 2023 -0500|globset-0.4.14
+8697946718f9a483aa1496a988d3e7e2c54ef56a|Dev01|dev02@example.com|Sun Nov 26 14:10:07 2023 -0500|release/doc: set date in man page
+8058859701f49abf0b70f506a736bf932272888b|Dev01|dev02@example.com|Sun Nov 26 14:05:23 2023 -0500|changelog: add link for reporting perf improvements/regressions
+e9ff90c8ffc9308cb1a5acb37e1adf8299124ed8|Dev01|dev02@example.com|Sun Nov 26 14:03:59 2023 -0500|changelog: updates for the 14.0.0 release
+bf9f74ea5b065d5603fa8b9039e5ca5040459d97|Dev01|dev02@example.com|Sun Nov 26 13:32:30 2023 -0500|doc: progress
+9b5091b895106a2458eadbda1e19329a346e8eff|Dev01|dev02@example.com|Sun Nov 26 13:31:31 2023 -0500|deps: bump to memmap2 0.9.0
+a4f165e3abb0b9de2971be6c4c9493f1769408ba|Dev01|dev02@example.com|Sun Nov 26 13:28:30 2023 -0500|deps: bump everything
+d1def67000194585e1bdafa8571ef6fcec64d63e|Dev01|dev02@example.com|Sun Nov 26 13:28:01 2023 -0500|deps: bump pcre2 to 0.2.6
+56af4d4a7444bfc15bfb3d6cd0202f4fb3076e90|Dev01|dev02@example.com|Sun Nov 26 09:55:44 2023 -0500|cli: add simple flag suggestions
+b0f664540889f26f8f53b699dbc870de288ec428|Dev01|dev02@example.com|Sat Nov 25 18:27:23 2023 -0500|ci: remove local deb build-and-publish script
+3dbe371fe448c1e99a568c249d7e875aad59d6a5|Dev01|dev02@example.com|Sat Nov 25 17:33:16 2023 -0500|ci: add Debian release build
+30d06b3b4c39500fc99ffdc27aa6c476eaf18f3d|Dev01|dev02@example.com|Sat Nov 25 14:29:52 2023 -0500|changelog: note that --no-ignore --ignore-vcs works as expected
+6a055d922cb0899efe48d76defad3ff56ab7395d|Dev01|dev02@example.com|Sat Nov 25 14:18:24 2023 -0500|doc: clarify errors for -z/--search-zip
+e0075232291bd4043202844719e755f5980a4cc8|Dev01|dev02@example.com|Sat Nov 25 14:08:30 2023 -0500|doc: note the precedence of -t/--type
+88353c80da5cb9b08112fb5faa512ac511cefd52|Dev01|dev02@example.com|Sat Nov 25 14:02:12 2023 -0500|doc: be more explicit about ripgrep's behavior when printing to a tty
+cd3bcce42d1443a342cd113f904a3767ce835441|Dev01|dev02@example.com|Sat Nov 25 13:52:27 2023 -0500|changelog: mention M2 binaries for releases
+1ea3552f2d85f2a0b369042af7269645971bd2fc|Dev01|dev02@example.com|Sat Nov 25 13:48:58 2023 -0500|changelog: mention perf improvement for inner literals
+9ed7565fcb47d02e76398d41f24ba0817f6b9c2f|Dev01|dev02@example.com|Sat Nov 25 10:39:08 2023 -0500|cli: error when searching for NUL
+7bb9f35d2d0b02952e20c082b17be856788e5f44|Dev01|dev02@example.com|Sat Nov 25 09:13:14 2023 -0500|doc: clarify that --pre can accept any kind of path
+b138d5740a0e723a84014ce41614a30c44866baa|Dev01|dev02@example.com|Fri Nov 24 15:05:47 2023 -0500|log: add message about number of threads used
+3f0c8c29004c9e18cc6330d35b81aa6bf0982ffc|Dev01|dev02@example.com|Fri Nov 24 15:02:49 2023 -0500|doc: improve -r/--replace docs
+0e6e9417f1b16bde7ad4db009611f3923f1412e5|Dev01|dev02@example.com|Fri Nov 24 14:56:00 2023 -0500|log: add message when a binary file is skipped
+fded2a5fe1273ccef1d0ee36e00e052fca247d44|Dev01|dev02@example.com|Fri Nov 24 14:16:39 2023 -0500|doc: add cargo-binstall instructions
+e14eeb288fa4bce14fb0075a6a57da10c0446ffc|Dev01|dev02@example.com|Fri Nov 24 14:10:02 2023 -0500|doc: mention that --stats is always implied by --json
+1cbcefddc9cfe1a9acbcc71adef7d9c0591fcb1d|Dev01|dev02@example.com|Fri Nov 24 14:04:40 2023 -0500|doc: add more warnings about --vimgrep
