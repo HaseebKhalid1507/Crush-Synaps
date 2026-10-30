@@ -28,7 +28,7 @@ aggregates only. Method and harness: [`README.md`](README.md); v0.1 for comparis
   test runs behind `python3` heredocs: 2.8% → 4.8%).
 - **The gate holds in code.** 0 panics, 0 non-idempotent results, 0 CONTENT
   changes, 0 SEARCH rebuild failures, 0 fired results with more real tokens,
-  crush-ext == library on every request, corpus p99 78 µs, every shipped 256 KiB
+  crush-ext == library on every request, corpus p99 66 µs, every shipped 256 KiB
   worst case under 1 ms (p99).
 
 ## 1. Tokens, default config (what ships)
@@ -239,43 +239,43 @@ fresh sheet is labelled.
 <!-- BEGIN:latency -->
 | set | results | in-process p50/p99 (all) | p50/p99 (≥ 2 KiB) | p50/p99 (fired) | max | crush-ext JSON-RPC round trip p50/p99 | panics | crush-ext ok | ext ≠ library |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| real corpus | 59,843 | 5.1 / 78 µs | 12 / 116 µs | 17 / 107 µs | 243 µs | 34 / 205 µs (3,079) | 0 | 3079/3079 | 0 |
-| fixtures | 50 | 18.1 / 225 µs | 27 / 229 µs | 18 / 35 µs | 240 µs | 86 / 557 µs (50) | 0 | 50/50 | 0 |
+| real corpus | 59,843 | 4.1 / 66 µs | 10 / 100 µs | 15 / 89 µs | 199 µs | 33 / 310 µs (3,079) | 0 | 3079/3079 | 0 |
+| fixtures | 50 | 15.4 / 193 µs | 23 / 198 µs | 16 / 30 µs | 209 µs | 60 / 441 µs (50) | 0 | 50/50 | 0 |
 
 256 KiB worst cases (200 runs each):
 
 | shape | bytes | result | transforms | best µs | p50 µs | p99 µs |
 |---|---:|---:|---:|---:|---:|---:|
-| grep_hits | 262,143 | nothing-to-do | – | 263 | 276 | 294 |
-| source_file | 262,044 | byte-identical-class | – | 195 | 204 | 258 |
-| ls_listing | 262,118 | nothing-to-do | – | 382 | 404 | 426 |
-| minified_json | 262,153 | nothing-to-do | – | 536 | 567 | 591 |
-| progress_cr | 262,131 | compressed | progress | 471 | 504 | 541 |
-| repeats_log | 262,140 | compressed | repeats | 309 | 334 | 374 |
-| base64_blobs | 261,976 | compressed | blobs | 839 | 891 | 959 |
+| grep_hits | 262,143 | nothing-to-do | – | 221 | 233 | 250 |
+| source_file | 262,044 | byte-identical-class | – | 163 | 177 | 226 |
+| ls_listing | 262,118 | nothing-to-do | – | 323 | 344 | 391 |
+| minified_json | 262,153 | nothing-to-do | – | 435 | 481 | 542 |
+| progress_cr | 262,131 | compressed | progress | 386 | 426 | 468 |
+| repeats_log | 262,140 | compressed | repeats | 265 | 295 | 333 |
+| base64_blobs | 261,976 | compressed | blobs | 699 | 762 | 873 |
 <!-- END:latency -->
 
 With SEARCH grouping on (its fired results are the slowest path: transform,
-rebuild check, re-classification and a second grouping pass for idempotence; the
-256 KiB grep case is the one p99 over 1 ms, 1.04 ms, measured with three fuzzers
-running):
+rebuild check, re-classification and a second grouping pass for idempotence; its
+256 KiB grep case is the tightest: p99 0.84 ms here, 1.04 ms in an earlier run
+with three fuzzers on the box):
 <!-- BEGIN:latency_search_on -->
 | set | results | in-process p50/p99 (all) | p50/p99 (≥ 2 KiB) | p50/p99 (fired) | max | crush-ext JSON-RPC round trip p50/p99 | panics | crush-ext ok | ext ≠ library |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| real corpus | 59,843 | 5.7 / 84 µs | 14 / 123 µs | 13 / 116 µs | 341 µs | 58 / 304 µs (6,492) | 0 | 6492/6492 | 0 |
-| fixtures | 50 | 17.7 / 337 µs | 26 / 363 µs | 33 / 415 µs | 435 µs | 101 / 979 µs (50) | 0 | 50/50 | 0 |
+| real corpus | 59,843 | 4.5 / 70 µs | 11 / 102 µs | 11 / 95 µs | 291 µs | 45 / 371 µs (6,492) | 0 | 6492/6492 | 0 |
+| fixtures | 50 | 13.4 / 274 µs | 17 / 298 µs | 33 / 345 µs | 363 µs | 230 / 904 µs (50) | 0 | 50/50 | 0 |
 
 256 KiB worst cases (200 runs each):
 
 | shape | bytes | result | transforms | best µs | p50 µs | p99 µs |
 |---|---:|---:|---:|---:|---:|---:|
-| grep_hits | 262,143 | compressed | search_group | 758 | 911 | 1037 |
-| source_file | 262,044 | byte-identical-class | – | 171 | 181 | 208 |
-| ls_listing | 262,118 | nothing-to-do | – | 326 | 356 | 393 |
-| minified_json | 262,153 | nothing-to-do | – | 468 | 487 | 535 |
-| progress_cr | 262,131 | compressed | progress | 402 | 431 | 475 |
-| repeats_log | 262,140 | compressed | repeats | 262 | 292 | 334 |
-| base64_blobs | 261,976 | compressed | blobs | 731 | 784 | 842 |
+| grep_hits | 262,143 | compressed | search_group | 624 | 706 | 844 |
+| source_file | 262,044 | byte-identical-class | – | 154 | 163 | 235 |
+| ls_listing | 262,118 | nothing-to-do | – | 308 | 332 | 410 |
+| minified_json | 262,153 | nothing-to-do | – | 428 | 456 | 539 |
+| progress_cr | 262,131 | compressed | progress | 366 | 405 | 482 |
+| repeats_log | 262,140 | compressed | repeats | 244 | 275 | 340 |
+| base64_blobs | 261,976 | compressed | blobs | 660 | 729 | 848 |
 <!-- END:latency_search_on -->
 
 Measured on a shared 24-core box under load (load average ≈ 12 from other
