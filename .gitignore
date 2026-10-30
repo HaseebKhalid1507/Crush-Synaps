@@ -4,3 +4,14 @@ fuzz/target
 fuzz/Cargo.lock
 fuzz/corpus
 fuzz/artifacts
+
+# crush eval harness — real session data must never be committed.
+# The corpus lives in ~/.cache/crush-corpus (0700); these patterns guard
+# against accidental copies into the checkout.
+eval/out/
+eval/**/*.corpus.jsonl
+eval/**/corpus*.jsonl
+eval/**/*.sqlite
+crush-corpus/
+eval/driver/target/
+__pycache__/

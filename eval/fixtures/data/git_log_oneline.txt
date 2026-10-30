@@ -1,0 +1,300 @@
+91f5d22 ignore-0.4.34
+55f2f69 globset-0.4.21
+65e072f ignore: respect linked worktree excludes without requiring Git
+d19650f globset: match filename-only regexes against basenames
+9d07a92 ignore: reuse incremental matchers for directories without rules
+6892bc2 ignore: use byte keys for incremental parent lookups
+1752fb7 globset: reject impossible literal lengths before hashing
+2d4fa85 ignore: skip empty absolute parent matchers (#3557)
+b5611fc ignore: reuse parent repository detection
+c5e744c ignore: avoid scratch pools for empty matchers
+fada8f9 ignore: benchmark Python workspace discovery and matching (#3554)
+7155f64 ignore: treat dotfiles ending in a dot as hidden (#3564)
+4c2362d doc: document Windows path separators and UTF-8 locale
+756a945 cargo: remove the `homepage` field
+cff2849 index: revert indexing additions
+7cc9c2f ci: install lz4 instead of liblz4-tool
+3fce3b5 ignore-0.4.33
+5055264 globset-0.4.20
+020687a ignore,globset: increase pool capacity
+7525479 ci: fix binary discovery
+5ed408e ignore-0.4.32
+435f59f ignore: skip loading unreachable ignore files
+dffd776 ci: attest build provenance for release archives
+f9c05a9 index: remove incorrect README
+8372866 index: add some initial indexing scaffolding
+d99ac34 core: add `index` module
+d57de83 nvim: enable all Cargo features
+2ed0c00 flags: disable many flags when indexing is enabled
+59e318f ignore-0.4.31
+a9dc222 cargo: set `rust-version` on all crates
+be739c7 index: add grep-index crate
+d958105 cargo: add new build-time `unstable-index` feature
+227381d ignore-0.4.30
+b621e65 ignore: add incremental checking
+c55818f ignore: more pathutil clean-up
+6e527e9 ignore: add routine for checking if a path is hidden or not
+626b895 ignore: refactor `is_hidden`
+c035d23 msrv: bump to Rust 1.96
+fc3dd04 doc: update OpenSubtitles benchmark corpus URL in README
+0d7054d ignore: fix deadlock when visitor panics
+5e16a5c changelog: start next section
+f91cde0 pkg/brew: update tap
+e89fff8 15.2.0
+d798261 deps: bump ignore version
+576005b grep-searcher-0.1.17
+432976d grep-pcre2-0.1.10
+41e0ae7 grep-matcher-0.1.9
+40ffc6e ignore-0.4.29
+28c687d globset-0.4.19
+f03c67e changelog: 15.2.0
+e988d4b deps: update everything
+d5b85d4 deps: bump to tikv-jemallocator 0.7.0
+324f7ef ignore-0.4.28
+241b87b ignore: support `GIT_CONFIG_GLOBAL` and `GIT_CONFIG_SYSTEM` for `core.excludesFile`
+b6849da ignore/walk: add `WalkBuilder::empty` and `WalkBuilder::from_iter`
+8bca2eb doc: fix typo in man page
+61a9fd8 doc: fix typo
+e7b0f89 lint: use `cloned()` or `copied()` when we can
+767086d searcher: hint at sequential memory map reading
+9548e86 ignore/types: add PKGBUILD type
+3b62573 deps: upgrade the lower bound for termcolor from 1.1.0 to 1.4.0
+bc3ad92 ignore/types: add Rocq `.v` files
+93acfe2 ignore/types: add `proto` for filtering to protobuf files
+77d27e8 ignore/types: add Mojo type
+f55548b globset: fix `matches_all` false positives
+2c23e39 changelog: bring unreleased changes up to date
+68b3c9e ignore: fetch directory entry metadata in batches
+653d7f5 ignore: add multi-root parent matcher regression tests
+068a63e globset: reduce owned path copying in globset
+3a57099 doc: fix typo
+f2f3d00 _rg: change some compadd -q to -r
+2394f72 test-complete: misc. improvements
+b357caa _rg: use _numbers where applicable
+a709a3b _rg: improve existing type functions
+42e6e85 _rg: improve colour- and type-spec completion
+c4f34e0 _rg: update $no pattern to account for --require-git and --unicode
+f168a87 _rg: eliminate superfluous group comments
+365edbf _rg: misc. spec fixes
+640ad85 _rg: add missing groups
+cdeff3e _rg: remove group-stripping functionality
+e015672 doc: fix typos in code comments
+b009b5b doc: fix typos in comments
+e5f627f doc: update AI policy link to point to ripgrep's document
+f127579 ignore: add depth to more errors
+48b0c79 ignore-0.4.27
+c10f151 ignore: always include depth in errors
+dfe4a81 ignore/types: add Hurl
+82313cf ignore-0.4.26
+43e2f08 ignore: fix parent gitignore matching across multiple roots
+79a23e0 ignore: use named fields in `Ignore`
+48a6ad9 ci: add support for `aarch64-unknown-linux-musl`
+c28ce76 docs: update GUIDE to use `lexopt`
+4857d6f docs: s/our projects/this project in AI policy
+f0cec34 docs: add AI policy for contributors
+4519153 doc: clarify half-boundary syntax for the `-w/--word-regexp` flag
+cb66736 core: bleat a DEBUG message when RIPGREP_CONFIG_PATH is not set
+9b84e15 ignore/types: add `container` type that covers both `Dockerfile` and `Containerfile`
+0a88ccc Fix compression tests in QEMU cross-compilation environments (#3248)
+cd1f981 fix: derive `Default` when possible
+57c190d ignore-0.4.25
+85edf4c ignore: only stat `.jj` if we actually care
+36b7597 changelog: start next section
+a132e56 pkg/brew: update tap
+af60c2d 15.1.0
+a63671e deps: bump to grep 0.4.1
+2ea06d6 grep-0.4.1
+85006b0 deps: bump to grep-printer 0.3.1
+423afb8 grep-printer-0.3.1
+4694800 deps: bump to grep-searcher 0.1.16
+86e0ab1 grep-searcher-0.1.16
+7189950 deps: bump to globset 0.4.18
+0b0e013 globset-0.4.18
+cac9870 doc: update date in man page template
+bee1337 deps: update everything
+f5be160 changelog: 15.1.0
+24e88dc ignore/types: add `ssa` type
+5748f81 printer: use `doc_cfg` instead of `doc_auto_cfg`
+d47663b searcher: fix regression with `--line-buffered` flag
+38d6302 printer: add Cursor hyperlink alias
+b3dc4b0 globset: improve debug log
+f09b55b changelog: start next section
+0551c6b pkg/brew: update tap
+3a612f8 15.0.0
+ca2e34f grep-0.4.0
+a6092be deps: bump to grep-printer 0.3.0
+a0d61a0 grep-printer-0.3.0
+c22fc0f deps: bump to grep-searcher 0.1.15
+087f822 grep-searcher-0.1.15
+a3a3089 deps: bump to grep-pcre2 0.1.9
+7397ab7 grep-pcre2-0.1.9
+cf1dab0 deps: bump to grep-regex 0.1.14
+e523c6b grep-regex-0.1.14
+720376e deps: bump to grep-matcher 0.1.8
+a5ba50c grep-matcher-0.1.8
+a766f79 deps: bump to grep-cli 0.1.12
+4aafe45 grep-cli-0.1.12
+c03e49b deps: bump to ignore 0.4.24
+70ae735 ignore-0.4.24
+19c2a6e deps: bump to globset 0.4.17
+064b36b globset-0.4.17
+365384a doc: move CHANGELOG update before dependency updates
+72a5291 doc: update date in man page template
+62e6768 deps: update everything
+3780168 changelog: 15.0.0
+4c95373 release: finally switch to LTO for release binaries
+79d393a release: remove riscv64 and powerpc64 artifacts
+85eaf95 ci: testing release
+63209ae printer: fix `--stats` for `--json`
+b610d1c ignore: fix global gitignore bug that arises with absolute paths
+9ec0852 ignore/types: add lowercase R extensions
+d4b77a8 searcher: fix a performance bug with `-A/--after-context`
+8c6595c searcher: fix performance bug with `-A/--after-context` when searching `stdin`
+de2567a printer: fix panic in replacements in look-around corner case
+9164158 core: don't build decompression reader unless we intend to use it
+5c42c8c test: add regression test for fixed bug
+f0faa91 doc: clarify `--ignore-file` precedence
+a5d9e03 test: attempt to fix flaky time-reliant test
+924ba10 test: fix `Command::current_dir` API
+293ef80 test: add another regression test for gitignore matching bug
+fa80aab test: add regression test for fixed gitignore bug
+7c2161d release: add binaries for `riscv64gc-unknown-linux-gnu` target
+096f79a deps: update everything
+0407e10 ignore: fix problem with searching whitelisted hidden files
+bb88a1a deps: semver compatible updated to dependencies
+2924d0c ignore: add `min_depth` option
+9d8016d printer: finish removal of `Dev55_matches`
+9802945 doc: update the CentOS, RHEL and Rocky Linux installation instructions
+fdea972 doc: clarify a case where -m/--Dev55-count is not strictly respected
+c45ec16 doc: clarify `--multiline --count`
+e42432c ignore: clarify `WalkBuilder::filter_entry`
+6e77339 cli: tweak docs for `resolve_binary`
+1b07c66 cli: document that `-c/--count` can be inconsistent with `-l/--files-with-matches`
+c1fc6a5 release: build aarch64 artifacts for macos on GitHub Actions
+8b5d3d1 printer: hack in a fix for `-l/--files-with-matches` when using `--pcre2 --multiline` with look-around
+491bf3f deps: update everything else
+81bed78 deps: update to PCRE2 10.46
+1b6177b cargo: set MSRV to 1.85
+a7b7d81 lint: fix a few Clippy errors
+bb8172f style: apply rustfmt
+64174b8 printer: preserve line terminator when using `--crlf` and `--replace`
+f596a5d globset: add `allow_unclosed_class` toggle
+5566236 ignore/types: add GDScript files (*.gd) for the Godot Engine
+a6e0be3 searcher: move "Dev55 matches" from printer to searcher
+a60e62d rust: move to Rust 2024
+3f565b5 ignore/types: add Qt types for resource files and ui declaration
+74959a1 man: escape all hyphens in flag names
+78383de complete/zsh: improve --hyperlink-format completion
+519c1bd complete: improvements for the `--hyperlink-format` flag
+66aa4a6 printer: deduplicate hyperlink alias names
+fdfda9a doc: actually fix deb download link
+c037310 doc: update installation instructions for RHEL/CentOS/Rocky Linux 9
+99fe884 colors: add `highlight` type support for matching lines
+126bbea printer: fix handling of `has_match` for summary printer
+859d542 globset: make `GlobSet::new` public
+33b4481 globset: make `GlobSet::empty` const
+c007d89 doc: clarify that `.git` is covered by `--hidden` and not `--ignore-vcs`
+60aa9f1 tests: increase sleep duration for sort file metadata tests on Windows AArch64
+56d03a1 ignore/types: include missing files for the tf type
+e166f27 ignore/types: add gleam
+83d9467 ignore/types: add LLVM to default types
+6887122 ignore/types: add ColdFusion and BoxLang
+06210b3 ignore/types: add `.env` to `sh` file type
+00e501b build: emit warning if git is missing during build
+2ebd768 doc: remove CentOS/RHEL installation instructions
+4df1298 globset: fix bug where trailing `.` in file name was incorrectly handled
+ba23ced ignore/types: add scdoc
+28cce89 doc: fix nixpkgs link
+7339bdf test: check binary file detection when using memory maps
+79f5a5a globset: add `Candidate::from_bytes` constructor
+4ab1862 stats: fix case where "bytes searched" could be wrong
+6244e63 ignore/types: add Kconfig
+5e2d32f printer: slightly simplify code
+75e17fc ignore/types: add `*.dtso` to `devicetree` type
+99b7957 ignore/doc: explain that `require_git(false)` will ascend above git roots
+ab4665a globset: remove `__Nonexhaustive` work-around
+5f5da48 globset: support nested alternates
+b0c6d4c ignore/types: add `*.svelte.ts` to Svelte file type glob
+d199058 cli: make `rg -vf file` behave sensibly
+bb0cbae ci: add aarch64 Windows
+8fca3cd doc: fix typo in FAQ
+6f39f83 globset: compact Debug impl for `GlobSetBuilder` and `Glob`
+e83828f ignore/types: add `*.rake` extension to list of Ruby file types
+72a1303 ignore/types: add typst
+861f6d3 style: simplify string formatting
+624bbf7 globset: add matches_all method
+53279db deps: switch to tikv-jemallocator
+292bc54 printer: support `-r/--replace` with `--json`
+5be67c1 ignore/types: include msbuild solution filters
+119407d printer: use std::path::absolute on Windows
+d869038 ignore: improve multithreading heuristic
+75970fd ignore: don't process command line arguments in reverse order
+380809f ignore/types: add Makefile.*
+94ea38d ignore: support `.jj` as well as `.git`
+da672f8 color: add italic to style attributes
+edafb61 core: add "total" to --stats output
+4836284 ignore/gitignore: skip BOM at start of ignore file
+c93fc79 searcher: add more tests for `replace_bytes`
+7c004f2 ignore/types: detect `WORKSPACE.bzlmod` for bazel file type
+52115ab globset: add opt-in `Arbitrary` trait implementations
+bfe2def tests: add test for filtering hidden files
+14f4957 ignore: fix filtering searching subdir or .ignore in parent dir
+f722268 complete/fish: Take RIPGREP_CONFIG_PATH into account
+90a680a impl: switch most atomic ops to `Relaxed` ordering
+119a58a msrv: bump to Rust 1.88
+3b7fd44 deps: update everything
+cbc598f doc: update version number in dpkg installation
+6dfaec0 deps: bump crossbeam-channel from 0.5.13 to 0.5.15
+5fbc4fe ignore/types: fix Seed7 file extension
+004370b ignore/types: add support for Seed7 files
+de4baa1 globset-0.4.16
+163ac15 globset: escape `{` and `}` in `escape`
+e2362d4 searcher: add log message noting detected encoding
+d6b59fe github: update WASI compilation job
+9430512 zsh: support sourcing zsh completion dynamically
+79cbe89 doc: tweak wording for stdin detection
+bf63fe8 regex: add as_match method to Captures trait
+8bd5950 changelog: add next section
+6e0539a pkg/brew: update tap
+4649aa9 14.1.1
+c009652 changelog: 14.1.1
+b9f7a9b deps: bump grep to 0.3.2
+a196087 grep-0.3.2
+bb0925a deps: bump grep-printer to 0.2.2
+be117db grep-printer-0.2.2
+06dc13a deps: bump grep-searcher to 0.1.14
+c6c2e69 grep-searcher-0.1.14
+e67c868 deps: bump grep-pcre2 to 0.1.8
+d33f2e2 grep-pcre2-0.1.8
+082edaf deps: bump grep-regex to 0.1.13
+7c8dc33 grep-regex-0.1.13
+ea96191 deps: bump grep-cli to 0.1.11
+7943bdf grep-cli-0.1.11
+312a788 deps: bump ignore to 0.4.23
+ac02f54 ignore-0.4.23
+24b337b deps: bump globset to 0.4.15
+a5083f9 globset-0.4.15
+f89cdba doc: update date in man page template
+f7b677d deps: update everything
+3f68a8f changelog: 14.1.1
+9d738ad regex: fix inner literal extraction that resulted in false negatives
+6c5108e github: add FUNDING
+e0f1000 deps: update everything
+ea99421 doc: fix transcription bug in ugrep benchmark command
+af8c386 doc: fix typo in --heading flag help
+71d71d2 doc: refer to correct flag name for --engine=auto
+c9ebcbd globset: optimize character escaping
+dec0dc3 doc: update link for debian installation
+2f0a269 github: use an obviously old version of ripgrep in issue template
+0a0893a ignore: add debug log message when opening gitignore file
+35160a1 doc: add Flox as an installation method
+f1d23c0 cli: add more logging for stdin heuristic detection
+22b6779 doc: fix some typos
+bb6f0f5 doc: fix typo in --vimgrep help message
+b6ef99e doc: remove unused man page template
+bb8601b printer: make compilation on non-unix, non-windows platforms work
+02b47b7 deps: update everything
+d922b7a doc: fix typo
+2acf25c ignore/types: add WGSL to the default file types
+8000769 ignore/types: add Vue
+3ad0e83 ignore/walk: correct build_parallel() documentation

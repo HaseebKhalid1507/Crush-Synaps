@@ -1,0 +1,220 @@
+/*!
+Defines all of the flags available in ripgrep.
+
+Each flag corresponds to a unit struct with a corresponding implementation
+of `Flag`. Note that each implementation of `Flag` might actually have many
+possible manifestations of the same "flag." That is, each implementation of
+`Flag` can have the following flags available to an end user of ripgrep:
+
+* The long flag name.
+* An optional short flag name.
+* An optional negated long flag name.
+* An arbitrarily long list of aliases.
+
+The idea is that even though there are multiple flags that a user can type,
+one implementation of `Flag` corresponds to a single _logical_ flag inside of
+ripgrep. For example, `-E`, `--encoding` and `--no-encoding` all manipulate the
+same encoding state in ripgrep.
+*/
+
+use std::{path::PathBuf, sync::LazyLock};
+
+use {anyhow::Context as AnyhowContext, bstr::ByteVec};
+
+use crate::flags::{
+    Category, Flag, FlagValue,
+    lowargs::{
+        BinaryMode, BoundaryMode, BufferMode, CaseMode, ColorChoice,
+        ContextMode, EncodingMode, EngineChoice, GenerateMode, LoggingMode,
+        LowArgs, MmapMode, Mode, PatternSource, SearchMode, SortMode,
+        SortModeKind, SpecialMode, TypeChange,
+    },
+};
+
+#[cfg(test)]
+use crate::flags::parse::parse_low_raw;
+
+use super::CompletionType;
+
+/// A list of all flags in ripgrep via implementations of `Flag`.
+///
+/// The order of these flags matter. It determines the order of the flags in
+/// the generated documentation (`-h`, `--help` and the man page) within each
+/// category. (This is why the deprecated flags are last.)
+pub(super) const FLAGS: &[&dyn Flag] = &[
+    // -e/--regexp and -f/--file should come before anything else in the
+    // same category.
+    &Regexp,
+    &File,
+    &AfterContext,
+    &BeforeContext,
+    &Binary,
+    &BlockBuffered,
+    &ByteOffset,
+    &CaseSensitive,
+    &Color,
+    &Colors,
+    &Column,
+    &Context,
+    &ContextSeparator,
+    &Count,
+    &CountMatches,
+    &Crlf,
+    &Debug,
+    &DfaSizeLimit,
+    &Encoding,
+    &Engine,
+    &FieldContextSeparator,
+    &FieldMatchSeparator,
+    &Files,
+    &FilesWithMatches,
+    &FilesWithoutMatch,
+    &FixedStrings,
+    &Follow,
+    &Generate,
+    &Glob,
+    &GlobCaseInsensitive,
+    &Heading,
+    &Help,
+    &Hidden,
+    &HostnameBin,
+    &HyperlinkFormat,
+    &IGlob,
+    &IgnoreCase,
+    &IgnoreFile,
+    &IgnoreFileCaseInsensitive,
+    &IncludeZero,
+    &InvertMatch,
+    &JSON,
+    &LineBuffered,
+    &LineNumber,
+    &LineNumberNo,
+    &LineRegexp,
+    &MaxColumns,
+    &MaxColumnsPreview,
+    &MaxCount,
+    &MaxDepth,
+    &MaxFilesize,
+    &Mmap,
+    &Multiline,
+    &MultilineDotall,
+    &NoConfig,
+    &NoIgnore,
+    &NoIgnoreDot,
+    &NoIgnoreExclude,
+    &NoIgnoreFiles,
+    &NoIgnoreGlobal,
+    &NoIgnoreMessages,
+    &NoIgnoreParent,
+    &NoIgnoreVcs,
+    &NoMessages,
+    &NoRequireGit,
+    &NoUnicode,
+    &Null,
+    &NullData,
+    &OneFileSystem,
+    &OnlyMatching,
+    &PathSeparator,
+    &Passthru,
+    &PCRE2,
+    &PCRE2Version,
+    &Pre,
+    &PreGlob,
+    &Pretty,
+    &Quiet,
+    &RegexSizeLimit,
+    &Replace,
+    &SearchZip,
+    &SmartCase,
+    &Sort,
+    &Sortr,
+    &Stats,
+    &StopOnNonmatch,
+    &Text,
+    &Threads,
+    &Trace,
+    &Trim,
+    &Type,
+    &TypeNot,
+    &TypeAdd,
+    &TypeClear,
+    &TypeList,
+    &Unrestricted,
+    &Version,
+    &Vimgrep,
+    &WithFilename,
+    &WithFilenameNo,
+    &WordRegexp,
+    // DEPRECATED (make them show up last in their respective categories)
+    &AutoHybridRegex,
+    &NoPcre2Unicode,
+    &SortFiles,
+];
+
+/// -A/--after-context
+#[derive(Debug)]
+struct AfterContext;
+
+impl Flag for AfterContext {
+    fn is_switch(&self) -> bool {
+        false
+    }
+    fn name_short(&self) -> Option<u8> {
+        Some(b'A')
+    }
+    fn name_long(&self) -> &'static str {
+        "after-context"
+    }
+    fn doc_variable(&self) -> Option<&'static str> {
+        Some("NUM")
+    }
+    fn doc_category(&self) -> Category {
+        Category::Output
+    }
+    fn doc_short(&self) -> &'static str {
+        "Show NUM lines after each match."
+    }
+    fn doc_long(&self) -> &'static str {
+        r"
+Show \fINUM\fP lines after each match.
+.sp
+This overrides the \flag{passthru} flag and partially overrides the
+\flag{context} flag.
+"
+    }
+
+    fn update(&self, v: FlagValue, args: &mut LowArgs) -> anyhow::Result<()> {
+        args.context.set_after(convert::usize(&v.unwrap_value())?);
+        Ok(())
+    }
+}
+
+#[cfg(test)]
+#[test]
+fn test_after_context() {
+    let mkctx = |lines| {
+        let mut mode = ContextMode::default();
+        mode.set_after(lines);
+        mode
+    };
+
+    let args = parse_low_raw(None::<&str>).unwrap();
+    assert_eq!(ContextMode::default(), args.context);
+
+    let args = parse_low_raw(["--after-context", "5"]).unwrap();
+    assert_eq!(mkctx(5), args.context);
+
+    let args = parse_low_raw(["--after-context=5"]).unwrap();
+    assert_eq!(mkctx(5), args.context);
+
+    let args = parse_low_raw(["-A", "5"]).unwrap();
+    assert_eq!(mkctx(5), args.context);
+
+    let args = parse_low_raw(["-A5"]).unwrap();
+    assert_eq!(mkctx(5), args.context);
+
+    let args = parse_low_raw(["-A5", "-A10"]).unwrap();
+    assert_eq!(mkctx(10), args.context);
+
+    let args = parse_low_raw(["-A5", "-A0"]).unwrap();
+    assert_eq!(mkctx(0), args.context);

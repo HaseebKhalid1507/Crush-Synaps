@@ -1,0 +1,855 @@
+cc -Wall -Wextra -O2 -c mod00.c -o mod00.o
+mod00.c: In function ‘handler_0_0’:
+mod00.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod00.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod00.c:4:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_0_0(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod00.c: In function ‘handler_0_1’:
+mod00.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod00.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod00.c:12:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_0_1(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod00.c: In function ‘handler_0_2’:
+mod00.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod00.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod00.c:20:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_0_2(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod00.c: In function ‘handler_0_3’:
+mod00.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod00.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod00.c:28:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_0_3(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod00.c: In function ‘handler_0_4’:
+mod00.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod00.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod00.c:36:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_0_4(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod00.c: In function ‘handler_0_5’:
+mod00.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod00.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod00.c:44:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_0_5(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod01.c -o mod01.o
+mod01.c: In function ‘handler_1_0’:
+mod01.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod01.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod01.c:4:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_1_0(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod01.c: In function ‘handler_1_1’:
+mod01.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod01.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod01.c:12:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_1_1(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod01.c: In function ‘handler_1_2’:
+mod01.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod01.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod01.c:20:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_1_2(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod01.c: In function ‘handler_1_3’:
+mod01.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod01.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod01.c:28:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_1_3(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod01.c: In function ‘handler_1_4’:
+mod01.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod01.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod01.c:36:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_1_4(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod01.c: In function ‘handler_1_5’:
+mod01.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod01.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod01.c:44:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_1_5(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod02.c -o mod02.o
+mod02.c: In function ‘handler_2_0’:
+mod02.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod02.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod02.c:4:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_2_0(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod02.c: In function ‘handler_2_1’:
+mod02.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod02.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod02.c:12:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_2_1(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod02.c: In function ‘handler_2_2’:
+mod02.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod02.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod02.c:20:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_2_2(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod02.c: In function ‘handler_2_3’:
+mod02.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod02.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod02.c:28:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_2_3(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod02.c: In function ‘handler_2_4’:
+mod02.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod02.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod02.c:36:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_2_4(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod02.c: In function ‘handler_2_5’:
+mod02.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod02.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod02.c:44:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_2_5(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod03.c -o mod03.o
+mod03.c: In function ‘handler_3_0’:
+mod03.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod03.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod03.c:4:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_3_0(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod03.c: In function ‘handler_3_1’:
+mod03.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod03.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod03.c:12:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_3_1(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod03.c: In function ‘handler_3_2’:
+mod03.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod03.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod03.c:20:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_3_2(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod03.c: In function ‘handler_3_3’:
+mod03.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod03.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod03.c:28:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_3_3(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod03.c: In function ‘handler_3_4’:
+mod03.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod03.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod03.c:36:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_3_4(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod03.c: In function ‘handler_3_5’:
+mod03.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod03.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod03.c:44:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_3_5(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod04.c -o mod04.o
+mod04.c: In function ‘handler_4_0’:
+mod04.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod04.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod04.c:4:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_4_0(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod04.c: In function ‘handler_4_1’:
+mod04.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod04.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod04.c:12:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_4_1(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod04.c: In function ‘handler_4_2’:
+mod04.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod04.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod04.c:20:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_4_2(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod04.c: In function ‘handler_4_3’:
+mod04.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod04.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod04.c:28:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_4_3(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod04.c: In function ‘handler_4_4’:
+mod04.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod04.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod04.c:36:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_4_4(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod04.c: In function ‘handler_4_5’:
+mod04.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod04.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod04.c:44:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_4_5(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod05.c -o mod05.o
+mod05.c: In function ‘handler_5_0’:
+mod05.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod05.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod05.c:4:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_5_0(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod05.c: In function ‘handler_5_1’:
+mod05.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod05.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod05.c:12:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_5_1(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod05.c: In function ‘handler_5_2’:
+mod05.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod05.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod05.c:20:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_5_2(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod05.c: In function ‘handler_5_3’:
+mod05.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod05.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod05.c:28:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_5_3(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod05.c: In function ‘handler_5_4’:
+mod05.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod05.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod05.c:36:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_5_4(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod05.c: In function ‘handler_5_5’:
+mod05.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod05.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod05.c:44:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_5_5(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod06.c -o mod06.o
+mod06.c: In function ‘handler_6_0’:
+mod06.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod06.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod06.c:4:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_6_0(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod06.c: In function ‘handler_6_1’:
+mod06.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod06.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod06.c:12:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_6_1(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod06.c: In function ‘handler_6_2’:
+mod06.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod06.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod06.c:20:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_6_2(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod06.c: In function ‘handler_6_3’:
+mod06.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod06.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod06.c:28:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_6_3(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod06.c: In function ‘handler_6_4’:
+mod06.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod06.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod06.c:36:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_6_4(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod06.c: In function ‘handler_6_5’:
+mod06.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod06.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod06.c:44:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_6_5(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod07.c -o mod07.o
+mod07.c: In function ‘handler_7_0’:
+mod07.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod07.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod07.c:4:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_7_0(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod07.c: In function ‘handler_7_1’:
+mod07.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod07.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod07.c:12:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_7_1(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod07.c: In function ‘handler_7_2’:
+mod07.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod07.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod07.c:20:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_7_2(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod07.c: In function ‘handler_7_3’:
+mod07.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod07.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod07.c:28:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_7_3(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod07.c: In function ‘handler_7_4’:
+mod07.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod07.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod07.c:36:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_7_4(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod07.c: In function ‘handler_7_5’:
+mod07.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod07.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod07.c:44:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_7_5(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod08.c -o mod08.o
+mod08.c: In function ‘handler_8_0’:
+mod08.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod08.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod08.c:4:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_8_0(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod08.c: In function ‘handler_8_1’:
+mod08.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod08.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod08.c:12:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_8_1(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod08.c: In function ‘handler_8_2’:
+mod08.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod08.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod08.c:20:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_8_2(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod08.c: In function ‘handler_8_3’:
+mod08.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod08.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod08.c:28:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_8_3(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod08.c: In function ‘handler_8_4’:
+mod08.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod08.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod08.c:36:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_8_4(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod08.c: In function ‘handler_8_5’:
+mod08.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod08.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod08.c:44:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_8_5(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod09.c -o mod09.o
+mod09.c: In function ‘handler_9_0’:
+mod09.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod09.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod09.c:4:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_9_0(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod09.c: In function ‘handler_9_1’:
+mod09.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod09.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod09.c:12:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_9_1(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod09.c: In function ‘handler_9_2’:
+mod09.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod09.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod09.c:20:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_9_2(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod09.c: In function ‘handler_9_3’:
+mod09.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod09.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod09.c:28:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_9_3(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod09.c: In function ‘handler_9_4’:
+mod09.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod09.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod09.c:36:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_9_4(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+mod09.c: In function ‘handler_9_5’:
+mod09.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod09.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod09.c:44:34: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_9_5(int argc, char **argv) {
+      |                           ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod10.c -o mod10.o
+mod10.c: In function ‘handler_10_0’:
+mod10.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod10.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod10.c:4:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_10_0(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod10.c: In function ‘handler_10_1’:
+mod10.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod10.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod10.c:12:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_10_1(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod10.c: In function ‘handler_10_2’:
+mod10.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod10.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod10.c:20:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_10_2(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod10.c: In function ‘handler_10_3’:
+mod10.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod10.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod10.c:28:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_10_3(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod10.c: In function ‘handler_10_4’:
+mod10.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod10.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod10.c:36:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_10_4(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod10.c: In function ‘handler_10_5’:
+mod10.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod10.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod10.c:44:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_10_5(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod11.c -o mod11.o
+mod11.c: In function ‘handler_11_0’:
+mod11.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod11.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod11.c:4:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_11_0(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod11.c: In function ‘handler_11_1’:
+mod11.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod11.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod11.c:12:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_11_1(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod11.c: In function ‘handler_11_2’:
+mod11.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod11.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod11.c:20:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_11_2(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod11.c: In function ‘handler_11_3’:
+mod11.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod11.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod11.c:28:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_11_3(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod11.c: In function ‘handler_11_4’:
+mod11.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod11.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod11.c:36:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_11_4(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod11.c: In function ‘handler_11_5’:
+mod11.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod11.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod11.c:44:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_11_5(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod12.c -o mod12.o
+mod12.c: In function ‘handler_12_0’:
+mod12.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod12.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod12.c:4:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_12_0(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod12.c: In function ‘handler_12_1’:
+mod12.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod12.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod12.c:12:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_12_1(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod12.c: In function ‘handler_12_2’:
+mod12.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod12.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod12.c:20:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_12_2(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod12.c: In function ‘handler_12_3’:
+mod12.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod12.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod12.c:28:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_12_3(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod12.c: In function ‘handler_12_4’:
+mod12.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod12.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod12.c:36:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_12_4(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod12.c: In function ‘handler_12_5’:
+mod12.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod12.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod12.c:44:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_12_5(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+cc -Wall -Wextra -O2 -c mod13.c -o mod13.o
+mod13.c: In function ‘handler_13_0’:
+mod13.c:7:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+    7 |     if (n < -1) return 0;
+      |           ^
+mod13.c:5:9: warning: unused variable ‘unused_0’ [-Wunused-variable]
+    5 |     int unused_0 = 0;
+      |         ^~~~~~~~
+mod13.c:4:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+    4 | int handler_13_0(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod13.c: In function ‘handler_13_1’:
+mod13.c:15:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   15 |     if (n < -1) return 0;
+      |           ^
+mod13.c:13:9: warning: unused variable ‘unused_1’ [-Wunused-variable]
+   13 |     int unused_1 = 1;
+      |         ^~~~~~~~
+mod13.c:12:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   12 | int handler_13_1(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod13.c: In function ‘handler_13_2’:
+mod13.c:23:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   23 |     if (n < -1) return 0;
+      |           ^
+mod13.c:21:9: warning: unused variable ‘unused_2’ [-Wunused-variable]
+   21 |     int unused_2 = 2;
+      |         ^~~~~~~~
+mod13.c:20:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   20 | int handler_13_2(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod13.c: In function ‘handler_13_3’:
+mod13.c:31:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   31 |     if (n < -1) return 0;
+      |           ^
+mod13.c:29:9: warning: unused variable ‘unused_3’ [-Wunused-variable]
+   29 |     int unused_3 = 3;
+      |         ^~~~~~~~
+mod13.c:28:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   28 | int handler_13_3(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod13.c: In function ‘handler_13_4’:
+mod13.c:39:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   39 |     if (n < -1) return 0;
+      |           ^
+mod13.c:37:9: warning: unused variable ‘unused_4’ [-Wunused-variable]
+   37 |     int unused_4 = 4;
+      |         ^~~~~~~~
+mod13.c:36:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   36 | int handler_13_4(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+mod13.c: In function ‘handler_13_5’:
+mod13.c:47:11: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   47 |     if (n < -1) return 0;
+      |           ^
+mod13.c:45:9: warning: unused variable ‘unused_5’ [-Wunused-variable]
+   45 |     int unused_5 = 5;
+      |         ^~~~~~~~
+mod13.c:44:35: warning: unused parameter ‘argv’ [-Wunused-parameter]
+   44 | int handler_13_5(int argc, char **argv) {
+      |                            ~~~~~~~^~~~
+ar rcs libmods.a mod00.o mod01.o mod02.o mod03.o mod04.o mod05.o mod06.o mod07.o mod08.o mod09.o mod10.o mod11.o mod12.o mod13.o
