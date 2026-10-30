@@ -7,9 +7,11 @@
 use crate::{Class, Config};
 
 pub mod blobs;
+pub mod listing;
 pub mod progress;
 pub mod repeats;
 pub mod search;
+pub mod search_elide;
 
 /// What the pipeline did.
 #[derive(Debug, Clone, PartialEq)]
@@ -23,16 +25,33 @@ pub struct Applied {
 fn pipeline(class: Class) -> &'static [&'static str] {
     match class {
         Class::Content => &[],
-        // hit text must stay byte-exact: grouping only
-        Class::Search => &[search::NAME],
-        Class::Log | Class::Listing | Class::Vcs | Class::Structured | Class::Unknown | Class::Prose => {
+        // hit text must stay byte-exact: lines are cut (with exact counts) or
+        // grouped, never rewritten
+        Class::Search => &[search_elide::NAME, search::NAME],
+        // `ls -l` factoring last: its round trip is checked on its own input
+        Class::Listing => &[progress::NAME, repeats::NAME, blobs::NAME, listing::NAME],
+        Class::Log | Class::Vcs | Class::Structured | Class::Unknown | Class::Prose => {
             &[progress::NAME, repeats::NAME, blobs::NAME]
         }
     }
 }
 
-/// Run the class pipeline. `None` when nothing applied.
-pub fn run(class: Class, text: &str, raw_ref: Option<&str>, cfg: &Config) -> Option<Applied> {
+/// Is `next` exactly what `name` may make of `src`? Checked after every step
+/// that has a checker, against that step's own input; a failure drops the
+/// whole result (pass-through on doubt).
+fn verify_step(name: &str, src: &str, next: &str) -> bool {
+    match name {
+        search::NAME => search::rebuilds(src, next),
+        search_elide::NAME => search_elide::verify(src, next),
+        listing::NAME => listing::verify(src, next),
+        _ => true,
+    }
+}
+
+/// Run the class pipeline. `None` when nothing applied. `command` is the
+/// shell command for shell-like tools (some transforms read flags or the
+/// grep pattern from it).
+pub fn run(class: Class, text: &str, command: Option<&str>, raw_ref: Option<&str>, cfg: &Config) -> Option<Applied> {
     let mut cur: Option<String> = None;
     let mut names = Vec::new();
     let mut lossless = true;
@@ -43,6 +62,8 @@ pub fn run(class: Class, text: &str, raw_ref: Option<&str>, cfg: &Config) -> Opt
             progress::NAME => (cfg.transforms.progress, true),
             repeats::NAME => (cfg.transforms.repeats, false),
             blobs::NAME => (cfg.transforms.blobs, true),
+            search_elide::NAME => (cfg.transforms.search_elide, true),
+            listing::NAME => (cfg.transforms.ls_columns, false),
             _ => (false, false),
         };
         if !on || (lossy && raw_ref.is_none()) {
@@ -53,10 +74,15 @@ pub fn run(class: Class, text: &str, raw_ref: Option<&str>, cfg: &Config) -> Opt
             progress::NAME => progress::collapse(src, raw_ref.unwrap_or("")),
             repeats::NAME => repeats::collapse(src),
             blobs::NAME => blobs::elide(src, raw_ref.unwrap_or("")),
+            search_elide::NAME => search_elide::elide(src, command, raw_ref.unwrap_or("")),
+            listing::NAME => listing::factor(src, command),
             _ => None,
         };
         if let Some(n) = next {
             if n != src {
+                if !verify_step(name, src, &n) {
+                    return None;
+                }
                 cur = Some(n);
                 names.push(name);
                 lossless &= !lossy;

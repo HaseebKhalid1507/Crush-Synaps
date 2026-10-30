@@ -33,6 +33,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import OUT, read_jsonl, tagged  # noqa: E402
+from p2a_checks import elide_ok, ls_restore  # noqa: E402
 from run_crush import load_samples, results_path  # noqa: E402
 
 HIT = re.compile(r"^([^\s:]+?)([:-])(\d+)([:-])(.*)$")
@@ -82,7 +83,11 @@ def check(which: str):
     res = {r["id"]: r for r in read_jsonl(results_path(which))}
     rep = {"content_changed": 0, "content_p0_changed": 0, "content_p0_lines_altered": 0, "content_p0_by_transform": Counter(),
            "search_group_samples": 0, "search_rebuild_failures": 0, "hit_lines": 0, "hit_lines_verbatim": 0,
-           "other_changed_by_class": Counter(), "other_lines_altered": Counter(), "items": []}
+           "other_changed_by_class": Counter(), "other_lines_altered": Counter(), "items": [],
+           # Phase 2A: SEARCH lines cut around the match, ls -l owner/group factoring
+           "search_elide_samples": 0, "search_elide_failures": 0, "search_elide_lines_cut": 0,
+           "search_elide_lines_verbatim": 0, "ls_columns_samples": 0, "ls_columns_restore_failures": 0,
+           "ls_columns_composed": 0}
     for s in load_samples(which):
         r = res.get(s["id"])
         if not r or not r["fired"]:
@@ -102,6 +107,21 @@ def check(which: str):
                     rep["hit_lines"] += 1
                     rep["hit_lines_verbatim"] += f"{m.group(3)}:{m.group(5)}" in have or l in have
             a = 0 if ok else a  # a rebuilt line is still quotable: heading + line
+        if "search_elide" in r["transforms"]:
+            rep["search_elide_samples"] += 1
+            if r["transforms"] == ["search_elide"]:
+                ok, cut, same = elide_ok(raw, out)
+                rep["search_elide_failures"] += not ok
+                rep["search_elide_lines_cut"] += cut
+                rep["search_elide_lines_verbatim"] += same
+            else:
+                rep["search_elide_failures"] += 1  # not composed with anything in Phase 2A configs
+        if "ls_columns" in r["transforms"]:
+            rep["ls_columns_samples"] += 1
+            if r["transforms"] == ["ls_columns"]:
+                rep["ls_columns_restore_failures"] += ls_restore(out) != raw
+            else:
+                rep["ls_columns_composed"] += 1  # checked per step inside crush-core
         if s["class"] == "CONTENT":
             rep["content_p0_changed"] += 1
             rep["content_p0_lines_altered"] += a
@@ -128,7 +148,8 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / tagged("edit_safety.json")).write_text(json.dumps(report, indent=1))
     print(json.dumps({w: {k: v for k, v in r.items() if k != "items"} for w, r in report.items()}, indent=1))
-    bad = sum(r["content_changed"] + r["search_rebuild_failures"] for r in report.values())
+    bad = sum(r["content_changed"] + r["search_rebuild_failures"] + r["search_elide_failures"]
+              + r["ls_columns_restore_failures"] for r in report.values())
     if bad:
         print(f"EDIT-SAFETY: {bad} violation(s)", file=sys.stderr)
     return 1 if (args.strict and bad) else 0

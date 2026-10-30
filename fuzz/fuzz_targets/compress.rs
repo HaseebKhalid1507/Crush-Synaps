@@ -2,7 +2,8 @@
 //! caught one), never an internal error, CONTENT untouched, never larger,
 //! SEARCH rebuilds, idempotent, deterministic.
 #![no_main]
-use crush_core::{compress, estimate_tokens, transforms::search, Class, Config, Input, Tokenizer, Why};
+use crush_core::transforms::{listing, search, search_elide};
+use crush_core::{compress, estimate_tokens, Class, Config, Input, Tokenizer, Why};
 use libfuzzer_sys::fuzz_target;
 
 const TOOLS: &[&str] = &["bash", "read", "grep", "ls", "forum_read", "x"];
@@ -19,6 +20,8 @@ const CMDS: &[&str] = &[
     "curl x",
     "python3 - <<'E'\nx\nE",
     "for f in *.log; do tail $f; done",
+    "grep -rni ab .",
+    "ls -lah ~",
 ];
 
 fuzz_target!(|data: &[u8]| {
@@ -38,6 +41,8 @@ fuzz_target!(|data: &[u8]| {
         ..Config::default()
     };
     small.transforms.search_group = true;
+    small.transforms.search_elide = true;
+    small.transforms.ls_columns = true;
     small.classes.prose = true;
     for cfg in [Config::default(), small] {
         for raw_ref in [None, Some("/r/raw.txt")] {
@@ -52,7 +57,13 @@ fuzz_target!(|data: &[u8]| {
                 for tk in [Tokenizer::V5, Tokenizer::V4] {
                     assert!(estimate_tokens(&o.text, tk) < estimate_tokens(&text, tk), "larger");
                 }
-                if o.transforms.contains(&search::NAME) {
+                if o.transforms == [search_elide::NAME] {
+                    assert!(search_elide::verify(&text, &o.text));
+                }
+                if o.transforms == [listing::NAME] {
+                    assert_eq!(listing::restore(&o.text).as_deref(), Some(text.as_ref()));
+                }
+                if o.transforms == [search::NAME] {
                     assert!(search::rebuilds(&text, &o.text));
                 }
                 let again = compress(&Input { output: &o.text, ..inp }, &cfg);
